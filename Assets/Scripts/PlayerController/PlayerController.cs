@@ -21,8 +21,6 @@ public class PlayerController : MonoBehaviour
     private float accelClampValue; //the local current version of maxAccelStep
 
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
-    private Rigidbody rb;
-
     private Vector3 leftStickDir;
 
     private bool frozen = false;    
@@ -91,11 +89,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AnimationCurve quickTurnMultiplier; //a curve that determines how much velocity gain is multiplied by when turning sharply, makes for a quicker turn around
     private float playerHitboxHeight; //the value of the players hitbox with scale transforms applied
 
+    [Space, Header("References")]
+    [SerializeField] private PlayerInputDetection inputDetection;
+    private Rigidbody rb;
+
 
     //these variables are all accessable to the various states
-
-    private PlayerInputDetection inputDetection;
-
 
     //General Variables
     public Rigidbody RB { get { return rb; }}
@@ -166,30 +165,31 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!frozen) CalculateMovement(rb, new Vector3(leftStickDir.x, 0, leftStickDir.y), acceleration, maxRunSpeed);
+        if (!frozen) CalculateMovement(rb, leftStickDir, acceleration, maxRunSpeed);
     }
 
 
     //get our jump inputs from the player input script
     public bool DetectJumpInput() //a single jump press (does not detect holding down the button)
     {
-        return false;
+        
+        return inputDetection.JumpBuffered();
     }
 
     public bool DetectJumpHold() //returns true while the jump button is held
     {
-       return false;
+       return inputDetection.jumpPressed;
     }
 
     public Vector3 ReadInputs()
     {
         //get the left stick inputs from the player input script
-        return leftStickDir;
+        return leftStickDir = inputDetection.GetHorizontalMovement();
     }
 
     public bool DetectCrouchInput()
     {
-        return false;
+        return inputDetection.crouchPressed;
     }
 
     //this function needs to run regardless of if the player is grounded or airborne, this is the basic movement
