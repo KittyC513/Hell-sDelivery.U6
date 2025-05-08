@@ -276,9 +276,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRunSpeed: 8
-  acceleration: 22
+  acceleration: 25
   decceleration: 23
-  maxAccelStep: 150
+  maxAccelStep: 50
   rotationSpeed: 15
   groundLayers:
     serializedVersion: 2
@@ -301,12 +301,13 @@ MonoBehaviour:
   doubleJumpDecayRate: 35
   maxJumps: 2
   remainingJumps: 0
-  maxSlideSpeed: 14
-  slideAccel: 50
+  maxSlideSpeed: 25
+  slideAccel: 85
   maxSlopeAngle: 45
   maxSlideAccelStep: 200
   airMaxedAccelerationFactor: 0.2
-  groundedMaxedAccelerationFactor: 0.4
+  groundedMaxedAccelerationFactor: 0.5
+  timeToRegularSpeed: 0.5
   ledgeGrabHorizontalRange: 0.6
   ledgeGrabUpwardsRange: 0.44
   ledgeGrabDownwardsRange: 0.37
@@ -350,6 +351,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   inputDetection: {fileID: 5716978660017008995}
+  currentSpeed: 0
 --- !u!114 &1207545429166844160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpPressed: 0
+  crouchPressed: 0
   cam: {fileID: 8171592294196646648}
   jumpBufferTime: 0.2
 --- !u!1 &8615474637660202734
@@ -470,7 +473,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8615474637660202734}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08818499, y: -0.03922357, z: -0.02663877, w: 0.99497503}
+  m_LocalRotation: {x: 0.17478517, y: -0, z: -0, w: 0.9846067}
   m_LocalPosition: {x: -1.6831512, y: 2.1223125, z: -3.1801453}
   m_LocalScale: {x: 0.5996408, y: 0.5033657, z: 0.5969934}
   m_ConstrainProportionsScale: 0

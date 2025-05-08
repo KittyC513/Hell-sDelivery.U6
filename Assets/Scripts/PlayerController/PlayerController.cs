@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float decceleration = 2; //how fast the player slows down when no longer inputting
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
     [SerializeField] private float rotationSpeed = 500; //how fast the player rotates
-    private float accelClampValue; //the local current version of maxAccelStep
+
 
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
     private Vector3 leftStickDir;
@@ -64,8 +64,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideAccel = 50; //how fast player builds up speed while sliding
     [SerializeField] private float maxSlopeAngle = 45; //the maximum slope our player can walk on
     [SerializeField] private float maxSlideAccelStep = 200; 
-    [SerializeField] [Range(0.0f, 1.0f)] private float airMaxedAccelerationFactor = 0.2f; //how much the max accel step is multiplied by when going over max speed while in the air
-    [SerializeField][Range(0.0f, 1.0f)] private float groundedMaxedAccelerationFactor = 0.2f; //how much the max accel step is multiplied by when going over max speed while on the ground
+   
 
     [Space, Header("Ledge Grab Variables")]
     [SerializeField] private float ledgeGrabHorizontalRange = 0.6f; //how far out the ledge grab detection ray is
@@ -92,6 +91,9 @@ public class PlayerController : MonoBehaviour
     [Space, Header("References")]
     [SerializeField] private PlayerInputDetection inputDetection;
     private Rigidbody rb;
+
+    [Space, Header("Debug")]
+    [SerializeField] private float currentSpeed;
 
 
     //these variables are all accessable to the various states
@@ -151,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
@@ -165,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!frozen) CalculateMovement(rb, leftStickDir, acceleration, maxRunSpeed);
+        if (!frozen) CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
     }
 
 
@@ -194,7 +196,7 @@ public class PlayerController : MonoBehaviour
 
     //this function needs to run regardless of if the player is grounded or airborne, this is the basic movement
     //therefore it needs to be in the main script
-    private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float maxSpeed)
+    private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float decelValue, float maxSpeed)
     {
         Vector3 currentVel = rb.linearVelocity;
         Vector3 targetDir = dir;
@@ -211,73 +213,54 @@ public class PlayerController : MonoBehaviour
 
         //Debug.Log(unitVel + "a" + targetDir);
 
-        //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
-        float accel = accelValue * quickTurnMultiplier.Evaluate(velDot);
-
         //the magnitude of only the x and z values
         float xzMagnitude = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude;
 
-        //if the player inputs any direction or has a speed low enough reset the max accel step to return to normal velocity curves
-        if (targetVelocity.magnitude > 0.05 || xzMagnitude <= maxSpeed / 2)
-        {
-            accelClampValue = maxAccelStep;
-        }
-        
-     
-   
-        //if our speed is greater than our max speed we want to slow down gradually to let the player keep built up speed
-        if (xzMagnitude > maxSpeed + 0.5f)
-        {
-            //grounded typically slows down faster than being in the air
-            if (grounded)
-            {
-                accelClampValue = maxAccelStep * groundedMaxedAccelerationFactor;
-            }
-            else
-            {
-                accelClampValue = maxAccelStep * airMaxedAccelerationFactor;
-            }
-            
-        }
+        currentSpeed = xzMagnitude;
 
+        //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
+        float accel = quickTurnMultiplier.Evaluate(velDot) * accelValue;
+        float decel = decelValue;
 
         //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
         if (targetVelocity.magnitude <= 0.05f)
         {
             //how much we will change our velocity next step with smoothing by vector3.movetowards
             //0.02 is unity's default fixedupdate timestep, i use this value right now because i dont know how to reference that variable
-            goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, decceleration * 0.02f);
-            //Debug.Log(goalVelocityChange + "|" + targetDir);
-
+            goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, decel * 0.02f);
+            
             //the amount of velocity change needed to reach our maximum velocity
             Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
 
             //maxAccelStep limits how much our velocity can change per step
-            velocityChange = Vector3.ClampMagnitude(velocityChange, accelClampValue);
+            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             //Debug.Log(velocityChange * rb.mass);
             //apply our force to our velocity
+            
+
             rb.AddForce(velocityChange * rb.mass);
             
         }
         else
         {
-
             //how much we will change our velocity next step with smoothing by vector3.movetowards
             goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, accel * 0.02f);
-            
+
             //the amount of velocity change needed to reach our maximum velocity
             Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
 
             //maxAccelStep limits how much our velocity can change per step
-            velocityChange = Vector3.ClampMagnitude(velocityChange, accelClampValue);
+            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
            
             //apply our force to our velocity
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
+
+            
+
             rb.AddForce(velocityChange * rb.mass);
         }
-
-       
+        
         RotateTowards(targetDir, rotationSpeed);
     }
 
