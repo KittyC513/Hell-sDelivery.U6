@@ -1,6 +1,13 @@
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public enum E_InputDeviceType 
+{
+    keyboard,
+    Gamepad,
+}
 
 public class PlayerInputDetection : MonoBehaviour
 {
@@ -18,6 +25,11 @@ public class PlayerInputDetection : MonoBehaviour
 
     [SerializeField] private float jumpBufferTime = 0.2f; //how long the jump input is read, used to buffer jumps 
     private float jumpBufferCurrent = 0;
+
+
+    [Header("Device Check")]
+    public bool isCheckedDevice;
+    public E_InputDeviceType inputDeviceType;
 
     private void Awake()
     {
@@ -45,6 +57,10 @@ public class PlayerInputDetection : MonoBehaviour
         playerMap.FindAction("Crouch").canceled -= Crouch;
     }
 
+    private void Start()
+    {
+        InputDeviceCheck();
+    }
     public Vector3 GetHorizontalMovement()
     {
         return GetRelativeInputDirection(cam, horizontalInputValue = moveAction.ReadValue<Vector2>());
@@ -122,4 +138,27 @@ public class PlayerInputDetection : MonoBehaviour
             return new Vector3(0, 0, 0);
         }
     }
+    #region Player input device check
+    private void InputDeviceCheck()
+    {
+        do 
+        {
+            if (Keyboard.current.anyKey.wasPressedThisFrame)
+            {
+                inputDeviceType = E_InputDeviceType.keyboard;
+                Cursor.visible = false;
+
+                isCheckedDevice = true;
+            }
+            else if (Gamepad.current != null && Gamepad.current.aButton.wasPressedThisFrame)
+            {
+                inputDeviceType = E_InputDeviceType.Gamepad;
+                isCheckedDevice = true;
+            }
+        } while (!isCheckedDevice);
+
+
+    }
+
+    #endregion
 }

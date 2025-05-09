@@ -40,6 +40,8 @@ public class CameraMovement_Player : MonoBehaviour
     private RaycastHit hit;
     private bool isHit;
 
+    [Header("Keyboard variables")]
+    public float keyboardMoveSpeed = 0.3f;
 
     [Header("Collision Detection Method")]
     private int[] layerID;
@@ -74,7 +76,11 @@ public class CameraMovement_Player : MonoBehaviour
     void CameraMovement()
     {
         //get input value
-        inputDelta = new Vector2(inputDetection.GetCameraMovement().x, inputDetection.GetCameraMovement().y);
+        inputDelta = new Vector2(inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ?
+                        inputDetection.GetCameraMovement().x : inputDetection.GetCameraMovement().x * keyboardMoveSpeed,
+                        inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ?
+                        inputDetection.GetCameraMovement().y : inputDetection.GetCameraMovement().y * keyboardMoveSpeed);
+        //inputDelta = new Vector2(inputDetection.GetCameraMovement().x, inputDetection.GetCameraMovement().y);
         //Update rotate value
         //x
         mRotateValue.x += inputDelta.x * rotateSpeed * Time.smoothDeltaTime;
