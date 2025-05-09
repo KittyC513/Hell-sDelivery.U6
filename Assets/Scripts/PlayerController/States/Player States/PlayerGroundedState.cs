@@ -41,13 +41,19 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
             return PlayerStateMachine.PlayerStates.jump;
        }
 
-       if (pControl.GroundAngle > pControl.MaxSlopeAngle || pControl.DetectCrouchInput())
+       if (pControl.GroundAngle > pControl.MaxSlopeAngle)
        {
             //this prevents any weird angle detections making the character slide
             if (pControl.GroundAngle < 89.9f)
             return PlayerStateMachine.PlayerStates.sliding;
        }
        
+       //if we are on a slope and input crouch start sliding
+       if (pControl.GroundAngle > 15 && pControl.DetectCrouchInput())
+       {
+            if (pControl.GroundAngle < 89.9f)
+                return PlayerStateMachine.PlayerStates.sliding;
+       }
        return stateKey;
     }
 

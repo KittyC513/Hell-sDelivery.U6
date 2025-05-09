@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
 {
     //create states and add them to the dictionary 
-    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen }
+    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll }
 
     public PlayerController controller;
 
@@ -23,6 +23,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
         states.Add(PlayerStates.sliding, new PlayerSlidingState(PlayerStates.sliding, controller));
         states.Add(PlayerStates.ledgeHang, new PlayerLedgeHangState(PlayerStates.ledgeHang, controller));
         states.Add(PlayerStates.frozen, new PlayerFrozenState(PlayerStates.frozen, controller));
+        states.Add(PlayerStates.ragdoll, new PlayerRagdollState(PlayerStates.ragdoll, controller));
 
         //set our current state to airborne as a default starting state
         currentState = states[PlayerStates.airborne];
@@ -32,7 +33,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
     //this function can change the current state without asking or interfering with the current state
     public void OverrideState(PlayerStates targetState)
     {
-        TransitionToState(targetState);
+        if (currentState.stateKey != targetState) TransitionToState(targetState);
     }
 
     //this will set the state machine to a frozen state

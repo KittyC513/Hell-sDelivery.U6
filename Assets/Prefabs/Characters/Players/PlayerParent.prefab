@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 3458804097939964128}
   - component: {fileID: 5327271782562332605}
   - component: {fileID: 5716978660017008995}
+  - component: {fileID: 8856362205373799850}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -285,7 +286,7 @@ MonoBehaviour:
     m_Bits: 256
   visualizeRaycast: 1
   floatHeight: 0.2
-  raycastDist: 0.35
+  raycastDist: 0.4
   raycastRadius: 0.23
   floatHeightStrength: 100
   floatHeightDamping: 4
@@ -305,9 +306,6 @@ MonoBehaviour:
   slideAccel: 85
   maxSlopeAngle: 45
   maxSlideAccelStep: 200
-  airMaxedAccelerationFactor: 0.2
-  groundedMaxedAccelerationFactor: 0.5
-  timeToRegularSpeed: 0.5
   ledgeGrabHorizontalRange: 0.6
   ledgeGrabUpwardsRange: 0.44
   ledgeGrabDownwardsRange: 0.37
@@ -447,6 +445,21 @@ MonoBehaviour:
   crouchPressed: 0
   cam: {fileID: 8171592294196646648}
   jumpBufferTime: 0.2
+--- !u!114 &8856362205373799850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6178439437155416088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934277bf7fd66af4596194e895efcd9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeItem: {fileID: 0}
+  playerStateMachine: {fileID: 1207545429166844160}
+  inputDetection: {fileID: 5716978660017008995}
 --- !u!1 &8615474637660202734
 GameObject:
   m_ObjectHideFlags: 0
