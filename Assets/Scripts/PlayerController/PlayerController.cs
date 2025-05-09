@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
     private Vector3 leftStickDir;
 
-    private bool frozen = false;    
-    
+    private bool frozen = false;
+
 
     [Header("Ground Check Variables")]
     [SerializeField] private LayerMask groundLayers; //what layers are ground

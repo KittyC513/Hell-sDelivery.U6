@@ -138,8 +138,10 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public bool IsPlayerID(int actorID)
         {
+
             Actor actor = actors.Find(a => a.id == actorID);
             return (actor != null) ? actor.IsPlayer : false;
+
         }
 
         /// <summary>
