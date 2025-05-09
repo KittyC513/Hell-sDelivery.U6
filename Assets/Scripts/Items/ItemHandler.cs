@@ -23,6 +23,7 @@ public class ItemHandler : MonoBehaviour
     //player equips this item
     public void EquipItem(PlayerItemControl playerItemControl)
     {
+        Debug.Log("Equipped");
         iControl = playerItemControl;
         equipped = true;
     }
@@ -47,6 +48,10 @@ public class ItemHandler : MonoBehaviour
         if (equipped) iControl.playerStateMachine.UnFreezeStateMachine();
     }
 
+    public void OverrideStateMachine(PlayerStateMachine.PlayerStates targetState)
+    {
+        iControl.playerStateMachine.OverrideState(targetState);
+    }
     private void Update()
     {
         Rotate();

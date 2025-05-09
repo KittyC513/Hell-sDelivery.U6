@@ -12,6 +12,7 @@ public class PlayerInputDetection : MonoBehaviour
     [HideInInspector] public bool crouchPressed;
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
+    private InputAction lookAction;
 
     [SerializeField] private Camera cam;
 
@@ -32,6 +33,7 @@ public class PlayerInputDetection : MonoBehaviour
         playerMap.FindAction("Crouch").started += Crouch;
         playerMap.FindAction("Crouch").canceled += CrouchCanceled;
         moveAction = playerMap.FindAction("Move");
+        lookAction = playerMap.FindAction("Look");
     }
 
     private void OnDisable()
@@ -46,6 +48,11 @@ public class PlayerInputDetection : MonoBehaviour
     public Vector3 GetHorizontalMovement()
     {
         return GetRelativeInputDirection(cam, horizontalInputValue = moveAction.ReadValue<Vector2>());
+    }
+
+    public Vector2 GetCameraMovement()
+    {
+        return lookAction.ReadValue<Vector2>();
     }
 
     //this function runs when you press jump
