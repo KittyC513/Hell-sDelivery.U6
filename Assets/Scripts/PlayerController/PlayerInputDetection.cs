@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,7 @@ public enum E_InputDeviceType
     Gamepad,
 }
 
-public class PlayerInputDetection : MonoBehaviour
+public class PlayerInputDetection : NetworkBehaviour
 {
     private PlayerInput playerInput;
     private InputActionAsset inputActionAsset;
@@ -31,6 +32,11 @@ public class PlayerInputDetection : MonoBehaviour
     public bool isCheckedDevice;
     public E_InputDeviceType inputDeviceType;
 
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+            enabled = false;
+    }
     private void Awake()
     {
         inputActionAsset = GetComponent<PlayerInput>().actions;
@@ -141,7 +147,7 @@ public class PlayerInputDetection : MonoBehaviour
     #region Player input device check
     private void InputDeviceCheck()
     {
-        do 
+        if (!isCheckedDevice)
         {
             if (Keyboard.current.anyKey.wasPressedThisFrame)
             {
@@ -153,12 +159,15 @@ public class PlayerInputDetection : MonoBehaviour
             else if (Gamepad.current != null && Gamepad.current.aButton.wasPressedThisFrame)
             {
                 inputDeviceType = E_InputDeviceType.Gamepad;
+                Cursor.lockState = CursorLockMode.Locked;
                 isCheckedDevice = true;
             }
-        } while (!isCheckedDevice);
-
-
+        }
     }
-
     #endregion
+
+    private void Update()
+    {
+        //if (!GetComponent<NetworkBehaviour>().IsOwner) return;
+    }
 }
