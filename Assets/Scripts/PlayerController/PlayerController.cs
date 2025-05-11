@@ -158,7 +158,7 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsOwner || !IsSpawned) return;
+        if(!IsOwner) return;
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active

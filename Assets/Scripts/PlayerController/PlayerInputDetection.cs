@@ -35,7 +35,8 @@ public class PlayerInputDetection : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        Debug.Log(OwnerClientId + "PlayerInputDetection:" + IsOwner);
+        if (!IsOwner)
+            enabled = false;
     }
     private void Awake()
     {
@@ -66,8 +67,7 @@ public class PlayerInputDetection : NetworkBehaviour
     private void Start()
     {
         InputDeviceCheck();
-        PanelSetup();
-
+        NGO_PanelControl.instance.inputDetector = this;
     }
     public Vector3 GetHorizontalMovement()
     {
@@ -155,28 +155,22 @@ public class PlayerInputDetection : NetworkBehaviour
             if (Keyboard.current.anyKey.wasPressedThisFrame)
             {
                 inputDeviceType = E_InputDeviceType.keyboard;         
-                //Cursor.visible = false;
+                Cursor.visible = false;
 
                 isCheckedDevice = true;
             }
             else if (Gamepad.current != null && Gamepad.current.aButton.wasPressedThisFrame)
             {
                 inputDeviceType = E_InputDeviceType.Gamepad;
-                //Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.Locked;
                 isCheckedDevice = true;
             }
         }
     }
     #endregion
 
-    #region Device Select Panel
-
-    void PanelSetup()
+    private void Update()
     {
-        if (NGO_PanelControl.instance != null)
-        {
-            NGO_PanelControl.instance.inputDetector = this;
-        }
+        //if (!GetComponent<NetworkBehaviour>().IsOwner) return;
     }
-    #endregion
 }
