@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
 //as well as any functionality that will always need to be active regardless of state such as basic movement, ground checks and rotation
 //there can also be toggles to disable this functionality but in general most states will need to use it
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [Header ("Basic Movement Variables")]
     [SerializeField] private float maxRunSpeed = 10; //the max speed the player can run
@@ -158,6 +158,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if(!IsOwner) return;
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active

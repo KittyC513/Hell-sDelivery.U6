@@ -1,11 +1,11 @@
 using System.Drawing;
 using System.Xml.Serialization;
+using Unity.Netcode;
 using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Profiling;
 
-public class CameraMovement_Player : MonoBehaviour
+public class CameraMovement_Player : NetworkBehaviour
 {
     public Transform playerTransform;
     public PlayerInputDetection inputDetection;
@@ -54,6 +54,12 @@ public class CameraMovement_Player : MonoBehaviour
 
     public float distanceRecoverySpeed = 3f;
     public float distanceRecoveryDelay = 1f;
+
+    //private void Start()
+    //{
+    //    if (!IsOwner) 
+    //        this.gameObject.SetActive(false);
+    //}
     private void OnEnable()
     {
         // get y axis
@@ -68,6 +74,7 @@ public class CameraMovement_Player : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!IsOwner) return;   
         CameraMovement();
 
     }
