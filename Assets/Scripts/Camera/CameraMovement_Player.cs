@@ -55,11 +55,11 @@ public class CameraMovement_Player : NetworkBehaviour
     public float distanceRecoverySpeed = 3f;
     public float distanceRecoveryDelay = 1f;
 
-    //private void Start()
-    //{
-    //    if (!IsOwner) 
-    //        this.gameObject.SetActive(false);
-    //}
+    private void Start()
+    {
+        if (!IsOwner)
+            this.gameObject.SetActive(false);
+    }
     private void OnEnable()
     {
         // get y axis
