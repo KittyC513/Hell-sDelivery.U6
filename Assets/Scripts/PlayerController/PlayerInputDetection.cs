@@ -3,6 +3,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public enum E_InputDeviceType 
 {
@@ -66,6 +67,7 @@ public class PlayerInputDetection : NetworkBehaviour
     private void Start()
     {
         InputDeviceCheck();
+        NGO_PanelControl.instance.inputDetector = this;
     }
     public Vector3 GetHorizontalMovement()
     {
@@ -147,11 +149,12 @@ public class PlayerInputDetection : NetworkBehaviour
     #region Player input device check
     private void InputDeviceCheck()
     {
+        
         if (!isCheckedDevice)
         {
             if (Keyboard.current.anyKey.wasPressedThisFrame)
             {
-                inputDeviceType = E_InputDeviceType.keyboard;
+                inputDeviceType = E_InputDeviceType.keyboard;         
                 Cursor.visible = false;
 
                 isCheckedDevice = true;
