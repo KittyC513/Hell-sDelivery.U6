@@ -1,5 +1,5 @@
 //Comment out `undef` or `def Newwork` to switch between script versions
-// need to be used with PlayerInputDetection.cs and CameraMovement_Player.cs
+// need to be set on PlayerController as well
 //#define Network
 #undef Network
 
