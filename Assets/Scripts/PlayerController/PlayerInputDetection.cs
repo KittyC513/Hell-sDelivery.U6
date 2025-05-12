@@ -62,7 +62,9 @@ public class PlayerInputDetection : NetworkBehaviour
     private void Start()
     {
         InputDeviceCheck();
-        NGO_PanelControl.instance.inputDetector = this;
+
+        if(NGO_PanelControl.instance != null)
+            NGO_PanelControl.instance.inputDetector = this;
     }
     public Vector3 GetHorizontalMovement()
     {

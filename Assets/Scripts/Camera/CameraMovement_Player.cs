@@ -57,8 +57,8 @@ public class CameraMovement_Player : NetworkBehaviour
 
     private void Start()
     {
-        if (!IsOwner)
-            this.gameObject.SetActive(false);
+        //if (!IsOwner)
+        //    this.gameObject.SetActive(false);
     }
     private void OnEnable()
     {
@@ -74,7 +74,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-        if (!IsOwner) return;   
+        //if (!IsOwner) return;   
         CameraMovement();
 
     }
