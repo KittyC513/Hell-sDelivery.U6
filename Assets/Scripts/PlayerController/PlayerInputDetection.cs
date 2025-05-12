@@ -33,11 +33,6 @@ public class PlayerInputDetection : NetworkBehaviour
     public bool isCheckedDevice;
     public E_InputDeviceType inputDeviceType;
 
-    public override void OnNetworkSpawn()
-    {
-        if (!IsOwner)
-            enabled = false;
-    }
     private void Awake()
     {
         inputActionAsset = GetComponent<PlayerInput>().actions;
@@ -155,22 +150,17 @@ public class PlayerInputDetection : NetworkBehaviour
             if (Keyboard.current.anyKey.wasPressedThisFrame)
             {
                 inputDeviceType = E_InputDeviceType.keyboard;         
-                Cursor.visible = false;
+                //Cursor.visible = false;
 
                 isCheckedDevice = true;
             }
             else if (Gamepad.current != null && Gamepad.current.aButton.wasPressedThisFrame)
             {
                 inputDeviceType = E_InputDeviceType.Gamepad;
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
                 isCheckedDevice = true;
             }
         }
     }
     #endregion
-
-    private void Update()
-    {
-        //if (!GetComponent<NetworkBehaviour>().IsOwner) return;
-    }
 }
