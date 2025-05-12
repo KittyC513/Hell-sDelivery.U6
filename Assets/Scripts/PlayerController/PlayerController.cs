@@ -80,6 +80,13 @@ public class PlayerController : NetworkBehaviour
     private Vector3 lastLedgeXZ; //the location of the last ledge detection on the X and Z plane
     private float lastLedgeY; //the location of the last ledge detecting on the Y plane
 
+    [Space, Header("Attack Variables")]
+    [SerializeField] private float attackTime = 1;
+    [SerializeField] private float attackCooldown = 0.5f;
+    private float attackCooldownTime = 0;
+    private bool freezeRotation = false;
+    public bool canAttack = true;
+
     [Space, Header("Quality Of Life Variables")]
     [SerializeField] private float coyoteTime = 0.1f; //how long after running off a ledge can the player still input jump
     private float coyoteCurrent = 0;
@@ -141,6 +148,9 @@ public class PlayerController : NetworkBehaviour
     public Vector3 LastLedgeXZ { get { return lastLedgeXZ; }}
     public float LastLedgeY {  get { return lastLedgeY; }}
 
+    //Attack Variables
+    public float AttackTime {  get { return attackTime; }}
+
     //QOL Variables
     public bool CanCoyote { get { return canCoyote; }}
 
@@ -162,7 +172,7 @@ public class PlayerController : NetworkBehaviour
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active
-
+        AttackCooldown();
        
     }
 
@@ -262,7 +272,8 @@ public class PlayerController : NetworkBehaviour
             rb.AddForce(velocityChange * rb.mass);
         }
         
-        RotateTowards(targetDir, rotationSpeed);
+        if (!freezeRotation) RotateTowards(targetDir, rotationSpeed);
+
     }
 
     private void RotateTowards(Vector3 direction, float rotationSpeed)
@@ -372,6 +383,32 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    private void AttackCooldown()
+    {
+        if (attackCooldownTime < attackCooldown)
+        {
+            attackCooldownTime += Time.deltaTime;
+        }
+
+        if (attackCooldownTime >= attackCooldown)
+        {
+            
+            canAttack = true;
+        }
+        else
+        {
+            
+            canAttack = false;
+        }
+
+       
+    }
+
+    public void ResetAttackCooldown()
+    {
+        attackCooldownTime = 0;
+    }
+
     private void OnDrawGizmos()
     {
         if (visualizeRaycast)
@@ -403,6 +440,12 @@ public class PlayerController : NetworkBehaviour
             goalVelocityChange = Vector3.zero;
         }
         Debug.Log("Player controller freeze state set to " + state + " by " + scriptName);
+    }
+
+    public void FreezeRotation(bool freezeState, string scriptName)
+    {
+        freezeRotation = freezeState;
+        Debug.Log("Player freeze rotation state set to " + freezeState + " by " + scriptName);
     }
 
     public void SetLedgeSnapVariables(Vector3 xz, float y)

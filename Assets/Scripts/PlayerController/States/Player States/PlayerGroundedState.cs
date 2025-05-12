@@ -54,6 +54,12 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
             if (pControl.GroundAngle < 89.9f)
                 return PlayerStateMachine.PlayerStates.sliding;
        }
+
+       //TEMPORARY
+       //if (pControl.DetectCrouchInput() && pControl.canAttack)
+       //{
+       //     return PlayerStateMachine.PlayerStates.attack;
+       //}
        return stateKey;
     }
 
