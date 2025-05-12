@@ -1,3 +1,6 @@
+#define Network
+//#undef Network
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -168,7 +171,10 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-        //if(!IsOwner) return;
+#if Network
+        if(!IsOwner) return;
+#endif
+
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active

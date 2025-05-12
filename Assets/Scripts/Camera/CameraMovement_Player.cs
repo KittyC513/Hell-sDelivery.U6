@@ -1,3 +1,6 @@
+#define Network
+//#undef Network
+
 using System.Drawing;
 using System.Xml.Serialization;
 using Unity.Netcode;
@@ -57,8 +60,11 @@ public class CameraMovement_Player : NetworkBehaviour
 
     private void Start()
     {
-        //if (!IsOwner)
-        //    this.gameObject.SetActive(false);
+#if Network
+
+        if (!IsOwner)
+            this.gameObject.SetActive(false);
+#endif
     }
     private void OnEnable()
     {
