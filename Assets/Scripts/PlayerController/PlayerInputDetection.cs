@@ -23,7 +23,8 @@ public class PlayerInputDetection : NetworkBehaviour
     private InputAction moveAction;
     private InputAction lookAction;
 
-    [SerializeField] private Camera cam;
+    public Camera cam;
+    public Camera playerCam;
 
     [SerializeField] private float jumpBufferTime = 0.2f; //how long the jump input is read, used to buffer jumps 
     private float jumpBufferCurrent = 0;

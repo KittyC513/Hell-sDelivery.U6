@@ -95,13 +95,11 @@ public class CameraMovement_Player : NetworkBehaviour
                         inputDetection.GetCameraMovement().x : inputDetection.GetCameraMovement().x * keyboardMoveSpeed,
                         inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ?
                         inputDetection.GetCameraMovement().y : inputDetection.GetCameraMovement().y * keyboardMoveSpeed);
-        //inputDelta = new Vector2(inputDetection.GetCameraMovement().x, inputDetection.GetCameraMovement().y);
         //Update rotate value
         //x
         mRotateValue.x += inputDelta.x * rotateSpeed * Time.smoothDeltaTime;
         mRotateValue.x = AngleCorrection(mRotateValue.x);
         //y
-        //mRotateValue.y += inputDelta.y * rotateSpeed * Time.smoothDeltaTime;
         mRotateValue.y += inputDelta.y * rotateSpeed * (invertPitch ? -1 : 1) * Time.smoothDeltaTime;
         mRotateValue.y = AngleCorrection(mRotateValue.y);
         mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimit.x, pitchLimit.y);
