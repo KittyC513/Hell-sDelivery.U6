@@ -392,6 +392,9 @@ MonoBehaviour:
   ledgeGrabMask:
     serializedVersion: 2
     m_Bits: 256
+  attackTime: 1
+  attackCooldown: 0.5
+  canAttack: 1
   coyoteTime: 0.1
   quickTurnMultiplier:
     serializedVersion: 2
@@ -532,6 +535,7 @@ MonoBehaviour:
   jumpPressed: 0
   crouchPressed: 0
   cam: {fileID: 1388806461392630024}
+  playerCam: {fileID: 1388806461392630024}
   jumpBufferTime: 0.2
   isCheckedDevice: 0
   inputDeviceType: 0

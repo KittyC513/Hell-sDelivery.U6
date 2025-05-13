@@ -1,6 +1,6 @@
 //Comment out `undef` or `def Newwork` to switch between script versions
 // need to be set on PlayerController as well
-//#define Network
+#define Network
 #undef Network
 
 using System.Drawing;
