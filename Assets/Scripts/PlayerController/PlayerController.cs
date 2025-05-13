@@ -1,7 +1,7 @@
 //Comment out `undef` or `def Newwork` to switch between script versions
 // need to set on CameraMovement_Player.cs as well
-//#define Network
-#undef Network
+#define Network
+//#undef Network
 
 using System.Collections;
 using System.Collections.Generic;

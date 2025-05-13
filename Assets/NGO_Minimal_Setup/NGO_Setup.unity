@@ -1622,6 +1622,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7444697608796572238, guid: 450f686e0e33b344eb10c153b85d97ff, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444697608796572238, guid: 450f686e0e33b344eb10c153b85d97ff, type: 3}
       propertyPath: 'startPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1097833861}
@@ -2657,11 +2661,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987058994}
   m_CullTransparentMesh: 1
---- !u!1 &1027768104 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3456400284770355496, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
-  m_PrefabInstance: {fileID: 1630648225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1029146190
 GameObject:
   m_ObjectHideFlags: 0
@@ -2935,43 +2934,7 @@ MonoBehaviour:
         m_CallState: 2
   JoinedSession:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1027768104}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1291748140}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2139735438}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   FailedToJoinSession:
     m_PersistentCalls:
       m_Calls: []
@@ -3247,43 +3210,7 @@ MonoBehaviour:
         m_CallState: 2
   JoinedSession:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1027768104}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1291748140}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2139735438}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   FailedToJoinSession:
     m_PersistentCalls:
       m_Calls: []
@@ -3314,11 +3241,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1291748140 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3403284878287510905, guid: 450f686e0e33b344eb10c153b85d97ff, type: 3}
-  m_PrefabInstance: {fileID: 598331232}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1315089749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3942,6 +3864,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8200099480877866640, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200099480877866640, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
       propertyPath: m_SplitScreen
       value: 1
       objectReference: {fileID: 0}
@@ -4189,7 +4115,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1642198706}
-    PlayerPrefab: {fileID: 0}
+    PlayerPrefab: {fileID: 4971868892339508933, guid: 9b47dee35ccdc6e49843bf6e78083288, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: b2a7fc494f585b941ae74b5259e9ee93, type: 2}
