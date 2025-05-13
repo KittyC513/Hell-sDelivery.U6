@@ -9,6 +9,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
     public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack }
 
     public PlayerController controller;
+    public PlayerAttackControl attackControl;
 
     private PlayerStates defaultState;
 
@@ -24,7 +25,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
         states.Add(PlayerStates.ledgeHang, new PlayerLedgeHangState(PlayerStates.ledgeHang, controller));
         states.Add(PlayerStates.frozen, new PlayerFrozenState(PlayerStates.frozen, controller));
         states.Add(PlayerStates.ragdoll, new PlayerRagdollState(PlayerStates.ragdoll, controller));
-        states.Add(PlayerStates.attack, new PlayerAttackState(PlayerStates.attack, controller));
+        states.Add(PlayerStates.attack, new PlayerAttackState(PlayerStates.attack, controller, attackControl));
 
         //set our current state to airborne as a default starting state
         currentState = states[PlayerStates.airborne];

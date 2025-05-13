@@ -105,6 +105,12 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
             return PlayerStateMachine.PlayerStates.ledgeHang;
         }
 
+        //TEMPORARY
+        if (pControl.DetectCrouchInput() && pControl.CheckCanAttack())
+        {
+            return PlayerStateMachine.PlayerStates.attack;
+        }
+
         return stateKey;
         
         

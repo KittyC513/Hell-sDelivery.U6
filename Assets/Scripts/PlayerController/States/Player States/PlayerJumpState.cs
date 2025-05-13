@@ -77,6 +77,12 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         {
             return PlayerStateMachine.PlayerStates.doubleJump;
         }
+
+        //TEMPORARY
+        if (pControl.DetectCrouchInput() && pControl.CheckCanAttack() && jumpTime > 0.1f)
+        {
+            return PlayerStateMachine.PlayerStates.attack;
+        }
         return stateKey;
     }
 

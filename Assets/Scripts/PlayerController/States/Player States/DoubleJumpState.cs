@@ -78,6 +78,13 @@ public class DoubleJumpState : BaseState<PlayerStateMachine.PlayerStates>
         {
             return PlayerStateMachine.PlayerStates.airborne;
         }
+
+        //TEMPORARY
+        if (pControl.DetectCrouchInput() && pControl.CheckCanAttack() && jumpTime > 0.1f)
+        {
+            return PlayerStateMachine.PlayerStates.attack;
+        }
+
         return stateKey;
     }
 

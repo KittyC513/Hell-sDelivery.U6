@@ -85,24 +85,21 @@ public class PlayerController : NetworkBehaviour
     private Vector3 lastLedgeXZ; //the location of the last ledge detection on the X and Z plane
     private float lastLedgeY; //the location of the last ledge detecting on the Y plane
 
-    [Space, Header("Attack Variables")]
-    [SerializeField] private float attackTime = 1;
-    [SerializeField] private float attackCooldown = 0.5f;
-    private float attackCooldownTime = 0;
-    private bool freezeRotation = false;
-    public bool canAttack = true;
+   
 
     [Space, Header("Quality Of Life Variables")]
     [SerializeField] private float coyoteTime = 0.1f; //how long after running off a ledge can the player still input jump
     private float coyoteCurrent = 0;
     private bool canCoyote = false;
-    
+    private bool freezeRotation = false;
+
     [SerializeField] private AnimationCurve quickTurnMultiplier; //a curve that determines how much velocity gain is multiplied by when turning sharply, makes for a quicker turn around
     private float playerHitboxHeight; //the value of the players hitbox with scale transforms applied
 
     [Space, Header("References")]
     [SerializeField] private PlayerInputDetection inputDetection;
     private Rigidbody rb;
+    [SerializeField] private PlayerAttackControl aControl;
 
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
@@ -153,8 +150,6 @@ public class PlayerController : NetworkBehaviour
     public Vector3 LastLedgeXZ { get { return lastLedgeXZ; }}
     public float LastLedgeY {  get { return lastLedgeY; }}
 
-    //Attack Variables
-    public float AttackTime {  get { return attackTime; }}
 
     //QOL Variables
     public bool CanCoyote { get { return canCoyote; }}
@@ -180,8 +175,7 @@ public class PlayerController : NetworkBehaviour
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active
-        AttackCooldown();
-       
+  
     }
 
     private void FixedUpdate()
@@ -391,31 +385,6 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    private void AttackCooldown()
-    {
-        if (attackCooldownTime < attackCooldown)
-        {
-            attackCooldownTime += Time.deltaTime;
-        }
-
-        if (attackCooldownTime >= attackCooldown)
-        {
-            
-            canAttack = true;
-        }
-        else
-        {
-            
-            canAttack = false;
-        }
-
-       
-    }
-
-    public void ResetAttackCooldown()
-    {
-        attackCooldownTime = 0;
-    }
 
     private void OnDrawGizmos()
     {
@@ -462,7 +431,10 @@ public class PlayerController : NetworkBehaviour
         lastLedgeY = y;
     }
 
-
+    public bool CheckCanAttack()
+    {
+        return aControl.canAttack;
+    }
 
 
 
