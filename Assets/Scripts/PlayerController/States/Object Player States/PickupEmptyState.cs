@@ -31,7 +31,7 @@ public class PickupEmptyState : BaseState<PickupStateMachine.PickupStates>
             GameObject temp = DetectObject();
 
             //if there is no object do nothing
-            if (temp != null)
+            if (temp != null && temp != oControl.gameObject)
             {
                 //otherwise set our current object and start to pick it up
                 oControl.currentObject = temp;
@@ -59,18 +59,22 @@ public class PickupEmptyState : BaseState<PickupStateMachine.PickupStates>
 
             foreach (Collider collider in inRangeObjects)
             {
-                //detect the current distance to the next object in the array
-                float currentDist = Vector3.Distance(oControl.transform.position, collider.transform.position);
-
-                //this makes sure the player picks up the closest object to them
-                if (currentDist < shortestDist)
+                if (collider.gameObject != oControl.gameObject)
                 {
-                    shortestDist = currentDist;
-                    target = collider;
+                    //detect the current distance to the next object in the array
+                    float currentDist = Vector3.Distance(oControl.transform.position, collider.transform.position);
+
+                    //this makes sure the player picks up the closest object to them
+                    if (currentDist < shortestDist)
+                    {
+                        shortestDist = currentDist;
+                        target = collider;
+                    }
                 }
             }
             //return the closest object
-            return target.gameObject;
+            if (target != null) return target.gameObject;
+            else return null;
         }
         else
         {
