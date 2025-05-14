@@ -37,6 +37,7 @@ public class PlayerAttackControl : MonoBehaviour
 
     private void AttackCooldown()
     {
+        //checks if the cooldown between attacks is over and the player can attack again
         if (attackCooldownTimer < attackCooldown)
         {
             attackCooldownTimer += Time.deltaTime;
@@ -68,6 +69,7 @@ public class PlayerAttackControl : MonoBehaviour
 
     public void UpdateAttackHitbox()
     {
+        //activate and deactivate the hitbox based on the hitbox timer
         if (hitboxTimer < attackHitboxTime)
         {
             hitboxTimer += Time.deltaTime;

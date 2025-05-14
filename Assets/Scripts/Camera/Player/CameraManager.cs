@@ -13,6 +13,7 @@ public class CameraManager : MonoBehaviour
     public Camera lockCam;
 
     public E_CamType currentCamType;
+    public PlayerLockOn playerLockOn;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,10 +23,18 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            currentCamType = E_CamType.lockCam;
-        }
+
+        ////Detect if there's target to lock on to
+        //if (playerLockOn.lockTarget != null)
+        //{
+        //    currentCamType = E_CamType.lockCam;
+        //}
+        //else
+        //{
+        //    Debug.Log("No target to lock on to");
+        //}
+
+        
         switch (currentCamType)
         {
             case E_CamType.playerCam:

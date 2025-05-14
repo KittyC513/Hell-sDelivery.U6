@@ -143,7 +143,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6347196777763878027}
   offSet: {x: 0, y: 3.11, z: -6.4}
+  smoothSpeed: 5
   isLockTrigger: 0
+  isMethod1: 0
 --- !u!1 &4013264815362067898
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +341,7 @@ MonoBehaviour:
   playerCam: {fileID: 1388806461392630024}
   lockCam: {fileID: 1345785732965247642}
   currentCamType: 0
+  playerLockOn: {fileID: 2126423918051728224}
 --- !u!1 &6117834857856622084
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +364,7 @@ GameObject:
   - component: {fileID: 866038887779867377}
   - component: {fileID: 484270049058831791}
   - component: {fileID: 270527704932579768}
-  - component: {fileID: 7196968435635041701}
+  - component: {fileID: 2126423918051728224}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -587,7 +590,7 @@ MonoBehaviour:
   inputDetection: {fileID: 3167985525364349275}
   aControl: {fileID: 0}
   currentSpeed: 0
-  lockCam: {fileID: 8672606718130849284}
+  playerLockOn: {fileID: 2126423918051728224}
 --- !u!114 &3534729435414562412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,9 +686,9 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   jumpPressed: 0
   crouchPressed: 0
+  lockPressed: 0
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
-  lockCam: {fileID: 1345785732965247642}
   jumpBufferTime: 0.2
   isCheckedDevice: 0
   inputDeviceType: 0
@@ -748,7 +751,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7196968435635041701
+--- !u!114 &2126423918051728224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -757,9 +760,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6117834857856622084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a11d90834be8f3469c9cdab29e2ed81, type: 3}
+  m_Script: {fileID: 11500000, guid: 629643604af296f49a8ef8128f0a0846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObj: {fileID: 6117834857856622084}
+  detectionRadius: 10
+  lockableLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  playerController: {fileID: 4161022655810438540}
+  inputDetection: {fileID: 3167985525364349275}
+  CameraManager: {fileID: 1062957148588737322}
+  lockTarget: {fileID: 0}
+  isLockedOn: 0
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0

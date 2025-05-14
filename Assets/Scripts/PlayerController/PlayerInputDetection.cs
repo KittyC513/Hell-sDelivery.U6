@@ -19,6 +19,7 @@ public class PlayerInputDetection : NetworkBehaviour
     private InputActionMap playerMap;
     [HideInInspector] public bool jumpPressed;
     [HideInInspector] public bool crouchPressed;
+    [HideInInspector] public bool lockPressed;
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
@@ -50,6 +51,8 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Jump").canceled += JumpCanceled;
         playerMap.FindAction("Crouch").started += Crouch;
         playerMap.FindAction("Crouch").canceled += CrouchCanceled;
+        playerMap.FindAction("Lock").started += Lock;
+        playerMap.FindAction("Lock").canceled += LockCanceled;
         moveAction = playerMap.FindAction("Move");
         lookAction = playerMap.FindAction("Look");
     }
@@ -61,6 +64,9 @@ public class PlayerInputDetection : NetworkBehaviour
 
         playerMap.FindAction("Crouch").started -= Crouch;
         playerMap.FindAction("Crouch").canceled -= Crouch;
+
+        playerMap.FindAction("Lock").started -= Lock;
+        playerMap.FindAction("Lock").canceled -= LockCanceled;
     }
 
     private void Start()
@@ -116,6 +122,16 @@ public class PlayerInputDetection : NetworkBehaviour
     private void CrouchCanceled(InputAction.CallbackContext action)
     {
         crouchPressed = false;
+    }
+
+    private void Lock(InputAction.CallbackContext action)
+    {
+        lockPressed = true;
+    }
+
+    private void LockCanceled(InputAction.CallbackContext action)
+    {
+        lockPressed = false;
     }
 
     private Vector3 GetRelativeInputDirection(Camera camera, Vector2 inputValue)

@@ -104,9 +104,9 @@ public class PlayerController : NetworkBehaviour
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
 
-    [Space, Header("Lock")]
-    public CameraMovement_Lock lockCam;
-    public Transform lockTarget;
+    [Space,Header("Lock")]
+    public PlayerLockOn playerLockOn;
+
 
     //these variables are all accessable to the various states
 
@@ -178,18 +178,14 @@ public class PlayerController : NetworkBehaviour
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active
-  
+
     }
 
     private void FixedUpdate()
     {
-
-        if (!frozen)
-        {
-                CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
-        }
-
+        if (!frozen) CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
     }
+
 
     //get our jump inputs from the player input script
     public bool DetectJumpInput() //a single jump press (does not detect holding down the button)
@@ -207,6 +203,7 @@ public class PlayerController : NetworkBehaviour
     {
         //get the left stick inputs from the player input script
         return leftStickDir = inputDetection.GetHorizontalMovement();
+
     }
 
     public bool DetectCrouchInput()
@@ -219,7 +216,6 @@ public class PlayerController : NetworkBehaviour
     private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float decelValue, float maxSpeed)
     {
         Vector3 currentVel = rb.linearVelocity;
-
         Vector3 targetDir = dir;
 
         
@@ -257,9 +253,8 @@ public class PlayerController : NetworkBehaviour
             velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             //Debug.Log(velocityChange * rb.mass);
-            //apply our force to our velocity
-            
 
+            //apply our force to our velocity
             rb.AddForce(velocityChange * rb.mass);
             
         }
@@ -278,7 +273,7 @@ public class PlayerController : NetworkBehaviour
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
 
             
-
+            //apply our velocity to the rigidbody
             rb.AddForce(velocityChange * rb.mass);
         }
         
@@ -292,10 +287,10 @@ public class PlayerController : NetworkBehaviour
         direction = new Vector3(direction.x, 0, direction.z);
 
         /********************************************************************************/
-        if (lockCam.isLockTrigger)
+        if (playerLockOn.isLockedOn)
         {
             if (direction.magnitude > 0)
-                this.transform.LookAt(lockTarget);
+                this.transform.LookAt(playerLockOn.lockTarget.transform);
         }
         /********************************************************************************/
         else
@@ -309,7 +304,7 @@ public class PlayerController : NetworkBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
             }
         }
-     
+
     }
 
    
@@ -324,6 +319,7 @@ public class PlayerController : NetworkBehaviour
             //Direction towards the raycast hit point from the raycast origin
             Vector3 directionToHit = (hit.point - raycastStartPoint).normalized;
 
+            //the angle of the ground using the spherecast
             float sphereCastAngle = Vector3.Angle(hit.normal, Vector3.up);
 
             //only cast the second raycast if there is any slope we need to double check
@@ -334,6 +330,7 @@ public class PlayerController : NetworkBehaviour
                 //this raycast will be cast from the same point at the same hit point but wont return a weird angle value from the corner
                 Physics.Raycast(raycastStartPoint, directionToHit, out RaycastHit test, Mathf.Infinity, groundLayers);
 
+                //get the angle using the raycast, this returns a more accurate value than a spherecast 
                 groundAngle = Vector3.Angle(test.normal, Vector3.up);
             }
             else
@@ -358,9 +355,14 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+            //if we are not grounded reset the factor that multiplies the raycast distance when on a slope
             groundCheckFactor = 1; 
+
+            //the angle of the ground is 0 (there is no ground)
             groundAngle = 0;
             grounded = false;
+
+            //return hit which is empty
             return hit;
         }
     }
