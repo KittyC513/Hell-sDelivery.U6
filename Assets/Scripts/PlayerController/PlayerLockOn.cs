@@ -38,10 +38,17 @@ public class PlayerLockOn : MonoBehaviour
     {
         if (DetectLockInput())
         {
-            Debug.Log("Lock input pressed");
-            lockTarget = GetNewTarget(playerCam, playerObj);
-            CameraManager.currentCamType = E_CamType.lockCam;
-            isLockedOn = true;
+            Debug.Log("Lock input pressed");          
+            
+            if ((lockTarget != null))
+            {
+                CameraManager.currentCamType = E_CamType.lockCam;
+                isLockedOn = true;
+            }
+            else
+            {
+                lockTarget = GetNewTarget(playerCam, playerObj);
+            }
         }
         else
         {
