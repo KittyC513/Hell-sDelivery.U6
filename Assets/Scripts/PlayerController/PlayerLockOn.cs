@@ -34,12 +34,12 @@ public class PlayerLockOn : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            GameObject lockTarget = GetNewTarget(playerCam, playerObj);
+            //GameObject lockTarget = GetNewTarget(playerCam, playerObj);
 
         }
     }
 
-    private GameObject GetNewTarget(Camera cam, GameObject player)
+    public GameObject GetNewTarget(Camera cam, GameObject player)
     {
         //consider changing this to OverlapSphereNonAlloc in the future
         Collider[] objectsInRange = Physics.OverlapSphere(player.transform.position, detectionRadius, lockableLayerMask);

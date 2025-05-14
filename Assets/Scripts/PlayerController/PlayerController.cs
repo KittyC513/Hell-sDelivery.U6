@@ -101,9 +101,6 @@ public class PlayerController : NetworkBehaviour
     private Rigidbody rb;
     [SerializeField] private PlayerAttackControl aControl;
 
-    private bool lockedOn = false;
-    private GameObject lockTarget = null;
-
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
 
