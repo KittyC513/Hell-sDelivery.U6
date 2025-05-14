@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 866038887779867377}
   - component: {fileID: 484270049058831791}
   - component: {fileID: 4998560965045212203}
+  - component: {fileID: 5236330033202627183}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -632,6 +633,27 @@ MonoBehaviour:
   canAttack: 1
   attackHitbox: {fileID: 4298658891200583904}
   attackSpeedBoost: 100
+  maximumVerticalSpeed: 5
+  stallVelocity: 50
+--- !u!114 &5236330033202627183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117834857856622084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629643604af296f49a8ef8128f0a0846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCam: {fileID: 0}
+  playerObj: {fileID: 6117834857856622084}
+  detectionRadius: 10
+  lockableLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  inputDetection: {fileID: 3167985525364349275}
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0

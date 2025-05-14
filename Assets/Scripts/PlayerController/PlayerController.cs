@@ -101,6 +101,9 @@ public class PlayerController : NetworkBehaviour
     private Rigidbody rb;
     [SerializeField] private PlayerAttackControl aControl;
 
+    private bool lockedOn = false;
+    private GameObject lockTarget = null;
+
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
 
@@ -175,7 +178,7 @@ public class PlayerController : NetworkBehaviour
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active
-  
+
     }
 
     private void FixedUpdate()
@@ -200,6 +203,7 @@ public class PlayerController : NetworkBehaviour
     {
         //get the left stick inputs from the player input script
         return leftStickDir = inputDetection.GetHorizontalMovement();
+
     }
 
     public bool DetectCrouchInput()
@@ -249,9 +253,8 @@ public class PlayerController : NetworkBehaviour
             velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             //Debug.Log(velocityChange * rb.mass);
-            //apply our force to our velocity
-            
 
+            //apply our force to our velocity
             rb.AddForce(velocityChange * rb.mass);
             
         }
@@ -270,7 +273,7 @@ public class PlayerController : NetworkBehaviour
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
 
             
-
+            //apply our velocity to the rigidbody
             rb.AddForce(velocityChange * rb.mass);
         }
         
@@ -306,6 +309,7 @@ public class PlayerController : NetworkBehaviour
             //Direction towards the raycast hit point from the raycast origin
             Vector3 directionToHit = (hit.point - raycastStartPoint).normalized;
 
+            //the angle of the ground using the spherecast
             float sphereCastAngle = Vector3.Angle(hit.normal, Vector3.up);
 
             //only cast the second raycast if there is any slope we need to double check
@@ -316,6 +320,7 @@ public class PlayerController : NetworkBehaviour
                 //this raycast will be cast from the same point at the same hit point but wont return a weird angle value from the corner
                 Physics.Raycast(raycastStartPoint, directionToHit, out RaycastHit test, Mathf.Infinity, groundLayers);
 
+                //get the angle using the raycast, this returns a more accurate value than a spherecast 
                 groundAngle = Vector3.Angle(test.normal, Vector3.up);
             }
             else
@@ -340,9 +345,14 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+            //if we are not grounded reset the factor that multiplies the raycast distance when on a slope
             groundCheckFactor = 1; 
+
+            //the angle of the ground is 0 (there is no ground)
             groundAngle = 0;
             grounded = false;
+
+            //return hit which is empty
             return hit;
         }
     }
