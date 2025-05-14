@@ -35,6 +35,7 @@ public class CameraManager : MonoBehaviour
         //}
 
         
+        //method to switch between cameras
         switch (currentCamType)
         {
             case E_CamType.playerCam:
