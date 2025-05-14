@@ -26,10 +26,10 @@ public class CameraMovement_Lock : MonoBehaviour
     void LateUpdate()
     {
         #region camera movement Method 1 - only follow player.x and z
-        //afterPos = player.position + offSet;
+        afterPos = player.position + offSet;
 
-        //this.transform.position = afterPos;
-        //this.transform.LookAt(player, Vector3.up);
+        this.transform.position = afterPos;
+        this.transform.LookAt(player, Vector3.up);
         #endregion
 
 
@@ -37,13 +37,13 @@ public class CameraMovement_Lock : MonoBehaviour
 
         #endregion
         // Rotate the offset to always be behind the player
-        Vector3 desiredPosition = player.position + player.rotation * offSet;
+        //Vector3 desiredPosition = player.position + player.rotation * offSet;
 
         // Smooth camera movement
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * smoothSpeed);
+        //transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * smoothSpeed);
 
         // Look at the player
-        transform.LookAt(player.position + Vector3.up * 1.5f); // Slightly above the player’s center
+        //transform.LookAt(player.position + Vector3.up * 1.5f); // Slightly above the player’s center
 
     }
 }

@@ -31,6 +31,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [SerializeField] private float jumpBufferTime = 0.2f; //how long the jump input is read, used to buffer jumps 
     private float jumpBufferCurrent = 0;
 
+    public bool useLockMovement = false;
 
     [Header("Device Check")]
     public bool isCheckedDevice;
@@ -71,7 +72,9 @@ public class PlayerInputDetection : NetworkBehaviour
     }
     public Vector3 GetHorizontalMovement()
     {
-        return GetRelativeInputDirection(cam, horizontalInputValue = moveAction.ReadValue<Vector2>());
+        if (useLockMovement) return GetPlayerRelativeInputDirection(this.gameObject, horizontalInputValue = moveAction.ReadValue<Vector2>());
+        else return GetRelativeInputDirection(cam, horizontalInputValue = moveAction.ReadValue<Vector2>());
+
     }
 
     public Vector2 GetCameraMovement()
@@ -123,6 +126,43 @@ public class PlayerInputDetection : NetworkBehaviour
             Vector3 camForward = camera.transform.forward;
             bool isLockCam = lockCam.GetComponent<CameraMovement_Lock>().isLockTrigger;
             Vector3 camRight = camera.transform.right;
+
+            /********************************************************************************/
+
+
+            /********************************************************************************/
+            camForward.y = 0;
+            camRight.y = 0;
+
+            camForward = camForward.normalized;
+            camRight = camRight.normalized;
+
+            //get our stick input
+            Vector3 stickInput = inputValue;
+            stickInput = stickInput.normalized;
+            //multiply our stick value by our cam right and forward to get a camera relative input
+            Vector3 horizontal = stickInput.x * camRight;
+            Vector3 vertical = stickInput.y * camForward;
+
+            Vector3 input = horizontal + vertical;
+            input = input.normalized;
+
+            return input.normalized;
+        }
+        else
+        {
+            return new Vector3(0, 0, 0);
+        }
+    }
+
+    private Vector3 GetPlayerRelativeInputDirection(GameObject player, Vector2 inputValue)
+    {
+        if (player != null)
+        {
+            //get camera forward and right
+            Vector3 camForward = player.transform.forward;
+            bool isLockCam = lockCam.GetComponent<CameraMovement_Lock>().isLockTrigger;
+            Vector3 camRight = player.transform.right;
 
             /********************************************************************************/
 
