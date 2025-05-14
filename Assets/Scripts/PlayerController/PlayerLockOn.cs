@@ -3,13 +3,14 @@ using UnityEngine;
 public class PlayerLockOn : MonoBehaviour
 {
     private Camera playerCam; //the main camera attached to the player
-    private bool isInPlayerCam = true; //if the camera is not on the regular player cam, the player cannot lock on
+    //private bool isInPlayerCam = true; //if the camera is not on the regular player cam, the player cannot lock on
     [SerializeField] private GameObject playerObj;
     [SerializeField] private float detectionRadius = 8;
     [SerializeField] private LayerMask lockableLayerMask;
     [SerializeField] private PlayerController playerController;
 
     [SerializeField] private PlayerInputDetection inputDetection;
+    public CameraManager CameraManager;
 
     //debug variables
     private Vector3 lastRayStart;
@@ -17,6 +18,9 @@ public class PlayerLockOn : MonoBehaviour
     private Vector3 tempDir;
 
     private bool debug = true;
+
+    public GameObject lockTarget;
+    [HideInInspector] public bool isLockedOn = false;
 
 
     // Update is called once per frame
@@ -32,12 +36,26 @@ public class PlayerLockOn : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (DetectLockInput())
         {
-            //GameObject lockTarget = GetNewTarget(playerCam, playerObj);
-
+            Debug.Log("Lock input pressed");
+            lockTarget = GetNewTarget(playerCam, playerObj);
+            CameraManager.currentCamType = E_CamType.lockCam;
+            isLockedOn = true;
+        }
+        else
+        {
+            lockTarget = null;
+            CameraManager.currentCamType = E_CamType.playerCam;
+            isLockedOn = false;
         }
     }
+
+    public bool DetectLockInput()
+    {
+        return inputDetection.lockPressed;
+    }
+
 
     public GameObject GetNewTarget(Camera cam, GameObject player)
     {

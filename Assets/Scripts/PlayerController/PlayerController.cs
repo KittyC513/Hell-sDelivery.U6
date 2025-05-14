@@ -104,6 +104,9 @@ public class PlayerController : NetworkBehaviour
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
 
+    [Space,Header("Lock")]
+    public PlayerLockOn playerLockOn;
+
 
     //these variables are all accessable to the various states
 
@@ -283,15 +286,25 @@ public class PlayerController : NetworkBehaviour
         //get our desired direction ignoring y 
         direction = new Vector3(direction.x, 0, direction.z);
 
-        if (direction.magnitude > 0)
+        /********************************************************************************/
+        if (playerLockOn.isLockedOn)
         {
-            //calculate our desired rotation
-            Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
-
-            //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
+            if (direction.magnitude > 0)
+                this.transform.LookAt(playerLockOn.lockTarget.transform);
         }
-     
+        /********************************************************************************/
+        else
+        {
+            if (direction.magnitude > 0)
+            {
+                //calculate our desired rotation
+                Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+
+                //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
+                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
+            }
+        }
+
     }
 
    
