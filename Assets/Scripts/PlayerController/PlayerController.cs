@@ -104,6 +104,9 @@ public class PlayerController : NetworkBehaviour
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
 
+    [Space, Header("Lock")]
+    public CameraMovement_Lock lockCam;
+    public Transform lockTarget;
 
     //these variables are all accessable to the various states
 
@@ -180,9 +183,13 @@ public class PlayerController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!frozen) CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
-    }
 
+        if (!frozen)
+        {
+                CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
+        }
+
+    }
 
     //get our jump inputs from the player input script
     public bool DetectJumpInput() //a single jump press (does not detect holding down the button)
@@ -212,6 +219,7 @@ public class PlayerController : NetworkBehaviour
     private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float decelValue, float maxSpeed)
     {
         Vector3 currentVel = rb.linearVelocity;
+
         Vector3 targetDir = dir;
 
         
@@ -283,13 +291,23 @@ public class PlayerController : NetworkBehaviour
         //get our desired direction ignoring y 
         direction = new Vector3(direction.x, 0, direction.z);
 
-        if (direction.magnitude > 0)
+        /********************************************************************************/
+        if (lockCam.isLockTrigger)
         {
-            //calculate our desired rotation
-            Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+            if (direction.magnitude > 0)
+                this.transform.LookAt(lockTarget);
+        }
+        /********************************************************************************/
+        else
+        {
+            if (direction.magnitude > 0)
+            {
+                //calculate our desired rotation
+                Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
 
-            //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
+                //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
+                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
+            }
         }
      
     }

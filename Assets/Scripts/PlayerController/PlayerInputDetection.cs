@@ -23,8 +23,10 @@ public class PlayerInputDetection : NetworkBehaviour
     private InputAction moveAction;
     private InputAction lookAction;
 
+    [Header("Camera")]
     public Camera cam;
     public Camera playerCam;
+    public Camera lockCam;
 
     [SerializeField] private float jumpBufferTime = 0.2f; //how long the jump input is read, used to buffer jumps 
     private float jumpBufferCurrent = 0;
@@ -119,8 +121,13 @@ public class PlayerInputDetection : NetworkBehaviour
         {
             //get camera forward and right
             Vector3 camForward = camera.transform.forward;
+            bool isLockCam = lockCam.GetComponent<CameraMovement_Lock>().isLockTrigger;
             Vector3 camRight = camera.transform.right;
 
+            /********************************************************************************/
+
+
+            /********************************************************************************/
             camForward.y = 0;
             camRight.y = 0;
 

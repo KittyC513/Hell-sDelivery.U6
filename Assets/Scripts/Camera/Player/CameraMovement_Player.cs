@@ -6,6 +6,7 @@
 using System.Drawing;
 using System.Xml.Serialization;
 using Unity.Netcode;
+using Unity.Services.Matchmaker.Models;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -60,6 +61,7 @@ public class CameraMovement_Player : NetworkBehaviour
     public float distanceRecoverySpeed = 3f;
     public float distanceRecoveryDelay = 1f;
 
+
     private void Start()
     {
 #if Network
@@ -82,9 +84,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-        //if (!IsOwner) return;   
         CameraMovement();
-
     }
 
     #region Player Camera movement(Base)
@@ -172,4 +172,5 @@ public class CameraMovement_Player : NetworkBehaviour
 
     }
     #endregion
+
 }
