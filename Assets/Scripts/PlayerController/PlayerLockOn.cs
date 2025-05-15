@@ -17,7 +17,7 @@ public class PlayerLockOn : MonoBehaviour
     private Vector3 lastRayEnd;
     private Vector3 tempDir;
 
-    private bool debug = true;
+    private bool debug = false;
 
     public GameObject lockTarget;
     [HideInInspector] public bool isLockedOn = false;
@@ -32,6 +32,7 @@ public class PlayerLockOn : MonoBehaviour
     private void Start()
     {
         playerCam = inputDetection.cam;
+
     }
 
     void Update()
@@ -43,15 +44,26 @@ public class PlayerLockOn : MonoBehaviour
             if ((lockTarget != null))
             {
                 CameraManager.currentCamType = E_CamType.lockCam;
-                isLockedOn = true;
+                if (!isLockedOn)
+                {
+                    CameraManager.ResetCamTransition();
+                    isLockedOn = true;
+                }
             }
             else
             {
                 lockTarget = GetNewTarget(playerCam, playerObj);
+                
             }
+
         }
         else
         {
+            if (lockTarget != null)
+            {
+                CameraManager.ResetCamTransition();
+            }
+
             lockTarget = null;
             CameraManager.currentCamType = E_CamType.playerCam;
             isLockedOn = false;
@@ -105,14 +117,13 @@ public class PlayerLockOn : MonoBehaviour
                 }
             }
 
-
             if (debug)
             {
                 lastRayStart = cam.transform.position;
                 lastRayEnd = target.transform.position;
             }
 
-            Debug.Log(cam.WorldToViewportPoint(target.transform.position));
+            //Debug.Log(cam.WorldToViewportPoint(target.transform.position));
             return target;
         }
 

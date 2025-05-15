@@ -23,6 +23,8 @@ public class CameraMovement_Lock : MonoBehaviour
     public float distance = 5f; // Distance from the target
     public float height = 2f; // Height above the target
 
+   
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -54,6 +56,8 @@ public class CameraMovement_Lock : MonoBehaviour
     #region camera movement Method 1 - only follow player.x and z
     private void CameraMovementMethod1()
     {
+       
+
         afterPos = player.position + offSet;
         this.transform.position = afterPos;
         this.transform.LookAt(player, Vector3.up);
@@ -63,6 +67,8 @@ public class CameraMovement_Lock : MonoBehaviour
     #region camera movement Method 2 - Always behind player
     private void CameraMovementMethod2()
     {
+        
+
         //Rotate the offset to always be behind the player
         Vector3 desiredPosition = player.position + player.rotation * offSet;
 
@@ -93,8 +99,10 @@ public class CameraMovement_Lock : MonoBehaviour
             // Look at the midpoint
             //transform.LookAt(midpoint);
         }
+        
 
     }
     #endregion
 
+    
 }

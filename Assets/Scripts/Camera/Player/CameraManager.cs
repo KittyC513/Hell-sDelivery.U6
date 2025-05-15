@@ -14,10 +14,13 @@ public class CameraManager : MonoBehaviour
 
     public E_CamType currentCamType;
     public PlayerLockOn playerLockOn;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
+
     }
 
     // Update is called once per frame
@@ -42,7 +45,7 @@ public class CameraManager : MonoBehaviour
                 playerCam.gameObject.SetActive(true);
                 lockCam.gameObject.SetActive(false);
                 inputDetection.cam = playerCam;
-
+                
                 break;
             case E_CamType.lockCam:
                 playerCam.gameObject.SetActive(false);
@@ -51,4 +54,19 @@ public class CameraManager : MonoBehaviour
                 break;
         }
     }
+
+    public void ResetCamTransition()
+    {
+       
+        switch (currentCamType)
+        {
+            case E_CamType.playerCam:
+                
+                break;
+            case E_CamType.lockCam:
+                lockCam.transform.position = playerCam.transform.position;
+                break;
+        }
+    }
+   
 }
