@@ -38,17 +38,18 @@ public class PlayerLockOn : MonoBehaviour
     void Update()
     {
         if (DetectLockInput())
-        {
-            Debug.Log("Lock input pressed");          
+        {  
             
             if ((lockTarget != null))
             {
+
                 CameraManager.currentCamType = E_CamType.lockCam;
                 if (!isLockedOn)
                 {
                     CameraManager.ResetCamTransition();
                     isLockedOn = true;
                 }
+
             }
             else
             {
@@ -59,6 +60,7 @@ public class PlayerLockOn : MonoBehaviour
         }
         else
         {
+
             if (lockTarget != null)
             {
                 CameraManager.ResetCamTransition();

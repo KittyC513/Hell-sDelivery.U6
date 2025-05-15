@@ -23,7 +23,7 @@ public class CameraMovement_Lock : MonoBehaviour
     public float distance = 5f; // Distance from the target
     public float height = 2f; // Height above the target
 
-   
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -86,6 +86,7 @@ public class CameraMovement_Lock : MonoBehaviour
     {
         if(playerLockOn.lockTarget != null)
         {
+
             // Calculate the midpoint between the player and the target
             Vector3 midpoint = (player.position + playerLockOn.lockTarget.transform.position) / 2;
             // Direction from target to player
@@ -98,8 +99,9 @@ public class CameraMovement_Lock : MonoBehaviour
             transform.LookAt(playerLockOn.lockTarget.transform.position + Vector3.up * 1.5f);
             // Look at the midpoint
             //transform.LookAt(midpoint);
+
         }
-        
+
 
     }
     #endregion

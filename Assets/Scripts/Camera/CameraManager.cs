@@ -15,11 +15,19 @@ public class CameraManager : MonoBehaviour
     public E_CamType currentCamType;
     public PlayerLockOn playerLockOn;
 
+    public CameraMovement_Lock cameraMovement_Lock;
+    public CameraMovement_Player cameraMovement_Player;
+
+    public Transform defaultPos;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
         
+    }
+    void Start()
+    {
 
     }
 
@@ -42,15 +50,10 @@ public class CameraManager : MonoBehaviour
         switch (currentCamType)
         {
             case E_CamType.playerCam:
-                playerCam.gameObject.SetActive(true);
-                lockCam.gameObject.SetActive(false);
-                inputDetection.cam = playerCam;
-                
+                SwitchToPlayerCam();
                 break;
             case E_CamType.lockCam:
-                playerCam.gameObject.SetActive(false);
-                lockCam.gameObject.SetActive(true);
-                inputDetection.cam = lockCam;
+                SwitchToLockCam();
                 break;
         }
     }
@@ -61,12 +64,25 @@ public class CameraManager : MonoBehaviour
         switch (currentCamType)
         {
             case E_CamType.playerCam:
-                
+
                 break;
             case E_CamType.lockCam:
                 lockCam.transform.position = playerCam.transform.position;
                 break;
         }
     }
-   
+
+    public void SwitchToPlayerCam()
+    {
+        lockCam.gameObject.SetActive(false);
+        playerCam.gameObject.SetActive(true);
+        inputDetection.cam = playerCam;
+    }
+
+    public void SwitchToLockCam()
+    {
+        playerCam.gameObject.SetActive(false);
+        lockCam.gameObject.SetActive(true);
+        inputDetection.cam = lockCam;
+    }
 }

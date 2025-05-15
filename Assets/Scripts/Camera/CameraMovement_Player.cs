@@ -60,8 +60,14 @@ public class CameraMovement_Player : NetworkBehaviour
     public float distanceRecoverySpeed = 3f;
     public float distanceRecoveryDelay = 1f;
 
+    [Header("Camera Moving Speed")]
+    private Vector3 movePos;
+    public float moveSpeed = 5f;
+
     private void Start()
     {
+        
+
 #if Network
 
         if (!IsOwner)
@@ -82,9 +88,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-        //if (!IsOwner) return;   
         CameraMovement();
-
     }
 
     #region Player Camera movement(Base)
@@ -127,7 +131,10 @@ public class CameraMovement_Player : NetworkBehaviour
                 mCurrentDistance = Mathf.Lerp(mCurrentDistance, expectDistance, Time.smoothDeltaTime * distanceRecoverySpeed);
         }
 
-        this.transform.position = from + finalDir * mCurrentDistance;
+        //this.transform.position = from + finalDir * mCurrentDistance;
+        movePos = from + finalDir * mCurrentDistance;
+        transform.position = Vector3.Lerp(this.transform.position, movePos, Time.deltaTime * moveSpeed);
+        //transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalDir), Time.deltaTime * rotateSpeed);
         this.transform.LookAt(from);
     }
     #endregion

@@ -378,6 +378,7 @@ Transform:
   m_Children:
   - {fileID: 7141576590397492036}
   - {fileID: 314226998518487352}
+  - {fileID: 5113240428649811745}
   m_Father: {fileID: 6784667347201551197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1062957148588737322
@@ -397,6 +398,9 @@ MonoBehaviour:
   lockCam: {fileID: 1345785732965247642}
   currentCamType: 0
   playerLockOn: {fileID: 2126423918051728224}
+  cameraMovement_Lock: {fileID: 8672606718130849284}
+  cameraMovement_Player: {fileID: 7700225210906002730}
+  defaultPos: {fileID: 5113240428649811745}
 --- !u!1 &6117834857856622084
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,6 +888,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6347196777763878027}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7444431499547966150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5113240428649811745}
+  - component: {fileID: 1871738871043624745}
+  m_Layer: 0
+  m_Name: DefaultPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5113240428649811745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444431499547966150}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8966105589589766189}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1871738871043624745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444431499547966150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c696daa419bc7746884795b1ef6aa97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6347196777763878027}
+  offSet: {x: 0, y: 5, z: -10}
+  smoothSpeed: 5
 --- !u!1 &7819527877158625371
 GameObject:
   m_ObjectHideFlags: 0
