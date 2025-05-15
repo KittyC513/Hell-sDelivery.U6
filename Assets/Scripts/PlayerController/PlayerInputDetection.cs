@@ -20,6 +20,8 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool jumpPressed;
     [HideInInspector] public bool crouchPressed;
     [HideInInspector] public bool lockPressed;
+    [HideInInspector] public bool attackPressed;
+    [HideInInspector] public bool grabPressed;
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
@@ -46,10 +48,20 @@ public class PlayerInputDetection : NetworkBehaviour
     {
         playerMap.FindAction("Jump").started += Jump;
         playerMap.FindAction("Jump").canceled += JumpCanceled;
+
         playerMap.FindAction("Crouch").started += Crouch;
         playerMap.FindAction("Crouch").canceled += CrouchCanceled;
+
         playerMap.FindAction("Lock").started += Lock;
         playerMap.FindAction("Lock").canceled += LockCanceled;
+
+        playerMap.FindAction("Attack").started += AttackPressed;
+        playerMap.FindAction("Attack").canceled += AttackCanceled;
+
+        playerMap.FindAction("Grab").started += GrabPressed;
+        playerMap.FindAction("Grab").canceled += GrabPressed;
+
+
         moveAction = playerMap.FindAction("Move");
         lookAction = playerMap.FindAction("Look");
     }
@@ -64,6 +76,12 @@ public class PlayerInputDetection : NetworkBehaviour
 
         playerMap.FindAction("Lock").started -= Lock;
         playerMap.FindAction("Lock").canceled -= LockCanceled;
+
+        playerMap.FindAction("Attack").started -= AttackPressed;
+        playerMap.FindAction("Attack").canceled -= AttackCanceled;
+
+        playerMap.FindAction("Grab").started -= GrabPressed;
+        playerMap.FindAction("Grab").canceled -= GrabPressed;
     }
 
     private void Start()
@@ -127,6 +145,26 @@ public class PlayerInputDetection : NetworkBehaviour
     private void LockCanceled(InputAction.CallbackContext action)
     {
         lockPressed = false;
+    }
+
+    private void AttackPressed(InputAction.CallbackContext action)
+    {
+        attackPressed = true;
+    }
+
+    private void AttackCanceled(InputAction.CallbackContext action)
+    {
+        attackPressed = false;
+    }
+
+    private void GrabPressed(InputAction.CallbackContext action)
+    {
+        grabPressed = true;
+    }
+
+    private void GrabCanceled(InputAction.CallbackContext action)
+    {
+        grabPressed = false;
     }
 
     private Vector3 GetRelativeInputDirection(Camera camera, Vector2 inputValue)

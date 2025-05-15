@@ -146,8 +146,8 @@ MonoBehaviour:
   smoothSpeed: 5
   lockCamType: 0
   playerLockOn: {fileID: 2126423918051728224}
-  distance: 5
-  height: 2
+  distance: 8
+  height: 2.5
 --- !u!1 &4013264815362067898
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +681,7 @@ MonoBehaviour:
   grabbableMask:
     serializedVersion: 2
     m_Bits: 64
+  inputDetection: {fileID: 0}
   forwardThrowForce: 6
   upwardsThrowForce: 4
   currentObject: {fileID: 0}
@@ -744,6 +745,8 @@ MonoBehaviour:
   jumpPressed: 0
   crouchPressed: 0
   lockPressed: 0
+  attackPressed: 0
+  grabPressed: 0
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
   jumpBufferTime: 0.2

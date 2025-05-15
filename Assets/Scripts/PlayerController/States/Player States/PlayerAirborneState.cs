@@ -40,6 +40,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
     public override void UpdateState()
     {
         
+
     }
 
     public override void PhysicsUpdate()
@@ -106,7 +107,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         }
 
         //TEMPORARY
-        if (pControl.DetectCrouchInput() && pControl.CheckCanAttack())
+        if (pControl.DetectAttackInput() && pControl.CheckCanAttack())
         {
             return PlayerStateMachine.PlayerStates.attack;
         }

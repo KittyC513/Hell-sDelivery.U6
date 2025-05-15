@@ -79,7 +79,7 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         }
 
         //TEMPORARY
-        if (pControl.DetectCrouchInput() && pControl.CheckCanAttack() && jumpTime > 0.1f)
+        if (pControl.DetectAttackInput() && pControl.CheckCanAttack() && jumpTime > 0.1f)
         {
             return PlayerStateMachine.PlayerStates.attack;
         }

@@ -211,6 +211,11 @@ public class PlayerController : NetworkBehaviour
         return inputDetection.crouchPressed;
     }
 
+    public bool DetectAttackInput()
+    {
+        return inputDetection.attackPressed;
+    }
+
     //this function needs to run regardless of if the player is grounded or airborne, this is the basic movement
     //therefore it needs to be in the main script
     private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float decelValue, float maxSpeed)

@@ -23,7 +23,7 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
 
     public override PickupStateMachine.PickupStates GetNextState()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (oControl.GetThrowInput())
         {
             return PickupStateMachine.PickupStates.throwing;
         }

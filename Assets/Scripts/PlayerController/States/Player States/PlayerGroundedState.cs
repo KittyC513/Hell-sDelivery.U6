@@ -56,7 +56,7 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
        }
 
        //TEMPORARY
-       if (pControl.DetectCrouchInput() && pControl.CheckCanAttack())
+       if (pControl.DetectAttackInput() && pControl.CheckCanAttack())
        {
              return PlayerStateMachine.PlayerStates.attack;
        }

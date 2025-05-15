@@ -10,6 +10,7 @@ public class PlayerObjectController : MonoBehaviour
     [SerializeField] private Transform holdPoint; //where the object is held in world 
     [SerializeField] private float pickupSpeed = 1; //how fast the object moves to the hold point when picking up an object
     [SerializeField] private LayerMask grabbableMask; //what layers can be grabbed
+    [SerializeField] private PlayerInputDetection inputDetection;
 
     [Space, Header("Throwing Variables")]
     [SerializeField] private float forwardThrowForce = 8; //how much force forwards to add to an object when throwing
@@ -26,6 +27,18 @@ public class PlayerObjectController : MonoBehaviour
     public float ForwardThrowForce { get { return forwardThrowForce; } }
     public float UpwardsThrowForce { get {return upwardsThrowForce; } }
 
+    private void Awake()
+    {
+        if (inputDetection == null)
+        {
+            inputDetection = GetComponent<PlayerInputDetection>();
+            Debug.Log("Input detection set to get component by default");
+        }
+    }
+    private void Start()
+    {
+      
+    }
     private void OnDrawGizmos()
     {
         if (showRadius)
@@ -33,6 +46,16 @@ public class PlayerObjectController : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, pickupRadius);
         }
+    }
+
+    public bool GetPickupInput()
+    {
+        return inputDetection.grabPressed;
+    }
+
+    public bool GetThrowInput()
+    {
+        return inputDetection.attackPressed;
     }
 
 }
