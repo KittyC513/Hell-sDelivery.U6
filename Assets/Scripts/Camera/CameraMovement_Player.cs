@@ -63,6 +63,9 @@ public class CameraMovement_Player : NetworkBehaviour
     [Header("Camera Moving Speed")]
     private Vector3 movePos;
     public float moveSpeed = 5f;
+    public Transform defaultPos;
+    public bool resetPos = false;
+
 
     private void Start()
     {
@@ -89,6 +92,17 @@ public class CameraMovement_Player : NetworkBehaviour
     void LateUpdate()
     {
         CameraMovement();
+    }
+
+    public void ResetPos()
+    {
+        if (!resetPos)
+        {
+            transform.position = Vector3.Lerp(this.transform.position, defaultPos.position, Time.deltaTime * moveSpeed);
+            this.transform.LookAt(playerTransform);
+            resetPos = true;
+            Debug.Log("Reset camera position");
+        }
     }
 
     #region Player Camera movement(Base)
