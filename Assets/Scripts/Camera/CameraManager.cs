@@ -64,10 +64,9 @@ public class CameraManager : MonoBehaviour
         switch (currentCamType)
         {
             case E_CamType.playerCam:
-                cameraMovement_Player.ResetPos();
+
                 break;
             case E_CamType.lockCam:
-                cameraMovement_Player.resetPos = false;
                 lockCam.transform.position = playerCam.transform.position;
                 break;
         }

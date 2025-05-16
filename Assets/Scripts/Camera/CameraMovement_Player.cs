@@ -9,6 +9,8 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.UIElements;
+using UnityEngine.Windows;
 
 public class CameraMovement_Player : NetworkBehaviour
 {
@@ -61,15 +63,24 @@ public class CameraMovement_Player : NetworkBehaviour
     public float distanceRecoveryDelay = 1f;
 
     [Header("Camera Moving Speed")]
-    private Vector3 movePos;
+    public Vector3 movePos;
     public float moveSpeed = 5f;
     public Transform defaultPos;
     public bool resetPos = false;
 
+    public CameraManager cameraManager;
+    public bool isResetPos = true;
+    private Vector3 camInput;
 
     private void Start()
     {
-        
+        // get y axis
+        var upAxis = -Physics.gravity.normalized;
+        //set cam default regarding player's position
+        mDefaultDir = Vector3.ProjectOnPlane(transform.position - playerTransform.position, upAxis).normalized;
+        //Initial yam and pitch axis
+        mYawRotateAxis = upAxis;
+        mPitchRotateAxis = Vector3.Cross(upAxis, Vector3.ProjectOnPlane(transform.forward, upAxis));
 
 #if Network
 
@@ -79,35 +90,48 @@ public class CameraMovement_Player : NetworkBehaviour
     }
     private void OnEnable()
     {
-        // get y axis
-        var upAxis = -Physics.gravity.normalized;
-        //set cam default regarding player's position
-        mDefaultDir = Vector3.ProjectOnPlane(transform.position - playerTransform.position, upAxis).normalized;
-        //Initial yam and pitch axis
-        mYawRotateAxis = upAxis;
-        mPitchRotateAxis = Vector3.Cross(upAxis, Vector3.ProjectOnPlane(transform.forward, upAxis));
+        //// get y axis
+        //var upAxis = -Physics.gravity.normalized;
+        ////set cam default regarding player's position
+        //mDefaultDir = Vector3.ProjectOnPlane(transform.position - playerTransform.position, upAxis).normalized;
+        ////Initial yam and pitch axis
+        //mYawRotateAxis = upAxis;
+        //mPitchRotateAxis = Vector3.Cross(upAxis, Vector3.ProjectOnPlane(transform.forward, upAxis));
+
+        //Reset function 
+        mRotateValue.x = playerTransform.eulerAngles.y; // face behind player
+        mRotateValue.y = Mathf.Clamp(distance, pitchLimit.x, pitchLimit.y); // default pitch
+
+        this.transform.position = cameraManager.lockCam.transform.position;
+        //ResetPos(defaultPos);
+    }
+    private void Update()
+    {
+
     }
 
 
     void LateUpdate()
     {
         CameraMovement();
+
+        //if (!resetPos)
+        //{
+        //    resetPos = true;
+        //    //ResetPos(defaultPos);
+        //}
+        //else
+        //{      
+        //    CameraMovement();
+        //}
+
     }
 
-    public void ResetPos()
-    {
-        if (!resetPos)
-        {
-            transform.position = Vector3.Lerp(this.transform.position, defaultPos.position, Time.deltaTime * moveSpeed);
-            this.transform.LookAt(playerTransform);
-            resetPos = true;
-            Debug.Log("Reset camera position");
-        }
-    }
 
     #region Player Camera movement(Base)
     void CameraMovement()
     {
+
         //get input value
         inputDelta = new Vector2(inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ?
                         inputDetection.GetCameraMovement().x : inputDetection.GetCameraMovement().x * keyboardMoveSpeed,
@@ -121,6 +145,7 @@ public class CameraMovement_Player : NetworkBehaviour
         mRotateValue.y += inputDelta.y * rotateSpeed * (invertPitch ? -1 : 1) * Time.smoothDeltaTime;
         mRotateValue.y = AngleCorrection(mRotateValue.y);
         mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimit.x, pitchLimit.y);
+
         //update yam
         horizontalQuat = Quaternion.AngleAxis(mRotateValue.x, mYawRotateAxis);
         verticalQuat = Quaternion.AngleAxis(mRotateValue.y, mPitchRotateAxis);
@@ -147,9 +172,12 @@ public class CameraMovement_Player : NetworkBehaviour
 
         //this.transform.position = from + finalDir * mCurrentDistance;
         movePos = from + finalDir * mCurrentDistance;
+
         transform.position = Vector3.Lerp(this.transform.position, movePos, Time.deltaTime * moveSpeed);
         //transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalDir), Time.deltaTime * rotateSpeed);
         this.transform.LookAt(from);
+
+
     }
     #endregion
 

@@ -106,6 +106,7 @@ public class PlayerController : NetworkBehaviour
 
     [Space,Header("Lock")]
     public PlayerLockOn playerLockOn;
+    public bool isLookAtTriggered = false; //if the player is looking at the target
 
 
     //these variables are all accessable to the various states
@@ -294,6 +295,16 @@ public class PlayerController : NetworkBehaviour
         {
             //the direction vector from the player to the enemy
             direction = (playerLockOn.lockTarget.transform.position - transform.position);
+            //First trigger lookAt
+            if (!isLookAtTriggered)
+            {
+                this.transform.LookAt(playerLockOn.lockTarget.transform);
+                isLookAtTriggered = true;
+            }
+
+            if (direction.magnitude > 0)
+                this.transform.LookAt(playerLockOn.lockTarget.transform);
+
         }
         /********************************************************************************/
 
