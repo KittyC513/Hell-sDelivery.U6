@@ -1,31 +1,28 @@
 using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.AI;
-using static UnityEditorInternal.ReorderableList;
-using static HellHoundStateMachine;
-using Unity.VisualScripting;
 
-
-public class NavmeshWander<State> : BaseState<State> where State : Enum
+public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
 {
-    float maxWanderDistance = 5;
-    private float wanderTime = 5;
+    float maxWanderDistance;
+    private float wanderTime;
     private float wanderTemp = 0;
 
     private NavMeshAgent navAgent;
-    private StateMachine hellHoundController;
+    private HellHoundStateMachine hellHoundController;
 
-
-    public NavmeshWander(State key, StateManager<State> stateMachine) : base(key)
+    public HellHoundWander(HellHoundStateMachine.HoundStates key, HellHoundStateMachine stateMachine) : base(key)
     {
-       
+        hellHoundController = stateMachine;
+        navAgent = hellHoundController.NavAgent;
     }
 
     public override void EnterState()
     {
-        navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
+        Debug.Log("EnterState");
+        maxWanderDistance = hellHoundController.MaxWanderDistance;
+        wanderTime = hellHoundController.WanderTime;
+
+        if (navAgent.isActiveAndEnabled) navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
     }
 
     public override void ExitState()
@@ -33,9 +30,12 @@ public class NavmeshWander<State> : BaseState<State> where State : Enum
         
     }
 
-    public override State GetNextState()
+    public override HellHoundStateMachine.HoundStates GetNextState()
     {
-        
+        if (hellHoundController.DetectPlayer() != null)
+        {
+            return HellHoundStateMachine.HoundStates.chase;
+        }
         return stateKey;
     }
 
@@ -55,11 +55,6 @@ public class NavmeshWander<State> : BaseState<State> where State : Enum
                 wanderTemp = 0;
             }
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        
 
     }
 
@@ -68,7 +63,7 @@ public class NavmeshWander<State> : BaseState<State> where State : Enum
         //every frame this function is called it will find a new position around a specified radius
 
         //get a random position inside a sphere around max wander distance
-        Vector3 randomPos = UnityEngine.Random.insideUnitSphere * radius;
+        Vector3 randomPos = Random.insideUnitSphere * radius;
 
         //make the position relative to the target
         randomPos += agent.transform.position;
@@ -79,5 +74,4 @@ public class NavmeshWander<State> : BaseState<State> where State : Enum
         //return random nav mesh position
         return meshHit.position;
     }
-
 }
