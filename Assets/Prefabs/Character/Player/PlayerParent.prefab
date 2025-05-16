@@ -479,6 +479,7 @@ MonoBehaviour:
   inputDetection: {fileID: 3167985525364349275}
   aControl: {fileID: 4998560965045212203}
   currentSpeed: 0
+  playerLockOn: {fileID: 0}
 --- !u!114 &3534729435414562412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +513,7 @@ MonoBehaviour:
   grabbableMask:
     serializedVersion: 2
     m_Bits: 8384
+  inputDetection: {fileID: 0}
   forwardThrowForce: 6
   upwardsThrowForce: 4
   currentObject: {fileID: 0}
@@ -574,6 +576,9 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   jumpPressed: 0
   crouchPressed: 0
+  lockPressed: 0
+  attackPressed: 0
+  grabPressed: 0
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
   jumpBufferTime: 0.2
@@ -651,9 +656,12 @@ MonoBehaviour:
   detectionRadius: 10
   lockableLayerMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 20480
   playerController: {fileID: 0}
   inputDetection: {fileID: 3167985525364349275}
+  CameraManager: {fileID: 0}
+  lockTarget: {fileID: 0}
+  isLockedOn: 0
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,3 +968,6 @@ MonoBehaviour:
   detectorSphereRadius: 0.3
   distanceRecoverySpeed: 3
   distanceRecoveryDelay: 1
+  moveSpeed: 5
+  defaultPos: {fileID: 0}
+  resetPos: 0

@@ -288,26 +288,25 @@ public class PlayerController : NetworkBehaviour
 
     private void RotateTowards(Vector3 direction, float rotationSpeed)
     {
-        //get our desired direction ignoring y 
-        direction = new Vector3(direction.x, 0, direction.z);
 
         /********************************************************************************/
         if (playerLockOn.isLockedOn)
         {
-            if (direction.magnitude > 0)
-                this.transform.LookAt(playerLockOn.lockTarget.transform);
+            //the direction vector from the player to the enemy
+            direction = (playerLockOn.lockTarget.transform.position - transform.position);
         }
         /********************************************************************************/
-        else
-        {
-            if (direction.magnitude > 0)
-            {
-                //calculate our desired rotation
-                Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
 
-                //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
-                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
-            }
+        //get our desired direction ignoring y 
+        direction = new Vector3(direction.x, 0, direction.z);
+
+        if (direction.magnitude > 0)
+        {
+            //calculate our desired rotation
+            Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+
+            //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
         }
 
     }
