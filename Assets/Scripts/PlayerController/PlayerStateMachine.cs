@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
 {
     //create states and add them to the dictionary 
-    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack }
+    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack, }
 
     public PlayerController controller;
     public PlayerAttackControl attackControl;
