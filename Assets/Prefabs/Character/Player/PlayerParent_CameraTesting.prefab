@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6347196777763878027}
-  offSet: {x: 0, y: 3.11, z: -6.4}
+  offSet: {x: 0, y: 6.62, z: -9.44}
   smoothSpeed: 5
   lockCamType: 0
   playerLockOn: {fileID: 2126423918051728224}
@@ -652,6 +652,7 @@ MonoBehaviour:
   aControl: {fileID: 2156524465778351454}
   currentSpeed: 0
   playerLockOn: {fileID: 2126423918051728224}
+  isLookAtTriggered: 0
 --- !u!114 &3534729435414562412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +686,7 @@ MonoBehaviour:
   grabbableMask:
     serializedVersion: 2
     m_Bits: 64
-  inputDetection: {fileID: 0}
+  inputDetection: {fileID: 3167985525364349275}
   forwardThrowForce: 6
   upwardsThrowForce: 4
   currentObject: {fileID: 0}
@@ -1210,6 +1211,9 @@ MonoBehaviour:
   detectorSphereRadius: 0.3
   distanceRecoverySpeed: 3
   distanceRecoveryDelay: 1
+  movePos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   defaultPos: {fileID: 5113240428649811745}
   resetPos: 0
+  cameraManager: {fileID: 1062957148588737322}
+  isResetPos: 1

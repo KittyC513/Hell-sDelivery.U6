@@ -106,6 +106,7 @@ public class PlayerController : NetworkBehaviour
 
     [Space,Header("Lock")]
     public PlayerLockOn playerLockOn;
+    public bool isLookAtTriggered = false; //if the player is looking at the target
 
 
     //these variables are all accessable to the various states
@@ -295,19 +296,50 @@ public class PlayerController : NetworkBehaviour
             //the direction vector from the player to the enemy
             direction = (playerLockOn.lockTarget.transform.position - transform.position);
         }
-        /********************************************************************************/
 
-        //get our desired direction ignoring y 
-        direction = new Vector3(direction.x, 0, direction.z);
+            //get our desired direction ignoring y 
+            direction = new Vector3(direction.x, 0, direction.z);
 
         if (direction.magnitude > 0)
         {
+
             //calculate our desired rotation
             Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
 
             //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
         }
+
+
+        /********************************************************************************/
+        //if (playerLockOn.isLockedOn)
+        //{
+        //    //the direction vector from the player to the enemy
+        //    direction = (playerLockOn.lockTarget.transform.position - transform.position);
+        //    //First trigger lookAt
+        //    if (!isLookAtTriggered)
+        //    {
+        //        this.transform.LookAt(playerLockOn.lockTarget.transform);
+        //        isLookAtTriggered = true;
+        //    }
+
+        //    if (direction.magnitude > 0)
+        //        this.transform.LookAt(playerLockOn.lockTarget.transform);
+
+        //}
+        ///********************************************************************************/
+
+        ////get our desired direction ignoring y 
+        //direction = new Vector3(direction.x, 0, direction.z);
+
+        //if (direction.magnitude > 0)
+        //{
+        //    //calculate our desired rotation
+        //    Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+
+        //    //use rotate towards to rotate to our desired position by our rotation speed rather than all at once
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
+        //}
 
     }
 

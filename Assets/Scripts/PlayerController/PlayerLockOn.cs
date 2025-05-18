@@ -47,6 +47,7 @@ public class PlayerLockOn : MonoBehaviour
                 if (!isLockedOn)
                 {
                     CameraManager.ResetCamTransition();
+                    playerController.isLookAtTriggered = false;
                     isLockedOn = true;
                 }
 
@@ -60,11 +61,6 @@ public class PlayerLockOn : MonoBehaviour
         }
         else
         {
-
-            if (lockTarget != null)
-            {
-                CameraManager.ResetCamTransition();
-            }
 
             lockTarget = null;
             CameraManager.currentCamType = E_CamType.playerCam;

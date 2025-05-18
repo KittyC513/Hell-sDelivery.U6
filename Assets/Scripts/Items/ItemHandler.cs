@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 //has functionality that all items will want access to
@@ -26,6 +27,13 @@ public class ItemHandler : MonoBehaviour
         Debug.Log("Equipped");
         iControl = playerItemControl;
         equipped = true;
+        /**************************************/
+        /**************************************/
+        //Set object as a child of a player 
+        this.transform.SetParent(playerItemControl.gameObject.transform);
+        Debug.Log("Parent");
+        /**************************************/
+        /**************************************/
     }
 
     //player unequips this item
