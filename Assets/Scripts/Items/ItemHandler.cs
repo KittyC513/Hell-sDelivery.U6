@@ -20,6 +20,10 @@ public class ItemHandler : MonoBehaviour
     public delegate void OnItemTrigger();
     public OnItemTrigger onItemTrigger;
 
+    private Transform parentObj;
+    public Vector3 offset;
+
+    public bool isBombTriggered = false;
 
     //player equips this item
     public void EquipItem(PlayerItemControl playerItemControl)
@@ -30,8 +34,12 @@ public class ItemHandler : MonoBehaviour
         /**************************************/
         /**************************************/
         //Set object as a child of a player 
-        this.transform.SetParent(playerItemControl.gameObject.transform);
-        Debug.Log("Parent");
+        if(this.gameObject.name == "Bomb Item")
+        {
+            parentObj = playerItemControl.gameObject.transform.parent;
+            this.transform.SetParent(parentObj);
+            Debug.Log("Parent");
+        }
         /**************************************/
         /**************************************/
     }
