@@ -35,6 +35,7 @@ public class PickupEmptyState : BaseState<PickupStateMachine.PickupStates>
             {
                 //otherwise set our current object and start to pick it up
                 oControl.currentObject = temp;
+
                 return PickupStateMachine.PickupStates.pickup;
             }
         }
