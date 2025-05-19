@@ -7,23 +7,21 @@ using UnityEngine;
 //such as being able to be picked up and dropped as well as any interactions with the player controller
 public class ItemHandler : MonoBehaviour
 {
-    private bool equipped = false;
+    [HideInInspector]
+    public bool equipped = false;
 
     [Header ("Non Equipped Variables")]
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Vector3 rotationAxis = Vector3.up;
 
     //equipped variables
-    private PlayerItemControl iControl;
+    [HideInInspector]
+    public PlayerItemControl iControl;
 
     //any functionality that needs to happen while equipped can subscribe to this event
     public delegate void OnItemTrigger();
     public OnItemTrigger onItemTrigger;
 
-    private Transform parentObj;
-    public Vector3 offset;
-
-    public bool isBombTriggered = false;
 
     //player equips this item
     public void EquipItem(PlayerItemControl playerItemControl)
@@ -31,17 +29,7 @@ public class ItemHandler : MonoBehaviour
         Debug.Log("Equipped");
         iControl = playerItemControl;
         equipped = true;
-        /**************************************/
-        /**************************************/
-        //Set object as a child of a player 
-        if(this.gameObject.name == "Bomb Item")
-        {
-            parentObj = playerItemControl.gameObject.transform.parent;
-            this.transform.SetParent(parentObj);
-            Debug.Log("Parent");
-        }
-        /**************************************/
-        /**************************************/
+
     }
 
     //player unequips this item

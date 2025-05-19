@@ -1,20 +1,33 @@
+using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BombItem : MonoBehaviour
 {
-    private ItemHandler iHandler;
-    private Transform parentObj;
-    private PlayerLockOn playerLockOn;
+    public ItemHandler iHandler;
+    public PlayerLockOn playerLockOn;
 
-    private Transform targetPos;
+    public Transform targetPos;
     public float dropSpeed = 5f;
 
     public Collider worldCollider;
-    private Rigidbody rb;
+    public Rigidbody rb;
 
+    public GameObject bombPrefab;
+    public bool isSpawned = false;
 
+    [Header("Bomb")]
+    public Vector3 offset; //to replace bombs
+    public bool isHeldBomb = false; 
+    public int maxBombs = 1;
+    private int numOfBombs = 0;
 
+    //cooldown setting
+    public float cdSpawn = 0.3f;
+    private float timer = 0;
+    public bool canStartTimer = false;
 
+    public List<BombMovement> bombsList = new List<BombMovement>();
 
     private void Awake()
     {
@@ -25,33 +38,71 @@ public class BombItem : MonoBehaviour
 
     private void Start()
     {
-        iHandler.onItemTrigger += ThrowTowardTarget;
+        iHandler.onItemTrigger += ThrowBomb;
     }
 
     private void OnDisable()
     {
-        iHandler.onItemTrigger -= ThrowTowardTarget;
+        iHandler.onItemTrigger -= ThrowBomb; 
     }
 
-    private void ThrowTowardTarget()
+    private void ThrowBomb()
     {
-        print("Throw");
-        parentObj = this.transform.parent.Find("Player").transform;
-        playerLockOn = parentObj.GetComponentInParent<PlayerLockOn>();
-        worldCollider.gameObject.SetActive(false);
-        if (playerLockOn.lockTarget != null)
+        if(numOfBombs < maxBombs)
         {
-            targetPos = playerLockOn.lockTarget.transform;
-            this.transform.position = Vector3.Lerp(this.transform.position, targetPos.position, Time.deltaTime * dropSpeed);
-
-            if (Vector3.Distance(this.transform.position, targetPos.position) < 0.1f) 
+            if (!isSpawned && timer >= cdSpawn)
             {
-                iHandler.isBombTriggered = false;
+                // while throwing bomb, generating a bomb object and reset the position to player's pos
+                print("Throw");
+                GameObject bombObj = Instantiate(bombPrefab);
+                bombObj.transform.position = this.transform.position;
+                if (Vector3.Distance(bombObj.transform.position, this.transform.position) < 0.1f)
+                    bombObj.transform.parent = iHandler.iControl.transform;
+                worldCollider.gameObject.SetActive(false);
+
+                bombsList.Add(bombObj.GetComponent<BombMovement>());
+                numOfBombs++;
+                isSpawned = true;
+                timer = 0;
             }
-            return;
-        }       
+
+        }
+
     }
+    public void Update()
+    {
+        //cooldown timer starts
+        if (canStartTimer)
+        {
+            if (timer < cdSpawn)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                timer = cdSpawn;
+            }
+        }
+
+        //When the item is equipped, the item will follow player's pos
+        if (iHandler.equipped)
+        {
+            /**************************************/
+            /**************************************/
+            //Set object as a child of a player 
 
 
+            //parentObj = iHandler.iControl.gameObject.transform.parent;
+            //this.transform.position = parentObj.transform.position;
 
+            if (Vector3.Distance(this.transform.position, iHandler.iControl.transform.position + offset) < 0.1f)
+                this.transform.SetParent(iHandler.iControl.transform);
+            else
+                this.transform.position = iHandler.iControl.transform.position + offset;
+            //Debug.Log("Parent");
+
+            /**************************************/
+            /**************************************/
+        }
+    }
 }
