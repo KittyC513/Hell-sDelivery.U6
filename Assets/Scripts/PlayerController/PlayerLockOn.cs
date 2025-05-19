@@ -44,6 +44,7 @@ public class PlayerLockOn : MonoBehaviour
             {
 
                 CameraManager.currentCamType = E_CamType.lockCam;
+                print("Lock_on" + lockTarget.transform.position);
                 if (!isLockedOn)
                 {
                     CameraManager.ResetCamTransition();
