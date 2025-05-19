@@ -52,8 +52,13 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
         else
         {
             chaseTemp = 0;
-            return stateKey;
         }
+
+        if (Vector3.Distance(navAgent.transform.position, hellHoundController.TargetPlayer.transform.position) < hellHoundController.AttackDetectionRange)
+        {
+            return HellHoundStateMachine.HoundStates.attack;
+        }
+
         return stateKey;
     }
 

@@ -32,7 +32,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
 
     public override HellHoundStateMachine.HoundStates GetNextState()
     {
-        if (hellHoundController.DetectPlayer() != null)
+        if (hellHoundController.DetectPlayer(hellHoundController.PlayerDetectionRadius, hellHoundController.VisionConeAngle) != null)
         {
             return HellHoundStateMachine.HoundStates.chase;
         }
@@ -70,7 +70,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
         NavMeshHit meshHit;
         //get a position on the nav mesh using the random position
         NavMesh.SamplePosition(randomPos, out meshHit, radius + 20, NavMesh.AllAreas);
-        Debug.Log(meshHit.position);
+        //Debug.Log(meshHit.position);
         //return random nav mesh position
         return meshHit.position;
     }
