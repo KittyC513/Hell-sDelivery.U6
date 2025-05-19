@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935899b62f48ae5498594680ed17d133, type: 3}
-  m_Name: Testing Database
+  m_Name: Testing Database (Auto-Backup)
   m_EditorClassIdentifier: 
   version: 
   author: 
@@ -1709,14 +1709,14 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("Goober") == "unassigned"
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 81.194016
+        x: 80
         y: 134
         width: 160
         height: 30
@@ -1929,7 +1929,7 @@ MonoBehaviour:
         destinationDialogueID: 6
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("Goober") == "unassigned"
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1979,7 +1979,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: SetQuestState("Goober", "active")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2039,7 +2039,7 @@ MonoBehaviour:
         destinationDialogueID: 10
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("Goober") == "active"
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -2094,7 +2094,7 @@ MonoBehaviour:
         destinationDialogueID: 0
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("Goober") == "success"
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -2149,7 +2149,7 @@ MonoBehaviour:
         destinationDialogueID: 11
         isConnector: 0
         priority: 2
-      conditionsString: Variable["Goober.TalkedTo"] == true
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -2254,7 +2254,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: SetQuestState("Goober", "success")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2314,8 +2314,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 27.5, y: 240.26678}
-    canvasZoom: 0.64000034
+    canvasScrollPosition: {x: 0, y: 21.257317}
+    canvasZoom: 0.7000003
   - id: 5
     fields:
     - title: Title
@@ -2473,8 +2473,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("Signatures") == "unassigned"
-      userScript: Variable["Goober.TalkedTo"] = true
+      conditionsString: 
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2673,7 +2673,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Okay. No more funny business. I need you to get [em1]6 signatures[/em1]
+        value: Okay. No more funny business. I need you to get [em1][6 signatures][/em1]
           today.
         type: 0
         typeString: 
@@ -2784,7 +2784,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Oh yeah, come back when you're done, then you can go home.
+        value: Ok bye. Oh yeah, come back when you're done, then you can go home.
         type: 0
         typeString: 
       - title: Sequence
@@ -2805,15 +2805,15 @@ MonoBehaviour:
         destinationDialogueID: 8
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("Signatures") == "unassigned"
+      conditionsString: CurrentQuestState("Goober") == "unassigned"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 82.19179
-        y: 636.9041
+        x: 80
+        y: 638
         width: 160
         height: 30
     - id: 8
@@ -2843,19 +2843,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'SetActive(Passerby,true);
-
-          SetActive(Passerby (1),true);
-
-          SetActive(Passerby
-          (2),true);
-
-          SetActive(Passerby (3),true);
-
-          SetActive(Passerby
-          (4),true);
-
-          SetActive(Passerby (5),true)'
+        value: 
         type: 0
         typeString: 
       conversationID: 5
@@ -2867,16 +2855,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestState("Signatures", "active");
-
-'
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 78.75
-        y: 723.25
+        x: 80
+        y: 722
         width: 160
         height: 30
     - id: 9
@@ -2929,7 +2915,7 @@ MonoBehaviour:
         destinationDialogueID: 13
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("Signatures") == "active"
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -2963,7 +2949,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Ok buddy, you did your work. Go home now.
+        value: 
         type: 0
         typeString: 
       - title: Sequence
@@ -2977,8 +2963,14 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: CurrentQuestState("Signatures") == "success"
+      outgoingLinks:
+      - originConversationID: 5
+        originDialogueID: 10
+        destinationConversationID: 8
+        destinationDialogueID: 0
+        isConnector: 0
+        priority: 2
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -3029,12 +3021,12 @@ MonoBehaviour:
       outgoingLinks:
       - originConversationID: 5
         originDialogueID: 11
-        destinationConversationID: 8
-        destinationDialogueID: 0
+        destinationConversationID: 5
+        destinationDialogueID: 12
         isConnector: 0
         priority: 2
-      conditionsString: Variable["Signatures.NumCollected"] >= 6
-      userScript: SetQuestState("Signatures", "success")
+      conditionsString: 
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3042,6 +3034,61 @@ MonoBehaviour:
         serializedVersion: 2
         x: 288
         y: 218
+        width: 160
+        height: 30
+    - id: 12
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 4
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 5
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 5
+        originDialogueID: 12
+        destinationConversationID: 8
+        destinationDialogueID: 0
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 288
+        y: 302
         width: 160
         height: 30
     - id: 13
@@ -3149,8 +3196,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 523.7498}
-    canvasZoom: 0.6400003
+    canvasScrollPosition: {x: 0, y: 441.31818}
+    canvasZoom: 0.7000002
   - id: 6
     fields:
     - title: Title
@@ -3582,7 +3629,7 @@ MonoBehaviour:
   - id: 7
     fields:
     - title: Title
-      value: Booger Praise
+      value: Quest Conclusion
       type: 0
       typeString: 
     - title: Description
@@ -3841,11 +3888,11 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.94000006
+    canvasZoom: 1
   - id: 8
     fields:
     - title: Title
-      value: Quest Conclusion
+      value: Goober Praise
       type: 0
       typeString: 
     - title: Description
