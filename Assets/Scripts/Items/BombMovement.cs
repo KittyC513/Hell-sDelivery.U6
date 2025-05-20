@@ -16,8 +16,11 @@ public class BombMovement : MonoBehaviour
     public float dropSpeed;
 
     public float radius;
-    public Collider[] colliders;
-    public float explosionForce;
+    public Collider[] colliders_e;
+    public Collider[] colliders_p;
+    public float explosionForce_e;
+    public float explosionForce_p;
+    public float upwardsModifier_e;
 
     public bool isTriggered = false;
 
@@ -67,7 +70,7 @@ public class BombMovement : MonoBehaviour
 
     }
 
-
+    #region Bomb Movement
     void MoveTowardTarget(Transform targetPos)
     {
         #region Bomb will move toward a target when it's within max dropping range
@@ -102,7 +105,7 @@ public class BombMovement : MonoBehaviour
         #region the target is over max distance of throwing
         else
         {
-            if(!isOnGround)
+            if (!isOnGround)
                 MovementMethod();
 
         }
@@ -110,10 +113,12 @@ public class BombMovement : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// When not target is locked on
+    /// </summary>
     void MovementMethod()
     {
-        
+
         time += Time.deltaTime;
         float t = Mathf.Clamp01(time / duration);
         //gain end point, the pos of end point can be modified by dropping force
@@ -127,39 +132,68 @@ public class BombMovement : MonoBehaviour
 
         transform.position = currentPos;
     }
+    #endregion
 
 
-    [ContextMenu("Boom!")]
+    #region Explosion Function - apply force to different objects 
     public void ApplyExplosionForce()
     {
         isTriggered = true;
+
         //Detect the explosion area, it's a sphere detector, set LayerMask that to be affected
-        colliders = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable"));
-        Debug.Log(colliders.Length + "_enemy/enemies in the explosion range");
-        if (colliders.Length > 0)
+        colliders_e = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable"));
+        colliders_p = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Player1"));
+
+        Debug.Log(colliders_e.Length + "_enemy/enemies in the explosion range");
+        Debug.Log(colliders_e.Length + "player/players in the explosion range");
+        #region Enemy type
+        if (colliders_e.Length > 0)
         {
-            for (int i = 0; i < colliders.Length; i++)
+            for (int i = 0; i < colliders_e.Length; i++)
             {
-                colliders[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, radius);
+                colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
+               
             }
 
         }
+        #endregion
+
+        #region Player type
+        if (colliders_p.Length > 0)
+        {
+            for (int i = 0; i < colliders_e.Length; i++)
+            {
+                //colliders_p[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_p, this.transform.position, radius, 
+                //upwardsModifier,ForceMode.Impulse);
+                colliders_p[i].GetComponent<Rigidbody>().AddForce(colliders_p[i].transform.up * explosionForce_p, ForceMode.Impulse);
+            }
+        }
+
+        #endregion
         //Destroy after the certain amount of time
-        Destroy(this.gameObject, 0.3f);
+        Destroy(this.gameObject, 0.2f);
 
     }
+    #endregion
 
+
+    #region DrawGizoms Function
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, radius);
     }
+    #endregion
 
+
+    #region GrounCheck
     //Ground Check
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
             isOnGround = true;
     }
+    #endregion
+
 
 }
