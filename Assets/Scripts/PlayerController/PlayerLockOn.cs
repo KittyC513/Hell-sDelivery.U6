@@ -22,6 +22,8 @@ public class PlayerLockOn : MonoBehaviour
     public GameObject lockTarget;
     [HideInInspector] public bool isLockedOn = false;
 
+    private bool canSwitchTarget = true;
+
 
     // Update is called once per frame
     private void Awake()
@@ -31,15 +33,16 @@ public class PlayerLockOn : MonoBehaviour
 
     private void Start()
     {
-        playerCam = inputDetection.cam;
+        
 
     }
 
     void Update()
     {
+        playerCam = inputDetection.cam;
         if (DetectLockInput())
-        {  
-            
+        {
+
             if ((lockTarget != null))
             {
 
@@ -56,7 +59,7 @@ public class PlayerLockOn : MonoBehaviour
             else
             {
                 lockTarget = GetNewTarget(playerCam, playerObj);
-                
+
             }
 
         }
@@ -68,9 +71,16 @@ public class PlayerLockOn : MonoBehaviour
             isLockedOn = false;
         }
 
-        if (lockTarget != null && DetectLockInput())
+        if (lockTarget != null && DetectLockInput() && inputDetection.GetCameraMovement() != Vector2.zero && canSwitchTarget)
         {
-            Vector2 direction = inputDetection.GetHorizontalMovement();
+            Vector2 direction = inputDetection.GetCameraMovement().normalized;
+            lockTarget = GetNextTarget(direction, playerCam, playerObj);
+            canSwitchTarget = false;
+        }
+
+        if (inputDetection.GetCameraMovement().magnitude == 0)
+        {
+            canSwitchTarget = true;
         }
     }
 
@@ -134,22 +144,8 @@ public class PlayerLockOn : MonoBehaviour
         return null;
     }
 
-    public GameObject GetNextTarget(Vector2 direction, Camera cam, GameObject player)
+    public GameObject GetNextTarget(Vector3 inputDir, Camera cam, GameObject player)
     {
-        //get all visible targets
-        //get each ones position on the view port
-        //get the target closest in the dir direction
-
-        //calculate the viewport angle between each object and the lock target
-        //check each object that has an angle smaller than 90 (this means nothing negative will be returned)
-        //get the object that has the shortest distance away from this object
-
-        //loop through each available target that is to the right of the origin target
-        //check the distances until you get the shortest distance in that direction
-
-
-        //consider changing this to OverlapSphereNonAlloc in the future
-
         Collider[] objectsInRange = Physics.OverlapSphere(player.transform.position, detectionRadius, lockableLayerMask);
         
         if (lockTarget != null)
@@ -158,49 +154,59 @@ public class PlayerLockOn : MonoBehaviour
             if (objectsInRange.Length > 0)
             {
                 float shortestDistance = 100;
-                GameObject target = null;
+                GameObject target = lockTarget;
 
                 //check each object in range
                 for (int i = 0; i < objectsInRange.Length; i++)
                 {
+                    //the position of the current lock target in the viewport
+                    Vector3 lockTargetViewport = cam.WorldToViewportPoint(lockTarget.transform.position);
                     //the position of the object
                     Vector3 objectPoint = objectsInRange[i].transform.position;
 
                     //the position of the object on the viewport
                     Vector3 viewportPos = cam.WorldToViewportPoint(objectPoint);
-
-                    //if the object is in range of the viewport we can raycast towards it
+                    
+                    //if the object is in the viewport
                     if (viewportPos.x < 1 && viewportPos.x > 0 && viewportPos.y < 1 && viewportPos.y > 0)
                     {
-                        //if the angle between the input direction and the next object in array is less than 90 consider it as a new target
-                        if (Vector2.Angle(direction, viewportPos) < 90 && objectsInRange[i] != lockTarget)
+                        //the direction towards the next object
+                        Vector3 toDirection = (viewportPos - lockTargetViewport).normalized;
+
+                        //if the direction towards the next target and the direction the player is inputting match up its in the correct direction
+                        if (toDirection.x > 0 && inputDir.x > 0 || toDirection.x < 0 && inputDir.x < 0)
                         {
-                            //direction towards the object from the camera
-                            Vector3 dir = (objectPoint - cam.transform.position).normalized;
-
-                            //send a raycast towards the target point, if it hits we can see the object
-                            if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, 50))
+                            //if the angle between the input direction and the next object in array is less than 90 consider it as a new target
+                            if (objectsInRange[i].gameObject != lockTarget)
                             {
-                                //if the raycast hits the correct object
-                                if (hit.collider == objectsInRange[i])
+                                //direction towards the object from the camera
+                                Vector3 dir = (objectPoint - cam.transform.position).normalized;
+
+                                //send a raycast towards the target point, if it hits we can see the object
+                                if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, 50))
                                 {
-                                    //the position of the current lock target in the viewport
-                                    Vector3 lockTargetViewport = cam.WorldToViewportPoint(lockTarget.transform.position);
-
-                                    //distance between the object and the lock target
-                                    float dist = Vector2.Distance(lockTargetViewport, viewportPos);
-
-                                    //if the distance to the object is shorter than the last make it the new shortest distance
-                                    if (dist < shortestDistance)
+                                    //if the raycast hits the correct object
+                                    if (hit.collider == objectsInRange[i])
                                     {
-                                        shortestDistance = dist;
-                                        target = objectsInRange[i].gameObject;
-                                    }
-                                }
+                                        //just use the horizontal position of both objects (you can lock onto objects higher up if its closer horizontally
+                                        Vector3 lockPoint = new Vector3(lockTargetViewport.x, 0, 0);
+                                        Vector3 targetPoint = new Vector3(viewportPos.x, 0, 0);
 
+                                        //distance between the object and the lock target
+                                        float dist = Vector2.Distance(lockPoint, targetPoint);
+
+                                        //if the distance to the object is shorter than the last make it the new shortest distance
+                                        if (dist < shortestDistance)
+                                        {
+                                            shortestDistance = dist;
+                                            target = objectsInRange[i].gameObject;
+                                            
+                                        }
+                                    }
+
+                                }
                             }
                         }
-                        
                     }
                 }
                 return target;
@@ -208,7 +214,8 @@ public class PlayerLockOn : MonoBehaviour
         }
 
 
-        return null;
+
+        return lockTarget;
     }
 
     private void OnDrawGizmos()
