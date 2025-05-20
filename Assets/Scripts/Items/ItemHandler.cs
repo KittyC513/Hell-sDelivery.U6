@@ -30,6 +30,10 @@ public class ItemHandler : MonoBehaviour
         iControl = playerItemControl;
         equipped = true;
 
+        //Freeze rotation and reset rotation 
+        rotationSpeed = 0;
+        this.transform.rotation = iControl.transform.rotation;
+
     }
 
     //player unequips this item
@@ -38,6 +42,7 @@ public class ItemHandler : MonoBehaviour
         UnfreezeStateMachine();
         iControl = null;
         equipped = false;
+        rotationSpeed = 100;
     }
 
     //this function grabs the player state machine and freezes the state machine

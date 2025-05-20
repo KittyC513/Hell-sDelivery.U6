@@ -42,6 +42,7 @@ public class DetonatorItem : MonoBehaviour
             }
 
             bombItem.bombsList.Clear();
+            bombItem.numOfBombs = 0;
         }
 
     }

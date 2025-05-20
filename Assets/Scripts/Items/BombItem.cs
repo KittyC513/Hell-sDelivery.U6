@@ -18,14 +18,14 @@ public class BombItem : MonoBehaviour
 
     [Header("Bomb")]
     public Vector3 offset; //to replace bombs
-    public bool isHeldBomb = false; 
     public int maxBombs = 1;
-    private int numOfBombs = 0;
+    public int numOfBombs = 0;
 
     //cooldown setting
     public float cdSpawn = 0.3f;
     private float timer = 0;
     public bool canStartTimer = false;
+
 
     public List<BombMovement> bombsList = new List<BombMovement>();
 
@@ -53,9 +53,10 @@ public class BombItem : MonoBehaviour
             if (!isSpawned && timer >= cdSpawn)
             {
                 // while throwing bomb, generating a bomb object and reset the position to player's pos
-                print("Throw");
+              
                 GameObject bombObj = Instantiate(bombPrefab);
                 bombObj.transform.position = this.transform.position;
+                //bombObj.transform.rotation = iHandler.iControl.transform.rotation;
                 if (Vector3.Distance(bombObj.transform.position, this.transform.position) < 0.1f)
                     bombObj.transform.parent = iHandler.iControl.transform;
                 worldCollider.gameObject.SetActive(false);
