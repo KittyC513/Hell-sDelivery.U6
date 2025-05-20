@@ -3,15 +3,9 @@ using UnityEngine.AI;
 
 public class HellHoundBase : EnemyBase
 {
-
-    [Space, Header("General Variables")]
-    [SerializeField] private float rotationSpeed = 15; //how fast the enemy rotates towards the target direction
-
     [Space, Header("Wander Variables")]
     [SerializeField] private float maxWanderDistance; //how far away the wander math can pick a spot
     [SerializeField] private float wanderTime = 4; //how long a wander path lasts until a new one is chosen
-
-    [SerializeField] private float playerDetectionRadius = 5; //how far away in a sphere can the player be deteceted
     [SerializeField] private float visionConeAngle = 45; //a vision cone in front of the enemy that detects the player
 
     [Space, Header("Attack Variables")]
@@ -54,11 +48,13 @@ public class HellHoundBase : EnemyBase
     {
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
+        eHealth.onEnemyDeath += OnEnemyDeath;
     }
 
     private void OnDisable()
     {
         eHealth.onTakeDamage -= StartKnockback;
+        eHealth.onEnemyDeath -= OnEnemyDeath;
     }
 
     private void Update()
@@ -71,6 +67,12 @@ public class HellHoundBase : EnemyBase
             navAgent.updatePosition = false;
             rb.useGravity = true;
         }
+
+        if (isDead)
+        {
+            navAgent.updatePosition = false;
+            shouldRotate = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -82,6 +84,7 @@ public class HellHoundBase : EnemyBase
     {
         attackHitboxObj.SetActive(state);
     }
+
 
     private void OnDrawGizmosSelected()
     {

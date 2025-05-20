@@ -8,16 +8,22 @@ public class EnemyBase : MonoBehaviour
     protected GameObject targetPlayer;
     protected bool addKnockback = false;
 
-    [Space, Header("Ground Check Variables")]
+    [Space, Header("Enemy Base Variables")]
     [SerializeField] protected float groundCheckDist = 0.8f;
     [SerializeField] protected LayerMask groundMask;
+    [SerializeField] protected float deathTime = 0.5f;
+    [SerializeField] protected float rotationSpeed = 15; //how fast the enemy rotates towards the target direction
     protected bool grounded;
+    [SerializeField] protected float playerDetectionRadius = 5; //how far away in a sphere can the player be detected
 
     [Space, Header("Enemy Base References")]
     [SerializeField] protected LayerMask playerMask;
     [SerializeField] protected Rigidbody rb; //the rigidbody attached to the enemy
     [SerializeField] protected NavMeshAgent navAgent; //the nav agent
     [SerializeField] protected EnemyHealth eHealth; //the enemy health script
+
+    private bool droppedMoney = false;
+    protected bool isDead = false;
 
     public virtual GameObject DetectPlayer(float range, float angle)
     {
@@ -130,5 +136,27 @@ public class EnemyBase : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, (rotationSpeed) * Time.fixedDeltaTime);
         }
 
+    }
+
+    protected void OnEnemyDeath()
+    {
+        //disable navmesh
+        navAgent.updatePosition = false;
+        //keep rigidbody active but stop adding forces / cancel knockback 
+        isDead = true;
+        //drop coins or something at random positions
+        //DropMoney();
+        //update animations
+
+
+        //poof / destroy object after timer / animation finishes
+        Destroy(this.gameObject, deathTime);
+    }
+
+    protected void DropMoney()
+    {
+        //get random value of money between range
+
+        //drop each piece at a random direction + upwards slightly
     }
 }
