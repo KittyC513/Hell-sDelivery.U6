@@ -59,7 +59,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         Vector3 xzVel = new Vector3(currentVel.x, 0, currentVel.z);
 
         //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
-        Vector3 targetVelocity = targetDir * pControl.MaxFallSpeed;
+        Vector3 targetVelocity = targetDir * (pControl.MaxFallSpeed * pControl.GravityScale);
        
         //how much we will change our velocity next step with smoothing by vector3.movetowards
         goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity + xzVel, pControl.FallAccel * 0.02f);

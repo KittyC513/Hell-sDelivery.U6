@@ -12,6 +12,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
     public PlayerAttackControl attackControl;
 
     private PlayerStates defaultState;
+    [SerializeField] private PlayerStates showCurrentState;
 
     private void Awake()
     {
@@ -30,6 +31,11 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
         //set our current state to airborne as a default starting state
         currentState = states[PlayerStates.airborne];
         defaultState = PlayerStates.airborne;
+    }
+
+    private void LateUpdate()
+    {
+        showCurrentState = currentState.stateKey;
     }
 
     //this function can change the current state without asking or interfering with the current state
