@@ -4,37 +4,37 @@ using UnityEngine;
 
 public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
 {
-    private HellHoundStateMachine hellHoundController;
+    private HellHoundBase hellHoundBase;
     private float attackDelayTime;
     private float attackDuration;
 
     private bool attackComplete = false;   
-    public HellHoundAttack(HellHoundStateMachine.HoundStates key, HellHoundStateMachine houndController) : base(key)
+    public HellHoundAttack(HellHoundStateMachine.HoundStates key, HellHoundBase houndBase) : base(key)
     {
-        hellHoundController = houndController;
-        attackDelayTime = hellHoundController.AttackDelayTime;
-        attackDuration = hellHoundController.AttackDuration;
+        hellHoundBase = houndBase;
+        attackDelayTime = hellHoundBase.AttackDelayTime;
+        attackDuration = hellHoundBase.AttackDuration;
     }
 
     public override void EnterState()
     {
         attackComplete = false;
-        hellHoundController.StartCoroutine(AttackSequence());
+        hellHoundBase.StartCoroutine(AttackSequence());
     }
 
     public override void ExitState()
     {
-        hellHoundController.StopCoroutine(AttackSequence());
-        hellHoundController.NavAgent.updatePosition = true;
-        hellHoundController.RB.linearVelocity = Vector3.zero;
-        hellHoundController.shouldRotate = true;
+        hellHoundBase.StopCoroutine(AttackSequence());
+        hellHoundBase.NavAgent.updatePosition = true;
+        hellHoundBase.RB.linearVelocity = Vector3.zero;
+        hellHoundBase.shouldRotate = true;
         attackComplete = false;
     }
 
     public override HellHoundStateMachine.HoundStates GetNextState()
     {
         //when the attack ends or the enemy takes a hit stop attacking
-        if (attackComplete || hellHoundController.AddKnockback)
+        if (attackComplete || hellHoundBase.AddKnockback)
         {
             return HellHoundStateMachine.HoundStates.cooldown;
         }
@@ -50,19 +50,19 @@ public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
     private IEnumerator AttackSequence()
     {
         //stop moving
-        hellHoundController.NavAgent.updatePosition = false;
-        hellHoundController.RB.linearVelocity = Vector3.zero;
+        hellHoundBase.NavAgent.updatePosition = false;
+        hellHoundBase.RB.linearVelocity = Vector3.zero;
         yield return new WaitForSeconds(attackDelayTime);
-        hellHoundController.shouldRotate = false;
+        hellHoundBase.shouldRotate = false;
         yield return new WaitForSeconds(attackDelayTime / 4);
         //activate hitbox
-        hellHoundController.ToggleAttackHitbox(true);
+        hellHoundBase.ToggleAttackHitbox(true);
         yield return new WaitForSeconds(attackDuration);
         //disable hitbox
-        hellHoundController.ToggleAttackHitbox(false);
+        hellHoundBase.ToggleAttackHitbox(false);
         yield return null;
         //transition to cooldown
-        hellHoundController.shouldRotate = true;
+        hellHoundBase.shouldRotate = true;
         attackComplete = true;
     }
 }

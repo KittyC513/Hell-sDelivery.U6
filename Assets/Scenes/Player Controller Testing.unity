@@ -5331,6 +5331,7 @@ GameObject:
   - component: {fileID: 1516228139}
   - component: {fileID: 1516228143}
   - component: {fileID: 1516228146}
+  - component: {fileID: 1516228147}
   - component: {fileID: 1516228144}
   - component: {fileID: 1516228145}
   m_Layer: 14
@@ -5425,7 +5426,7 @@ Transform:
   m_GameObject: {fileID: 1516228138}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.98, y: 3.47, z: 4.44}
+  m_LocalPosition: {x: -8.56, y: -1.44, z: 4.44}
   m_LocalScale: {x: 1, y: 0.7006583, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5510,28 +5511,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d79310a1a28bb45bb53fecd6968e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 15
-  maxWanderDistance: 7
-  wanderTime: 4
-  playerDetectionRadius: 8
-  visionConeAngle: 65
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 192
-  attackDetectionRange: 1.5
-  attackDelayTime: 0.5
-  attackDuration: 0.2
-  attackCooldownTime: 1
-  attackHitboxObj: {fileID: 1013776473}
-  shouldRotate: 1
-  groundCheckDist: 0.79
+  houndBase: {fileID: 1516228147}
+--- !u!114 &1516228147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516228138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca845b28e2b79db40a3f72787509873d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckDist: 0.8
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  showRadius: 1
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 192
   rb: {fileID: 1516228144}
-  eHealth: {fileID: 1516228143}
   navAgent: {fileID: 1516228145}
+  eHealth: {fileID: 1516228143}
+  rotationSpeed: 15
+  maxWanderDistance: 5
+  wanderTime: 4
+  playerDetectionRadius: 8
+  visionConeAngle: 45
+  attackDetectionRange: 1
+  attackDelayTime: 0.5
+  attackDuration: 0.2
+  attackCooldownTime: 0.5
+  attackHitboxObj: {fileID: 1013776473}
+  shouldRotate: 1
+  showRadius: 1
 --- !u!43 &1599619794
 Mesh:
   m_ObjectHideFlags: 0

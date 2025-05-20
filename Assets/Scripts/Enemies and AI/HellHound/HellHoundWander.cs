@@ -8,19 +8,19 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
     private float wanderTemp = 0;
 
     private NavMeshAgent navAgent;
-    private HellHoundStateMachine hellHoundController;
+    private HellHoundBase hellHoundBase;
 
-    public HellHoundWander(HellHoundStateMachine.HoundStates key, HellHoundStateMachine stateMachine) : base(key)
+    public HellHoundWander(HellHoundStateMachine.HoundStates key, HellHoundBase houndBase) : base(key)
     {
-        hellHoundController = stateMachine;
-        navAgent = hellHoundController.NavAgent;
+        hellHoundBase = houndBase;
+        navAgent = hellHoundBase.NavAgent;
     }
 
     public override void EnterState()
     {
         Debug.Log("EnterState");
-        maxWanderDistance = hellHoundController.MaxWanderDistance;
-        wanderTime = hellHoundController.WanderTime;
+        maxWanderDistance = hellHoundBase.MaxWanderDistance;
+        wanderTime = hellHoundBase.WanderTime;
 
         if (navAgent.isActiveAndEnabled) navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
     }
@@ -32,7 +32,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
 
     public override HellHoundStateMachine.HoundStates GetNextState()
     {
-        if (hellHoundController.DetectPlayer(hellHoundController.PlayerDetectionRadius, hellHoundController.VisionConeAngle) != null)
+        if (hellHoundBase.DetectPlayer(hellHoundBase.PlayerDetectionRadius, hellHoundBase.VisionConeAngle) != null)
         {
             return HellHoundStateMachine.HoundStates.chase;
         }

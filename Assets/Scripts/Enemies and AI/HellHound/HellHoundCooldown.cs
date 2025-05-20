@@ -5,24 +5,24 @@ public class HellHoundCooldown : BaseState<HellHoundStateMachine.HoundStates>
     private float cooldownTime;
     private float cooldownTemp;
 
-    private HellHoundStateMachine hellHoundController;
+    private HellHoundBase hellHoundBase;
 
-    public HellHoundCooldown(HellHoundStateMachine.HoundStates key, HellHoundStateMachine houndController) : base(key)
+    public HellHoundCooldown(HellHoundStateMachine.HoundStates key, HellHoundBase houndBase) : base(key)
     {
-        cooldownTime = houndController.CooldownTime;
-        hellHoundController = houndController;
+        hellHoundBase = houndBase;
+        cooldownTime = hellHoundBase.CooldownTime;
     }
 
     public override void EnterState()
     {
         cooldownTemp = 0;
-        hellHoundController.NavAgent.updatePosition = false;
+        hellHoundBase.NavAgent.updatePosition = false;
     }
 
     public override void ExitState()
     {
-        hellHoundController.NavAgent.Warp(hellHoundController.NavAgent.transform.position);
-        hellHoundController.NavAgent.updatePosition = true;
+        hellHoundBase.NavAgent.Warp(hellHoundBase.NavAgent.transform.position);
+        hellHoundBase.NavAgent.updatePosition = true;
     }
 
     public override HellHoundStateMachine.HoundStates GetNextState()
