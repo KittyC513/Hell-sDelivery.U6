@@ -19,7 +19,8 @@ public class BombMovement : MonoBehaviour
     public Collider[] colliders_e;
     public Collider[] colliders_p;
     public float explosionForce_e;
-    public float explosionForce_p;
+    public float explosionForce_pH;
+    public float explosionForce_pV;
     public float upwardsModifier_e;
 
     public bool isTriggered = false;
@@ -34,6 +35,7 @@ public class BombMovement : MonoBehaviour
     private float time = 0f;
     public float dropForce;
     public float offsetY = 0f;
+
 
     //ground check
     private bool isOnGround = false;
@@ -142,10 +144,10 @@ public class BombMovement : MonoBehaviour
 
         //Detect the explosion area, it's a sphere detector, set LayerMask that to be affected
         colliders_e = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable"));
-        colliders_p = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Player1"));
+        colliders_p = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
 
         Debug.Log(colliders_e.Length + "_enemy/enemies in the explosion range");
-        Debug.Log(colliders_e.Length + "player/players in the explosion range");
+        Debug.Log(colliders_p.Length + "player/players in the explosion range");
         #region Enemy type
         if (colliders_e.Length > 0)
         {
@@ -161,17 +163,21 @@ public class BombMovement : MonoBehaviour
         #region Player type
         if (colliders_p.Length > 0)
         {
+            Debug.Log("Player : "+ colliders_p.Length);
             for (int i = 0; i < colliders_e.Length; i++)
             {
-                //colliders_p[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_p, this.transform.position, radius, 
-                //upwardsModifier,ForceMode.Impulse);
-                colliders_p[i].GetComponent<Rigidbody>().AddForce(colliders_p[i].transform.up * explosionForce_p, ForceMode.Impulse);
+                Debug.Log("Player : " + colliders_p[i].name);
+                // gain the dirction between bomb and player
+                Vector3 dir = (colliders_p[i].transform.position - this.transform.position).normalized;
+                colliders_p[i].GetComponent<Rigidbody>().AddForce(dir * explosionForce_pH + Vector3.up * explosionForce_pV, ForceMode.Impulse);            
             }
+            return;
         }
 
-        #endregion
-        //Destroy after the certain amount of time
-        Destroy(this.gameObject, 0.2f);
+
+            #endregion
+            //Destroy after the certain amount of time
+            //Destroy(this.gameObject, 0.2f);
 
     }
     #endregion

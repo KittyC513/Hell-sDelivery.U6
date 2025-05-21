@@ -22,7 +22,13 @@ public class ItemHandler : MonoBehaviour
     public delegate void OnItemTrigger();
     public OnItemTrigger onItemTrigger;
 
+    private Collider triggerCollider;
 
+
+    private void Awake()
+    {
+        triggerCollider = GetComponent<Collider>();
+    }
     //player equips this item
     public void EquipItem(PlayerItemControl playerItemControl)
     {
@@ -34,6 +40,8 @@ public class ItemHandler : MonoBehaviour
         rotationSpeed = 0;
         this.transform.rotation = iControl.transform.rotation;
 
+        triggerCollider.enabled = false;
+
     }
 
     //player unequips this item
@@ -43,6 +51,7 @@ public class ItemHandler : MonoBehaviour
         iControl = null;
         equipped = false;
         rotationSpeed = 100;
+        triggerCollider.enabled = true;
     }
 
     //this function grabs the player state machine and freezes the state machine

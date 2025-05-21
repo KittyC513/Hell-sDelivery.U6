@@ -9,8 +9,13 @@ public class DetonatorItem : MonoBehaviour
     public Vector3 offset;
 
     public List<BombMovement> list;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
+    //cooldown setting
+    public float cdTime = 0.3f;
+    private float timer = 0;
+    public bool canStartTimer = false;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         iHandler = GetComponent<ItemHandler>();
@@ -18,6 +23,7 @@ public class DetonatorItem : MonoBehaviour
     void Start()
     {
         iHandler.onItemTrigger += Ignite;
+        timer = 0;
     }
 
     private void OnDisable()
@@ -33,12 +39,14 @@ public class DetonatorItem : MonoBehaviour
 
     public void Ignite()
     {
-        if(bombItem.bombsList.Count > 0)
+        if(bombItem.bombsList.Count > 0 && timer >= cdTime)
         {
             for (int i = 0; i <= bombItem.bombsList.Count - 1; i++)
             {
+
                 bombItem.bombsList[i].ApplyExplosionForce();
                 print("Trigger" + bombItem.bombsList[i].name);
+
             }
 
             bombItem.bombsList.Clear();
@@ -49,6 +57,13 @@ public class DetonatorItem : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (canStartTimer)
+        {
+            if (timer >= cdTime)
+                timer = cdTime;
+            else
+                timer += Time.deltaTime;
+        }
         if (iHandler.equipped)
         {
             /**************************************/

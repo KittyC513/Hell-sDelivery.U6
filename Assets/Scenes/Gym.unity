@@ -1320,6 +1320,8 @@ MonoBehaviour:
   bombItem: {fileID: 965283271}
   offset: {x: 0, y: 0, z: 0}
   list: []
+  cdTime: 0.3
+  canStartTimer: 0
 --- !u!1 &696191142
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,7 +1485,7 @@ Transform:
   m_GameObject: {fileID: 720869360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.29, y: 4, z: -7.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2073,7 +2075,6 @@ MonoBehaviour:
   bombPrefab: {fileID: 3435195785975598480, guid: 15563e57cb35e1f498b1f152ed51092d, type: 3}
   isSpawned: 0
   offset: {x: 0, y: 0, z: 0}
-  isHeldBomb: 0
   maxBombs: 2
   numOfBombs: 0
   cdSpawn: 0.3
@@ -2259,6 +2260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1348024878}
   attackControl: {fileID: 0}
+  showCurrentState: 0
 --- !u!114 &1348024878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2289,6 +2291,7 @@ MonoBehaviour:
   maxFallSpeed: 10
   fallAccel: 25
   maxFallAccelStep: 150
+  gravityScale: 1
   jumpHeight: 2.5
   jumpDecayRate: 40
   jumpReleaseFactor: 2
@@ -3275,6 +3278,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3741851670433619098, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200099480877866640, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
+      propertyPath: m_SplitScreen
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8200099480877866640, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
