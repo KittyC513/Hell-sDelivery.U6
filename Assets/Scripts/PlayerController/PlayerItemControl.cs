@@ -67,12 +67,16 @@ public class PlayerItemControl : MonoBehaviour
     #region Detonator Event
     private void UseDetonator()
     {
-        if (inputDetection.crouchPressed && activeItem.gameObject.GetComponent<DetonatorItem>().list.Count > 0)
+        if (inputDetection.crouchPressed && activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count > 0)
         {
             UseItem();
-            activeItem.gameObject.GetComponent<DetonatorItem>().canStartTimer = true;
-            Debug.Log("bomb list :" + activeItem.gameObject.GetComponent<DetonatorItem>().list.Count);
+            Debug.Log("bomb list :" + activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count);
+            activeItem.gameObject.GetComponent<DetonatorItem>().canStartTimer = false;
             //activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Clear();
+        }
+        if (!inputDetection.crouchPressed)
+        {
+            activeItem.gameObject.GetComponent<DetonatorItem>().canStartTimer = true;
         }
     }
     #endregion

@@ -164,20 +164,20 @@ public class BombMovement : MonoBehaviour
         if (colliders_p.Length > 0)
         {
             Debug.Log("Player : "+ colliders_p.Length);
-            for (int i = 0; i < colliders_e.Length; i++)
+            for (int i = 0; i < colliders_p.Length; i++)
             {
+
                 Debug.Log("Player : " + colliders_p[i].name);
                 // gain the dirction between bomb and player
                 Vector3 dir = (colliders_p[i].transform.position - this.transform.position).normalized;
-                colliders_p[i].GetComponent<Rigidbody>().AddForce(dir * explosionForce_pH + Vector3.up * explosionForce_pV, ForceMode.Impulse);            
+                colliders_p[i].GetComponent<Rigidbody>().AddForce(dir * explosionForce_pH + Vector3.up * explosionForce_pV, ForceMode.Impulse);
+                  
             }
-            return;
         }
 
-
-            #endregion
-            //Destroy after the certain amount of time
-            //Destroy(this.gameObject, 0.2f);
+        #endregion
+        //Destroy after the certain amount of time
+        Destroy(this.gameObject, 0.2f);
 
     }
     #endregion

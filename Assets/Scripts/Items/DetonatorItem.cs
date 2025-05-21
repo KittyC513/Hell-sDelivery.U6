@@ -13,7 +13,7 @@ public class DetonatorItem : MonoBehaviour
     //cooldown setting
     public float cdTime = 0.3f;
     private float timer = 0;
-    public bool canStartTimer = false;
+    public bool canStartTimer = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
