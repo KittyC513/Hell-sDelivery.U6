@@ -25,6 +25,8 @@ public class EnemyBase : MonoBehaviour
     private bool droppedMoney = false;
     protected bool isDead = false;
 
+    public NavMeshAgent NavAgent { get {  return navAgent; } }
+    public GameObject TargetPlayer { get { return targetPlayer; } }
     public virtual GameObject DetectPlayer(float range, float angle)
     {
         //if a player is detected in the sphere

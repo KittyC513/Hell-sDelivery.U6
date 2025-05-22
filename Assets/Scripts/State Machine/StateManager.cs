@@ -14,20 +14,6 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
 
     [SerializeField] protected Animator anim;
 
-    //need the base state to be able to call a function that can change the current anim
-    //or be able to trigger it in some way through this script
-    //this script has access to the current base state
-    //if something changes in the current base state this can listen
-    //if the base state has a variable for a current animation
-    //solution could be to check if that animation string changes from " " and if it does then change the current animation to the new string
-    //afterwards resetting the string to " " so that if it needs to be set again it can be set again but it won't constantly keep setting the new animation
-
-    //now this works but how do i get access to an animator without null reference and what if a state machine doesn't need access or have access to an animator
-
-    //could make a serialized field that you can fill and if left empty the animation functionality will be ignored
-
-    //or i could make a variation of state manager that requires an animator??
-    
 
     protected bool isTransitioningState = false;
     void Start() 
@@ -45,7 +31,7 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         {
             currentState.UpdateState();
 
-            //check for changes in animation state
+            //check for changes in animation state, if there is any change from the current state update the animator to play that clip name
             if (currentState.animName != " " && anim != null)
             {
                 ChangeAnimation(currentState.animName);
@@ -73,7 +59,7 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         //exit the current state
         currentState.ExitState();
 
-        //update the animator
+        //update the animator after exit has run in case any variables were changed in exit
         if (currentState.animName != " " && anim != null)
         {
             ChangeAnimation(currentState.animName);

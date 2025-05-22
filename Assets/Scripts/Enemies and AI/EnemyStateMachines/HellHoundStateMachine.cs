@@ -3,7 +3,6 @@ using UnityEngine.AI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Serialization;
 
 public class HellHoundStateMachine : StateManager <HellHoundStateMachine.HoundStates>
 {
