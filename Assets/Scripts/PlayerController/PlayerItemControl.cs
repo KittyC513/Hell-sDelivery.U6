@@ -20,8 +20,6 @@ public class PlayerItemControl : MonoBehaviour
             UseItem();
         }
 
-
-
         //Bomb 
         if(activeItem != null && activeItem.name == "Bomb Item")
         {
@@ -37,17 +35,23 @@ public class PlayerItemControl : MonoBehaviour
     #region Bomb Event
     private void UseBomb()
     {
-        if (inputDetection.lockPressed)
-        {
-            activeItem.gameObject.GetComponent<BombItem>().isHeldBomb = true;
+        //if (inputDetection.lockPressed)
+        //{
+        //    activeItem.gameObject.GetComponent<BombItem>().isHeldBomb = true;
 
-        }
-        else
-        {
-            activeItem.gameObject.GetComponent<BombItem>().isHeldBomb = false;
-        }
+        //}
+        //else
+        //{
+        //    activeItem.gameObject.GetComponent<BombItem>().isHeldBomb = false;
+        //}
 
-        if (inputDetection.crouchPressed && activeItem.gameObject.GetComponent<BombItem>().isHeldBomb)
+        //if (inputDetection.crouchPressed && activeItem.gameObject.GetComponent<BombItem>().isHeldBomb)
+        //{
+        //    UseItem();
+        //    activeItem.gameObject.GetComponent<BombItem>().isSpawned = false;
+        //}
+
+        if (inputDetection.crouchPressed)
         {
             UseItem();
             activeItem.gameObject.GetComponent<BombItem>().isSpawned = false;
@@ -63,10 +67,16 @@ public class PlayerItemControl : MonoBehaviour
     #region Detonator Event
     private void UseDetonator()
     {
-        if (inputDetection.crouchPressed)
+        if (inputDetection.crouchPressed && activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count > 0)
         {
             UseItem();
+            Debug.Log("bomb list :" + activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count);
+            activeItem.gameObject.GetComponent<DetonatorItem>().canStartTimer = false;
             //activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Clear();
+        }
+        if (!inputDetection.crouchPressed)
+        {
+            activeItem.gameObject.GetComponent<DetonatorItem>().canStartTimer = true;
         }
     }
     #endregion

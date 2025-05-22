@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour
     private List<LayerMask> playerLayers;
 
     private PlayerInputManager playerInputManager;
+    public float lockOnCam_height = 3.39f;
+    public float lockOnCam_distance = 14.5f;
 
     private void Awake()
     {
@@ -48,6 +50,24 @@ public class PlayerManager : MonoBehaviour
         //set the layer
         //for future reference
         player.gameObject.layer = layerToAdd;
+
+        //When 2nd player join, the camera will change the lock on camera viewport rect into half and half
+        AdaptLockOnCamermView();
     }
 
+
+    //Modify lock on camera view regarding the numbers of player
+    private void AdaptLockOnCamermView()
+    {
+        if(players.Count == 2)
+        {
+            players[0].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0, 0, 0.5f, 1);
+            players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
+            players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+            players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
+            players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
+            players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+
+        }
+    }
 }

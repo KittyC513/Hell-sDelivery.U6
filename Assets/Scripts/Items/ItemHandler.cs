@@ -22,13 +22,25 @@ public class ItemHandler : MonoBehaviour
     public delegate void OnItemTrigger();
     public OnItemTrigger onItemTrigger;
 
+    private Collider triggerCollider;
 
+
+    private void Awake()
+    {
+        triggerCollider = GetComponent<Collider>();
+    }
     //player equips this item
     public void EquipItem(PlayerItemControl playerItemControl)
     {
         Debug.Log("Equipped");
         iControl = playerItemControl;
         equipped = true;
+
+        //Freeze rotation and reset rotation 
+        rotationSpeed = 0;
+        this.transform.rotation = iControl.transform.rotation;
+
+        triggerCollider.enabled = false;
 
     }
 
@@ -38,6 +50,8 @@ public class ItemHandler : MonoBehaviour
         UnfreezeStateMachine();
         iControl = null;
         equipped = false;
+        rotationSpeed = 100;
+        triggerCollider.enabled = true;
     }
 
     //this function grabs the player state machine and freezes the state machine

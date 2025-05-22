@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     //an event for when the enemy takes damage, when adding a function make sure it has a value for the dmg value
-    public delegate void OnTakeDamage();
+    public delegate void OnTakeDamage(Vector3 dir);
     public OnTakeDamage onTakeDamage;
 
     //an event for when the enemy dies
@@ -15,6 +15,8 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private float invulTime = 0.2f; //how long is the enemy not able to take damage after taking a hit
     private float invulTemp = 0;
+
+    [SerializeField] private float knockbackForce = 5;
 
     private bool invulnerable = false;
 
@@ -55,7 +57,8 @@ public class EnemyHealth : MonoBehaviour
     {
         if (other.CompareTag("PlayerAttack") && !invulnerable)
         {
-            onTakeDamage?.Invoke();
+            Vector3 knockDir = (transform.position - other.transform.position).normalized;
+            onTakeDamage?.Invoke(knockDir * knockbackForce);
             TakeDamage(1);
         }
     }
@@ -64,7 +67,8 @@ public class EnemyHealth : MonoBehaviour
     {
         if (collision.collider.CompareTag("PlayerAttack") && !invulnerable)
         {
-            onTakeDamage?.Invoke();
+            Vector3 knockDir = (transform.position - collision.transform.position).normalized;
+            onTakeDamage?.Invoke(knockDir * knockbackForce);
             TakeDamage(1);
         }
     }
