@@ -1680,7 +1680,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Camera(BoogerCloseUp,,1)
+        value: 'Camera(BoogerCloseUp,,0);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 4
@@ -1900,7 +1902,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Camera(GooberCloseUp,,1)
+        value: 'Camera(GooberCloseUp,,1);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 4
@@ -1967,7 +1971,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: SetQuestState("Goober", "active")
+      userScript: 'SetQuestState("Goober", "active");
+
+        Variable["Alert"]
+        = "Talk to Goober"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2004,7 +2011,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Camera(BoogerCloseUp,,1)
+        value: Camera(BoogerCloseUp,,0)
         type: 0
         typeString: 
       conversationID: 4
@@ -2065,7 +2072,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Camera(BoogerCloseUp,,1)
+        value: 'Camera(BoogerCloseUp,,0);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 4
@@ -2242,7 +2251,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: SetQuestState("Goober", "success")
+      userScript: 'SetQuestState("Goober", "success");
+
+        Variable["Alert"]
+        = "Talk to Goober - Completed!"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2302,7 +2314,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 44.736847}
+    canvasScrollPosition: {x: 0, y: 44.736877}
     canvasZoom: 0.76000017
   - id: 5
     fields:
@@ -2444,7 +2456,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Camera(GooberCloseUp,,1)
+        value: 'Camera(GooberCloseUp,,0);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 5
@@ -2721,7 +2735,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Camera(GooberCloseUp,,1)
+        value: Camera(GooberCloseUp,Listener,1)
         type: 0
         typeString: 
       conversationID: 5
@@ -2857,7 +2871,8 @@ MonoBehaviour:
       conditionsString: 
       userScript: 'SetQuestState("Signatures", "active");
 
-'
+        Variable["Alert"]
+        = "Collect 6 Signatures"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2894,7 +2909,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: Camera(GooberCloseUp,,0)
         type: 0
         typeString: 
       conversationID: 5
@@ -2955,7 +2970,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Camera(GooberCloseUp,,0);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 5
@@ -3022,7 +3039,10 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: Variable["Signatures.NumCollected"] >= 6
-      userScript: SetQuestState("Signatures", "success")
+      userScript: 'SetQuestState("Signatures", "success");
+
+        Variable["Alert"]
+        = "Collect 6 Signatures - Completed!"'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3163,7 +3183,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Camera(PasserbyNPC,,1)
+        value: 'Camera(PasserbyNPC,Listener,1);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 5
@@ -3192,8 +3214,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 308.49344}
-    canvasZoom: 0.8200001
+    canvasScrollPosition: {x: 0, y: 351.42847}
+    canvasZoom: 0.7000002
   - id: 6
     fields:
     - title: Title
