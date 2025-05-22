@@ -1946,6 +1946,37 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &188755012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 188755013}
+  m_Layer: 0
+  m_Name: PasserbyNPC
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &188755013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188755012}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -23.81, y: 7, z: 7.21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 228643429}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &220617943
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,6 +2360,7 @@ Transform:
   m_Children:
   - {fileID: 561830505}
   - {fileID: 1620126084}
+  - {fileID: 188755013}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311416612
@@ -9053,7 +9085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6775324577070352726, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: conversationEvents.onConversationStart.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6775324577070352726, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: conversationEvents.onConversationEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -9362,7 +9394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &769800353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9467,7 +9499,7 @@ Transform:
   m_GameObject: {fileID: 769800352}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -22.19, y: 7.31, z: 15.1}
+  m_LocalPosition: {x: -23.81, y: 7.02, z: 7.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10347,6 +10379,10 @@ PrefabInstance:
       propertyPath: displaySettings.alertSettings.minAlertSeconds
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.cameraSettings.sequencerCamera
+      value: 
+      objectReference: {fileID: 769800354}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.continueButton
       value: 2
@@ -14953,7 +14989,7 @@ Transform:
   m_GameObject: {fileID: 1723531125}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.69, y: 6.37, z: 15.02}
+  m_LocalPosition: {x: -24.69, y: 6.22, z: 15.02}
   m_LocalScale: {x: 1, y: 2.2315, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16906,7 +16942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2126490571
 Transform:
   m_ObjectHideFlags: 0
