@@ -19,6 +19,9 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 
         //reset our maximum jumps
         pControl.remainingJumps = pControl.MaxJumps;
+
+        //set animation 
+        animName = "Player_Land";
     }
 
     public override void ExitState()

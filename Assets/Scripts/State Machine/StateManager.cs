@@ -11,6 +11,22 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     protected Dictionary<Estate, BaseState<Estate>> states = new Dictionary<Estate, BaseState<Estate>>();
 
     protected BaseState<Estate> currentState;
+
+    [SerializeField] protected Animator anim;
+
+    //need the base state to be able to call a function that can change the current anim
+    //or be able to trigger it in some way through this script
+    //this script has access to the current base state
+    //if something changes in the current base state this can listen
+    //if the base state has a variable for a current animation
+    //solution could be to check if that animation string changes from " " and if it does then change the current animation to the new string
+    //afterwards resetting the string to " " so that if it needs to be set again it can be set again but it won't constantly keep setting the new animation
+
+    //now this works but how do i get access to an animator without null reference and what if a state machine doesn't need access or have access to an animator
+
+    //could make a serialized field that you can fill and if left empty the animation functionality will be ignored
+
+    //or i could make a variation of state manager that requires an animator??
     
 
     protected bool isTransitioningState = false;
@@ -28,6 +44,12 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         if (!isTransitioningState && nextStateKey.Equals(currentState.stateKey))
         {
             currentState.UpdateState();
+
+            //check for changes in animation state
+            if (currentState.animName != " " && anim != null)
+            {
+                ChangeAnimation(currentState.animName);
+            }
         }
         else if (!isTransitioningState) //otherwise if our next state key doesnt match, change our current state to the state associated with the new state key
         {
@@ -48,9 +70,14 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     {
         isTransitioningState = true;
 
-        
         //exit the current state
         currentState.ExitState();
+
+        //update the animator
+        if (currentState.animName != " " && anim != null)
+        {
+            ChangeAnimation(currentState.animName);
+        }
 
         //update to the new state by using our dictionary
         currentState = states[stateKey];
@@ -76,5 +103,9 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         currentState.OnTriggerExit(other);
     }
   
-
+    private void ChangeAnimation(string animationName)
+    {
+        anim.Play(animationName);
+        currentState.animName = " ";
+    }
 }

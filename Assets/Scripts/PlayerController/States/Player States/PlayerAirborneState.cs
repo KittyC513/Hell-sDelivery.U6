@@ -35,6 +35,9 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         rb = pControl.RB;
         playerHitboxHeight = pControl.PlayerHitboxHeight;
         goalVelocityChange = Vector3.zero;
+
+        //set animation 
+        animName = "Player_Fall";
     }
 
     public override void UpdateState()

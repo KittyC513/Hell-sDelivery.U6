@@ -12,6 +12,7 @@ public abstract class BaseState<Estate> where Estate : Enum
     }
 
     public Estate stateKey { get; private set; }
+    public string animName = " ";
 
     public abstract void EnterState();
     public virtual void PhysicsUpdate() { }
