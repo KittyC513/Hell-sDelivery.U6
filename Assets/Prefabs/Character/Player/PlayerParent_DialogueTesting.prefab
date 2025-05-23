@@ -589,6 +589,7 @@ MonoBehaviour:
   fallAccel: 45
   maxFallAccelStep: 150
   gravityScale: 1
+  fallAccelScale: 1
   jumpHeight: 3
   jumpDecayRate: 55
   jumpReleaseFactor: 2
@@ -655,6 +656,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   inputDetection: {fileID: 3167985525364349275}
   aControl: {fileID: 2156524465778351454}
+  anim: {fileID: 0}
   currentSpeed: 0
   playerLockOn: {fileID: 2126423918051728224}
   isLookAtTriggered: 0
@@ -670,6 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9661b2029c93f6b49b68a1dba66313e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   controller: {fileID: 4161022655810438540}
   attackControl: {fileID: 2156524465778351454}
   dialogueControl: {fileID: 8294628848149590567}
@@ -709,6 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894c469af2fe36d439e92d90ea022369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   objectController: {fileID: 6453902458872554444}
   playerController: {fileID: 4161022655810438540}
 --- !u!114 &495353182775990796
@@ -1290,7 +1294,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 131039
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
