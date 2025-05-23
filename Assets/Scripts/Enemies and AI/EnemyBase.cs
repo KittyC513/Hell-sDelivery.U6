@@ -27,6 +27,7 @@ public class EnemyBase : MonoBehaviour
 
     public NavMeshAgent NavAgent { get {  return navAgent; } }
     public GameObject TargetPlayer { get { return targetPlayer; } }
+    public float PlayerDetectionRadius { get { return playerDetectionRadius; } }
     public virtual GameObject DetectPlayer(float range, float angle)
     {
         //if a player is detected in the sphere
