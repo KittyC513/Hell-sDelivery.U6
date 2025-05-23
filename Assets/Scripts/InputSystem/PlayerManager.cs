@@ -77,18 +77,13 @@ public class PlayerManager : MonoBehaviour
        
         if(players[0] != null)
         {
-            if (players[0].GetComponent<PlayerDialogueControl>().startConversation != true)
-                    players[0].GetComponent<PlayerDialogueControl>().startConversation = true;
-            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().gameObject.name);
-            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().startConversation);
+            players[0].GetComponent<PlayerStateMachine>().FreezeStateMachine();
+
         }
 
         if (players[1] != null)
         {
-            if (players[1].GetComponent<PlayerDialogueControl>().startConversation != true)
-                    players[1].GetComponent<PlayerDialogueControl>().startConversation = true;
-            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().gameObject.name);
-            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().startConversation);
+            players[1].GetComponent<PlayerStateMachine>().FreezeStateMachine();
         }
         Debug.Log("StartConversation");
     }
@@ -97,18 +92,12 @@ public class PlayerManager : MonoBehaviour
     {
         if (players[0] != null)
         {
-            if (players[0].GetComponent<PlayerDialogueControl>().startConversation == true)
-                    players[0].GetComponent<PlayerDialogueControl>().startConversation = false;
-            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().gameObject.name);
-            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().startConversation);
+            players[0].GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
         }
 
         if (players[1] != null)
         {
-            if (players[1].GetComponent<PlayerDialogueControl>().startConversation == true)
-                    players[1].GetComponent<PlayerDialogueControl>().startConversation = false;
-            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().gameObject.name);
-            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().startConversation);
+            players[1].GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
         }
         Debug.Log("EndConversation");
     }

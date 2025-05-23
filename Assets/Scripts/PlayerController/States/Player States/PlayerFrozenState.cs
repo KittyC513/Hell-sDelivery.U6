@@ -29,12 +29,11 @@ public class PlayerFrozenState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override PlayerStateMachine.PlayerStates GetNextState()
     {
-        if (playerDialogueControl.startConversation)
-        {
-            return PlayerStateMachine.PlayerStates.frozen;
-        }
 
+        //return PlayerStateMachine.PlayerStates.frozen;
         return stateKey;
+
+    
     }
 
     public override void UpdateState()
