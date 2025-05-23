@@ -32,6 +32,8 @@ public class PlayerInputDetection : NetworkBehaviour
     [SerializeField] private float jumpBufferTime = 0.2f; //how long the jump input is read, used to buffer jumps 
     private float jumpBufferCurrent = 0;
 
+    [SerializeField] private float dropActiveItemTime = 0.3f;
+    public float currentTime = 0;
 
     [Header("Device Check")]
     public bool isCheckedDevice;
@@ -59,7 +61,7 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Attack").canceled += AttackCanceled;
 
         playerMap.FindAction("Grab").started += GrabPressed;
-        playerMap.FindAction("Grab").canceled += GrabPressed;
+        playerMap.FindAction("Grab").canceled += GrabCanceled;
 
 
         moveAction = playerMap.FindAction("Move");
@@ -81,7 +83,7 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Attack").canceled -= AttackCanceled;
 
         playerMap.FindAction("Grab").started -= GrabPressed;
-        playerMap.FindAction("Grab").canceled -= GrabPressed;
+        playerMap.FindAction("Grab").canceled -= GrabCanceled;
     }
 
     private void Start()
@@ -160,11 +162,34 @@ public class PlayerInputDetection : NetworkBehaviour
     private void GrabPressed(InputAction.CallbackContext action)
     {
         grabPressed = true;
+
+
+    }
+
+    public bool IsDropActiveItem()
+    {
+        if (grabPressed)
+        {
+            //Measure pressing buttom time
+            if (currentTime >= dropActiveItemTime)
+            {
+                dropActiveItemTime = currentTime;
+                return true;
+            }
+            else
+            {
+                currentTime += Time.deltaTime;
+                return false;
+            }
+        }
+        
+        return false;
     }
 
     private void GrabCanceled(InputAction.CallbackContext action)
     {
         grabPressed = false;
+        currentTime = 0;
     }
 
     private Vector3 GetRelativeInputDirection(Camera camera, Vector2 inputValue)

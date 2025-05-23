@@ -24,14 +24,22 @@ public class ItemHandler : MonoBehaviour
 
     private Collider triggerCollider;
 
+    [HideInInspector]
+    public Rigidbody rb;
+
+
+
+
 
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
     }
     //player equips this item
     public void EquipItem(PlayerItemControl playerItemControl)
     {
+        StopCoroutine(DropCoroutine());
         Debug.Log("Equipped");
         iControl = playerItemControl;
         equipped = true;
@@ -41,6 +49,7 @@ public class ItemHandler : MonoBehaviour
         this.transform.rotation = iControl.transform.rotation;
 
         triggerCollider.enabled = false;
+        rb.useGravity = false;
 
     }
 
@@ -48,11 +57,27 @@ public class ItemHandler : MonoBehaviour
     public void UnequipItem()
     {
         UnfreezeStateMachine();
-        iControl = null;
-        equipped = false;
-        rotationSpeed = 100;
-        triggerCollider.enabled = true;
+        //iControl = null;
+        //equipped = false;
+        //rotationSpeed = 100;
+        //triggerCollider.enabled = true;
+
+        StartCoroutine(DropCoroutine());
     }
+
+    #region Drop Coroutine
+    IEnumerator DropCoroutine()
+    {
+        Debug.Log("Unequipt");
+        equipped = false;
+        this.transform.parent = null;
+        rotationSpeed = 100;
+        iControl = null;
+        yield return new WaitForSeconds(1f);
+        triggerCollider.enabled = true;
+
+    }
+    #endregion
 
     //this function grabs the player state machine and freezes the state machine
     public void FreezeStateMachine()

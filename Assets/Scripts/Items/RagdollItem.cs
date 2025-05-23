@@ -3,6 +3,9 @@ using UnityEngine;
 public class RagdollItem : MonoBehaviour
 {
     private ItemHandler iHandler;
+    public Collider worldCollider;
+
+    public Vector3 offset;
 
     private void Awake()
     {
@@ -26,5 +29,27 @@ public class RagdollItem : MonoBehaviour
         iHandler.OverrideStateMachine(PlayerStateMachine.PlayerStates.ragdoll);
         
     }
+
+    private void FixedUpdate()
+    {
+        if(iHandler.equipped)
+        {
+            if(worldCollider.enabled == true)
+                worldCollider.enabled = false;
+
+            if (Vector3.Distance(this.transform.position, iHandler.iControl.transform.position + offset) < 0.1f)
+                this.transform.SetParent(iHandler.iControl.transform);
+            else
+                this.transform.position = iHandler.iControl.transform.position + offset;
+        }
+                     
+        if (!iHandler.equipped && (worldCollider.enabled == false || iHandler.rb.useGravity == false))
+        {
+            worldCollider.enabled = true;
+            iHandler.rb.useGravity = true;
+        }
+
+    }
+
 
 }

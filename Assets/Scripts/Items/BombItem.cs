@@ -59,7 +59,8 @@ public class BombItem : MonoBehaviour
                 //bombObj.transform.rotation = iHandler.iControl.transform.rotation;
                 if (Vector3.Distance(bombObj.transform.position, this.transform.position) < 0.1f)
                     bombObj.transform.parent = iHandler.iControl.transform;
-                worldCollider.gameObject.SetActive(false);
+                worldCollider.enabled = false;
+                //worldCollider.gameObject.SetActive(false);
 
                 bombsList.Add(bombObj.GetComponent<BombMovement>());
                 numOfBombs++;
@@ -70,7 +71,7 @@ public class BombItem : MonoBehaviour
         }
 
     }
-    public void Update()
+    public void FixedUpdate()
     {
         //cooldown timer starts
         if (canStartTimer)
@@ -105,5 +106,12 @@ public class BombItem : MonoBehaviour
             /**************************************/
             /**************************************/
         }
+
+        if (!iHandler.equipped && (worldCollider.enabled == false || iHandler.rb.useGravity == false))
+        {
+            worldCollider.enabled = true;
+            iHandler.rb.useGravity = true;
+        }
+
     }
 }
