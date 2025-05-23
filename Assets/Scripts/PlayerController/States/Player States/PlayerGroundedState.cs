@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
@@ -13,6 +14,7 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void EnterState()
     {
+        pControl.gravityScale = 1f;
         //Debug.Log("ENTER GROUNDED");
         rb = pControl.RB;
         //rb.AddForce(rb.velocity * -1);

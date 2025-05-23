@@ -8,6 +8,8 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 {
     //reference to our player controller
     private PlayerController pControl;
+    private PlayerDialogueControl playerDialogueControl;
+    
     private Vector3 goalVelocityChange;
     private Rigidbody rb;
 
@@ -21,9 +23,10 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 
 
 
-    public PlayerAirborneState(PlayerStateMachine.PlayerStates key, PlayerController controller) : base(key)
+    public PlayerAirborneState(PlayerStateMachine.PlayerStates key, PlayerController controller, PlayerDialogueControl playerDialogueControl) : base(key)
     {
         pControl = controller;
+        this.playerDialogueControl = playerDialogueControl;
         ledgeGrabHorizontalRange = pControl.LedgeGrabHorizontalRange;
         ledgeGrabUpwardsRange = pControl.LedgeGrabUpwardsRange;
         ledgeGrabMask = pControl.LedgeGrabMask;
@@ -65,13 +68,14 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         Vector3 targetVelocity = targetDir * (pControl.MaxFallSpeed * pControl.GravityScale);
        
         //how much we will change our velocity next step with smoothing by vector3.movetowards
-        goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity + xzVel, pControl.FallAccel * 0.02f);
+        goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity + xzVel, (pControl.FallAccel * pControl.fallAccelScale) * 0.02f);
         
         //the amount of velocity change needed to reach our maximum velocity
         Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
-        
+
+
         //maxAccelStep limits how much our velocity can change per step
-        Vector3.ClampMagnitude(velocityChange, pControl.MaxFallAccelStep);
+        velocityChange = Vector3.ClampMagnitude(velocityChange, pControl.MaxFallAccelStep);
 
         //make sure we are only adding force in the Y value
         velocityChange = new Vector3(0, velocityChange.y, 0);
@@ -114,7 +118,8 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         {
             return PlayerStateMachine.PlayerStates.attack;
         }
-
+        
+        
         return stateKey;
         
         
