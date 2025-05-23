@@ -50,7 +50,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxFallSpeed = 10; //the maximum speed the player can fall
     [SerializeField] private float fallAccel = 25; //how fast the player gains speed when falling downwards
     [SerializeField] private float maxFallAccelStep = 150;
-    [SerializeField] private float gravityScale = 1;
+    [SerializeField] public float gravityScale = 1;
+    [SerializeField] public float fallAccelScale = 1;
 
     [Space, Header("Jump Variables")]
     [SerializeField] private float jumpHeight = 2.5f;

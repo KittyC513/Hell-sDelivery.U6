@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 1550417069281404750}
   - component: {fileID: 4149645925774843317}
   - component: {fileID: 6775324577070352726}
+  - component: {fileID: 8294628848149590567}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -587,6 +588,7 @@ MonoBehaviour:
   maxFallSpeed: 25
   fallAccel: 45
   maxFallAccelStep: 150
+  gravityScale: 1
   jumpHeight: 3
   jumpDecayRate: 55
   jumpReleaseFactor: 2
@@ -670,6 +672,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 4161022655810438540}
   attackControl: {fileID: 2156524465778351454}
+  dialogueControl: {fileID: 8294628848149590567}
+  showCurrentState: 0
 --- !u!114 &6453902458872554444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,7 +935,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6117834857856622084}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a5473918a168c44fa0294bd4d1399f0, type: 3}
   m_Name: 
@@ -1002,6 +1006,20 @@ MonoBehaviour:
     onDialogueSystemUnpause:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &8294628848149590567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117834857856622084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6eeee3098ce2c24db5a7483dbe7f47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startConversation: 0
+  playerStateMachine: {fileID: 3534729435414562412}
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,7 +1290,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 131039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

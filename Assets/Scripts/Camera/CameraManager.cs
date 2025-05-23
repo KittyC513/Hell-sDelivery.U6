@@ -28,7 +28,7 @@ public class CameraManager : MonoBehaviour
     }
     void Start()
     {
-
+        AddCullingMaskOnPlayers();
     }
 
     // Update is called once per frame
@@ -84,5 +84,22 @@ public class CameraManager : MonoBehaviour
         playerCam.gameObject.SetActive(false);
         lockCam.gameObject.SetActive(true);
         inputDetection.cam = lockCam;
+    }
+
+    //Add culling mask according to player1 and player2
+    //if it's player1, don't render p2UI, and vice verse
+    void AddCullingMaskOnPlayers()
+    {
+        if(inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1"))
+        {
+            playerCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P1Ignore"));
+            lockCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P1Ignore"));
+        }
+
+        if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2"))
+        {
+            playerCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P2Ignore"));
+            lockCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P2Ignore"));
+        }
     }
 }

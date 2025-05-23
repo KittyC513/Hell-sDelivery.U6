@@ -8,10 +8,12 @@ using UnityEngine;
 public class PlayerFrozenState : BaseState<PlayerStateMachine.PlayerStates>
 {
     private PlayerController pControl;
+    private PlayerDialogueControl playerDialogueControl;
 
-    public PlayerFrozenState(PlayerStateMachine.PlayerStates key, PlayerController controller) : base(key)
+    public PlayerFrozenState(PlayerStateMachine.PlayerStates key, PlayerController controller, PlayerDialogueControl playerDialogueControl) : base(key)
     {
         pControl = controller;
+        this.playerDialogueControl = playerDialogueControl;
     }
 
     public override void EnterState()
@@ -26,6 +28,11 @@ public class PlayerFrozenState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override PlayerStateMachine.PlayerStates GetNextState()
     {
+        if (playerDialogueControl.startConversation)
+        {
+            return PlayerStateMachine.PlayerStates.frozen;
+        }
+
         return stateKey;
     }
 

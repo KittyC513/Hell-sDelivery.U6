@@ -8,7 +8,8 @@ using System.Collections.Generic;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    private List<PlayerInput> players = new List<PlayerInput>();
+    [HideInInspector]
+    public List<PlayerInput> players = new List<PlayerInput>();
 
     [SerializeField]
     private List<Transform> startPoints;
@@ -70,4 +71,46 @@ public class PlayerManager : MonoBehaviour
 
         }
     }
+
+    public void StartConversation()
+    {
+       
+        if(players[0] != null)
+        {
+            if (players[0].GetComponent<PlayerDialogueControl>().startConversation != true)
+                    players[0].GetComponent<PlayerDialogueControl>().startConversation = true;
+            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().gameObject.name);
+            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().startConversation);
+        }
+
+        if (players[1] != null)
+        {
+            if (players[1].GetComponent<PlayerDialogueControl>().startConversation != true)
+                    players[1].GetComponent<PlayerDialogueControl>().startConversation = true;
+            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().gameObject.name);
+            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().startConversation);
+        }
+        Debug.Log("StartConversation");
+    }
+
+    public void EndConversation()
+    {
+        if (players[0] != null)
+        {
+            if (players[0].GetComponent<PlayerDialogueControl>().startConversation == true)
+                    players[0].GetComponent<PlayerDialogueControl>().startConversation = false;
+            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().gameObject.name);
+            Debug.Log(players[0].GetComponent<PlayerDialogueControl>().startConversation);
+        }
+
+        if (players[1] != null)
+        {
+            if (players[1].GetComponent<PlayerDialogueControl>().startConversation == true)
+                    players[1].GetComponent<PlayerDialogueControl>().startConversation = false;
+            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().gameObject.name);
+            Debug.Log(players[1].GetComponent<PlayerDialogueControl>().startConversation);
+        }
+        Debug.Log("EndConversation");
+    }
 }
+
