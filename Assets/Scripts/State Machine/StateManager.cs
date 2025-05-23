@@ -11,7 +11,9 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     protected Dictionary<Estate, BaseState<Estate>> states = new Dictionary<Estate, BaseState<Estate>>();
 
     protected BaseState<Estate> currentState;
-    
+
+    [SerializeField] protected Animator anim;
+
 
     protected bool isTransitioningState = false;
     void Start() 
@@ -28,6 +30,12 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         if (!isTransitioningState && nextStateKey.Equals(currentState.stateKey))
         {
             currentState.UpdateState();
+
+            //check for changes in animation state, if there is any change from the current state update the animator to play that clip name
+            if (currentState.animName != " " && anim != null)
+            {
+                ChangeAnimation(currentState.animName);
+            }
         }
         else if (!isTransitioningState) //otherwise if our next state key doesnt match, change our current state to the state associated with the new state key
         {
@@ -48,9 +56,14 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     {
         isTransitioningState = true;
 
-        
         //exit the current state
         currentState.ExitState();
+
+        //update the animator after exit has run in case any variables were changed in exit
+        if (currentState.animName != " " && anim != null)
+        {
+            ChangeAnimation(currentState.animName);
+        }
 
         //update to the new state by using our dictionary
         currentState = states[stateKey];
@@ -76,5 +89,9 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         currentState.OnTriggerExit(other);
     }
   
-
+    private void ChangeAnimation(string animationName)
+    {
+        anim.Play(animationName);
+        currentState.animName = " ";
+    }
 }

@@ -19,10 +19,8 @@ public class HellHoundBase : EnemyBase
     [SerializeField] private bool showRadius = true; //use this to see player detection radius and ground ray with gizmos
 
     //accessible variables
-    public NavMeshAgent NavAgent { get { return navAgent; } }
     public float MaxWanderDistance { get { return maxWanderDistance; } }
     public float WanderTime { get { return wanderTime; } }
-    public GameObject TargetPlayer { get { return targetPlayer; } }
     public Rigidbody RB { get { return rb; } }
     public bool AddKnockback { get { return addKnockback; } }
     public float VisionConeAngle { get { return visionConeAngle; } }

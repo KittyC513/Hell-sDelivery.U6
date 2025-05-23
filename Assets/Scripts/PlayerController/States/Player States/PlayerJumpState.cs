@@ -51,7 +51,8 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
 
         pControl.remainingJumps -= 1;
 
-       
+        //set animation to jump
+        animName = "Player_Jump";
     }
 
     public override void ExitState()

@@ -18,6 +18,10 @@ public class PlayerSlidingState : BaseState<PlayerStateMachine.PlayerStates>
     {
         goalVelocityChange = Vector3.zero;
         rb = pControl.RB;
+
+        //set animation 
+        animName = "Player_Slide";
+
         //Debug.Log(pControl.GroundAngle);
         //Debug.Log("SLIDING");
     }

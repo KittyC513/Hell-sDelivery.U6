@@ -24,6 +24,9 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void EnterState()
     {
+        //set animation
+        animName = "Player_Attack";
+
         //set our total attack time 
         attackTime = aControl.AttackTime;
 

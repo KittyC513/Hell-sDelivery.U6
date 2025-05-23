@@ -20,7 +20,9 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
         
         //freeze player movement to stick to the ledge
         pControl.SetFreezeState(true, this.ToString());
-        
+
+        //set animation to jump
+        animName = "Player_LedgeHang";
     }
 
     public override void ExitState()

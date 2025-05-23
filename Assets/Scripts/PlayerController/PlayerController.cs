@@ -102,6 +102,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerInputDetection inputDetection;
     private Rigidbody rb;
     [SerializeField] private PlayerAttackControl aControl;
+    [SerializeField] private Animator anim;
 
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
@@ -182,6 +183,7 @@ public class PlayerController : NetworkBehaviour
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         CoyoteTime(); //determines if coyote time is active
+        if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
     }
 
