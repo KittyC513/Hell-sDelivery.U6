@@ -20,17 +20,21 @@ public class PlayerItemControl : MonoBehaviour
             UseItem();
         }
 
-        //Bomb 
-        if(activeItem != null && activeItem.name == "Bomb Item")
+        if(activeItem != null)
         {
-            UseBomb();
+            //Bomb 
+            if (activeItem.name == "Bomb Item")
+                UseBomb();
+            //Detonator
+            else if (activeItem.name == "Detonator Item")
+                UseDetonator();
+        } 
+
+        if(activeItem != null && inputDetection.IsDropActiveItem())
+        {
+            UnequipItem();
         }
 
-        //Detonator
-        if(activeItem != null && activeItem.name == "Detonator Item")
-        {
-            UseDetonator();
-        }
     }
     #region Bomb Event
     private void UseBomb()
@@ -102,6 +106,7 @@ public class PlayerItemControl : MonoBehaviour
         activeItem.UnequipItem();
         activeItem = null;
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

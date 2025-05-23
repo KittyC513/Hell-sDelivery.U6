@@ -6,6 +6,7 @@ public class DetonatorItem : MonoBehaviour
 {
     public ItemHandler iHandler;
     public BombItem bombItem;
+    public Collider worldCollider;
     public Vector3 offset;
 
     public List<BombMovement> list;
@@ -66,13 +67,15 @@ public class DetonatorItem : MonoBehaviour
         }
         if (iHandler.equipped)
         {
+            if (worldCollider.enabled == true)
+                    worldCollider.enabled = false;
             /**************************************/
-            /**************************************/
-            //Set object as a child of a player 
+                /**************************************/
+                //Set object as a child of a player 
 
 
-            //parentObj = iHandler.iControl.gameObject.transform.parent;
-            //this.transform.position = parentObj.transform.position;
+                //parentObj = iHandler.iControl.gameObject.transform.parent;
+                //this.transform.position = parentObj.transform.position;
 
             if (Vector3.Distance(this.transform.position, iHandler.iControl.transform.position + offset) < 0.1f)
                 this.transform.SetParent(iHandler.iControl.transform);
@@ -83,5 +86,13 @@ public class DetonatorItem : MonoBehaviour
             /**************************************/
             /**************************************/
         }
+
+        if (!iHandler.equipped && (worldCollider.enabled == false || iHandler.rb.useGravity == false))
+        {
+            worldCollider.enabled = true;
+            iHandler.rb.useGravity = true;
+        }
+
+
     }
 }
