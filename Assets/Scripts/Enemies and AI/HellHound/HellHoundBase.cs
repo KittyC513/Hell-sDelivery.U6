@@ -57,15 +57,7 @@ public class HellHoundBase : EnemyBase
 
     private void Update()
     {
-        //if we are not grounded apply gravity until ground is reached, this stops the enemy teleporting to the ground
-        if (!DetectGround())
-        {
-            Debug.Log("NOT GROUNDED");
-            //nav agent must be disabled to use the rigidbody's gravity
-            navAgent.updatePosition = false;
-            rb.useGravity = true;
-        }
-
+      
         if (isDead)
         {
             navAgent.updatePosition = false;
@@ -76,6 +68,17 @@ public class HellHoundBase : EnemyBase
     {
         //this is how the enemy looks towards its destination
         if (shouldRotate) RotateTowards((navAgent.destination - navAgent.transform.position).normalized, rotationSpeed);
+
+        //if we are not grounded apply gravity until ground is reached, this stops the enemy teleporting to the ground
+        if (!DetectGround())
+        {
+            Debug.Log("NOT GROUNDED");
+            //nav agent must be disabled to use the rigidbody's gravity
+            navAgent.updatePosition = false;
+            rb.useGravity = true;
+        }
+
+
     }
 
     public void ToggleAttackHitbox(bool state)
