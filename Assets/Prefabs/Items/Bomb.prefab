@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3435195785975598480}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.767018, y: 1.3569992, z: -6.602105}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -134,10 +134,13 @@ MonoBehaviour:
   upwardsModifier_e: 0.04
   isTriggered: 0
   maxDistance: 7
+  startPoint: {x: 0, y: 0, z: 0}
+  endPoint: {x: 0, y: 0, z: 0}
   height: 1.3
   duration: 0.5
   dropForce: 5
-  offsetY: -1
+  forceScale: 1
+  offsetY: -0.5
 --- !u!54 &2965179730859077166
 Rigidbody:
   m_ObjectHideFlags: 0

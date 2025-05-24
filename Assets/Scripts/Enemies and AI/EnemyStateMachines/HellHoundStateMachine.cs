@@ -30,7 +30,7 @@ public class HellHoundStateMachine : StateManager <HellHoundStateMachine.HoundSt
         TransitionToState(newState);
     }
 
-    private void OnHoundDeath()
+    public void OnHoundDeath()
     {
         OverrideState(HoundStates.die);
     }

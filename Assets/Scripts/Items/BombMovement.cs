@@ -1,14 +1,10 @@
 using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.ScrollRect;
 
-public enum E_MovementType
-{
-    Method1,
-    Method2,
-}
 public class BombMovement : MonoBehaviour
 {
     public PlayerLockOn playerLockOn;
@@ -28,17 +24,18 @@ public class BombMovement : MonoBehaviour
     //Drop variables
     //parabolic arc movement Method
     public float maxDistance;
-    private Vector3 startPoint;
-    private Vector3 endPoint;
+    public Vector3 startPoint;
+    public Vector3 endPoint;
     public float height = 5f;
     public float duration = 1f;
     private float time = 0f;
     public float dropForce;
+    public float forceScale = 1f;
     public float offsetY = 0f;
 
 
     //ground check
-    private bool isOnGround = false;
+    public bool isOnGround = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -64,10 +61,15 @@ public class BombMovement : MonoBehaviour
             {
                 MoveTowardTarget(targetPos);
             }
-
-
-
             //No target is locked on
+            else
+            {
+                if (!isOnGround)
+                    ThrowBombWithoutTarget();
+
+            }
+
+
         }
 
     }
@@ -120,7 +122,7 @@ public class BombMovement : MonoBehaviour
     /// </summary>
     void MovementMethod()
     {
-
+        Debug.Log("the target is over max distance of throwing");
         time += Time.deltaTime;
         float t = Mathf.Clamp01(time / duration);
         //gain end point, the pos of end point can be modified by dropping force
@@ -136,6 +138,26 @@ public class BombMovement : MonoBehaviour
     }
     #endregion
 
+    #region when not target is locked on, throwing a bomb
+
+    void ThrowBombWithoutTarget()
+    {
+        Debug.Log("Not target is locked on");
+        time += Time.deltaTime;
+        float t = Mathf.Clamp01(time / duration);
+        //gain end point, the pos of end point can be modified by dropping force
+        endPoint = playerLockOn.transform.forward * dropForce * forceScale + startPoint;
+        endPoint.y = offsetY;
+        // Linear interpolation for X and Z
+        Vector3 currentPos = Vector3.Lerp(startPoint, endPoint, t);
+        // Parabolic height using a simple formula: 4h * t * (1 - t)
+        float parabola = 4 * height * t * (1 - t);
+        currentPos.y = Mathf.Lerp(startPoint.y, endPoint.y, t) + parabola;
+        
+        this. transform.position = currentPos;
+    }
+    #endregion
+
 
     #region Explosion Function - apply force to different objects 
     public void ApplyExplosionForce()
@@ -143,7 +165,7 @@ public class BombMovement : MonoBehaviour
         isTriggered = true;
 
         //Detect the explosion area, it's a sphere detector, set LayerMask that to be affected
-        colliders_e = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable"));
+        colliders_e = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable") | 1 << LayerMask.NameToLayer("Enemy"));
         colliders_p = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
 
         Debug.Log(colliders_e.Length + "_enemy/enemies in the explosion range");
@@ -154,7 +176,7 @@ public class BombMovement : MonoBehaviour
             for (int i = 0; i < colliders_e.Length; i++)
             {
                 colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
-               
+                colliders_e[i].GetComponent<EnemyHealth>().TakeDamage(2);
             }
 
         }
@@ -194,11 +216,13 @@ public class BombMovement : MonoBehaviour
 
     #region GrounCheck
     //Ground Check
-    private void OnTriggerEnter(Collider other)
+    private bool GroundCheck()
     {
-        if (other.CompareTag("Ground"))
-            isOnGround = true;
+        //Ground check method
+        return false;
     }
+
+    
     #endregion
 
 

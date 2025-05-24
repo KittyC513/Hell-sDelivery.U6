@@ -27,7 +27,7 @@ public class EnemyHealth : MonoBehaviour
     }
 
     //called when this script takes damage, not subbed to the event because this function needs a dmg value whereas any other reaction to taking damage wouldn't
-    private void TakeDamage(int dmg)
+    public void TakeDamage(int dmg)
     {
         currentHealth -= dmg;
 
