@@ -593,10 +593,13 @@ MonoBehaviour:
   jumpReleaseFactor: 2
   jumpPeakFactor: 0.3
   jumpPeakRange: 1.2
+  jumpHeight_exploded: 40
+  jumpDecay_exploded: 40
+  gravityFactor: 0.3
   doubleJumpHeight: 1
   doubleJumpDecayRate: 45
   maxJumps: 2
-  remainingJumps: 0
+  remainingJumps: 2
   maxSlideSpeed: 25
   slideAccel: 85
   maxSlopeAngle: 45
@@ -652,12 +655,16 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inputDetection: {fileID: 3167985525364349275}
-  aControl: {fileID: 2156524465778351454}
+  inputDetection: {fileID: 0}
+  aControl: {fileID: 0}
   anim: {fileID: 0}
   currentSpeed: 0
-  playerLockOn: {fileID: 2126423918051728224}
+  playerLockOn: {fileID: 0}
   isLookAtTriggered: 0
+  jumpTime: 0
+  maxHeight: 68
+  totalAirTime: 5
+  horizontalDistance: 60
 --- !u!114 &3534729435414562412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,6 +771,8 @@ MonoBehaviour:
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
   jumpBufferTime: 0.2
+  dropActiveItemTime: 0.3
+  currentTime: 0
   isCheckedDevice: 0
   inputDeviceType: 0
 --- !u!114 &866038887779867377

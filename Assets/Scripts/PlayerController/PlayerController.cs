@@ -12,6 +12,7 @@ using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 using UnityEditor.ShaderGraph;
+using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
 //as well as any functionality that will always need to be active regardless of state such as basic movement, ground checks and rotation
@@ -60,14 +61,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float jumpReleaseFactor = 2f; //how much gravity is increased when the jump button is let go of
     [SerializeField] private float jumpPeakFactor = 0.3f; //how much gravity is changed at the peak of the jump to give longer air time
     [SerializeField] private float jumpPeakRange = 1.2f; //what velocity value will slow down velocity at the peak of a jump
-
-    [Space, Header("Exploded Variables")]
-    private float jumpTime_exploded = 0;
-    private float maxJumpTime_exploded = 1.7f;
-    private float jumpHeight_exploded = 7;
-    private float jumpDecay_exploded = 30f;
-    private float jumpForce_exploded = 5f;
-    private float gravityFactor = 1;
 
     [Space, Header ("Double Jump Variables")]
     [SerializeField] private float doubleJumpHeight = 1f; //jump height when double jumping
@@ -119,6 +112,11 @@ public class PlayerController : NetworkBehaviour
     [Space,Header("Lock")]
     public PlayerLockOn playerLockOn;
     public bool isLookAtTriggered = false; //if the player is looking at the target
+
+    [Space, Header("Exploded Variables")]
+    public float maxHeight = 3f;
+    public float totalAirTime = 1.2f;
+    public float horizontalDistance = 8f;
 
 
     //these variables are all accessable to the various states
@@ -191,9 +189,15 @@ public class PlayerController : NetworkBehaviour
 
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
+        
+        //reset fallAccelScale to 1
+        if(grounded && fallAccelScale!= 1) 
+            fallAccelScale = 1.0f;
+
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
+        Debug.Log("RegularGravity" + Physics.gravity);
     }
 
     private void FixedUpdate()
@@ -506,19 +510,14 @@ public class PlayerController : NetworkBehaviour
         return aControl.canAttack;
     }
 
-    public void GainExplodedForce(Vector3 direction, float maxHeight, float horizontaolDistance, float totalTime)
+    public void GainExplodedForce(Vector3 direction)
     {
-        float gravity = Mathf.Abs(Physics.gravity.y);
-
-        float verticalVelocity = (4 * maxHeight) / totalTime;
-
-        Vector3 horizontalDirection = new Vector3(direction.x, 0, direction.z).normalized;
-        float horizontalSpeed = horizontaolDistance / totalTime;
-        Vector3 horizontalVelocity = horizontalDirection * horizontalSpeed;
-
+        float verticalVelocity = (4 * maxHeight) / totalAirTime;
+        float horizontalSpeed = horizontalDistance / totalAirTime;
+        Vector3 horizontalVelocity = direction * horizontalSpeed;
         Vector3 launchVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
-
         rb.linearVelocity = launchVelocity;
+        //rb.AddForce(launchVelocity * rb.mass, ForceMode.Impulse);
 
     }
 

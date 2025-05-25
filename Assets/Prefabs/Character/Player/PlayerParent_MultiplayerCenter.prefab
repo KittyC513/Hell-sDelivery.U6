@@ -371,11 +371,16 @@ MonoBehaviour:
   maxFallSpeed: 25
   fallAccel: 45
   maxFallAccelStep: 150
+  gravityScale: 1
+  fallAccelScale: 1
   jumpHeight: 3
   jumpDecayRate: 55
   jumpReleaseFactor: 2
   jumpPeakFactor: 0.3
   jumpPeakRange: 1.2
+  jumpHeight_exploded: 7
+  jumpDecay_exploded: 60
+  gravityFactor: 1
   doubleJumpHeight: 1
   doubleJumpDecayRate: 45
   maxJumps: 2
@@ -392,9 +397,6 @@ MonoBehaviour:
   ledgeGrabMask:
     serializedVersion: 2
     m_Bits: 256
-  attackTime: 1
-  attackCooldown: 0.5
-  canAttack: 1
   coyoteTime: 0.1
   quickTurnMultiplier:
     serializedVersion: 2
@@ -439,7 +441,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   inputDetection: {fileID: 3167985525364349275}
+  aControl: {fileID: 0}
+  anim: {fileID: 0}
   currentSpeed: 0
+  playerLockOn: {fileID: 0}
+  isLookAtTriggered: 0
+  jumpTime: 0
 --- !u!114 &3534729435414562412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +459,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9661b2029c93f6b49b68a1dba66313e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   controller: {fileID: 4161022655810438540}
+  attackControl: {fileID: 0}
+  dialogueControl: {fileID: 0}
+  showCurrentState: 0
 --- !u!114 &6453902458872554444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +483,7 @@ MonoBehaviour:
   grabbableMask:
     serializedVersion: 2
     m_Bits: 64
+  inputDetection: {fileID: 0}
   forwardThrowForce: 6
   upwardsThrowForce: 4
   currentObject: {fileID: 0}
@@ -487,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894c469af2fe36d439e92d90ea022369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   objectController: {fileID: 6453902458872554444}
   playerController: {fileID: 4161022655810438540}
 --- !u!114 &495353182775990796
@@ -534,9 +547,14 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   jumpPressed: 0
   crouchPressed: 0
+  lockPressed: 0
+  attackPressed: 0
+  grabPressed: 0
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
   jumpBufferTime: 0.2
+  dropActiveItemTime: 0.3
+  currentTime: 0
   isCheckedDevice: 0
   inputDeviceType: 0
 --- !u!114 &866038887779867377
@@ -927,3 +945,9 @@ MonoBehaviour:
   detectorSphereRadius: 0.3
   distanceRecoverySpeed: 3
   distanceRecoveryDelay: 1
+  movePos: {x: 0, y: 0, z: 0}
+  moveSpeed: 5
+  defaultPos: {fileID: 0}
+  resetPos: 0
+  cameraManager: {fileID: 0}
+  isResetPos: 1

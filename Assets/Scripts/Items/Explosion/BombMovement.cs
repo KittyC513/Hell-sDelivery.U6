@@ -200,15 +200,16 @@ public class BombMovement : MonoBehaviour
                 Debug.Log("Player : " + colliders_p[i].name);
                 // gain the dirction between bomb and player
                 Vector3 dir = (colliders_p[i].transform.position - this.transform.position).normalized;
+                colliders_p[i].GetComponent<PlayerController>().GainExplodedForce(dir);
                 //colliders_p[i].GetComponent<Rigidbody>().AddForce(dir * explosionForce_pH + Vector3.up * explosionForce_pV, ForceMode.Impulse);
-                //colliders_p[i].GetComponent<PlayerStateMachine>().OverrideState(PlayerStateMachine.PlayerStates.airborne);
-                //colliders_p[i].GetComponent<PlayerController>().fallAccelScale = 0.2f;
+                colliders_p[i].GetComponent<PlayerStateMachine>().OverrideState(PlayerStateMachine.PlayerStates.airborne);
+                colliders_p[i].GetComponent<PlayerController>().fallAccelScale = 0.5f;
             }
         }
 
         #endregion
         //Destroy after the certain amount of time
-        Destroy(this.gameObject, 0.2f);
+        Destroy(this.gameObject, 0.5f);
 
     }
     #endregion
