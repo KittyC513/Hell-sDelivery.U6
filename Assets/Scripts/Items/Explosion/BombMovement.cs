@@ -17,9 +17,9 @@ public class BombMovement : MonoBehaviour
     public float explosionForce_e;
     public float explosionForce_pH;
     public float explosionForce_pV;
-    public float upwardsModifier_e;
 
     public bool isTriggered = false;
+    private bool isThrew = false;
 
     //Drop variables
     //parabolic arc movement Method
@@ -35,7 +35,7 @@ public class BombMovement : MonoBehaviour
 
 
     //ground check
-    public bool isOnGround = false;
+    public float groundCheckDist = 1f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -64,7 +64,7 @@ public class BombMovement : MonoBehaviour
             //No target is locked on
             else
             {
-                if (!isOnGround)
+                if (!GroundCheck())
                     ThrowBombWithoutTarget();
 
             }
@@ -109,7 +109,7 @@ public class BombMovement : MonoBehaviour
         #region the target is over max distance of throwing
         else
         {
-            if (!isOnGround)
+            if (!GroundCheck())
                 MovementMethod();
 
         }
@@ -126,7 +126,11 @@ public class BombMovement : MonoBehaviour
         time += Time.deltaTime;
         float t = Mathf.Clamp01(time / duration);
         //gain end point, the pos of end point can be modified by dropping force
-        endPoint = playerLockOn.transform.forward * dropForce + startPoint;
+        if (!isThrew)
+        {
+            endPoint = playerLockOn.transform.forward * dropForce + startPoint;
+            isThrew = true;
+        }
         endPoint.y = offsetY;
         // Linear interpolation for X and Z
         Vector3 currentPos = Vector3.Lerp(startPoint, endPoint, t);
@@ -138,6 +142,7 @@ public class BombMovement : MonoBehaviour
     }
     #endregion
 
+
     #region when not target is locked on, throwing a bomb
 
     void ThrowBombWithoutTarget()
@@ -146,7 +151,11 @@ public class BombMovement : MonoBehaviour
         time += Time.deltaTime;
         float t = Mathf.Clamp01(time / duration);
         //gain end point, the pos of end point can be modified by dropping force
-        endPoint = playerLockOn.transform.forward * dropForce * forceScale + startPoint;
+        if (!isThrew)
+        {
+            endPoint = playerLockOn.transform.forward * dropForce * forceScale + startPoint;
+            isThrew = true;
+        }
         endPoint.y = offsetY;
         // Linear interpolation for X and Z
         Vector3 currentPos = Vector3.Lerp(startPoint, endPoint, t);
@@ -175,7 +184,7 @@ public class BombMovement : MonoBehaviour
         {
             for (int i = 0; i < colliders_e.Length; i++)
             {
-                colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
+                //colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
                 colliders_e[i].GetComponent<EnemyHealth>().TakeDamage(2);
             }
 
@@ -191,8 +200,8 @@ public class BombMovement : MonoBehaviour
                 Debug.Log("Player : " + colliders_p[i].name);
                 // gain the dirction between bomb and player
                 Vector3 dir = (colliders_p[i].transform.position - this.transform.position).normalized;
-                colliders_p[i].GetComponent<Rigidbody>().AddForce(dir * explosionForce_pH + Vector3.up * explosionForce_pV, ForceMode.Impulse);
-                colliders_p[i].GetComponent<PlayerStateMachine>().OverrideState(PlayerStateMachine.PlayerStates.airborne);
+                //colliders_p[i].GetComponent<Rigidbody>().AddForce(dir * explosionForce_pH + Vector3.up * explosionForce_pV, ForceMode.Impulse);
+                //colliders_p[i].GetComponent<PlayerStateMachine>().OverrideState(PlayerStateMachine.PlayerStates.airborne);
                 //colliders_p[i].GetComponent<PlayerController>().fallAccelScale = 0.2f;
             }
         }
@@ -219,10 +228,15 @@ public class BombMovement : MonoBehaviour
     private bool GroundCheck()
     {
         //Ground check method
-        return false;
-    }
 
-    
+        if (Physics.Raycast(this.transform.position, Vector3.down, groundCheckDist, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            Debug.Log("Bomb is grounded");
+            return true;
+        }
+        return false;
+
+    }
     #endregion
 
 

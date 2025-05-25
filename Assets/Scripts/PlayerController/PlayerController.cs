@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using UnityEditor.ShaderGraph;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
 //as well as any functionality that will always need to be active regardless of state such as basic movement, ground checks and rotation
@@ -59,6 +60,14 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float jumpReleaseFactor = 2f; //how much gravity is increased when the jump button is let go of
     [SerializeField] private float jumpPeakFactor = 0.3f; //how much gravity is changed at the peak of the jump to give longer air time
     [SerializeField] private float jumpPeakRange = 1.2f; //what velocity value will slow down velocity at the peak of a jump
+
+    [Space, Header("Exploded Variables")]
+    private float jumpTime_exploded = 0;
+    private float maxJumpTime_exploded = 1.7f;
+    private float jumpHeight_exploded = 7;
+    private float jumpDecay_exploded = 30f;
+    private float jumpForce_exploded = 5f;
+    private float gravityFactor = 1;
 
     [Space, Header ("Double Jump Variables")]
     [SerializeField] private float doubleJumpHeight = 1f; //jump height when double jumping
@@ -497,6 +506,20 @@ public class PlayerController : NetworkBehaviour
         return aControl.canAttack;
     }
 
+    public void GainExplodedForce(Vector3 direction, float maxHeight, float horizontaolDistance, float totalTime)
+    {
+        float gravity = Mathf.Abs(Physics.gravity.y);
 
+        float verticalVelocity = (4 * maxHeight) / totalTime;
+
+        Vector3 horizontalDirection = new Vector3(direction.x, 0, direction.z).normalized;
+        float horizontalSpeed = horizontaolDistance / totalTime;
+        Vector3 horizontalVelocity = horizontalDirection * horizontalSpeed;
+
+        Vector3 launchVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
+
+        rb.linearVelocity = launchVelocity;
+
+    }
 
 }
