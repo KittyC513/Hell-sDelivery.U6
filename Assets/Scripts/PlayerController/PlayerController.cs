@@ -11,7 +11,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
-using UnityEditor.ShaderGraph;
 using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here

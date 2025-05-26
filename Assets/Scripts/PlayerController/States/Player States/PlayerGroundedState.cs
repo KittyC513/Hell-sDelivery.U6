@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
@@ -16,7 +15,8 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
     {
         pControl.gravityScale = 1f;
         //Debug.Log("ENTER GROUNDED");
-        rb = pControl.RB;
+        if(pControl.RB != null)
+            rb = pControl.RB;
         //rb.AddForce(rb.velocity * -1);
 
         //reset our maximum jumps
