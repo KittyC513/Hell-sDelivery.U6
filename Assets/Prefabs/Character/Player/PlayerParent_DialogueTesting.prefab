@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &314226998518487352
 Transform:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6784667347201551197
 Transform:
   m_ObjectHideFlags: 0
@@ -334,13 +334,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 4091438702
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 4091438702
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
+  SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -766,6 +766,8 @@ MonoBehaviour:
   grabPressed: 0
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
+  isExploded: 0
+  isResetCam: 0
   jumpBufferTime: 0.2
   dropActiveItemTime: 0.3
   currentTime: 0
@@ -1195,7 +1197,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.5
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -1277,6 +1279,8 @@ MonoBehaviour:
   playerTransform: {fileID: 6347196777763878027}
   inputDetection: {fileID: 3167985525364349275}
   distance: 10
+  oriDistance: 10
+  topdownDistance: 20
   rotateSpeed: 120
   offset: {x: 0, y: 1.5, z: 0}
   invertPitch: 0
@@ -1290,7 +1294,9 @@ MonoBehaviour:
   distanceRecoveryDelay: 1
   movePos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
+  oriMoveSpeed: 5
+  topdownMoveSpeed: 12
   defaultPos: {fileID: 5113240428649811745}
   resetPos: 0
   cameraManager: {fileID: 1062957148588737322}
-  isResetPos: 1
+  offsetY: 70

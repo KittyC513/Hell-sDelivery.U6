@@ -191,8 +191,13 @@ public class PlayerController : NetworkBehaviour
         DetectGround(); //detect ground and slopes
         
         //reset fallAccelScale to 1
-        if(grounded && fallAccelScale!= 1) 
+        if(grounded && (fallAccelScale!= 1 || inputDetection.isExploded != false || inputDetection.isResetCam != false))
+        {
             fallAccelScale = 1.0f;
+            inputDetection.isExploded = false;
+            inputDetection.isResetCam = false;
+        } 
+
 
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
@@ -512,6 +517,7 @@ public class PlayerController : NetworkBehaviour
 
     public void GainExplodedForce(Vector3 direction)
     {
+        inputDetection.isExploded = true;
         float verticalVelocity = (4 * maxHeight) / totalAirTime;
         float horizontalSpeed = horizontalDistance / totalAirTime;
         Vector3 horizontalVelocity = direction * horizontalSpeed;

@@ -3,6 +3,7 @@
 #define Network
 #undef Network
 
+using PixelCrushers.DialogueSystem;
 using System.Drawing;
 using System.Xml.Serialization;
 using Unity.Netcode;
@@ -26,6 +27,8 @@ public class CameraMovement_Player : NetworkBehaviour
     //纵向:俯仰角 left_right rotate
     Vector3 mYawRotateAxis;
     public float distance = 4;
+    public float oriDistance = 4;
+    public float topdownDistance;
     public float rotateSpeed = 120f;
     public Vector3 offset = new Vector3(0f, 1.5f, 0f);
 
@@ -65,15 +68,19 @@ public class CameraMovement_Player : NetworkBehaviour
     [Header("Camera Moving Speed")]
     public Vector3 movePos;
     public float moveSpeed = 5f;
+    public float oriMoveSpeed;
+    public float topdownMoveSpeed;
     public Transform defaultPos;
     public bool resetPos = false;
 
     public CameraManager cameraManager;
-    public bool isResetPos = true;
-    private Vector3 camInput;
+    public float offsetY;
+
 
     private void Start()
     {
+        distance = oriDistance;
+        moveSpeed = oriMoveSpeed;
         // get y axis
         var upAxis = -Physics.gravity.normalized;
         //set cam default regarding player's position
@@ -90,20 +97,16 @@ public class CameraMovement_Player : NetworkBehaviour
     }
     private void OnEnable()
     {
-        //// get y axis
-        //var upAxis = -Physics.gravity.normalized;
-        ////set cam default regarding player's position
-        //mDefaultDir = Vector3.ProjectOnPlane(transform.position - playerTransform.position, upAxis).normalized;
-        ////Initial yam and pitch axis
-        //mYawRotateAxis = upAxis;
-        //mPitchRotateAxis = Vector3.Cross(upAxis, Vector3.ProjectOnPlane(transform.forward, upAxis));
+        /*************/
+        //distance = topdownDistance;
+        /*************/
+
 
         //Reset function 
         mRotateValue.x = playerTransform.eulerAngles.y; // face behind player
         mRotateValue.y = Mathf.Clamp(distance, pitchLimit.x, pitchLimit.y); // default pitch
 
         this.transform.position = cameraManager.lockCam.transform.position;
-        //ResetPos(defaultPos);
     }
     private void Update()
     {
@@ -113,7 +116,17 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-        CameraMovement();
+        if (inputDetection.isExploded && !inputDetection.isResetCam)
+        {
+            SwitchToTopDownCam();
+            inputDetection.isResetCam = true;
+        }
+        else if (!inputDetection.isExploded && (distance != oriDistance || moveSpeed != oriMoveSpeed)) 
+        {
+            distance = oriDistance;
+            moveSpeed = oriMoveSpeed;
+        }
+            CameraMovement();
 
         //if (!resetPos)
         //{
@@ -126,6 +139,18 @@ public class CameraMovement_Player : NetworkBehaviour
         //}
 
     }
+    #region Topdown Cam while gaining exploded force
+    void SwitchToTopDownCam()
+    {
+        Debug.Log("Topdown view");
+        distance = topdownDistance;
+        moveSpeed = topdownMoveSpeed;
+
+        mRotateValue.x = playerTransform.eulerAngles.y; // face behind player
+        mRotateValue.y = Mathf.Clamp(distance, pitchLimit.x + offsetY, pitchLimit.y); // default pitch
+
+    }
+    #endregion
 
 
     #region Player Camera movement(Base)

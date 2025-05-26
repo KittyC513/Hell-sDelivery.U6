@@ -17,6 +17,7 @@ public class BombMovement : MonoBehaviour
     public float explosionForce_e;
     public float explosionForce_pH;
     public float explosionForce_pV;
+    public float upwardsModifier_e;
 
     public bool isTriggered = false;
     private bool isThrew = false;
@@ -184,7 +185,7 @@ public class BombMovement : MonoBehaviour
         {
             for (int i = 0; i < colliders_e.Length; i++)
             {
-                //colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
+                colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
                 colliders_e[i].GetComponent<EnemyHealth>().TakeDamage(2);
             }
 

@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
 using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -28,6 +29,8 @@ public class PlayerInputDetection : NetworkBehaviour
 
     public Camera cam;
     public Camera playerCam;
+    public bool isExploded = false;
+    public bool isResetCam = false;
 
     [SerializeField] private float jumpBufferTime = 0.2f; //how long the jump input is read, used to buffer jumps 
     private float jumpBufferCurrent = 0;
