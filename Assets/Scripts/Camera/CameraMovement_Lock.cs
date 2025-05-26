@@ -22,7 +22,8 @@ public class CameraMovement_Lock : MonoBehaviour
 
     public float distance = 5f; // Distance from the target
     public float height = 2f; // Height above the target
-
+    public float collisionOffset = 0.3f; // how close the camera can get to a wall
+    private RaycastHit hit;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -68,7 +69,6 @@ public class CameraMovement_Lock : MonoBehaviour
     private void CameraMovementMethod2()
     {
         
-
         //Rotate the offset to always be behind the player
         Vector3 desiredPosition = player.position + player.rotation * offSet;
 
@@ -93,6 +93,19 @@ public class CameraMovement_Lock : MonoBehaviour
             Vector3 dir = (player.position - playerLockOn.lockTarget.transform.position).normalized;
             // Camera offset
             Vector3 desiredPosition = midpoint + dir * distance + Vector3.up * height;
+
+            Vector3 collisionCheckStart = playerLockOn.lockTarget.transform.position + Vector3.up * 1.5f;
+            Vector3 directionToCamera = (desiredPosition - collisionCheckStart).normalized;
+            float desiredDistance = Vector3.Distance(collisionCheckStart, desiredPosition);
+
+
+            if (Physics.Raycast(collisionCheckStart, directionToCamera, out hit, desiredDistance, 1 << LayerMask.NameToLayer("Wall")))
+            {
+                // Adjust position to just before the obstacle
+                desiredPosition = hit.point - directionToCamera * collisionOffset;
+            }
+
+
             // Smooth camera movement
             transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * smoothSpeed);
             // Look at the target (or midpoint)
