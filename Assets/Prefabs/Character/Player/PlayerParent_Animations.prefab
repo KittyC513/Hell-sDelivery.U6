@@ -571,7 +571,7 @@ MonoBehaviour:
   rotationSpeed: 15
   groundLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 448
   visualizeRaycast: 1
   floatHeight: 0.2
   raycastDist: 0.4
@@ -582,6 +582,7 @@ MonoBehaviour:
   fallAccel: 45
   maxFallAccelStep: 150
   gravityScale: 1
+  fallAccelScale: 1
   jumpHeight: 3
   jumpDecayRate: 55
   jumpReleaseFactor: 2
@@ -652,6 +653,9 @@ MonoBehaviour:
   currentSpeed: 0
   playerLockOn: {fileID: 3662975582725661216}
   isLookAtTriggered: 0
+  maxHeight: 3
+  totalAirTime: 1.2
+  horizontalDistance: 8
 --- !u!114 &4154314733899377294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +671,7 @@ MonoBehaviour:
   anim: {fileID: 7762844096772117635}
   controller: {fileID: 7473742530820170042}
   attackControl: {fileID: 5133293132453997093}
+  dialogueControl: {fileID: 0}
   showCurrentState: 0
 --- !u!114 &5199581260611710357
 MonoBehaviour:
@@ -756,7 +761,11 @@ MonoBehaviour:
   grabPressed: 0
   cam: {fileID: 1118409008970511611}
   playerCam: {fileID: 1118409008970511611}
+  isExploded: 0
+  isResetCam: 0
   jumpBufferTime: 0.2
+  dropActiveItemTime: 0.3
+  currentTime: 0
   isCheckedDevice: 0
   inputDeviceType: 0
 --- !u!114 &307583485102679301
@@ -1027,6 +1036,8 @@ MonoBehaviour:
   playerTransform: {fileID: 8422092204057916922}
   inputDetection: {fileID: 5509215914677950525}
   distance: 10
+  oriDistance: 4
+  topdownDistance: 0
   rotateSpeed: 120
   offset: {x: 0, y: 1.5, z: 0}
   invertPitch: 0
@@ -1040,10 +1051,12 @@ MonoBehaviour:
   distanceRecoveryDelay: 1
   movePos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
+  oriMoveSpeed: 0
+  topdownMoveSpeed: 0
   defaultPos: {fileID: 4806908118540621154}
   resetPos: 0
   cameraManager: {fileID: 5764554587499620219}
-  isResetPos: 1
+  offsetY: 0
 --- !u!1 &8754351330438206717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,6 +1205,7 @@ MonoBehaviour:
   playerLockOn: {fileID: 3662975582725661216}
   distance: 8
   height: 2.5
+  collisionOffset: 0.3
 --- !u!1 &8929415180158217774
 GameObject:
   m_ObjectHideFlags: 0
