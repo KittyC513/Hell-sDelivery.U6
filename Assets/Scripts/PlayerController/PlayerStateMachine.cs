@@ -28,7 +28,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
         states.Add(PlayerStates.frozen, new PlayerFrozenState(PlayerStates.frozen, controller,dialogueControl));
         states.Add(PlayerStates.ragdoll, new PlayerRagdollState(PlayerStates.ragdoll, controller));
         states.Add(PlayerStates.attack, new PlayerAttackState(PlayerStates.attack, controller, attackControl));
-        states.Add(PlayerStates.headBounce, new PlayerHeadBounce(PlayerStates.headBounce, controller));
+        //states.Add(PlayerStates.headBounce, new PlayerHeadBounce(PlayerStates.headBounce, controller));
 
         //set our current state to airborne as a default starting state
         currentState = states[PlayerStates.airborne];
