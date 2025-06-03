@@ -26,10 +26,6 @@ public class ItemHandler : MonoBehaviour
     [HideInInspector]
     public Rigidbody rb;
 
-
-
-
-
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
