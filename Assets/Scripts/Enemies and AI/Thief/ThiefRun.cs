@@ -8,6 +8,7 @@ public class ThiefRun : BaseState<ThiefStateMachine.ThiefStates>
     private float runAwayDist;
 
     private NavMeshAgent navAgent;
+    private float runSpeed = 7f;
     public ThiefRun(ThiefStateMachine.ThiefStates key, ThiefBase thiefBase) : base(key)
     {
         tBase = thiefBase;
@@ -18,7 +19,7 @@ public class ThiefRun : BaseState<ThiefStateMachine.ThiefStates>
     public override void EnterState()
     {
         runAwayDist = tBase.PlayerDetectionRadius + 3;
-        tBase.animator.SetFloat("Speed", navAgent.speed);
+        tBase.animator.SetFloat("Speed", runSpeed);
     }
 
     public override void ExitState()
