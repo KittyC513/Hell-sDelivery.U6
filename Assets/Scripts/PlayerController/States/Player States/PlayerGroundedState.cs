@@ -23,7 +23,10 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
         pControl.remainingJumps = pControl.MaxJumps;
 
         //set animation 
-        animName = "Player_Land";
+        //animName = "Player_Land";
+
+        //set placeholder animation
+        animName = "Idle";
     }
 
     public override void ExitState()

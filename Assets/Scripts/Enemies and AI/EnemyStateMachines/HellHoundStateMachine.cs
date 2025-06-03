@@ -3,12 +3,15 @@ using UnityEngine.AI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using static PlayerStateMachine;
 
 public class HellHoundStateMachine : StateManager <HellHoundStateMachine.HoundStates>
 {
     public enum HoundStates { wander, chase, attack, cooldown, die }
 
     [SerializeField] private HellHoundBase houndBase;
+
+    [SerializeField] public HoundStates showCurrentState;
 
     private void Awake()
     {
@@ -33,6 +36,11 @@ public class HellHoundStateMachine : StateManager <HellHoundStateMachine.HoundSt
     public void OnHoundDeath()
     {
         OverrideState(HoundStates.die);
+    }
+
+    private void LateUpdate()
+    {
+        showCurrentState = currentState.stateKey;
     }
 
 }

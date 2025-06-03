@@ -1,3 +1,5 @@
+#define placeholder_animation
+#undef placeholder_animation
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -52,7 +54,12 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         pControl.remainingJumps -= 1;
 
         //set animation to jump
-        animName = "Player_Jump";
+        //animName = "Player_Jump";
+
+        //set placeholder animation to jump
+        animName = "Jump In Place";
+
+
     }
 
     public override void ExitState()

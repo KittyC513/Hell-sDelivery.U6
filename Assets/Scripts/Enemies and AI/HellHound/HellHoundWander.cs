@@ -10,6 +10,9 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
     private NavMeshAgent navAgent;
     private HellHoundBase hellHoundBase;
 
+    //public Animator animator;
+
+
     public HellHoundWander(HellHoundStateMachine.HoundStates key, HellHoundBase houndBase) : base(key)
     {
         hellHoundBase = houndBase;
@@ -23,6 +26,9 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
         wanderTime = hellHoundBase.WanderTime;
 
         if (navAgent.isActiveAndEnabled) navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
+
+        //set placeholder animation
+        hellHoundBase.animator.SetFloat("Speed", navAgent.speed);
     }
 
     public override void ExitState()

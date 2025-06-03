@@ -18,6 +18,7 @@ public class ThiefRun : BaseState<ThiefStateMachine.ThiefStates>
     public override void EnterState()
     {
         runAwayDist = tBase.PlayerDetectionRadius + 3;
+        tBase.animator.SetFloat("Speed", navAgent.speed);
     }
 
     public override void ExitState()

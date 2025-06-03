@@ -20,6 +20,9 @@ public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
     {
         attackComplete = false;
         hellHoundBase.StartCoroutine(AttackSequence());
+
+        //set placeholder animation
+        animName = "Bite Attack";
     }
 
     public override void ExitState()
