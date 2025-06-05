@@ -17,6 +17,9 @@ public class HellHoundCooldown : BaseState<HellHoundStateMachine.HoundStates>
     {
         cooldownTemp = 0;
         hellHoundBase.NavAgent.updatePosition = false;
+
+        //set placeholder animation
+        animName = "Sniff";
     }
 
     public override void ExitState()

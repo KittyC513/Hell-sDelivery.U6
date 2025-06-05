@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ThiefBase : EnemyBase
 {
+    public Animator animator;
+
     public bool shouldRotate = true;
     [SerializeField] private bool showRadius;
     [HideInInspector] public bool hasPackage = false;
@@ -66,7 +68,17 @@ public class ThiefBase : EnemyBase
     {
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
-        eHealth.onEnemyDeath += OnEnemyDeath;
+        //eHealth.onEnemyDeath += OnEnemyDeath;
+        eHealth.onEnemyDeath += () =>
+        {
+            animator.SetTrigger("Dead");
+            //disable navmesh
+            navAgent.updatePosition = false;
+            //keep rigidbody active but stop adding forces / cancel knockback 
+            isDead = true;
+            //poof / destroy object after timer / animation finishes
+            Destroy(this.gameObject, deathTime);
+        };
         eHealth.onTakeDamage += SetRunState;
     }
 

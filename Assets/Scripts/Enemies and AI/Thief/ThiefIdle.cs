@@ -20,7 +20,7 @@ public class ThiefIdle : BaseState<ThiefStateMachine.ThiefStates>
 
     public override void EnterState()
     {
-
+        animName = "Fly Idle";
     }
 
     public override void ExitState()

@@ -28,6 +28,7 @@ public class ThiefSteal : BaseState<ThiefStateMachine.ThiefStates>
     public override void EnterState()
     {
         tBase.StartCoroutine(AttackSequence());
+        animName = "Bite Attack";
     }
 
     public override void ExitState()
