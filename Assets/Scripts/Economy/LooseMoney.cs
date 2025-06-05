@@ -3,22 +3,23 @@ using UnityEngine;
 
 public class LooseMoney : MonoBehaviour
 {
-    [SerializeField] public int value = 5;
-    [SerializeField] private float rotationSpeed = 80;
+    [SerializeField] public int value = 5; //the value of this pickup
+    [SerializeField] private float rotationSpeed = 80; //how fast the object rotates on the ground
 
-    [SerializeField] private GameObject collectableObj;
+    [SerializeField] private GameObject collectableObj; //this is the gameobject that reacts with the player's hitbox to be collected
     private Rigidbody rb;
 
     private Animator anim;
 
-    private bool collected = false;
+    private bool collected = false; //has this object been collected yet
 
-    private float activateTime = 0.55f;
+    private float activateTime = 0.55f; //how long until this object starts reacting to the player (can be collected, moves towards player)
     private float timeTemp = 0;
 
-    [SerializeField] private float gravity = 2;
+    [SerializeField] private float gravity = 14; //a manual gravity value that can be used to fine tune how the money feels
 
-    public bool activated = false;
+    public bool activated = false; //is this object active yet
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,6 +31,7 @@ public class LooseMoney : MonoBehaviour
         //rotate the money in place
         transform.Rotate(Vector3.up * (Time.deltaTime * rotationSpeed));
 
+        //count up until this object activates
         if (timeTemp < activateTime)
         {
             timeTemp += Time.deltaTime;
@@ -42,6 +44,7 @@ public class LooseMoney : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //add our gravity to the rigidbody
         rb.AddForce(Vector3.down * gravity, ForceMode.Force);
     }
 
@@ -67,6 +70,7 @@ public class LooseMoney : MonoBehaviour
 
     private void OnCollect()
     {
+        //set animator and destroy this object
         anim.SetTrigger("OnCollect");
         Destroy(this.gameObject, 0.5f);
     }

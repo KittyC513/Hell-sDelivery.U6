@@ -11,14 +11,16 @@ public class DropMoney : MonoBehaviour
     [SerializeField] private float2 forceRangeX = new float2(1.5f, 4);
     [SerializeField] private float2 forceRangeY = new float2(4, 8);
 
+    //a simple struct that combines a prefab and amount of that prefab to drop
     [SerializeField] private MoneyCounts[] moneyCount;
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SpawnCurrency();
-        }
+        //a debug function to test the dropping of money
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    SpawnCurrency();
+        //}
     }
     public void SpawnCurrency()
     {
@@ -26,18 +28,25 @@ public class DropMoney : MonoBehaviour
         {
             for(int j = 0; j < moneyCount[i].amount; j++)
             {
+                //spawn a money prefab and get its rigidbody
                 GameObject temp = Instantiate(moneyCount[i].moneyPrefab, transform.position, Quaternion.identity);
                 Rigidbody tempRB = temp.GetComponent<Rigidbody>();
 
+                //if the rigidbody is not null
                 if (tempRB != null)
                 {
+                    //get random values for the x, y and z
                     float randomX = UnityEngine.Random.Range(forceRangeX.x, forceRangeX.y);
                     float randomZ = UnityEngine.Random.Range(forceRangeX.x, forceRangeX.y);
                     float randomY = UnityEngine.Random.Range(forceRangeY.x, forceRangeY.y);
+
+                    //get a random direction 
                     Vector3 randomDir = GetRandomDirection().normalized;
-                    Debug.Log(randomDir);
+                    
+                    //combine the random values with the random directions
                     Vector3 velocityDir = new Vector3(randomDir.x * randomX, 1 * randomY, randomDir.z * randomZ);
-                    Debug.Log(velocityDir);
+                    
+                    //apply to the rigidbody of each object
                     tempRB.AddForce(velocityDir, ForceMode.Impulse);
                 }
             }

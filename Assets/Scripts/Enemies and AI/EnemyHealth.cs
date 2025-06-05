@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour
     private float invulTemp = 0;
 
     [SerializeField] private float knockbackForce = 5;
-    [SerializeField] private DropMoney dropMoney;
+    [SerializeField] private DropMoney dropMoney; //the script that allows this object to drop money on death
 
     private bool invulnerable = false;
 
