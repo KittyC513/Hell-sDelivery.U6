@@ -69,26 +69,36 @@ public class PlayerMoneyManager : MonoBehaviour
 
                     if (mRb != null)
                     {
-                        float distanceFromPlayer = Vector3.Distance(transform.position, mRb.position);
-                        Vector3 directionToPlayer = (transform.position - mRb.position).normalized;
+                        //get a reference to the money we are collecting
+                        LooseMoney looseMoney = mRb.GetComponentInParent<LooseMoney>();
 
-                        mRb.AddForce((magnetSpeed / (distanceFromPlayer)) * directionToPlayer, ForceMode.Impulse);
+                        if (looseMoney.activated)
+                        {
+                            float distanceFromPlayer = Vector3.Distance(transform.position, mRb.position);
+                            Vector3 directionToPlayer = (transform.position - mRb.position).normalized;
+
+                            mRb.AddForce((magnetSpeed / (distanceFromPlayer)) * directionToPlayer, ForceMode.Impulse);
+                        }
                     }
                 }
             }
         }
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("LooseMoney"))
         {
             //get a reference to the money we are collecting
             LooseMoney looseMoney = other.GetComponentInParent<LooseMoney>();
 
-            //add the value and tell the money that is has been collected
-            AddMoney(looseMoney.value);
-            looseMoney.Collect();
+            if (looseMoney.activated)
+            {
+                //add the value and tell the money that is has been collected
+                AddMoney(looseMoney.value);
+                looseMoney.Collect();
+            }
         }
     }
 

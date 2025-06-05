@@ -22,6 +22,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected NavMeshAgent navAgent; //the nav agent
     [SerializeField] protected EnemyHealth eHealth; //the enemy health script
 
+
     private bool droppedMoney = false;
     protected bool isDead = false;
 
@@ -155,10 +156,5 @@ public class EnemyBase : MonoBehaviour
         Destroy(this.gameObject, deathTime);
     }
 
-    protected void DropMoney()
-    {
-        //get random value of money between range
-
-        //drop each piece at a random direction + upwards slightly
-    }
+  
 }
