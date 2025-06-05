@@ -60,7 +60,5 @@ public class PanelRotateManager : MonoBehaviour
         {
             text_p2.text = text_p1.text;
         }
-
-
     }
 }
