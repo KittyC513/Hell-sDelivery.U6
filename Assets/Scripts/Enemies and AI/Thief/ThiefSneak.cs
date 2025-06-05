@@ -22,6 +22,7 @@ public class ThiefSneak : BaseState<ThiefStateMachine.ThiefStates>
     {
         //set speed to a slower value for sneaking
         navAgent.speed = sneakSpeed;
+        tBase.animator.SetFloat("Speed", navAgent.speed);
     }
 
     public override void ExitState()

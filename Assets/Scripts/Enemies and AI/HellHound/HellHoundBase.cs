@@ -3,6 +3,8 @@ using UnityEngine.AI;
 
 public class HellHoundBase : EnemyBase
 {
+    public Animator animator;
+
     [Space, Header("Wander Variables")]
     [SerializeField] private float maxWanderDistance; //how far away the wander math can pick a spot
     [SerializeField] private float wanderTime = 4; //how long a wander path lasts until a new one is chosen
@@ -46,7 +48,14 @@ public class HellHoundBase : EnemyBase
     {
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
-        eHealth.onEnemyDeath += OnEnemyDeath;
+        //eHealth.onEnemyDeath += OnEnemyDeath;
+        eHealth.onEnemyDeath += () =>
+        {
+            navAgent.updatePosition = false;    
+            isDead = true;
+            animator.SetTrigger("Dead");
+            Destroy(this.gameObject, deathTime);
+        };
     }
 
     private void OnDisable()
@@ -77,7 +86,6 @@ public class HellHoundBase : EnemyBase
             navAgent.updatePosition = false;
             rb.useGravity = true;
         }
-
 
     }
 

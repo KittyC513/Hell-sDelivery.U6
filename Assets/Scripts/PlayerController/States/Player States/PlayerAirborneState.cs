@@ -94,6 +94,13 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
     {
         if (pControl.Grounded)
         {
+            //a player is detected as ground below this player
+            if (pControl.GroundObject.CompareTag("Player"))
+            {
+                Debug.Log("HeadBounce");
+                return PlayerStateMachine.PlayerStates.headBounce;
+            }
+
             return PlayerStateMachine.PlayerStates.grounded;
         }
 
@@ -118,6 +125,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         {
             return PlayerStateMachine.PlayerStates.attack;
         }
+
         
         
         return stateKey;

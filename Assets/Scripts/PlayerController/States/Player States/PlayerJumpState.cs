@@ -1,3 +1,5 @@
+#define placeholder_animation
+#undef placeholder_animation
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -28,8 +30,8 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
     public override void EnterState()
     {
         //set our jump height and decay variables up by grabbing from our player controller
-        jumpHeight = pControl.JumpHeight;
-        jumpDecay = pControl.JumpDecayRate;
+        if (jumpHeight == 0) jumpHeight = pControl.JumpHeight;
+        if (jumpDecay == 0) jumpDecay = pControl.JumpDecayRate;
         
 
         gravityFactor = 1;
@@ -38,7 +40,7 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         jumpTime = 0;
         
         //setup our rigidbody
-        rb = pControl.RB;
+        if (rb == null) rb = pControl.RB;
 
         //make sure our y velocity does not affect our current jump by setting it to 0
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
@@ -52,7 +54,12 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         pControl.remainingJumps -= 1;
 
         //set animation to jump
-        animName = "Player_Jump";
+        //animName = "Player_Jump";
+
+        //set placeholder animation to jump
+        animName = "Jump In Place";
+
+
     }
 
     public override void ExitState()

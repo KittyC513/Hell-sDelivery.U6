@@ -10,6 +10,8 @@ public class EnemyHealth : MonoBehaviour
     public delegate void OnEnemyDeath();
     public OnEnemyDeath onEnemyDeath;
 
+    private bool dead = false;
+
     [SerializeField] private int maxHealth = 2; //maximum health of the enemy
     [SerializeField] private int currentHealth = 0; //current health of the enemy
 
@@ -17,6 +19,7 @@ public class EnemyHealth : MonoBehaviour
     private float invulTemp = 0;
 
     [SerializeField] private float knockbackForce = 5;
+    [SerializeField] private DropMoney dropMoney; //the script that allows this object to drop money on death
 
     private bool invulnerable = false;
 
@@ -26,14 +29,25 @@ public class EnemyHealth : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        if (dropMoney != null) onEnemyDeath += dropMoney.SpawnCurrency;
+    }
+
+    private void OnDisable()
+    {
+        if (dropMoney != null) onEnemyDeath -= dropMoney.SpawnCurrency;
+    }
+
     //called when this script takes damage, not subbed to the event because this function needs a dmg value whereas any other reaction to taking damage wouldn't
     public void TakeDamage(int dmg)
     {
         currentHealth -= dmg;
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !dead)
         {
             onEnemyDeath?.Invoke();
+            dead = true;
         }
 
         invulTemp = 0;

@@ -16,6 +16,7 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
     private Rigidbody rb;
 
 
+
     public HellHoundChase(HellHoundStateMachine.HoundStates key, HellHoundBase houndBase) : base(key)
     {
         hellHoundBase = houndBase;
@@ -28,6 +29,9 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
         chaseRange = hellHoundBase.PlayerDetectionRadius;
 
         if (!hellHoundBase.AddKnockback) hellHoundBase.StartKnockback(Vector3.up * 5);
+
+        //set placeholder animation
+        hellHoundBase.animator.SetFloat("Speed", navAgent.speed);
     }
 
     public override void ExitState()

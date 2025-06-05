@@ -12,6 +12,7 @@ using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
+using System.Drawing.Text;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
 //as well as any functionality that will always need to be active regardless of state such as basic movement, ground checks and rotation
@@ -105,8 +106,13 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerAttackControl aControl;
     [SerializeField] private Animator anim;
 
+    private GameObject currentGround;
+    private PlayerController lastBouncedPlayer;
+
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
+    private LayerMask thisLayer;
+    private int layerIndex;
 
     [Space,Header("Lock")]
     public PlayerLockOn playerLockOn;
@@ -131,6 +137,7 @@ public class PlayerController : NetworkBehaviour
     public float FloatHeightDamping { get { return floatHeightDamping; } }
     public float GroundAngle { get { return groundAngle; } }
     public float MaxSlopeAngle { get { return maxSlopeAngle; } }
+    public GameObject GroundObject { get { return currentGround; } }
 
     //Falling Variables
     public float MaxFallSpeed { get { return maxFallSpeed; }}
@@ -177,7 +184,11 @@ public class PlayerController : NetworkBehaviour
 
     private void Start()
     {
+        //get the index of the layer attached to the player gameobject
+        layerIndex = this.gameObject.layer;
 
+        //remove this objects layer from the groundlayers list
+        groundLayers &= ~(1 << layerIndex);
     }
 
     private void Update()
@@ -365,12 +376,13 @@ public class PlayerController : NetworkBehaviour
 
     }
 
-   
+    
 
     public RaycastHit DetectGround()
     {
         RaycastHit hit;
         raycastStartPoint = new Vector3(transform.position.x, (transform.position.y + 0.1f + raycastRadius) - (playerHitboxHeight / 2), transform.position.z);
+
         //Cast a ray downwards to detect any objects with the ground layermask
         if (Physics.SphereCast(raycastStartPoint, raycastRadius, -transform.up, out hit, raycastDist * groundCheckFactor, groundLayers))
         {
@@ -405,9 +417,12 @@ public class PlayerController : NetworkBehaviour
             {
                 groundCheckFactor = 1;
             }
-            
+
             grounded = true;
-            
+
+            currentGround = hit.collider.gameObject;
+
+
 
             return hit;
         }
@@ -419,6 +434,8 @@ public class PlayerController : NetworkBehaviour
             //the angle of the ground is 0 (there is no ground)
             groundAngle = 0;
             grounded = false;
+
+            currentGround = null;
 
             //return hit which is empty
             return hit;
