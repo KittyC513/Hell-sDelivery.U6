@@ -12,7 +12,7 @@ using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
-using System.Drawing.Text;
+//using System.Drawing.Text;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
 //as well as any functionality that will always need to be active regardless of state such as basic movement, ground checks and rotation
