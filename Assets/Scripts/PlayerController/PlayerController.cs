@@ -212,7 +212,7 @@ public class PlayerController : NetworkBehaviour
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
-        Debug.Log("RegularGravity" + Physics.gravity);
+        //Debug.Log("RegularGravity" + Physics.gravity);
     }
 
     private void FixedUpdate()
