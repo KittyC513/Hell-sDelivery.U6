@@ -32,6 +32,7 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
 
     public override void UpdateState()
     {
-        oControl.currentObject.transform.position = oControl.HoldPoint.position;
+        if (oControl.currentObject != null) oControl.currentObject.transform.position = oControl.HoldPoint.position;
+
     }
 }
