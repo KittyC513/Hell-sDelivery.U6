@@ -1713,7 +1713,7 @@ MonoBehaviour:
   alertDuration: 0
   sendMessages: []
   barkSource: 1
-  barkConversation: Passerby Barks
+  barkConversation: Barks/Passerby Barks
   barkEntryID: -1
   barkEntryTitle: 
   barkText: 
@@ -2720,7 +2720,7 @@ MonoBehaviour:
   allowBarksDuringConversations: 0
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
-  conversation: Talk To Goober
+  conversation: Main Quest/Talk To Goober
   conversationConversant: {fileID: 1301581652}
   conversationActor: {fileID: 311416616}
   startConversationEntryID: -1
@@ -2884,6 +2884,17 @@ MonoBehaviour:
     onDialogueSystemUnpause:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &317637336 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4237295567065224700, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  m_PrefabInstance: {fileID: 6992852283720818374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &319056430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3279,6 +3290,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
+--- !u!114 &350557595 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6959501933144754889, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  m_PrefabInstance: {fileID: 6992852283720818374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &381887812
 GameObject:
   m_ObjectHideFlags: 0
@@ -6843,7 +6865,7 @@ MonoBehaviour:
   alertDuration: 0
   sendMessages: []
   barkSource: 1
-  barkConversation: Passerby Barks
+  barkConversation: Barks/Passerby Barks
   barkEntryID: -1
   barkEntryTitle: 
   barkText: 
@@ -9932,6 +9954,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &773543117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  m_PrefabInstance: {fileID: 6992852283720818374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &779924142
 GameObject:
   m_ObjectHideFlags: 0
@@ -10088,7 +10115,7 @@ MonoBehaviour:
   alertDuration: 0
   sendMessages: []
   barkSource: 1
-  barkConversation: Passerby Barks
+  barkConversation: Barks/Passerby Barks
   barkEntryID: -1
   barkEntryTitle: 
   barkText: 
@@ -10830,7 +10857,7 @@ MonoBehaviour:
   alertDuration: 0
   sendMessages: []
   barkSource: 1
-  barkConversation: Passerby Barks
+  barkConversation: Barks/Passerby Barks
   barkEntryID: -1
   barkEntryTitle: 
   barkText: 
@@ -10948,7 +10975,7 @@ PrefabInstance:
       objectReference: {fileID: 228643428}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.alertSettings.minAlertSeconds
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.cameraSettings.sequencerCamera
@@ -10957,6 +10984,10 @@ PrefabInstance:
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.continueButton
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.subtitleSettings.minSubtitleSeconds
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.inputSettings.alwaysForceResponseMenu
@@ -10971,6 +11002,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.subtitleSettings.informSequenceStartAndEnd
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.requireContinueOnLastLine
       value: 1
       objectReference: {fileID: 0}
@@ -10982,6 +11017,14 @@ PrefabInstance:
       propertyPath: displaySettings.alertSettings.allowAlertsDuringConversations
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11471062, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: m_prefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471062, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: 'm_prefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 773543117}
     - target: {fileID: 22325660, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: m_Camera
       value: 
@@ -11008,6 +11051,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 22425850, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1290804973}
+    - targetCorrespondingSourceObject: {fileID: 22425850, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6992852283720818375}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 125852, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       insertIndex: -1
@@ -11666,7 +11712,7 @@ MonoBehaviour:
   alertDuration: 0
   sendMessages: []
   barkSource: 1
-  barkConversation: Passerby Barks
+  barkConversation: Barks/Passerby Barks
   barkEntryID: -1
   barkEntryTitle: 
   barkText: 
@@ -16138,7 +16184,7 @@ MonoBehaviour:
   allowBarksDuringConversations: 0
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
-  conversation: Receive Quest From Goober
+  conversation: Main Quest/Receive Quest From Goober
   conversationConversant: {fileID: 1301581652}
   conversationActor: {fileID: 1723531129}
   startConversationEntryID: -1
@@ -16155,7 +16201,7 @@ MonoBehaviour:
   maxConversationDistance: 5
   monitorConversationDistanceFrequency: 1
   showCursorDuringConversation: 0
-  pauseGameDuringConversation: 0
+  pauseGameDuringConversation: 1
   setActiveActions: []
   setEnabledActions: []
   setAnimatorStateActions: []
@@ -16654,6 +16700,40 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1858780422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1858780423}
+  m_Layer: 0
+  m_Name: Devil Quest Barks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1858780423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858780422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2005976767}
+  - {fileID: 2014413056}
+  - {fileID: 1970102211}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1860673796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 125852, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
@@ -17187,7 +17267,7 @@ MonoBehaviour:
   alertDuration: 0
   sendMessages: []
   barkSource: 1
-  barkConversation: Passerby Barks
+  barkConversation: Barks/Passerby Barks
   barkEntryID: -1
   barkEntryTitle: 
   barkText: 
@@ -17227,6 +17307,116 @@ MonoBehaviour:
       lastEvaluationValue: 0
     target: {fileID: 1937279637}
     state: 1
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: afa4d1ca2136afa41b6afd8fee13c11d, type: 2}
+--- !u!1 &1970102210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1970102211}
+  - component: {fileID: 1970102212}
+  m_Layer: 0
+  m_Name: Goober Marker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1970102211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970102210}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1858780423}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970102212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970102210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 64
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  setAnotherQuestEntryState: 0
+  anotherQuestEntryNumber: 1
+  anotherQuestEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkEntryID: -1
+  barkEntryTitle: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: Devil Markers/Goober Quest
+  conversationConversant: {fileID: 1301581652}
+  conversationActor: {fileID: 2005976767}
+  startConversationEntryID: -1
+  startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  exclusive: 0
+  replace: 0
+  queue: 0
+  skipIfNoValidEntries: 0
+  preventRestartOnSameFrameEnded: 0
+  stopConversationOnTriggerExit: 0
+  marginToAllowTriggerExit: 0.2
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
   setAnimatorStateActions: []
   onExecute:
     m_PersistentCalls:
@@ -17890,6 +18080,37 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &2005976766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2005976767}
+  m_Layer: 0
+  m_Name: Devil
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2005976767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005976766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1858780423}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2009909591
 GameObject:
   m_ObjectHideFlags: 0
@@ -17923,7 +18144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   once: 0
-  conversation: Barks
+  conversation: Barks/Devil Placeholders
   condition:
     luaConditions: []
     questConditions: []
@@ -18037,6 +18258,116 @@ Transform:
   - {fileID: 1563233956320644774}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2014413055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2014413056}
+  - component: {fileID: 2014413057}
+  m_Layer: 0
+  m_Name: Booger Marker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2014413056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014413055}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1858780423}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2014413057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014413055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 64
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  setAnotherQuestEntryState: 0
+  anotherQuestEntryNumber: 1
+  anotherQuestEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkEntryID: -1
+  barkEntryTitle: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: Devil Markers/Booger Quest
+  conversationConversant: {fileID: 1301581652}
+  conversationActor: {fileID: 2005976767}
+  startConversationEntryID: -1
+  startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  exclusive: 0
+  replace: 0
+  queue: 0
+  skipIfNoValidEntries: 0
+  preventRestartOnSameFrameEnded: 0
+  stopConversationOnTriggerExit: 0
+  marginToAllowTriggerExit: 0.2
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: afa4d1ca2136afa41b6afd8fee13c11d, type: 2}
 --- !u!1001 &2100024871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18853,6 +19184,120 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13ff6b03b2820534298b202cb66bb703, type: 3}
+--- !u!1001 &6992852283720818374
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 609159575}
+    m_Modifications:
+    - target: {fileID: 1878472953594893221, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_hasFocus
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878472953594893221, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: portraitImage
+      value: 
+      objectReference: {fileID: 317637336}
+    - target: {fileID: 1878472953594893221, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: portraitName.m_textMeshProUGUI
+      value: 
+      objectReference: {fileID: 350557595}
+    - target: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_Name
+      value: Devil Bark UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+--- !u!224 &6992852283720818375 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  m_PrefabInstance: {fileID: 6992852283720818374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7187783617264891952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18868,6 +19313,10 @@ PrefabInstance:
     - target: {fileID: 5947601361675808649, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
       propertyPath: m_Name
       value: NPC Dialogue UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073317373888039608, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 657995
       objectReference: {fileID: 0}
     - target: {fileID: 6839529461286036379, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
       propertyPath: m_Pivot.x
@@ -18949,6 +19398,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8053560206299636503, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
     - target: {fileID: 8299946732419698859, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -18998,3 +19451,4 @@ SceneRoots:
   - {fileID: 2009909596}
   - {fileID: 1021601129}
   - {fileID: 1105366210}
+  - {fileID: 1858780423}
