@@ -2760,7 +2760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64578247383140469c45370654a984a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actor: Booger
+  actor: Player
   persistentDataName: 
   portrait: {fileID: 0}
   spritePortrait: {fileID: 0}
@@ -2884,17 +2884,6 @@ MonoBehaviour:
     onDialogueSystemUnpause:
       m_PersistentCalls:
         m_Calls: []
---- !u!114 &317637336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4237295567065224700, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
-  m_PrefabInstance: {fileID: 6992852283720818374}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &319056430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3290,17 +3279,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
---- !u!114 &350557595 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6959501933144754889, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
-  m_PrefabInstance: {fileID: 6992852283720818374}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &381887812
 GameObject:
   m_ObjectHideFlags: 0
@@ -16201,7 +16179,7 @@ MonoBehaviour:
   maxConversationDistance: 5
   monitorConversationDistanceFrequency: 1
   showCursorDuringConversation: 0
-  pauseGameDuringConversation: 1
+  pauseGameDuringConversation: 0
   setActiveActions: []
   setEnabledActions: []
   setAnimatorStateActions: []
@@ -17405,7 +17383,7 @@ MonoBehaviour:
   overrideDialogueUI: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
   exclusive: 0
   replace: 0
-  queue: 0
+  queue: 1
   skipIfNoValidEntries: 0
   preventRestartOnSameFrameEnded: 0
   stopConversationOnTriggerExit: 0
@@ -18089,6 +18067,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2005976767}
+  - component: {fileID: 2005976768}
+  - component: {fileID: 2005976769}
   m_Layer: 0
   m_Name: Devil
   m_TagString: Untagged
@@ -18111,6 +18091,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1858780423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2005976768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005976766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64578247383140469c45370654a984a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 
+  persistentDataName: 
+  portrait: {fileID: 0}
+  spritePortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  barkUISettings:
+    barkUI: {fileID: 6992852283720818377}
+    barkUIOffset: {x: 0, y: 2, z: 0}
+  standardDialogueUISettings:
+    subtitlePanelNumber: 0
+    customSubtitlePanel: {fileID: 0}
+    customSubtitlePanelOffset: {x: 0, y: 0, z: 0}
+    menuPanelNumber: 0
+    customMenuPanel: {fileID: 0}
+    customMenuPanelOffset: {x: 0, y: 0, z: 0}
+    useMenuPanelFor: 0
+    portraitAnimatorController: {fileID: 0}
+    setSubtitleColor: 0
+    applyColorToPrependedName: 0
+    prependActorNameSeparator: ': '
+    prependActorNameFormat: '{0}{1}'
+    subtitleColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &2005976769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005976766}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205c6d4e7606f8d40b5d2763ea70a42d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 0
+  ui: {fileID: 773543117}
+  dontDestroyPrefabInstance: 1
 --- !u!1 &2009909591
 GameObject:
   m_ObjectHideFlags: 0
@@ -18345,10 +18374,10 @@ MonoBehaviour:
   conversationActor: {fileID: 2005976767}
   startConversationEntryID: -1
   startConversationEntryTitle: 
-  overrideDialogueUI: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  overrideDialogueUI: {fileID: 773543117}
   exclusive: 0
   replace: 0
-  queue: 0
+  queue: 1
   skipIfNoValidEntries: 0
   preventRestartOnSameFrameEnded: 0
   stopConversationOnTriggerExit: 0
@@ -19192,21 +19221,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 609159575}
     m_Modifications:
-    - target: {fileID: 1878472953594893221, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
-      propertyPath: m_hasFocus
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1878472953594893221, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 317637336}
-    - target: {fileID: 1878472953594893221, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
-      propertyPath: portraitName.m_textMeshProUGUI
-      value: 
-      objectReference: {fileID: 350557595}
     - target: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
       propertyPath: m_Name
       value: Devil Bark UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3074501175638509120, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: includeName
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3074501175638509120, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: showPortraitImage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3074501175638509120, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: textDisplaySetting
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
       propertyPath: m_Pivot.x
@@ -19298,6 +19327,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
   m_PrefabInstance: {fileID: 6992852283720818374}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6992852283720818377 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3074501175638509120, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  m_PrefabInstance: {fileID: 6992852283720818374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773543117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b689d0205d778479b0dac3b159c3b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7187783617264891952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19445,10 +19485,10 @@ SceneRoots:
   - {fileID: 62357508}
   - {fileID: 1723531129}
   - {fileID: 311416616}
+  - {fileID: 1858780423}
   - {fileID: 1718577299}
   - {fileID: 769800355}
   - {fileID: 228643429}
   - {fileID: 2009909596}
   - {fileID: 1021601129}
   - {fileID: 1105366210}
-  - {fileID: 1858780423}
