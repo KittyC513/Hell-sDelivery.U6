@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class BarkUIControl_FlavourNPC : MonoBehaviour
 {
-    public GameObject TextUI;
+    public GameObject textUI;
     public GameObject barkUI;
     public BarkOnIdle barkOnIdle;
 
@@ -37,18 +37,15 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
     }
     void TurnOnProximityUI() 
     {
-
-        TextUI.SetActive(true);
+        textUI.SetActive(true);
         barkUI.SetActive(false);
         barkOnIdle.enabled = true;
-
     }
 
     void TurnOffProximityUI()
     {
-        TextUI.SetActive(false);
+        textUI.SetActive(false);
         barkUI.SetActive(true);
         barkOnIdle.enabled = false;
-
     }
 }
