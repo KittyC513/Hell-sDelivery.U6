@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 1550417069281404750}
   - component: {fileID: 4149645925774843317}
   - component: {fileID: 4116568581615793056}
+  - component: {fileID: 4642552388033755086}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -973,6 +974,24 @@ MonoBehaviour:
     y: 0
     width: 0.7
     height: 0
+--- !u!114 &4642552388033755086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117834857856622084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56a1dffb4858f24fa4ccb8103926da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 11400000, guid: a9365193e933d384c8be6035db8951de, type: 2}
+  moneyMask:
+    serializedVersion: 2
+    m_Bits: 131072
+  magnetRange: 8
+  magnetSpeed: 1
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0

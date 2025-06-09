@@ -6,6 +6,7 @@ public class PickupStateMachine : StateManager<PickupStateMachine.PickupStates>
 {
     //create states and add them to the dictionary 
     public enum PickupStates { empty, pickup, holding, throwing }
+    public PickupStates activeState;
 
     public PlayerObjectController objectController;
     public PlayerController playerController;
@@ -21,5 +22,19 @@ public class PickupStateMachine : StateManager<PickupStateMachine.PickupStates>
 
         //set our current state to airborne as a default starting state
         currentState = states[PickupStates.empty];
+        
     }
+
+    private void LateUpdate()
+    {
+        activeState = currentState.stateKey;
+        if (objectController.currentObject == null && activeState != PickupStates.empty) OverrideState(PickupStates.empty); 
+    }
+
+    public void OverrideState(PickupStates targetState)
+    {
+
+        if (currentState.stateKey != targetState) TransitionToState(targetState);
+    }
+
 }

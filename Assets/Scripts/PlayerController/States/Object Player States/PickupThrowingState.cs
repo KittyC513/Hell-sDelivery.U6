@@ -42,8 +42,7 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
         //add force to the object
         rb.AddForce(velDirection, ForceMode.Impulse);
 
-        //we have now thrown and can exit
-        thrown = true;
+        oControl.StartCoroutine(ThrowWait());
     }
 
     public override void ExitState()
@@ -63,6 +62,15 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
         }
         return stateKey;
     }
+
+    public IEnumerator ThrowWait()
+    {
+        yield return new WaitForSeconds(0.25f);
+        //we have now thrown and can exit
+        thrown = true;
+    }
+
+
 
     public override void UpdateState()
     {

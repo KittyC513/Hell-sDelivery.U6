@@ -1138,24 +1138,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6117834857856622084, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
   m_PrefabInstance: {fileID: 883815309}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &510349033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510349014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56a1dffb4858f24fa4ccb8103926da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerStats: {fileID: 11400000, guid: a9365193e933d384c8be6035db8951de, type: 2}
-  moneyMask:
-    serializedVersion: 2
-    m_Bits: 131072
-  magnetRange: 8
-  magnetSpeed: 1
 --- !u!1 &589293668
 GameObject:
   m_ObjectHideFlags: 0
@@ -4231,6 +4213,10 @@ PrefabInstance:
       value: 1194662545
       objectReference: {fileID: 0}
     - target: {fileID: 4161022655810438540, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: pickMachine
+      value: 
+      objectReference: {fileID: 883815321}
+    - target: {fileID: 4161022655810438540, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: groundLayers.m_Bits
       value: 8448
       objectReference: {fileID: 0}
@@ -4292,9 +4278,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6117834857856622084, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 510349033}
-    - targetCorrespondingSourceObject: {fileID: 6117834857856622084, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 883815317}
   m_SourcePrefab: {fileID: 100100000, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
 --- !u!4 &883815310 stripped
@@ -4348,6 +4331,17 @@ MonoBehaviour:
   rightArmTransform: {fileID: 883815312}
   leftLegTransform: {fileID: 883815313}
   rightLegTransform: {fileID: 883815310}
+--- !u!114 &883815321 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5350303395643184213, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+  m_PrefabInstance: {fileID: 883815309}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510349014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 894c469af2fe36d439e92d90ea022369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &893883218
 Mesh:
   m_ObjectHideFlags: 0

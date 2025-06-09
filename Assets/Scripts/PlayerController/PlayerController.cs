@@ -105,6 +105,8 @@ public class PlayerController : NetworkBehaviour
     private Rigidbody rb;
     [SerializeField] private PlayerAttackControl aControl;
     [SerializeField] private Animator anim;
+    [SerializeField] private PickupStateMachine pickMachine;
+    [SerializeField] private PickupStateMachine.PickupStates pickupState;
 
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
@@ -206,9 +208,9 @@ public class PlayerController : NetworkBehaviour
             fallAccelScale = 1.0f;
             inputDetection.isExploded = false;
             inputDetection.isResetCam = false;
-        } 
+        }
 
-
+        pickupState = pickMachine.activeState;
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
@@ -528,6 +530,7 @@ public class PlayerController : NetworkBehaviour
 
     public bool CheckCanAttack()
     {
+        if (pickupState != PickupStateMachine.PickupStates.empty) return false;
         return aControl.canAttack;
     }
 

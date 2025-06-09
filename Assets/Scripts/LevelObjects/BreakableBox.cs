@@ -4,10 +4,7 @@ using UnityEngine.Events;
 
 public class BreakableBox : MonoBehaviour
 {
-    //box that can break on impact to the ground or being attacked by the player
-
-    //on impact can detect how fast the box is moving while it has an impact with the ground
-    //if the box's speed is greater than a certain value it will break
+    //box or any object that can break on impact to the ground or being attacked by the player
 
     [SerializeField] public UnityEvent onBoxBreak;
     private Animator anim;
@@ -68,7 +65,7 @@ public class BreakableBox : MonoBehaviour
         if (collision.collider.CompareTag("PlayerAttack"))
         {
             //the player has attacked the box
-            //if (!hasDestroyed) onBoxBreak?.Invoke();
+            if (!hasDestroyed) onBoxBreak?.Invoke();
         }
         else //this is used to determine if the box has smashed into a surface hard enough to break
         {
@@ -81,7 +78,7 @@ public class BreakableBox : MonoBehaviour
         if (other.CompareTag("PlayerAttack"))
         {
             //the player has attacked the box
-            //if (!hasDestroyed) onBoxBreak?.Invoke();
+            if (!hasDestroyed) onBoxBreak?.Invoke();
         }
     }
 }
