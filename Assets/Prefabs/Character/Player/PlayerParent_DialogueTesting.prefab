@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 2156524465778351454}
   - component: {fileID: 1550417069281404750}
   - component: {fileID: 4149645925774843317}
+  - component: {fileID: 4116568581615793056}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -920,7 +921,19 @@ MonoBehaviour:
   actorTransform: {fileID: 0}
   onSelectedUsable:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4116568581615793056}
+        m_TargetAssemblyTypeName: UIControl_NormalNPCs, Assembly-CSharp
+        m_MethodName: UIControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onDeselectedUsable:
     m_PersistentCalls:
       m_Calls: []
@@ -939,6 +952,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagSpecificElements: []
   layerSpecificElements: []
+--- !u!114 &4116568581615793056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117834857856622084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a48be26c3f98d4481d6198719ff025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueController: {fileID: 0}
+  proximitySelector: {fileID: 0}
+  cam: {fileID: 0}
+  camRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0.7
+    height: 0
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0
