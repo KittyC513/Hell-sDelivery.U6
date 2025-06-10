@@ -3,6 +3,7 @@ using PixelCrushers.DialogueSystem.SequencerCommands;
 using PixelCrushers.DialogueSystem.Wrappers;
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static PixelCrushers.DialogueSystem.StartConversationOnDialogueEvent;
 
 public class UIControl_NormalNPCs : MonoBehaviour
@@ -16,9 +17,7 @@ public class UIControl_NormalNPCs : MonoBehaviour
     void Start()
     {
         proximitySelector = this.GetComponent<PixelCrushers.DialogueSystem.ProximitySelector>();
-        dialogueController = DialogueManager.instance.gameObject.GetComponent<PixelCrushers.DialogueSystem.DialogueSystemController>();
         cam = Camera.main;
-
     }
 
     // Update is called once per frame
@@ -38,8 +37,9 @@ public class UIControl_NormalNPCs : MonoBehaviour
         {
             if(this.gameObject.layer == LayerMask.NameToLayer("Player1"))
             {
-
                 cam.rect = camRect;
+                Debug.Log("Player1cam's rect changed");
+                //PlayerManager.Instance.p2cam.rect = new Rect(0, camRect.y, 1 - camRect.width, 1);
             }
         }
     }

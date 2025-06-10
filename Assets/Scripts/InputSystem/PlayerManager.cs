@@ -8,6 +8,10 @@ using System.Collections.Generic;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
+    private static PlayerManager instance;
+
+    public static PlayerManager Instance = instance;
+
     [HideInInspector]
     public List<PlayerInput> players = new List<PlayerInput>();
 
@@ -19,6 +23,9 @@ public class PlayerManager : MonoBehaviour
     private PlayerInputManager playerInputManager;
     public float lockOnCam_height = 3.39f;
     public float lockOnCam_distance = 14.5f;
+
+    public Camera p1cam;
+    public Camera p2cam;
 
     private void Awake()
     {
@@ -65,9 +72,11 @@ public class PlayerManager : MonoBehaviour
             players[0].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0, 0, 0.5f, 1);
             players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
             players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+            p1cam = players[0].GetComponent<PlayerInputDetection>().playerCam;
             players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
             players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
             players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+            p2cam = players[1].GetComponent<PlayerInputDetection>().playerCam;
 
         }
     }
