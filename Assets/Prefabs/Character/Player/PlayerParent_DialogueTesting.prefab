@@ -659,6 +659,8 @@ MonoBehaviour:
   inputDetection: {fileID: 3167985525364349275}
   aControl: {fileID: 2156524465778351454}
   anim: {fileID: 3003704552810336728}
+  pickMachine: {fileID: 5350303395643184213}
+  pickupState: 0
   currentSpeed: 0
   playerLockOn: {fileID: 2126423918051728224}
   isLookAtTriggered: 0
@@ -680,7 +682,6 @@ MonoBehaviour:
   anim: {fileID: 3003704552810336728}
   controller: {fileID: 4161022655810438540}
   attackControl: {fileID: 2156524465778351454}
-  dialogueControl: {fileID: 0}
   showCurrentState: 0
 --- !u!114 &6453902458872554444
 MonoBehaviour:
@@ -718,6 +719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 3003704552810336728}
+  activeState: 0
   objectController: {fileID: 6453902458872554444}
   playerController: {fileID: 4161022655810438540}
 --- !u!114 &495353182775990796
@@ -925,7 +927,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4116568581615793056}
         m_TargetAssemblyTypeName: UIControl_NormalNPCs, Assembly-CSharp
-        m_MethodName: UIControl
+        m_MethodName: SwitchToConversantCamRect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -968,12 +970,21 @@ MonoBehaviour:
   dialogueController: {fileID: 0}
   proximitySelector: {fileID: 0}
   cam: {fileID: 0}
-  camRect:
+  camRect_P1:
     serializedVersion: 2
     x: 0
     y: 0
     width: 0.7
-    height: 0
+    height: 1
+  camRect_P2:
+    serializedVersion: 2
+    x: 0.3
+    y: 0
+    width: 0.7
+    height: 1
+  playerManager: {fileID: 0}
+  playerInputDetection: {fileID: 3167985525364349275}
+  dialogueSystemTrigger: {fileID: 0}
 --- !u!114 &4642552388033755086
 MonoBehaviour:
   m_ObjectHideFlags: 0

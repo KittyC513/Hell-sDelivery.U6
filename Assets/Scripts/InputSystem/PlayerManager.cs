@@ -21,11 +21,20 @@ public class PlayerManager : MonoBehaviour
     private List<LayerMask> playerLayers;
 
     private PlayerInputManager playerInputManager;
-    public float lockOnCam_height = 3.39f;
-    public float lockOnCam_distance = 14.5f;
+    //public float lockOnCam_height = 3.39f;
+    //public float lockOnCam_distance = 14.5f;
 
     public Camera p1cam;
     public Camera p2cam;
+
+    public UIControl_NormalNPCs uiControl_P1;
+    public UIControl_NormalNPCs uiControl_P2;
+
+    public Rect changeRect_P1 = new Rect(0,0,0.7f,1);
+    public Rect changeRect_P2 = new Rect(0.3f, 0, 0.7f, 1);
+
+    public bool startConversation_p1 = false;
+    public bool startConversation_p2 = false;
 
     private void Awake()
     {
@@ -70,29 +79,37 @@ public class PlayerManager : MonoBehaviour
         if(players.Count == 2)
         {
             players[0].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0, 0, 0.5f, 1);
-            players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
-            players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+            //players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
+            //players[0].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+            uiControl_P1 = players[0].GetComponent<UIControl_NormalNPCs>();
+            players[0].GetComponent<UIControl_NormalNPCs>().playerManager = this;
             p1cam = players[0].GetComponent<PlayerInputDetection>().playerCam;
             players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
-            players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
-            players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+            //players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
+            //players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
+            uiControl_P2 = players[1].GetComponent<UIControl_NormalNPCs>();
+            players[1].GetComponent<UIControl_NormalNPCs>().playerManager = this;
             p2cam = players[1].GetComponent<PlayerInputDetection>().playerCam;
 
         }
     }
 
+    /// <summary>
+    /// Progress NPCs
+    /// </summary>
     public void StartConversation()
     {
        
         if(players[0] != null)
         {
             players[0].GetComponent<PlayerStateMachine>().FreezeStateMachine();
-
+            //p1cam.rect = changeRect; // Set Player 1's camera to full screen
         }
 
         if (players[1] != null)
         {
             players[1].GetComponent<PlayerStateMachine>().FreezeStateMachine();
+            //p2cam.rect = new Rect(changeRect.width, 0, 1- changeRect.width, 1); // Set Player 2's camera to the right side of the screen
         }
         Debug.Log("StartConversation");
     }
@@ -102,13 +119,65 @@ public class PlayerManager : MonoBehaviour
         if (players[0] != null)
         {
             players[0].GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+
+            //p1cam.rect = new Rect(0, 0, 0.5f, 1); // Set Player 1's camera to full screen
         }
 
         if (players[1] != null)
         {
             players[1].GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+            //p2cam.rect = new Rect(0.5f, 0, 0.5f, 1);
         }
+
         Debug.Log("EndConversation");
+    }
+
+    public void StartConversationWithNormalNpcs()
+    {
+        if (startConversation_p1)
+        {
+            players[0].GetComponent<PlayerStateMachine>().FreezeStateMachine();
+        }
+
+
+        if (startConversation_p2)
+        {
+            players[1].GetComponent<PlayerStateMachine>().FreezeStateMachine();
+        }
+
+    }
+
+    public void EndConversationWithNormalNpcs()
+    {
+        if (players[0] != null)
+        {
+            players[0].GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+            p1cam.rect = new Rect(0, 0, 0.5f, 1);
+
+        }
+
+        if (players[1] != null)
+        {
+            players[1].GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+            p2cam.rect = new Rect(0.5f, 0, 0.5f, 1);
+        }
+
+        if (startConversation_p1)
+        {
+            uiControl_P1.dialogueSystemTrigger.enabled = false; // Disable the DialogueSystemTrigger to stop the conversation
+            uiControl_P1.dialogueSystemTrigger = null;
+            startConversation_p1 = false;
+        }
+
+        
+        if (startConversation_p2)
+        {
+            uiControl_P2.dialogueSystemTrigger.enabled = false; // Disable the DialogueSystemTrigger to stop the conversation
+            uiControl_P2.dialogueSystemTrigger = null;
+            startConversation_p2 = false;
+        }
+
+
     }
 }
 

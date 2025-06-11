@@ -77,7 +77,7 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Jump").canceled -= JumpCanceled;
 
         playerMap.FindAction("Crouch").started -= Crouch;
-        playerMap.FindAction("Crouch").canceled -= Crouch;
+        playerMap.FindAction("Crouch").canceled -= CrouchCanceled;
 
         playerMap.FindAction("Lock").started -= Lock;
         playerMap.FindAction("Lock").canceled -= LockCanceled;

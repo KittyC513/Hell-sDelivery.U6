@@ -210,7 +210,7 @@ public class PlayerController : NetworkBehaviour
             inputDetection.isResetCam = false;
         }
         /*******************************************************************************/
-        //pickupState = pickMachine.activeState;
+        pickupState = pickMachine.activeState;
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
