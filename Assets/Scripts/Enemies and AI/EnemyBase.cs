@@ -86,6 +86,7 @@ public class EnemyBase : MonoBehaviour
         StartCoroutine(ApplyKnockback(force, navAgent));
     }
 
+
     public IEnumerator ApplyKnockback(Vector3 force, NavMeshAgent navAgent)
     {
         //knockback is being added until this bool is false

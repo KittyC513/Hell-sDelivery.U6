@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -185,7 +186,13 @@ public class BombMovement : MonoBehaviour
         {
             for (int i = 0; i < colliders_e.Length; i++)
             {
-                colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
+                Vector3 dir = (colliders_e[i].transform.position - this.transform.position).normalized;
+
+                if (colliders_e[i].name.Contains("Hell Hound"))
+                    colliders_e[i].GetComponent<HellHoundBase>().StartKnockback(dir * explosionForce_e);
+                if (colliders_e[i].name.Contains("Thief"))
+                    colliders_e[i].GetComponent<ThiefBase>().StartKnockback(dir * explosionForce_e);
+                
                 colliders_e[i].GetComponent<Health>().TakeDamage(2);
             }
 
