@@ -16,6 +16,8 @@ public class BombMovement : MonoBehaviour
     public Collider[] colliders_e;
     public Collider[] colliders_p;
     public float explosionForce_e;
+    public float explosionUpForce_e;
+
     public float explosionForce_pH;
     public float explosionForce_pV;
     public float upwardsModifier_e;
@@ -188,8 +190,10 @@ public class BombMovement : MonoBehaviour
             {
                 Vector3 dir = (colliders_e[i].transform.position - this.transform.position).normalized;
 
+                print(dir);
+
                 if (colliders_e[i].name.Contains("Hell Hound"))
-                    colliders_e[i].GetComponent<HellHoundBase>().StartKnockback(dir * explosionForce_e);
+                    colliders_e[i].GetComponent<HellHoundBase>().StartKnockback(dir * explosionForce_e + Vector3.up * explosionUpForce_e);
                 if (colliders_e[i].name.Contains("Thief"))
                     colliders_e[i].GetComponent<ThiefBase>().StartKnockback(dir * explosionForce_e);
                 
