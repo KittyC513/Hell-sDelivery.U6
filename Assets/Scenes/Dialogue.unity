@@ -2643,10 +2643,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 609159575}
     m_Modifications:
+    - target: {fileID: 2309189515097420592, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: startState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
       propertyPath: m_Name
       value: Devil Bark UI
       objectReference: {fileID: 0}
+    - target: {fileID: 3035712406747785069, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: conversationUIElements.menuPanels.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035712406747785069, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: 'conversationUIElements.menuPanels.Array.data[0]'
+      value: 
+      objectReference: {fileID: 810250140}
     - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2725,6 +2737,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829301889242799090, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929552724183140171, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 419.8499
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929552724183140171, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -116.96997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6726726659336444198, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6959501933144754889, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176301185754644, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176301185754644, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176301185754644, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176301185754644, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176301185754644, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176301185754644, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2924,7 +2980,7 @@ MonoBehaviour:
   conversationActor: {fileID: 311416616}
   startConversationEntryID: -1
   startConversationEntryTitle: 
-  overrideDialogueUI: {fileID: 0}
+  overrideDialogueUI: {fileID: 1290804972}
   exclusive: 0
   replace: 0
   queue: 0
@@ -7745,7 +7801,7 @@ MonoBehaviour:
   spritePortrait: {fileID: 0}
   audioSource: {fileID: 0}
   barkUISettings:
-    barkUI: {fileID: 1219592234}
+    barkUI: {fileID: 0}
     barkUIOffset: {x: 0, y: 2, z: 0}
   standardDialogueUISettings:
     subtitlePanelNumber: 0
@@ -7768,7 +7824,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564380009}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 205c6d4e7606f8d40b5d2763ea70a42d, type: 3}
   m_Name: 
@@ -11098,6 +11154,17 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &810250140 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2975915026752155287, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
+  m_PrefabInstance: {fileID: 243654823}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 229c54286810e0d4eb194aef94f89d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &812961082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11557,7 +11624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.requireContinueOnLastLine
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.showPCSubtitlesDuringLine
@@ -14318,17 +14385,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2506170650128888863, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
   m_PrefabInstance: {fileID: 243654823}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1219592234 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3074501175638509120, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
-  m_PrefabInstance: {fileID: 243654823}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219592233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b689d0205d778479b0dac3b159c3b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1219592236 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3321324605616938827, guid: b7cb2b801d7fd7e4ab59a69729e51e97, type: 3}
@@ -16914,7 +16970,7 @@ MonoBehaviour:
   conversationActor: {fileID: 1723531129}
   startConversationEntryID: -1
   startConversationEntryTitle: 
-  overrideDialogueUI: {fileID: 0}
+  overrideDialogueUI: {fileID: 1290804972}
   exclusive: 0
   replace: 0
   queue: 0
@@ -19679,6 +19735,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 609159575}
     m_Modifications:
+    - target: {fileID: 4662062726995339873, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
+      propertyPath: alertUIElements.alertText.m_uiText
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5243232537775814957, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

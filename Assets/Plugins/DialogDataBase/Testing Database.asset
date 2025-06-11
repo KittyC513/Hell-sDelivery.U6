@@ -1046,7 +1046,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'Camera(GooberCloseUp,,1);
 
-          SetActive(Booger Marker,true)'
+          Delay(2);
+
+          SetActive(Booger
+          Marker,true)'
         type: 0
         typeString: 
       conversationID: 4
@@ -1058,10 +1061,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestState("Goober", "active");
-
-        Variable["Alert"]
-        = "Talk to Goober"'
+      userScript: SetQuestState("Goober", "active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1352,17 +1352,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestState("Goober", "success");
-
-        Variable["Alert"]
-        = "Talk to Goober - Completed!"'
+      userScript: SetQuestState("Goober", "success");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 288
-        y: 302
+        y: 298.7347
         width: 160
         height: 30
     - id: 12
@@ -1419,7 +1416,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 100.60199}
+    canvasScrollPosition: {x: 0, y: 273.66312}
     canvasZoom: 0.49000022
   - id: 5
     fields:
@@ -1926,10 +1923,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestState("Signatures", "active");
-
-        Variable["Alert"]
-        = "Collect 6 Signatures"'
+      userScript: SetQuestState("Signatures", "active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2101,10 +2095,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: Variable["Signatures.NumCollected"] >= 6
-      userScript: 'SetQuestState("Signatures", "success");
-
-        Variable["Alert"]
-        = "Collect 6 Signatures - Completed!"'
+      userScript: SetQuestState("Signatures", "success");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2276,7 +2267,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 42.22722}
+    canvasScrollPosition: {x: 0, y: 130.36246}
     canvasZoom: 0.6100003
   - id: 6
     fields:
@@ -3116,12 +3107,12 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160
+        x: 160.79999
         y: 130
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 39.199997}
     canvasZoom: 1
   - id: 10
     fields:
@@ -3587,7 +3578,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["Alert"] = "Talk to Goober"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3691,7 +3682,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["Alert"] = "Talk to Goober - Completed!"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3702,8 +3693,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 17.92453}
-    canvasZoom: 1.06
+    canvasScrollPosition: {x: 0, y: 58.252426}
+    canvasZoom: 1.03
   - id: 13
     fields:
     - title: Title
@@ -3960,7 +3951,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["Alert"] = "Collect 6 Signatures"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -4119,7 +4110,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["Alert"] = "Collect 6 Signatures - Completed!"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
