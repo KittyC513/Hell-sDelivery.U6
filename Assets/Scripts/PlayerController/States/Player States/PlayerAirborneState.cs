@@ -8,7 +8,6 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 {
     //reference to our player controller
     private PlayerController pControl;
-    private PlayerDialogueControl playerDialogueControl;
     
     private Vector3 goalVelocityChange;
     private Rigidbody rb;
@@ -23,10 +22,9 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 
 
 
-    public PlayerAirborneState(PlayerStateMachine.PlayerStates key, PlayerController controller, PlayerDialogueControl playerDialogueControl) : base(key)
+    public PlayerAirborneState(PlayerStateMachine.PlayerStates key, PlayerController controller) : base(key)
     {
         pControl = controller;
-        this.playerDialogueControl = playerDialogueControl;
         ledgeGrabHorizontalRange = pControl.LedgeGrabHorizontalRange;
         ledgeGrabUpwardsRange = pControl.LedgeGrabUpwardsRange;
         ledgeGrabMask = pControl.LedgeGrabMask;

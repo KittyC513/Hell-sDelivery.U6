@@ -41,7 +41,7 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
                                                 1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
         // group the hits when it comes from the same object with multiple colliders
         hits = hits.GroupBy(h => h.collider.gameObject).Select(g => g.First()).ToArray();
-        print(hits.Length);
+        //print(hits.Length);
 
         switch (hits.Length) 
         {
