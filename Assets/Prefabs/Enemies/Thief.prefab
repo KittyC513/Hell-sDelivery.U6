@@ -240,7 +240,11 @@ MonoBehaviour:
   maxHealth: 2
   currentHealth: 0
   invulTime: 0.2
-  knockbackForce: 18
+  dropMoney: {fileID: 0}
+  damageDealers:
+  - tag: PlayerAttack
+    damage: 1
+    knockbackForce: 15
 --- !u!114 &6421008383427346651
 MonoBehaviour:
   m_ObjectHideFlags: 0

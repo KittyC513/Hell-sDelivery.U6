@@ -186,7 +186,7 @@ public class BombMovement : MonoBehaviour
             for (int i = 0; i < colliders_e.Length; i++)
             {
                 colliders_e[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce_e, this.transform.position, radius, upwardsModifier_e);
-                colliders_e[i].GetComponent<EnemyHealth>().TakeDamage(2);
+                colliders_e[i].GetComponent<Health>().TakeDamage(2);
             }
 
         }

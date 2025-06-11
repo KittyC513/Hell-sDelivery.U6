@@ -20,7 +20,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected LayerMask playerMask;
     [SerializeField] protected Rigidbody rb; //the rigidbody attached to the enemy
     [SerializeField] protected NavMeshAgent navAgent; //the nav agent
-    [SerializeField] protected EnemyHealth eHealth; //the enemy health script
+    [SerializeField] protected Health eHealth; //the enemy health script
 
 
     private bool droppedMoney = false;

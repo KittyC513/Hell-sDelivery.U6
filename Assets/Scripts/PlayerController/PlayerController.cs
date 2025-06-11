@@ -106,7 +106,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerAttackControl aControl;
     [SerializeField] private Animator anim;
     [SerializeField] private PickupStateMachine pickMachine;
-    [SerializeField] private PickupStateMachine.PickupStates pickupState;
+    private PickupStateMachine.PickupStates pickupState;
+    [SerializeField] private Health pHealth;
 
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
@@ -191,6 +192,17 @@ public class PlayerController : NetworkBehaviour
 
         //remove this objects layer from the groundlayers list
         groundLayers &= ~(1 << layerIndex);
+    }
+
+    private void OnEnable()
+    {
+        pHealth.onTakeDamage += KnockbackPlayer;
+
+    }
+
+    private void OnDisable()
+    {
+        pHealth.onTakeDamage -= KnockbackPlayer;
     }
 
     private void Update()
@@ -546,4 +558,9 @@ public class PlayerController : NetworkBehaviour
 
     }
 
+    public void KnockbackPlayer(Vector3 force)
+    {
+        Vector3 adjustedForce = new Vector3(force.x, force.y, force.z);
+        rb.AddForce(adjustedForce, ForceMode.Impulse);
+    }
 }
