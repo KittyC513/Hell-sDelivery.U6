@@ -190,6 +190,7 @@ MonoBehaviour:
   currentHealth: 0
   invulTime: 0.2
   dropMoney: {fileID: 4068456453717096333}
+  invulnerable: 0
   damageDealers:
   - tag: PlayerAttack
     damage: 1
@@ -238,8 +239,8 @@ MonoBehaviour:
   maxWanderDistance: 5
   wanderTime: 4
   visionConeAngle: 45
-  attackDetectionRange: 1.2
-  attackDelayTime: 0.2
+  attackDetectionRange: 1.5
+  attackDelayTime: 0.3
   attackDuration: 0.3
   attackCooldownTime: 0.4
   attackHitboxObj: {fileID: 3195145265521847291}
@@ -288,7 +289,7 @@ NavMeshAgent:
   m_AngularSpeed: 1000
   m_StoppingDistance: 0.8
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1

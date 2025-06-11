@@ -7,6 +7,7 @@ public class PlayerLockOn : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     [SerializeField] private float detectionRadius = 8;
     [SerializeField] private LayerMask lockableLayerMask;
+    [SerializeField] private LayerMask detectableLayers;
     [SerializeField] private PlayerController playerController;
 
     [SerializeField] private PlayerInputDetection inputDetection;
@@ -112,7 +113,7 @@ public class PlayerLockOn : MonoBehaviour
                     Vector3 dir = (objectPoint - cam.transform.position).normalized;
                     tempDir = dir;
                     //send a raycast towards the target point
-                    if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, 50))
+                    if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, 50, detectableLayers))
                     {
                         if (hit.collider == objectsInRange[i])
                         {
@@ -183,7 +184,7 @@ public class PlayerLockOn : MonoBehaviour
                                 Vector3 dir = (objectPoint - cam.transform.position).normalized;
 
                                 //send a raycast towards the target point, if it hits we can see the object
-                                if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, 50))
+                                if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, 50, detectableLayers))
                                 {
                                     //if the raycast hits the correct object
                                     if (hit.collider == objectsInRange[i])
