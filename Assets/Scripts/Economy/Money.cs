@@ -21,7 +21,7 @@ public class Money : MonoBehaviour
         }
     }
 
-    private void AddValueToPlayer(GameObject collector)
+    private void AddValueToPlayer(GameObject collector, Collectable c)
     { 
         //if the collector is a player
         if (collector.CompareTag("Player"))

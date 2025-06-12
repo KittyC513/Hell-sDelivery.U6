@@ -15,7 +15,7 @@ public class Collectable : MonoBehaviour
     [SerializeField] private float rotationSpeed = 80;
     [SerializeField] private float activateTime = 0.55f; //how long until this object starts reacting to the player (can be collected, moves towards player)
 
-    public delegate void OnCollect(GameObject collector);
+    public delegate void OnCollect(GameObject collector, Collectable collectable);
     public OnCollect onCollect;
 
     private bool collected = false; //has this object been collected yet
@@ -65,7 +65,7 @@ public class Collectable : MonoBehaviour
             collected = true;
 
             //trigger collect event
-            onCollect?.Invoke(collector);
+            onCollect?.Invoke(collector, this);
 
             CollectSequence();
         }
