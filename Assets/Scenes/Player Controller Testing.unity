@@ -4679,6 +4679,53 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &966529729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 966529731}
+  - component: {fileID: 966529730}
+  m_Layer: 0
+  m_Name: BadgeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &966529730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966529729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcecd00c4e3ec5c40a671d5cef4cbf4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  badgeList: {fileID: 11400000, guid: 0b5314c310f81ad4584f4f33744cab34, type: 2}
+  player1Badges: []
+  player2Badges: []
+--- !u!4 &966529731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966529729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6973333, y: -0.14133596, z: 2.6769435}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &994145571
 Mesh:
   m_ObjectHideFlags: 0
@@ -7404,6 +7451,7 @@ GameObject:
   - component: {fileID: 1481243780}
   - component: {fileID: 1481243779}
   - component: {fileID: 1481243781}
+  - component: {fileID: 1481243782}
   m_Layer: 0
   m_Name: SequenceCollectables
   m_TagString: Untagged
@@ -7434,6 +7482,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1481243781}
         m_TargetAssemblyTypeName: DropMoney, Assembly-CSharp
         m_MethodName: SpawnCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1481243782}
+        m_TargetAssemblyTypeName: EarnBadge, Assembly-CSharp
+        m_MethodName: AwardBadge
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7479,6 +7539,21 @@ MonoBehaviour:
   moneyCount:
   - moneyPrefab: {fileID: 7599532976038015769, guid: d4efd45510a84324db6dbbfaf6438748, type: 3}
     amount: 15
+--- !u!114 &1481243782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481243778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff85e40f03b9d0498115f2f5121c7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: 1
+  badgeNum: 1
+  badgeManager: {fileID: 966529730}
 --- !u!43 &1599619794
 Mesh:
   m_ObjectHideFlags: 0
@@ -16381,3 +16456,4 @@ SceneRoots:
   - {fileID: 1103523031}
   - {fileID: 1481243780}
   - {fileID: 1310021257}
+  - {fileID: 966529731}
