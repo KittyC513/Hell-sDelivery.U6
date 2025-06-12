@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5569132225984298554}
   m_Layer: 0
   m_Name: PlayerCollision
-  m_TagString: LooseMoney
+  m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,9 +66,11 @@ GameObject:
   - component: {fileID: 6865619895626973149}
   - component: {fileID: 9090464625535842277}
   - component: {fileID: 239332658749365672}
-  - component: {fileID: 4254766010471436799}
+  - component: {fileID: 6843880835835203396}
+  - component: {fileID: 2481894842388469114}
+  - component: {fileID: 7888837527215578791}
   - component: {fileID: 4716148563120013114}
-  m_Layer: 17
+  m_Layer: 18
   m_Name: Dollar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +194,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4254766010471436799
+--- !u!114 &6843880835835203396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,13 +203,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 7599532976038015769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d34367412b0bb11449c7afe8e19d4424, type: 3}
+  m_Script: {fileID: 11500000, guid: ee1dca46a771ca846a8999aff844f70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 1
-  rotationSpeed: 80
-  collectableObj: {fileID: 6983616680526704149}
   gravity: 16
+  physicsStyle: 0
+--- !u!114 &2481894842388469114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599532976038015769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d9efdf322afb34aad7329eabc62b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectable: {fileID: 7888837527215578791}
+  amount: 5
+--- !u!114 &7888837527215578791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599532976038015769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f6192315e2f1e4f8406738917b3a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectableObj: {fileID: 6983616680526704149}
+  anim: {fileID: 4716148563120013114}
+  rb: {fileID: 239332658749365672}
+  enableMagnetism: 1
+  shouldRotate: 1
+  rotationSpeed: 80
+  activateTime: 0.55
+  activated: 0
 --- !u!95 &4716148563120013114
 Animator:
   serializedVersion: 7

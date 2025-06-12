@@ -47,6 +47,8 @@ public class PlayerCosmeticHandler : MonoBehaviour
         {
             ChangeCosmetic();
         }
+
+  
     }
 
     private void ChangeCosmetic()
@@ -57,6 +59,7 @@ public class PlayerCosmeticHandler : MonoBehaviour
             Destroy(obj);
         }
 
+
         //clear the list of cosmetic parts
         currentCosmetic.Clear();
       
@@ -66,8 +69,8 @@ public class PlayerCosmeticHandler : MonoBehaviour
             Transform targetTransform = cosmeticToTransform[part.cosmeticPlace];
 
             //create an empty object to nest the cosmetic into
-            GameObject emptyObj = Instantiate(cosmeticHolder, targetTransform.position, targetTransform.rotation, targetTransform);
-            
+            GameObject emptyObj = Instantiate(cosmeticHolder, targetTransform.position, targetTransform.rotation);
+
             //add the empty object to be destroyed and cleared later
             currentCosmetic.Add(emptyObj);
             

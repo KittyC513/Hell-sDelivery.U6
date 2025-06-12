@@ -50,7 +50,6 @@ public class LooseMoney : MonoBehaviour
 
     public void Collect()
     {
-        
         if (!collected)
         {
             //set the object that the player can collect to inactive
@@ -65,7 +64,6 @@ public class LooseMoney : MonoBehaviour
 
             OnCollect();
         }
-     
     }
 
     private void OnCollect()

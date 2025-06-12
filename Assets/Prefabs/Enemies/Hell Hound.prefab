@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3612718716747072221}
-  - component: {fileID: 4512750457192073789}
+  - component: {fileID: 911516613158634047}
   m_Layer: 14
   m_Name: AttackHitbox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,15 +25,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3195145265521847291}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.62}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.19, z: 0.691}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2263096039684707712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4512750457192073789
-SphereCollider:
+--- !u!136 &911516613158634047
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -47,12 +47,14 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.18
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.97
+  m_Height: 2.65
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.27, z: 0}
 --- !u!1 &3485961379418123806
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,6 +72,7 @@ GameObject:
   - component: {fileID: 951151148206241996}
   - component: {fileID: 9009788746683265614}
   - component: {fileID: 553395823478606192}
+  - component: {fileID: 4068456453717096333}
   m_Layer: 14
   m_Name: Hell Hound
   m_TagString: Untagged
@@ -186,7 +189,12 @@ MonoBehaviour:
   maxHealth: 2
   currentHealth: 0
   invulTime: 0.2
-  knockbackForce: 18
+  dropMoney: {fileID: 4068456453717096333}
+  invulnerable: 0
+  damageDealers:
+  - tag: PlayerAttack
+    damage: 1
+    knockbackForce: 15
 --- !u!114 &2264681176415530857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 6825669411742295912}
   houndBase: {fileID: 951151148206241996}
+  showCurrentState: 0
 --- !u!114 &951151148206241996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,10 +239,10 @@ MonoBehaviour:
   maxWanderDistance: 5
   wanderTime: 4
   visionConeAngle: 45
-  attackDetectionRange: 1
-  attackDelayTime: 0.5
-  attackDuration: 0.2
-  attackCooldownTime: 0.5
+  attackDetectionRange: 1.5
+  attackDelayTime: 0.3
+  attackDuration: 0.3
+  attackCooldownTime: 0.4
   attackHitboxObj: {fileID: 3195145265521847291}
   shouldRotate: 1
   showRadius: 1
@@ -280,12 +289,33 @@ NavMeshAgent:
   m_AngularSpeed: 1000
   m_StoppingDistance: 0.8
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!114 &4068456453717096333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3485961379418123806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0089b54f47ea9241a4d37178e402801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceRangeX:
+    x: 1.5
+    y: 4
+  forceRangeY:
+    x: 4
+    y: 8
+  moneyCount:
+  - moneyPrefab: {fileID: 7599532976038015769, guid: d4efd45510a84324db6dbbfaf6438748, type: 3}
+    amount: 5
 --- !u!1 &8251785007394896610
 GameObject:
   m_ObjectHideFlags: 0

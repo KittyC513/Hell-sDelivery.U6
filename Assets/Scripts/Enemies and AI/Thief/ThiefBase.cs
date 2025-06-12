@@ -69,7 +69,7 @@ public class ThiefBase : EnemyBase
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
         //eHealth.onEnemyDeath += OnEnemyDeath;
-        eHealth.onEnemyDeath += () =>
+        eHealth.onDeath += () =>
         {
             animator.SetTrigger("Dead");
             //disable navmesh
@@ -86,7 +86,7 @@ public class ThiefBase : EnemyBase
     private void OnDisable()
     {
         eHealth.onTakeDamage -= StartKnockback;
-        eHealth.onEnemyDeath -= OnEnemyDeath;
+        eHealth.onDeath -= OnEnemyDeath;
         eHealth.onTakeDamage -= SetRunState;
     }
 

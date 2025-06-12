@@ -55,8 +55,12 @@ public class PickupPickingState : BaseState<PickupStateMachine.PickupStates>
         //update our lerp time
         lerpTime += pickupSpeed * Time.deltaTime;
 
-        //lerp the object from the starting point to where the player holds it
-        oControl.currentObject.transform.position = Vector3.Lerp(objectStartPos, oControl.HoldPoint.transform.position, lerpTime);
+        if (oControl.currentObject != null)
+        {
+            //lerp the object from the starting point to where the player holds it
+            oControl.currentObject.transform.position = Vector3.Lerp(objectStartPos, oControl.HoldPoint.transform.position, lerpTime);
+        }
+ 
 
         //this doesnt work at the moment
         //pControl.LimitPlayerVelocity(0f, this.ToString());

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyAnimationControl : MonoBehaviour
 {
-    EnemyHealth enemyHealth;
+    Health health;
     HellHoundBase hellHoundBase;
     HellHoundStateMachine hellHoundState;
 

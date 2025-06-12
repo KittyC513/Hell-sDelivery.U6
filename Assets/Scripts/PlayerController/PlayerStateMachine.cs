@@ -10,7 +10,6 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
 
     public PlayerController controller;
     public PlayerAttackControl attackControl;
-    public PlayerDialogueControl dialogueControl;
 
     private PlayerStates defaultState;
     [SerializeField] public PlayerStates showCurrentState;
@@ -19,13 +18,13 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
     {
         //this is how you initialize and add a state to the dictionary
         //you assign your enum first followed by the script you will assign to that enum
-        states.Add(PlayerStates.airborne, new PlayerAirborneState(PlayerStates.airborne, controller, dialogueControl));
+        states.Add(PlayerStates.airborne, new PlayerAirborneState(PlayerStates.airborne, controller));
         states.Add(PlayerStates.grounded, new PlayerGroundedState(PlayerStates.grounded, controller));
         states.Add(PlayerStates.jump, new PlayerJumpState(PlayerStates.jump, controller));
         states.Add(PlayerStates.doubleJump, new DoubleJumpState(PlayerStates.doubleJump, controller));
         states.Add(PlayerStates.sliding, new PlayerSlidingState(PlayerStates.sliding, controller));
         states.Add(PlayerStates.ledgeHang, new PlayerLedgeHangState(PlayerStates.ledgeHang, controller));
-        states.Add(PlayerStates.frozen, new PlayerFrozenState(PlayerStates.frozen, controller,dialogueControl));
+        states.Add(PlayerStates.frozen, new PlayerFrozenState(PlayerStates.frozen, controller));
         states.Add(PlayerStates.ragdoll, new PlayerRagdollState(PlayerStates.ragdoll, controller));
         states.Add(PlayerStates.attack, new PlayerAttackState(PlayerStates.attack, controller, attackControl));
         //states.Add(PlayerStates.headBounce, new PlayerHeadBounce(PlayerStates.headBounce, controller));

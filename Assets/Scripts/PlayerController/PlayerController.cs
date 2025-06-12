@@ -105,6 +105,9 @@ public class PlayerController : NetworkBehaviour
     private Rigidbody rb;
     [SerializeField] private PlayerAttackControl aControl;
     [SerializeField] private Animator anim;
+    [SerializeField] private PickupStateMachine pickMachine;
+    private PickupStateMachine.PickupStates pickupState;
+    [SerializeField] private Health pHealth;
 
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
@@ -191,6 +194,17 @@ public class PlayerController : NetworkBehaviour
         groundLayers &= ~(1 << layerIndex);
     }
 
+    private void OnEnable()
+    {
+        pHealth.onTakeDamage += KnockbackPlayer;
+
+    }
+
+    private void OnDisable()
+    {
+        pHealth.onTakeDamage -= KnockbackPlayer;
+    }
+
     private void Update()
     {
 #if Network
@@ -206,9 +220,9 @@ public class PlayerController : NetworkBehaviour
             fallAccelScale = 1.0f;
             inputDetection.isExploded = false;
             inputDetection.isResetCam = false;
-        } 
-
-
+        }
+        /*******************************************************************************/
+        pickupState = pickMachine.activeState;
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
@@ -528,6 +542,7 @@ public class PlayerController : NetworkBehaviour
 
     public bool CheckCanAttack()
     {
+        if (pickupState != PickupStateMachine.PickupStates.empty) return false;
         return aControl.canAttack;
     }
 
@@ -543,4 +558,9 @@ public class PlayerController : NetworkBehaviour
 
     }
 
+    public void KnockbackPlayer(Vector3 force)
+    {
+        Vector3 adjustedForce = new Vector3(force.x, force.y, force.z);
+        rb.AddForce(adjustedForce, ForceMode.Impulse);
+    }
 }

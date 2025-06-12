@@ -35,7 +35,7 @@ public class HellHoundBase : EnemyBase
     private void Awake()
     {
         //get the enemy health component 
-        if (eHealth == null) eHealth = GetComponent<EnemyHealth>();
+        if (eHealth == null) eHealth = GetComponent<Health>();
     }
 
     private void Start()
@@ -49,7 +49,7 @@ public class HellHoundBase : EnemyBase
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
         //eHealth.onEnemyDeath += OnEnemyDeath;
-        eHealth.onEnemyDeath += () =>
+        eHealth.onDeath += () =>
         {
             navAgent.updatePosition = false;    
             isDead = true;
@@ -61,7 +61,7 @@ public class HellHoundBase : EnemyBase
     private void OnDisable()
     {
         eHealth.onTakeDamage -= StartKnockback;
-        eHealth.onEnemyDeath -= OnEnemyDeath;
+        eHealth.onDeath -= OnEnemyDeath;
     }
 
     private void Update()

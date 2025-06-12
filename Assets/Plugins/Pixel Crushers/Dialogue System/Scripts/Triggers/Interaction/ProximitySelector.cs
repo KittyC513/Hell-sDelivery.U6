@@ -3,6 +3,7 @@
 using PixelCrushers.DialogueSystem.UnityGUI;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace PixelCrushers.DialogueSystem
@@ -30,7 +31,6 @@ namespace PixelCrushers.DialogueSystem
     [AddComponentMenu("")] // Use wrapper.
     public class ProximitySelector : MonoBehaviour
     {
-
         /// <summary>
         /// This class defines the textures and size of the targeting reticle.
         /// </summary>
@@ -380,6 +380,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if (!enabled) return;
             Usable usable = other.GetComponent<Usable>();
+
             if (usable != null && usable.enabled)
             {
                 SetCurrentUsable(usable);
