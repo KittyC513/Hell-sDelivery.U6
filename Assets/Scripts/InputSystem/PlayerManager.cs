@@ -70,6 +70,12 @@ public class PlayerManager : MonoBehaviour
 
         //When 2nd player join, the camera will change the lock on camera viewport rect into half and half
         AdaptLockOnCamermView();
+
+        //if(uiControl_P1 != null && uiControl_P2 != null)
+        //{
+        //    if (uiControl_P1.cam != null && uiControl_P2.cam != null)
+        //        Camera.main.enabled = false;
+        //}
     }
 
 

@@ -18,10 +18,11 @@ public class CustomGUIRoot : MonoBehaviour
         //通过每一次绘制之前 得到所有子对象控件的 父类脚本
         //这句代码 浪费性能 因为每次 GUI都会来获取所有的 控件对应的脚本
         //编辑状态下 才会一直执行
-        if (!Application.isPlaying)
-        {
-            controls = this.GetComponentsInChildren<CustomGUIControl>();
-        }
+        //if (!Application.isPlaying)
+        //{
+        //    controls = this.GetComponentsInChildren<CustomGUIControl>();
+        //}
+        controls = this.GetComponentsInChildren<CustomGUIControl>();
         //遍历每一个控件 让其执行绘制
         for (int i = 0; i < controls.Length; i++) 
         {
