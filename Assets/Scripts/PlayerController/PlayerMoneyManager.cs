@@ -9,7 +9,6 @@ public class PlayerMoneyManager : MonoBehaviour
     [SerializeField] private float magnetRange = 2; //how far away money can be detected to the player
     [SerializeField] private float magnetSpeed = 5; // how fast the maximum move speed of the money is
 
-
     private int currentMoney = 0;
 
     public delegate void OnMoneyChange();
@@ -70,9 +69,9 @@ public class PlayerMoneyManager : MonoBehaviour
                     if (mRb != null)
                     {
                         //get a reference to the money we are collecting
-                        LooseMoney looseMoney = mRb.GetComponentInParent<LooseMoney>();
+                        Collectable money = mRb.GetComponentInParent<Collectable>();
 
-                        if (looseMoney.activated)
+                        if (money.activated && money.enableMagnetism)
                         {
                             float distanceFromPlayer = Vector3.Distance(transform.position, mRb.position);
                             Vector3 directionToPlayer = (transform.position - mRb.position).normalized;
@@ -83,7 +82,6 @@ public class PlayerMoneyManager : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -91,13 +89,12 @@ public class PlayerMoneyManager : MonoBehaviour
         if (other.CompareTag("LooseMoney"))
         {
             //get a reference to the money we are collecting
-            LooseMoney looseMoney = other.GetComponentInParent<LooseMoney>();
+            Collectable money = other.GetComponentInParent<Collectable>();
 
-            if (looseMoney.activated)
+            if (money.activated)
             {
                 //add the value and tell the money that is has been collected
-                AddMoney(looseMoney.value);
-                looseMoney.Collect();
+                money.Collect(this.gameObject);
             }
         }
     }
