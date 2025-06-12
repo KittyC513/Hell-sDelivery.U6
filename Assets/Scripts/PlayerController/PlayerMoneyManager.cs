@@ -86,7 +86,7 @@ public class PlayerMoneyManager : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("LooseMoney"))
+        if (other.CompareTag("Collectable"))
         {
             //get a reference to the money we are collecting
             Collectable money = other.GetComponentInParent<Collectable>();
