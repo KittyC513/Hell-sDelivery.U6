@@ -1144,6 +1144,8 @@ MonoBehaviour:
   playerTransform: {fileID: 1348024883}
   inputDetection: {fileID: 1348024872}
   distance: 4
+  oriDistance: 4
+  topdownDistance: 0
   rotateSpeed: 120
   offset: {x: 0, y: 1.5, z: 0}
   invertPitch: 0
@@ -1157,10 +1159,12 @@ MonoBehaviour:
   distanceRecoveryDelay: 1
   movePos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
+  oriMoveSpeed: 0
+  topdownMoveSpeed: 0
   defaultPos: {fileID: 0}
   resetPos: 0
   cameraManager: {fileID: 0}
-  isResetPos: 1
+  offsetY: 0
 --- !u!114 &777284935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,7 +1709,11 @@ MonoBehaviour:
   grabPressed: 0
   cam: {fileID: 777284936}
   playerCam: {fileID: 0}
+  isExploded: 0
+  isResetCam: 0
   jumpBufferTime: 0.2
+  dropActiveItemTime: 0.3
+  currentTime: 0
   isCheckedDevice: 0
   inputDeviceType: 0
 --- !u!114 &1348024873
@@ -1766,6 +1774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  activeState: 0
   objectController: {fileID: 1348024876}
   playerController: {fileID: 1348024878}
 --- !u!114 &1348024876
@@ -1806,7 +1815,6 @@ MonoBehaviour:
   anim: {fileID: 0}
   controller: {fileID: 1348024878}
   attackControl: {fileID: 0}
-  dialogueControl: {fileID: 0}
   showCurrentState: 0
 --- !u!114 &1348024878
 MonoBehaviour:
@@ -1898,9 +1906,14 @@ MonoBehaviour:
   inputDetection: {fileID: 1348024872}
   aControl: {fileID: 0}
   anim: {fileID: 0}
+  pickMachine: {fileID: 0}
+  pHealth: {fileID: 0}
   currentSpeed: 0
   playerLockOn: {fileID: 0}
   isLookAtTriggered: 0
+  maxHeight: 3
+  totalAirTime: 1.2
+  horizontalDistance: 8
 --- !u!54 &1348024879
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2581,8 +2594,8 @@ Transform:
   m_GameObject: {fileID: 2074869754}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
-  m_LocalScale: {x: 30, y: 1, z: 30}
+  m_LocalPosition: {x: 0, y: -2, z: -26.6936}
+  m_LocalScale: {x: 30, y: 1, z: 83.38971}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
