@@ -30,7 +30,6 @@ public class SceneSelectionPanel : BasePanel<SceneSelectionPanel>
         btn_exit.clickEvent += () =>
         {
             HideMe();
-            OptionPanel.Instance.HideMe();
         };
 
         HideMe();

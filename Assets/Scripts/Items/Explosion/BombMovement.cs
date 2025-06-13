@@ -179,7 +179,7 @@ public class BombMovement : MonoBehaviour
 
         //Detect the explosion area, it's a sphere detector, set LayerMask that to be affected
         colliders_e = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable") | 1 << LayerMask.NameToLayer("Enemy"));
-        colliders_p = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
+        colliders_p = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2") | 1 << LayerMask.NameToLayer("Invisible_Player1") | 1 << LayerMask.NameToLayer("Invisible_Player2"));
 
         Debug.Log(colliders_e.Length + "_enemy/enemies in the explosion range");
         Debug.Log(colliders_p.Length + "player/players in the explosion range");

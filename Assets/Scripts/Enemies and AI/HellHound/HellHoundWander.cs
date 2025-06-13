@@ -1,3 +1,4 @@
+using System.Drawing.Printing;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,7 +29,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
         if (navAgent.isActiveAndEnabled) navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
 
         //set placeholder animation
-        hellHoundBase.animator.SetFloat("Speed", navAgent.speed);
+
     }
 
     public override void ExitState()
@@ -47,6 +48,9 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
 
     public override void UpdateState()
     {
+        hellHoundBase.animator.SetFloat("Speed", navAgent.velocity.magnitude);
+        Debug.Log("Speed" + navAgent.velocity.magnitude);
+
         if (wanderTemp < wanderTime)
         {
             wanderTemp += Time.deltaTime;
