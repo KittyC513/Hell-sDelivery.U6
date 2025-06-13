@@ -20,11 +20,12 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
     public bool isInRange_P2 = false;
     
     private RaycastHit[] hits;
+    public Animator anim;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -136,6 +137,7 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
     {
         textUI_P1.SetActive(true);
         barkUI_P1.SetActive(false);
+        anim.Play("Show");
     }
 
     void TurnOffProximityUIP1()
