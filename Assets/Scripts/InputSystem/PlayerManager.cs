@@ -79,6 +79,8 @@ public class PlayerManager : MonoBehaviour
         //    if (uiControl_P1.cam != null && uiControl_P2.cam != null)
         //        Camera.main.enabled = false;
         //}
+
+        DataPersistenceManager.Instance.LoadGame();
     }
 
 
