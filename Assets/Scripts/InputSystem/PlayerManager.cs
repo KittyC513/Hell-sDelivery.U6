@@ -90,6 +90,7 @@ public class PlayerManager : MonoBehaviour
             uiControl_P1 = players[0].GetComponent<UIControl_NormalNPCs>();
             players[0].GetComponent<UIControl_NormalNPCs>().playerManager = this;
             p1cam = players[0].GetComponent<PlayerInputDetection>().playerCam;
+
             players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
             //players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
             //players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
