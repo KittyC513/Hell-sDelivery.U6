@@ -107,6 +107,14 @@ public class PlayerMoneyManager : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        data.p1CoinCount = this.currentMoney;
+        if (playerStats.playerNum == 1)
+        {
+            data.p1CoinCount = this.currentMoney;
+        }
+        else
+        {
+            data.p2CoinCount = this.currentMoney;
+        }
+      
     }
 }

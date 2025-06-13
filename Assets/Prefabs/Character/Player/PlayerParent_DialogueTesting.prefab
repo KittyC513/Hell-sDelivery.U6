@@ -415,7 +415,6 @@ GameObject:
   - component: {fileID: 6348291974515979406}
   - component: {fileID: 650946095932873623}
   - component: {fileID: 1567855771603597878}
-  - component: {fileID: 4161022655810438540}
   - component: {fileID: 3534729435414562412}
   - component: {fileID: 6453902458872554444}
   - component: {fileID: 5350303395643184213}
@@ -432,6 +431,7 @@ GameObject:
   - component: {fileID: 4642552388033755086}
   - component: {fileID: 1290623826351122846}
   - component: {fileID: 8203644173174369472}
+  - component: {fileID: 4161022655810438540}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -562,113 +562,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &4161022655810438540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6117834857856622084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc799f992f232fa43982581f5b5e2678, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  maxRunSpeed: 11
-  acceleration: 30
-  decceleration: 25
-  maxAccelStep: 70
-  rotationSpeed: 15
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 8448
-  visualizeRaycast: 1
-  floatHeight: 0.2
-  raycastDist: 0.4
-  raycastRadius: 0.23
-  floatHeightStrength: 100
-  floatHeightDamping: 3
-  maxFallSpeed: 25
-  fallAccel: 45
-  maxFallAccelStep: 150
-  gravityScale: 1
-  fallAccelScale: 1
-  jumpHeight: 3
-  jumpDecayRate: 55
-  jumpReleaseFactor: 2
-  jumpPeakFactor: 0.3
-  jumpPeakRange: 1.2
-  doubleJumpHeight: 1
-  doubleJumpDecayRate: 45
-  maxJumps: 2
-  remainingJumps: 2
-  maxSlideSpeed: 25
-  slideAccel: 85
-  maxSlopeAngle: 45
-  maxSlideAccelStep: 200
-  ledgeGrabHorizontalRange: 0.7
-  ledgeGrabUpwardsRange: 0.5
-  ledgeGrabDownwardsRange: 0.5
-  xzHangOffset: 0.5
-  yHangOffset: 0.3
-  ledgeGrabMask:
-    serializedVersion: 2
-    m_Bits: 256
-  coyoteTime: 0.1
-  quickTurnMultiplier:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -1
-      value: 2.2
-      inSlope: -0.01750326
-      outSlope: -0.01750326
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.31226337
-    - serializedVersion: 3
-      time: -0.104708076
-      value: 1.2527851
-      inSlope: -2.952232
-      outSlope: -2.952232
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.06619798
-      outWeight: 0.5774176
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  inputDetection: {fileID: 3167985525364349275}
-  aControl: {fileID: 2156524465778351454}
-  anim: {fileID: 3003704552810336728}
-  pickMachine: {fileID: 5350303395643184213}
-  pHealth: {fileID: 8203644173174369472}
-  currentSpeed: 0
-  playerLockOn: {fileID: 2126423918051728224}
-  isLookAtTriggered: 0
-  maxHeight: 68
-  totalAirTime: 5
-  horizontalDistance: 60
 --- !u!114 &3534729435414562412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,6 +942,113 @@ MonoBehaviour:
   - tag: Enemy
     damage: 1
     knockbackForce: 20
+--- !u!114 &4161022655810438540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117834857856622084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc799f992f232fa43982581f5b5e2678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxRunSpeed: 11
+  acceleration: 30
+  decceleration: 25
+  maxAccelStep: 70
+  rotationSpeed: 15
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 8448
+  visualizeRaycast: 1
+  floatHeight: 0.2
+  raycastDist: 0.4
+  raycastRadius: 0.23
+  floatHeightStrength: 100
+  floatHeightDamping: 3
+  maxFallSpeed: 25
+  fallAccel: 45
+  maxFallAccelStep: 150
+  gravityScale: 1
+  fallAccelScale: 1
+  jumpHeight: 3
+  jumpDecayRate: 55
+  jumpReleaseFactor: 2
+  jumpPeakFactor: 0.3
+  jumpPeakRange: 1.2
+  doubleJumpHeight: 1
+  doubleJumpDecayRate: 45
+  maxJumps: 2
+  remainingJumps: 2
+  maxSlideSpeed: 25
+  slideAccel: 85
+  maxSlopeAngle: 45
+  maxSlideAccelStep: 200
+  ledgeGrabHorizontalRange: 0.7
+  ledgeGrabUpwardsRange: 0.5
+  ledgeGrabDownwardsRange: 0.5
+  xzHangOffset: 0.5
+  yHangOffset: 0.3
+  ledgeGrabMask:
+    serializedVersion: 2
+    m_Bits: 256
+  coyoteTime: 0.1
+  quickTurnMultiplier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1
+      value: 2.2
+      inSlope: -0.01750326
+      outSlope: -0.01750326
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.31226337
+    - serializedVersion: 3
+      time: -0.104708076
+      value: 1.2527851
+      inSlope: -2.952232
+      outSlope: -2.952232
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06619798
+      outWeight: 0.5774176
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  inputDetection: {fileID: 3167985525364349275}
+  aControl: {fileID: 2156524465778351454}
+  anim: {fileID: 3003704552810336728}
+  pickMachine: {fileID: 5350303395643184213}
+  pHealth: {fileID: 8203644173174369472}
+  currentSpeed: 0
+  playerLockOn: {fileID: 2126423918051728224}
+  isLookAtTriggered: 0
+  maxHeight: 68
+  totalAirTime: 5
+  horizontalDistance: 60
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,6 +1420,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6347196777763878027}
     m_Modifications:
+    - target: {fileID: 955717841892144577, guid: f8b62f332c9589e4e847b449066a2967, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b85f634abfcabe4fac822dafc63b5ef, type: 2}
     - target: {fileID: 955717841895258307, guid: f8b62f332c9589e4e847b449066a2967, type: 3}
       propertyPath: m_Name
       value: Dragon Spark

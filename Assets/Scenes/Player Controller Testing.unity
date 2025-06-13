@@ -553,7 +553,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -1133146583961207029, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_PlayerPrefab: {fileID: 1290245880936105332, guid: 2c13c5ba1235e214b9918dfc2d3a9f9d, type: 3}
+  m_PlayerPrefab: {fileID: 4971868892339508933, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
   m_SplitScreen: 1
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -3788,10 +3788,6 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.r
       value: 0.16981131
       objectReference: {fileID: 0}
-    - target: {fileID: 3003704552806035224, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 6b85f634abfcabe4fac822dafc63b5ef, type: 2}
     - target: {fileID: 3003704552817769984, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 12.856653
@@ -4288,9 +4284,17 @@ PrefabInstance:
       propertyPath: groundLayers.m_Bits
       value: 8448
       objectReference: {fileID: 0}
+    - target: {fileID: 4242292160371283292, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4971868892339508933, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_Name
       value: PlayerParent_DialogueTesting
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971868892339508933, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6117834857856622084, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_Layer
@@ -7775,6 +7779,8 @@ MonoBehaviour:
     height: 1
   startConversation_p1: 0
   startConversation_p2: 0
+  player1Stats: {fileID: 0}
+  player2Stats: {fileID: 0}
 --- !u!4 &1603943634
 Transform:
   m_ObjectHideFlags: 0
@@ -15705,6 +15711,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2100130911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2100130912}
+  m_Layer: 0
+  m_Name: BadgeTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2100130912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100130911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6973333, y: -0.14133596, z: 2.6769435}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2120437256
 GameObject:
   m_ObjectHideFlags: 0
@@ -16519,3 +16556,4 @@ SceneRoots:
   - {fileID: 1310021257}
   - {fileID: 966529731}
   - {fileID: 2449949420953777652}
+  - {fileID: 2100130912}

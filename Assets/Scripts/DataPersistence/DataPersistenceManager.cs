@@ -57,6 +57,10 @@ public class DataPersistenceManager : MonoBehaviour
         //get the game data from the file handler
         this.gameData = fileDataHandler.Load();
 
+        //on loading game refresh our list of objects so that newly created objects can still load
+        this.persitenceObjs = FindAllDataPersistenceObjects();
+
+
         //if there is no data to load create a new game instead
         if (this.gameData == null)
         {
@@ -86,6 +90,9 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        //on saving game refresh our list of objects so that newly created objects can still save
+        this.persitenceObjs = FindAllDataPersistenceObjects();
+
         //if there is no game data to save to just return in order to stop further errors
         if (gameData == null)
         {

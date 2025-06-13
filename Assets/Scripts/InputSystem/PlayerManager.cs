@@ -36,6 +36,9 @@ public class PlayerManager : MonoBehaviour
     public bool startConversation_p1 = false;
     public bool startConversation_p2 = false;
 
+    [SerializeField] private PlayerStats player1Stats;
+    [SerializeField] private PlayerStats player2Stats;
+
     private void Awake()
     {
         playerInputManager = FindFirstObjectByType<PlayerInputManager>();
@@ -76,6 +79,8 @@ public class PlayerManager : MonoBehaviour
         //    if (uiControl_P1.cam != null && uiControl_P2.cam != null)
         //        Camera.main.enabled = false;
         //}
+
+        DataPersistenceManager.Instance.LoadGame();
     }
 
 
@@ -98,6 +103,8 @@ public class PlayerManager : MonoBehaviour
             players[1].GetComponent<UIControl_NormalNPCs>().playerManager = this;
             p2cam = players[1].GetComponent<PlayerInputDetection>().playerCam;
 
+            players[0].GetComponent<PlayerMoneyManager>().playerStats = player1Stats;
+            players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;
         }
     }
 
