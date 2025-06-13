@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMoneyManager : MonoBehaviour
+public class PlayerMoneyManager : MonoBehaviour, IDataPersistence
 {
     //this value needs to be set by the player manager so that each player has their respective stats object
     [SerializeField] public PlayerStats playerStats;
@@ -99,4 +99,14 @@ public class PlayerMoneyManager : MonoBehaviour
         }
     }
 
+
+    public void LoadData(GameData data)
+    {
+        this.currentMoney = data.p1CoinCount;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.p1CoinCount = this.currentMoney;
+    }
 }
