@@ -149,6 +149,102 @@ MonoBehaviour:
   distance: 8
   height: 2.5
   collisionOffset: 0.3
+--- !u!1 &2753464789022311353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1673121963761400438}
+  - component: {fileID: 3416450860833816811}
+  - component: {fileID: 2846412479338710749}
+  - component: {fileID: 5290936013929528091}
+  m_Layer: 6
+  m_Name: CollectHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1673121963761400438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753464789022311353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6347196777763878027}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3416450860833816811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753464789022311353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56a1dffb4858f24fa4ccb8103926da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 11400000, guid: a9365193e933d384c8be6035db8951de, type: 2}
+  moneyMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  magnetRange: 8
+  magnetSpeed: 1
+--- !u!114 &2846412479338710749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753464789022311353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8438225c54a81e446bd571e693ed1811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  currentHealth: 0
+  invulTime: 0.5
+  dropMoney: {fileID: 0}
+  invulnerable: 0
+  damageDealers:
+  - tag: Enemy
+    damage: 1
+    knockbackForce: 20
+--- !u!136 &5290936013929528091
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753464789022311353}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Height: 1.9445591
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.08184719, z: 0}
 --- !u!1 &4013264815362067898
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4091438702
+  GlobalObjectIdHash: 3028989162
   InScenePlacedSourceGlobalObjectIdHash: 4091438702
   DeferredDespawnTick: 0
   Ownership: 1
@@ -428,9 +524,7 @@ GameObject:
   - component: {fileID: 1550417069281404750}
   - component: {fileID: 4149645925774843317}
   - component: {fileID: 4116568581615793056}
-  - component: {fileID: 4642552388033755086}
   - component: {fileID: 1290623826351122846}
-  - component: {fileID: 8203644173174369472}
   - component: {fileID: 4161022655810438540}
   m_Layer: 0
   m_Name: Player
@@ -457,6 +551,7 @@ Transform:
   - {fileID: 1609799438346312396}
   - {fileID: 198884333018987069}
   - {fileID: 3003704552817770042}
+  - {fileID: 1673121963761400438}
   m_Father: {fileID: 6784667347201551197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5316770225156586138
@@ -882,24 +977,6 @@ MonoBehaviour:
   playerManager: {fileID: 0}
   playerInputDetection: {fileID: 3167985525364349275}
   dialogueSystemTrigger: {fileID: 0}
---- !u!114 &4642552388033755086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6117834857856622084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56a1dffb4858f24fa4ccb8103926da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerStats: {fileID: 11400000, guid: a9365193e933d384c8be6035db8951de, type: 2}
-  moneyMask:
-    serializedVersion: 2
-    m_Bits: 262144
-  magnetRange: 8
-  magnetSpeed: 1
 --- !u!114 &1290623826351122846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,27 +998,6 @@ MonoBehaviour:
   rightArmTransform: {fileID: 3003704552817769992}
   leftLegTransform: {fileID: 3003704552817770014}
   rightLegTransform: {fileID: 3003704552817770096}
---- !u!114 &8203644173174369472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6117834857856622084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8438225c54a81e446bd571e693ed1811, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealth: 0
-  invulTime: 0.5
-  dropMoney: {fileID: 0}
-  invulnerable: 0
-  damageDealers:
-  - tag: Enemy
-    damage: 1
-    knockbackForce: 20
 --- !u!114 &4161022655810438540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,7 +1098,7 @@ MonoBehaviour:
   aControl: {fileID: 2156524465778351454}
   anim: {fileID: 3003704552810336728}
   pickMachine: {fileID: 5350303395643184213}
-  pHealth: {fileID: 8203644173174369472}
+  pHealth: {fileID: 2846412479338710749}
   currentSpeed: 0
   playerLockOn: {fileID: 2126423918051728224}
   isLookAtTriggered: 0
