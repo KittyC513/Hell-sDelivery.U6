@@ -4716,7 +4716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcecd00c4e3ec5c40a671d5cef4cbf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  badgeList: {fileID: 11400000, guid: 0b5314c310f81ad4584f4f33744cab34, type: 2}
+  levelID: 0
   player1Badges: []
   player2Badges: []
 --- !u!4 &966529731
@@ -7560,7 +7560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 1
-  badgeNum: 1
+  badgeNum: 0
   badgeManager: {fileID: 966529730}
 --- !u!43 &1599619794
 Mesh:
@@ -15724,6 +15724,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2100130912}
+  - component: {fileID: 2100130913}
   m_Layer: 0
   m_Name: BadgeTracker
   m_TagString: Untagged
@@ -15746,6 +15747,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2100130913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100130911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c73a82cf4dfe32c4488ebc146e2dbe13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  badgeLists:
+  - levelName: Level 1
+    badgeList:
+    - badge: {fileID: 11400000, guid: e260253e2091d0d4f8bcb8d7e68003c5, type: 2}
+      earned: 0
+    - badge: {fileID: 0}
+      earned: 0
+    - badge: {fileID: 0}
+      earned: 0
 --- !u!1 &2120437256
 GameObject:
   m_ObjectHideFlags: 0
