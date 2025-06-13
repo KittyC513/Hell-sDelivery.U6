@@ -41,8 +41,8 @@ public class BadgeManager : MonoBehaviour
                     break;
             }
 
-            targetBadge.earned = true;
+           
         }
-     
+        levelBadgeList.badgeList[badgeNum].earned = true;
     }
 }

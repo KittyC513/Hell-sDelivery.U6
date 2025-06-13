@@ -7,6 +7,9 @@ public class GameData
     public int p1CoinCount;
     public int p2CoinCount;
 
+    public LevelBadgeList[] levelBadgeList;
+
+
     //anything in this constructor will be the default values
     //these values are used when a new game is created
     public GameData()

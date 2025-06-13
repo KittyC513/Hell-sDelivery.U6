@@ -36,6 +36,11 @@ public class DataPersistenceManager : MonoBehaviour
         this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
     }
 
+    private void Start()
+    {
+        //NewGame();
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

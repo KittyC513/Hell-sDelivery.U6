@@ -7460,6 +7460,7 @@ GameObject:
   - component: {fileID: 1481243779}
   - component: {fileID: 1481243781}
   - component: {fileID: 1481243782}
+  - component: {fileID: 1481243783}
   m_Layer: 0
   m_Name: SequenceCollectables
   m_TagString: Untagged
@@ -7561,6 +7562,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: 1
   badgeNum: 0
+  badgeManager: {fileID: 966529730}
+--- !u!114 &1481243783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481243778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff85e40f03b9d0498115f2f5121c7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: 1
+  badgeNum: 1
   badgeManager: {fileID: 966529730}
 --- !u!43 &1599619794
 Mesh:
@@ -15764,7 +15780,7 @@ MonoBehaviour:
     badgeList:
     - badge: {fileID: 11400000, guid: e260253e2091d0d4f8bcb8d7e68003c5, type: 2}
       earned: 0
-    - badge: {fileID: 0}
+    - badge: {fileID: 11400000, guid: e260253e2091d0d4f8bcb8d7e68003c5, type: 2}
       earned: 0
     - badge: {fileID: 0}
       earned: 0
@@ -16578,8 +16594,8 @@ SceneRoots:
   - {fileID: 6353593761449174300}
   - {fileID: 1450980741}
   - {fileID: 1103523031}
-  - {fileID: 1481243780}
   - {fileID: 1310021257}
+  - {fileID: 1481243780}
   - {fileID: 966529731}
-  - {fileID: 2449949420953777652}
   - {fileID: 2100130912}
+  - {fileID: 2449949420953777652}
