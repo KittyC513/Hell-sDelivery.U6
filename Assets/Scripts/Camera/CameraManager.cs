@@ -1,9 +1,12 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum E_CamType
 {
     playerCam,
     lockCam,
+    mainCam,
 }
 public class CameraManager : MonoBehaviour
 {
@@ -11,6 +14,7 @@ public class CameraManager : MonoBehaviour
 
     public Camera playerCam;
     public Camera lockCam;
+    public Camera mainCam;
 
     public E_CamType currentCamType;
     public PlayerLockOn playerLockOn;
@@ -34,18 +38,8 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DetectScene();
 
-        ////Detect if there's target to lock on to
-        //if (playerLockOn.lockTarget != null)
-        //{
-        //    currentCamType = E_CamType.lockCam;
-        //}
-        //else
-        //{
-        //    Debug.Log("No target to lock on to");
-        //}
-
-        
         //method to switch between cameras
         switch (currentCamType)
         {
@@ -54,6 +48,9 @@ public class CameraManager : MonoBehaviour
                 break;
             case E_CamType.lockCam:
                 SwitchToLockCam();
+                break;
+            case E_CamType.mainCam:
+                SwitchToMainCam();
                 break;
         }
     }
@@ -86,6 +83,30 @@ public class CameraManager : MonoBehaviour
         inputDetection.cam = lockCam;
     }
 
+    public void SwitchToMainCam()
+    {
+        if(mainCam == null)
+        {
+            mainCam = Camera.main;
+
+        }
+
+        playerCam.gameObject.SetActive(false);
+        lockCam.gameObject.SetActive(false);
+        inputDetection.cam = mainCam;
+
+        //Assign pos on main camera for player1 and player2
+        if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1"))
+        {
+            mainCam.GetComponent<CameraMovement_Scene>().p1Pos = inputDetection.transform;
+        }
+
+        if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2"))
+        {
+            mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
+        }
+    }
+
     //Add culling mask according to player1 and player2
     //if it's player1, don't render p2UI, and vice verse
     void AddCullingMaskOnPlayers()
@@ -102,4 +123,19 @@ public class CameraManager : MonoBehaviour
             lockCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P2Ignore"));
         }
     }
+
+
+    #region Detect Scene
+
+    public void DetectScene()
+    {
+        if(SceneManager.GetActiveScene().name == "Alleyway")
+        {
+            currentCamType = E_CamType.mainCam;
+        }
+    }
+
+    #endregion
+
+
 }

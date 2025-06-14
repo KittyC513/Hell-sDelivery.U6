@@ -80,7 +80,9 @@ public class PlayerManager : MonoBehaviour
         //        Camera.main.enabled = false;
         //}
 
-        DataPersistenceManager.Instance.LoadGame();
+
+        /******************************************************************************************************/
+        //DataPersistenceManager.Instance.LoadGame();
     }
 
 
@@ -96,6 +98,7 @@ public class PlayerManager : MonoBehaviour
             players[0].GetComponent<UIControl_NormalNPCs>().playerManager = this;
             p1cam = players[0].GetComponent<PlayerInputDetection>().playerCam;
 
+
             players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
             //players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.distance = lockOnCam_distance;
             //players[1].GetComponent<PlayerLockOn>().CameraManager.cameraMovement_Lock.height = lockOnCam_height;
@@ -103,8 +106,10 @@ public class PlayerManager : MonoBehaviour
             players[1].GetComponent<UIControl_NormalNPCs>().playerManager = this;
             p2cam = players[1].GetComponent<PlayerInputDetection>().playerCam;
 
-            players[0].GetComponent<PlayerMoneyManager>().playerStats = player1Stats;
-            players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;
+
+            /******************************************************************************************************/
+            //players[0].GetComponent<PlayerMoneyManager>().playerStats = player1Stats;
+            //players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;
         }
     }
 
