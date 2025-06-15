@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,10 @@ public class CameraManager : MonoBehaviour
     public Camera lockCam;
     public Camera mainCam;
 
+    #region Alleyway Scene Cam
+    public Camera alleywayCam;
+    #endregion
+
     public E_CamType currentCamType;
     public PlayerLockOn playerLockOn;
 
@@ -23,6 +28,7 @@ public class CameraManager : MonoBehaviour
     public CameraMovement_Player cameraMovement_Player;
 
     public Transform defaultPos;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,7 +56,10 @@ public class CameraManager : MonoBehaviour
                 SwitchToLockCam();
                 break;
             case E_CamType.mainCam:
-                SwitchToMainCam();
+                //SwitchToMainCam();
+                #region Alleyway Scene Cam
+                SwitchToAlleywayCam();
+                #endregion
                 break;
         }
     }
@@ -82,7 +91,6 @@ public class CameraManager : MonoBehaviour
         lockCam.gameObject.SetActive(true);
         inputDetection.cam = lockCam;
     }
-
     public void SwitchToMainCam()
     {
         if(mainCam == null)
@@ -106,6 +114,17 @@ public class CameraManager : MonoBehaviour
             mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
         }
     }
+
+    #region Alleyway Scene Cam
+    public void SwitchToAlleywayCam()
+    {
+        playerCam.gameObject.SetActive(false);
+        lockCam.gameObject.SetActive(false);
+        alleywayCam.gameObject.SetActive(true);
+        inputDetection.cam = alleywayCam;
+
+    }
+    #endregion
 
     //Add culling mask according to player1 and player2
     //if it's player1, don't render p2UI, and vice verse

@@ -29,6 +29,7 @@ public class PlayerInputDetection : NetworkBehaviour
 
     public Camera cam;
     public Camera playerCam;
+
     public bool isExploded = false;
     public bool isResetCam = false;
 
