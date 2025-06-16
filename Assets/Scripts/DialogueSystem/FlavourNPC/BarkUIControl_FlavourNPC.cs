@@ -137,11 +137,13 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
     {
         textUI_P1.SetActive(true);
         barkUI_P1.SetActive(false);
-        anim.Play("Show");
+        //anim.Play("Show");
+        anim.SetTrigger("Show");
     }
 
     void TurnOffProximityUIP1()
     {
+        anim.SetTrigger("Hide");
         textUI_P1.SetActive(false);
         barkUI_P1.SetActive(true);
     }
