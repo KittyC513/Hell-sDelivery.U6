@@ -18,14 +18,17 @@ public class PlayerInputDetection : NetworkBehaviour
     private InputActionAsset inputActionAsset;
 
     private InputActionMap playerMap;
+    private InputActionMap pauseMap;
     [HideInInspector] public bool jumpPressed;
     [HideInInspector] public bool crouchPressed;
     [HideInInspector] public bool lockPressed;
     [HideInInspector] public bool attackPressed;
     [HideInInspector] public bool grabPressed;
+    [HideInInspector] public bool pausePressed;
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
+    private PauseManager pauseManager;
 
     public Camera cam;
     public Camera playerCam;
@@ -48,7 +51,9 @@ public class PlayerInputDetection : NetworkBehaviour
         inputActionAsset = GetComponent<PlayerInput>().actions;
         playerInput = GetComponent<PlayerInput>();
         playerMap = inputActionAsset.FindActionMap("Player");
+        pauseMap = inputActionAsset.FindActionMap("Pause Menu");
     }
+
 
     private void OnEnable()
     {
@@ -67,12 +72,16 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Grab").started += GrabPressed;
         playerMap.FindAction("Grab").canceled += GrabCanceled;
 
+        playerMap.FindAction("Pause").started += PausePressed;
+        playerMap.FindAction("Pause").canceled += PauseCancelled;
+
+        pauseMap.FindAction("Pause").started += PausePressed;
+        pauseMap.FindAction("Pause").canceled += PauseCancelled;
+
 
         moveAction = playerMap.FindAction("Move");
         lookAction = playerMap.FindAction("Look");
 
-        PauseManager.Instance.onGamePause += SwitchToPauseMap;
-        PauseManager.Instance.onGameResume += SwitchToPlayerMap;
     }
 
     private void OnDisable()
@@ -92,6 +101,12 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Grab").started -= GrabPressed;
         playerMap.FindAction("Grab").canceled -= GrabCanceled;
 
+        playerMap.FindAction("Pause").started -= PausePressed;
+        playerMap.FindAction("Pause").canceled -= PauseCancelled;
+
+        pauseMap.FindAction("Pause").started -= PausePressed;
+        pauseMap.FindAction("Pause").canceled -= PauseCancelled;
+
         PauseManager.Instance.onGamePause -= SwitchToPauseMap;
         PauseManager.Instance.onGameResume -= SwitchToPlayerMap;
     }
@@ -99,10 +114,21 @@ public class PlayerInputDetection : NetworkBehaviour
     private void Start()
     {
         InputDeviceCheck();
+        pauseManager = PauseManager.Instance;
 
-        if(NGO_PanelControl.instance != null)
+        if (pauseManager!= null)
+        {
+            pauseManager.onGamePause += SwitchToPauseMap;
+            pauseManager.onGameResume += SwitchToPlayerMap;
+
+        }
+
+
+        if (NGO_PanelControl.instance != null)
             NGO_PanelControl.instance.inputDetector = this;
     }
+
+    #region Movement Inputs
     public Vector3 GetHorizontalMovement()
     {
         return GetRelativeInputDirection(cam, horizontalInputValue = moveAction.ReadValue<Vector2>());
@@ -172,8 +198,6 @@ public class PlayerInputDetection : NetworkBehaviour
     private void GrabPressed(InputAction.CallbackContext action)
     {
         grabPressed = true;
-
-
     }
 
     public bool IsDropActiveItem()
@@ -233,6 +257,8 @@ public class PlayerInputDetection : NetworkBehaviour
             return new Vector3(0, 0, 0);
         }
     }
+    #endregion
+
     #region Player input device check
     private void InputDeviceCheck()
     {
@@ -255,16 +281,39 @@ public class PlayerInputDetection : NetworkBehaviour
         }
     }
     #endregion
+
     #region Pause menu
     private void SwitchToPauseMap()
     {
-        Debug.Log("Switch to Pause");
-        playerInput.SwitchCurrentActionMap("Pause Menu");
+        playerInput.SwitchCurrentActionMap(pauseMap.name);
+    }
+
+    private void Update()
+    {
+        if (pauseManager != null)
+        {
+            if (pausePressed)
+            {
+                pauseManager.PauseGame(this);
+            }
+        }
+      
     }
 
     private void SwitchToPlayerMap()
     {
-        playerInput.SwitchCurrentActionMap("Player");
+        playerInput.SwitchCurrentActionMap(playerMap.name);
     }
+
+    private void PausePressed(InputAction.CallbackContext action)
+    {
+        pausePressed = true;
+    }
+
+    private void PauseCancelled(InputAction.CallbackContext action)
+    {
+        pausePressed = false;
+    }
+
     #endregion
 }
