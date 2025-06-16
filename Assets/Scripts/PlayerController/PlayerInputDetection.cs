@@ -70,6 +70,9 @@ public class PlayerInputDetection : NetworkBehaviour
 
         moveAction = playerMap.FindAction("Move");
         lookAction = playerMap.FindAction("Look");
+
+        PauseManager.Instance.onGamePause += SwitchToPauseMap;
+        PauseManager.Instance.onGameResume += SwitchToPlayerMap;
     }
 
     private void OnDisable()
@@ -88,6 +91,9 @@ public class PlayerInputDetection : NetworkBehaviour
 
         playerMap.FindAction("Grab").started -= GrabPressed;
         playerMap.FindAction("Grab").canceled -= GrabCanceled;
+
+        PauseManager.Instance.onGamePause -= SwitchToPauseMap;
+        PauseManager.Instance.onGameResume -= SwitchToPlayerMap;
     }
 
     private void Start()
@@ -247,6 +253,18 @@ public class PlayerInputDetection : NetworkBehaviour
                 isCheckedDevice = true;
             }
         }
+    }
+    #endregion
+    #region Pause menu
+    private void SwitchToPauseMap()
+    {
+        Debug.Log("Switch to Pause");
+        playerInput.SwitchCurrentActionMap("Pause Menu");
+    }
+
+    private void SwitchToPlayerMap()
+    {
+        playerInput.SwitchCurrentActionMap("Player");
     }
     #endregion
 }
