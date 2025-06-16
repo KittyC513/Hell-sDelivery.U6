@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PauseManager : MonoBehaviour
 
     public bool gamePaused = false;
 
+    private PlayerInputDetection playerInControl;
+
     private void Awake()
     {
         if (Instance != null)
@@ -26,17 +29,21 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
-        if ( Input.GetKeyDown(KeyCode.P))
+        if (gamePaused)
         {
-            if (!gamePaused) PauseGame();
-            else UnpauseGame();
+            if (playerInControl.pausePressed)
+            {
+                UnpauseGame();
+            }
         }
+      
     }
 
-    public void PauseGame()
+    public void PauseGame(PlayerInputDetection player)
     {
         if (!gamePaused)
         {
+            playerInControl = player;
             gamePaused = true;
             Time.timeScale = 0;
             onGamePause?.Invoke();

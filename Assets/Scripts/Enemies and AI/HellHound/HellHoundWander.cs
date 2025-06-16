@@ -49,7 +49,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
     public override void UpdateState()
     {
         hellHoundBase.animator.SetFloat("Speed", navAgent.velocity.magnitude);
-        Debug.Log("Speed" + navAgent.velocity.magnitude);
+        //Debug.Log("Speed" + navAgent.velocity.magnitude);
 
         if (wanderTemp < wanderTime)
         {
