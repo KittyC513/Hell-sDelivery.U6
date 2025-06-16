@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PanelRotateManager : MonoBehaviour
 {
@@ -12,8 +13,10 @@ public class PanelRotateManager : MonoBehaviour
     private Transform p2Cam;
 
     [Header("UI info")]
-    public Text text_p1;
+    public TMPro.TextMeshProUGUI text_p1;
     public Text text_p2;
+
+
 
     private void OnEnable()
     {
