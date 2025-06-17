@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
+    //controls when the game is paused and unpaused
+    //singleton 
+
     public static PauseManager Instance { get; private set; }
 
     //event that triggers when the game is paused

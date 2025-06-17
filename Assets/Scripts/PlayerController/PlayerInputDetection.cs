@@ -43,6 +43,8 @@ public class PlayerInputDetection : NetworkBehaviour
     [SerializeField] private float dropActiveItemTime = 0.3f;
     public float currentTime = 0;
 
+    public int playerNum = 1;
+
     [Header("Device Check")]
     public bool isCheckedDevice;
     public E_InputDeviceType inputDeviceType;
@@ -53,6 +55,8 @@ public class PlayerInputDetection : NetworkBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerMap = inputActionAsset.FindActionMap("Player");
         pauseMap = inputActionAsset.FindActionMap("Pause Menu");
+
+      
     }
 
 
@@ -110,8 +114,13 @@ public class PlayerInputDetection : NetworkBehaviour
         pauseMap.FindAction("Pause").started -= PausePressed;
         pauseMap.FindAction("Pause").canceled -= PauseCancelled;
 
-        PauseManager.Instance.onGamePause -= SwitchToPauseMap;
-        PauseManager.Instance.onGameResume -= SwitchToPlayerMap;
+        if (pauseManager != null)
+        {
+            pauseManager.onGamePause -= SwitchToPauseMap;
+            pauseManager.onGameResume -= SwitchToPlayerMap;
+
+        }
+
     }
 
     private void Start()
@@ -126,6 +135,11 @@ public class PlayerInputDetection : NetworkBehaviour
 
         }
 
+        //set the player number to be used by the settings based on the player's layer
+        if (this.gameObject.layer == 7)
+        {
+            playerNum = 2;
+        }
 
         if (NGO_PanelControl.instance != null)
             NGO_PanelControl.instance.inputDetector = this;

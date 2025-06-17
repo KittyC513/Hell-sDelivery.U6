@@ -7,6 +7,9 @@ public class GameData
     public int p1CoinCount;
     public int p2CoinCount;
 
+    public float p1Sens;
+    public float p2Sens;
+
     public LevelBadgeList[] levelBadgeList;
 
 
@@ -16,5 +19,7 @@ public class GameData
     {
         this.p1CoinCount = 0;
         this.p2CoinCount = 0;
+        this.p1Sens = 160;
+        this.p2Sens = 160;
     }
 }

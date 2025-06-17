@@ -76,7 +76,7 @@ public class CameraMovement_Player : NetworkBehaviour
     public CameraManager cameraManager;
     public float offsetY;
 
-
+    private PlayerSettings playerSettings;
     private void Start()
     {
         distance = oriDistance;
@@ -88,7 +88,10 @@ public class CameraMovement_Player : NetworkBehaviour
         //Initial yam and pitch axis
         mYawRotateAxis = upAxis;
         mPitchRotateAxis = Vector3.Cross(upAxis, Vector3.ProjectOnPlane(transform.forward, upAxis));
+        
+        playerSettings = PlayerSettings.instance;
 
+        playerSettings.onSettingsChange += UpdateSensitivity;
 #if Network
 
         if (!IsOwner)
@@ -108,9 +111,39 @@ public class CameraMovement_Player : NetworkBehaviour
 
         this.transform.position = cameraManager.lockCam.transform.position;
     }
+
+    private void OnDisable()
+    {
+        playerSettings.onSettingsChange -= UpdateSensitivity;
+    }
+
     private void Update()
     {
+        
+    }
 
+    //update the camera rotate speed based on the PlayerSettings sensitivty values
+    //is called on settingsChange via events
+    private void UpdateSensitivity()
+    {
+        if (playerSettings != null)
+        {
+            if (inputDetection.playerNum == 1)
+            {
+                if (playerSettings.p1Sensitivity != rotateSpeed)
+                {
+                    rotateSpeed = playerSettings.p1Sensitivity;
+                }
+            }
+            else
+            {
+                if (playerSettings.p2Sensitivity != rotateSpeed)
+                {
+                    rotateSpeed = playerSettings.p2Sensitivity;
+                }
+            }
+
+        }
     }
 
 
