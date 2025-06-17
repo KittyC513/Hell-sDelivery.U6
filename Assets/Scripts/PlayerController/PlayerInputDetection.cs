@@ -28,6 +28,7 @@ public class PlayerInputDetection : NetworkBehaviour
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
+    private InputAction pauseMoveAction;
     private PauseManager pauseManager;
 
     public Camera cam;
@@ -79,6 +80,8 @@ public class PlayerInputDetection : NetworkBehaviour
         pauseMap.FindAction("Pause").canceled += PauseCancelled;
 
 
+
+        //pauseMoveAction = pauseMap.FindAction("Move");
         moveAction = playerMap.FindAction("Move");
         lookAction = playerMap.FindAction("Look");
 
@@ -314,6 +317,8 @@ public class PlayerInputDetection : NetworkBehaviour
     {
         pausePressed = false;
     }
+
+
 
     #endregion
 }

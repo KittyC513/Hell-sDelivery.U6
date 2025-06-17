@@ -15,7 +15,9 @@ public class PauseManager : MonoBehaviour
 
     public bool gamePaused = false;
 
-    private PlayerInputDetection playerInControl;
+    [HideInInspector] public PlayerInputDetection playerInControl;
+
+    
 
     private void Awake()
     {
