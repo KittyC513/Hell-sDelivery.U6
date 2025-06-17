@@ -38,8 +38,8 @@ public class CameraMovement_Alleyway : MonoBehaviour
 
     private void Update()
     {
-        //if(isTransitioning)
-            //StartCoroutine(CamTransition());
+        if(isTransitioning)
+            StartCoroutine(CamTransition());
     }
     IEnumerator CamTransition()
     {
