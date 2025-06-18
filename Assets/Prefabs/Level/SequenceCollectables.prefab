@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1353588612493089823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6858178206921800354}
+  - component: {fileID: 6968766288073046761}
+  - component: {fileID: 7309743424109181388}
+  m_Layer: 0
+  m_Name: SequenceCollectables
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6858178206921800354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353588612493089823}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.7628496, y: -1.08, z: 3.1375637}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6968766288073046761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353588612493089823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a41ce717cb01443a9c8168d4fb4d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectables: []
+  numCollected: 0
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7309743424109181388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353588612493089823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0089b54f47ea9241a4d37178e402801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceRangeX:
+    x: 2
+    y: 5
+  forceRangeY:
+    x: 6
+    y: 8
+  moneyCount:
+  - moneyPrefab: {fileID: 7599532976038015769, guid: d4efd45510a84324db6dbbfaf6438748, type: 3}
+    amount: 15

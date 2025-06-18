@@ -95,10 +95,9 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
             //a player is detected as ground below this player
             if (pControl.GroundObject.CompareTag("Player"))
             {
-                Debug.Log("HeadBounce");
+                //Debug.Log("HeadBounce");
                 return PlayerStateMachine.PlayerStates.headBounce;
             }
-
             return PlayerStateMachine.PlayerStates.grounded;
         }
 

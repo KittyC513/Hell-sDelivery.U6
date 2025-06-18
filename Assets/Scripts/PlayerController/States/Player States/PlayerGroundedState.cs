@@ -27,6 +27,8 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 
         //set placeholder animation
         animName = "Idle";
+
+
     }
 
     public override void ExitState()
@@ -68,6 +70,9 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
        {
              return PlayerStateMachine.PlayerStates.attack;
        }
+
+       
+
        return stateKey;
     }
 

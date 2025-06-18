@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     //controls the pause and settings menus
-
+    [Header("Menu References")]
     [SerializeField] private EventSystem eventSystem;
 
     [SerializeField] private GameObject menuObj; //the pause menu object
@@ -17,8 +17,9 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] private GameObject defaultSelectSettings; //the default object to select when opening settings
     [SerializeField] private GameObject defaultSelectPause; //the default object to select when opening pause
-    [SerializeField] private Slider sensSlider;
 
+    [Space, Header("Settings")]
+    [SerializeField] private Slider sensSlider;
     private PlayerSettings playerSettings;
 
     private PauseManager pauseManager;

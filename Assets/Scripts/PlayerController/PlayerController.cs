@@ -226,6 +226,7 @@ public class PlayerController : NetworkBehaviour
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
+
         //Debug.Log("RegularGravity" + Physics.gravity);
     }
 
@@ -435,8 +436,6 @@ public class PlayerController : NetworkBehaviour
             grounded = true;
 
             currentGround = hit.collider.gameObject;
-
-
 
             return hit;
         }
