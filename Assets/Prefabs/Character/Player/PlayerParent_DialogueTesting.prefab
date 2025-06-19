@@ -394,6 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6784667347201551197}
   - component: {fileID: 3548510325447334173}
+  - component: {fileID: 6075536159822664565}
   m_Layer: 0
   m_Name: PlayerParent_DialogueTesting
   m_TagString: Untagged
@@ -443,6 +444,18 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &6075536159822664565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971868892339508933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8937f58418c684eb018173b1276ec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5213446573483736595
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +776,7 @@ MonoBehaviour:
   lockPressed: 0
   attackPressed: 0
   grabPressed: 0
+  pausePressed: 0
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
   isExploded: 0
@@ -770,6 +784,7 @@ MonoBehaviour:
   jumpBufferTime: 0.2
   dropActiveItemTime: 0.3
   currentTime: 0
+  playerNum: 1
   isCheckedDevice: 0
   inputDeviceType: 0
 --- !u!114 &866038887779867377

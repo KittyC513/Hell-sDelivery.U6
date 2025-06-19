@@ -1,6 +1,7 @@
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnterPlace : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class EnterPlace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //DetectEnter();
+        DetectEnter();
     }
 
     private void DetectEnter()
@@ -34,7 +35,10 @@ public class EnterPlace : MonoBehaviour
         print(hits.Length);
 
         if (hits.Length == 2)
+        {
+            SceneManager.LoadScene(enterPlaceName);
             print("Enter" + enterPlaceName);
+        }
         else
             print("waiting for the other player");
 
@@ -46,14 +50,14 @@ public class EnterPlace : MonoBehaviour
         Gizmos.DrawWireCube(this.transform.position, 2 * halfSize);
     }
 
-    #region Split-screen
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player1") || other.gameObject.layer == LayerMask.NameToLayer("Player2"))
-        {
-            other.GetComponent<PlayerLockOn>().CameraManager.alleywayCam.GetComponent<CameraMovement_Alleyway>().isTransitioning = true;
-            other.gameObject.transform.position = enterPlace.position;
-        }
-    }
+    #region Split-screen - Commented out for now
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //if (other.gameObject.layer == LayerMask.NameToLayer("Player1") || other.gameObject.layer == LayerMask.NameToLayer("Player2"))
+    //    //{
+    //    //    other.GetComponent<PlayerLockOn>().CameraManager.alleywayCam.GetComponent<CameraMovement_Alleyway>().isTransitioning = true;
+    //    //    other.gameObject.transform.position = enterPlace.position;
+    //    //}
+    //}
     #endregion
 }

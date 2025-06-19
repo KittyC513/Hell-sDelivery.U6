@@ -29,6 +29,8 @@ public class CameraManager : MonoBehaviour
 
     public Transform defaultPos;
     
+    private bool isResetCam = false;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -56,9 +58,10 @@ public class CameraManager : MonoBehaviour
                 SwitchToLockCam();
                 break;
             case E_CamType.mainCam:
-                //SwitchToMainCam();
-                #region Alleyway Scene Cam
-                SwitchToAlleywayCam();
+                SwitchToMainCam();              
+                
+                #region Alleyway Scene Cam - comment out for now
+                //SwitchToAlleywayCam();
                 #endregion
                 break;
         }
@@ -93,10 +96,10 @@ public class CameraManager : MonoBehaviour
     }
     public void SwitchToMainCam()
     {
-        if(mainCam == null)
+        if(mainCam == null || SceneControlBase.Instance.sceneChanged)
         {
             mainCam = Camera.main;
-
+            SceneControlBase.Instance.sceneChanged = false;
         }
 
         playerCam.gameObject.SetActive(false);
@@ -148,7 +151,7 @@ public class CameraManager : MonoBehaviour
 
     public void DetectScene()
     {
-        if(SceneManager.GetActiveScene().name == "Alleyway")
+        if(SceneManager.GetActiveScene().name == "Alleyway" || SceneManager.GetActiveScene().name == "PostOffice")
         {
             currentCamType = E_CamType.mainCam;
         }

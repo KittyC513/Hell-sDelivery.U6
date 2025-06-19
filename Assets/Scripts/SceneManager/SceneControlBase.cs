@@ -5,6 +5,8 @@ public class SceneControlBase : MonoBehaviour
     private static SceneControlBase instance;
     public static SceneControlBase Instance => instance;
 
+    public bool sceneChanged = false;
+
     private void Awake()
     {
         instance = this;
@@ -12,7 +14,7 @@ public class SceneControlBase : MonoBehaviour
 
     private void Start()
     {
-        
+        sceneChanged = true;
     }
 
 
