@@ -9,6 +9,8 @@ public class HellHoundBase : EnemyBase
     [SerializeField] private float maxWanderDistance; //how far away the wander math can pick a spot
     [SerializeField] private float wanderTime = 4; //how long a wander path lasts until a new one is chosen
     [SerializeField] private float visionConeAngle = 45; //a vision cone in front of the enemy that detects the player
+    [SerializeField] private float walkSpeed = 7;
+    [SerializeField] private float runSpeed = 10;
 
     [Space, Header("Attack Variables")]
     [SerializeField] private float attackDetectionRange = 1; //how far away should the player be until an attack starts
@@ -31,6 +33,9 @@ public class HellHoundBase : EnemyBase
     public float AttackDetectionRange { get { return attackDetectionRange; } }
     public float AttackDelayTime { get { return attackDelayTime; } }
     public float AttackDuration { get { return attackDuration; } }
+    public float WalkSpeed {  get { return walkSpeed; } }
+    public float RunSpeed {  get { return runSpeed; } }
+    public bool Dead {  get { return isDead; } }
 
     private void Awake()
     {
@@ -48,6 +53,7 @@ public class HellHoundBase : EnemyBase
     {
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
+        eHealth.onTakeDamage += OnHit;
         //eHealth.onEnemyDeath += OnEnemyDeath;
         eHealth.onDeath += () =>
         {
@@ -55,6 +61,7 @@ public class HellHoundBase : EnemyBase
             isDead = true;
             animator.SetTrigger("Dead");
             Destroy(this.gameObject, deathTime);
+           
         };
     }
 
@@ -62,15 +69,16 @@ public class HellHoundBase : EnemyBase
     {
         eHealth.onTakeDamage -= StartKnockback;
         eHealth.onDeath -= OnEnemyDeath;
+        eHealth.onTakeDamage -= OnHit;
     }
 
     private void Update()
     {
-      
         if (isDead)
         {
             navAgent.updatePosition = false;
             shouldRotate = false;
+            attackHitboxObj.SetActive(false);
         }
     }
     private void FixedUpdate()
@@ -81,7 +89,6 @@ public class HellHoundBase : EnemyBase
         //if we are not grounded apply gravity until ground is reached, this stops the enemy teleporting to the ground
         if (!DetectGround())
         {
-            Debug.Log("NOT GROUNDED");
             //nav agent must be disabled to use the rigidbody's gravity
             navAgent.updatePosition = false;
             rb.useGravity = true;

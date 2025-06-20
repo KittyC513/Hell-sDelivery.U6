@@ -20,6 +20,7 @@ public class HellHoundCooldown : BaseState<HellHoundStateMachine.HoundStates>
 
         //set placeholder animation
         animName = "Sniff";
+        hellHoundBase.animator.SetFloat("Speed", 0);
     }
 
     public override void ExitState()
@@ -33,6 +34,11 @@ public class HellHoundCooldown : BaseState<HellHoundStateMachine.HoundStates>
         if (cooldownTemp >= cooldownTime)
         {
             return HellHoundStateMachine.HoundStates.wander;
+        }
+
+        if (hellHoundBase.TakeHit)
+        {
+            return HellHoundStateMachine.HoundStates.takeHit;
         }
         return stateKey;
     }
