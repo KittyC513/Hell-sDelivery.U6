@@ -1,11 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
-public class DontDestroyatLoad : MonoBehaviour
+public class PanelControl_player : MonoBehaviour
 {
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        DontDestroyOnLoad(this);
+
     }
 
     // Update is called once per frame
@@ -13,4 +17,5 @@ public class DontDestroyatLoad : MonoBehaviour
     {
         
     }
+
 }

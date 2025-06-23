@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 629575665}
   - component: {fileID: 629575664}
   - component: {fileID: 629575663}
-  - component: {fileID: 629575662}
+  - component: {fileID: 629575666}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -207,27 +207,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &629575662
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629575661}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &629575663
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -295,8 +274,24 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1054692207}
+  - {fileID: 1265152915}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &629575666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629575661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7081dd718b297494786f531c733c21bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterPlaceName: Alleyway
+  halfSize: {x: 1.53, y: 1.57, z: 1.59}
+  maxDistance: 5
 --- !u!1 &1054692206
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1054692207}
   m_Layer: 0
-  m_Name: EnterPoint
+  m_Name: EnterPoint_p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,6 +318,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.27, y: -0.16333334, z: 0.0081571825}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 629575665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1265152914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265152915}
+  m_Layer: 0
+  m_Name: EnterPoint_p2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1265152915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265152914}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.27, y: -0.16333334, z: 1.97}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -773,7 +799,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7fc1aacb1ace64896baf1fbe12ddac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterPoint: {fileID: 0}
+  sceneChanged: 0
+  enterPoints:
+  - {fileID: 1054692207}
+  - {fileID: 1265152915}
 --- !u!4 &1963024616
 Transform:
   m_ObjectHideFlags: 0

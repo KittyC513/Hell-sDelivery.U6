@@ -1,22 +1,16 @@
 using UnityEngine;
 
-public class SceneControl_PostOffice : SceneControl_Base
+public class DontDestroyOnLoad : MonoBehaviour
 {
-    public Transform[] enterPoints;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    private void Awake()
-    {
-    }
     void Start()
     {
-
-
+        DontDestroyOnLoad(this);
     }
 
+    // Update is called once per frame
     void Update()
     {
         
     }
-
 }

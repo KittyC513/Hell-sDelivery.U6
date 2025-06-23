@@ -11,8 +11,6 @@ public class EnterPlace : MonoBehaviour
     public Vector3 halfSize = new Vector3(5, 5, 5);
     public float maxDistance = 5f;
 
-    public Transform enterPlace;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

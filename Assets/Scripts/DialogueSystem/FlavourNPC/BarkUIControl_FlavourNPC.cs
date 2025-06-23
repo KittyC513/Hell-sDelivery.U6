@@ -84,33 +84,6 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
         if(hits != null && hits.Length > 0)
             barkOnIdle.enabled = true;
 
-
-        //if (hits.Length > 0 )
-        //{
-        //    print(hits.Length);
-        //    barkOnIdle.enabled = true;
-        //    for (int i = 0; i < hits.Length - 1; i++)
-        //    {
-        //        if(hits[i].transform.gameObject.layer == LayerMask.NameToLayer("Player1"))
-        //        {
-        //            isInRange_P1 = true;
-        //            print("FindPlayer1");
-        //        }
-
-        //        if (hits[i].transform.gameObject.layer == LayerMask.NameToLayer("Player2"))
-        //        {
-        //            isInRange_P2 = true;
-        //            print("FindPlayer2");
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    hits = null;
-        //    barkOnIdle.enabled = false;
-        //    isInRange_P1 = false;
-        //    isInRange_P2 = false;
-        //}
     }
 
     private void UIControl()

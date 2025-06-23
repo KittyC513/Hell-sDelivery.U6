@@ -91,7 +91,10 @@ public class CameraMovement_Player : NetworkBehaviour
         
         playerSettings = PlayerSettings.instance;
 
-        playerSettings.onSettingsChange += UpdateSensitivity;
+
+        /*************************************************/
+        //playerSettings.onSettingsChange += UpdateSensitivity;
+
 #if Network
 
         if (!IsOwner)
@@ -114,7 +117,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     private void OnDisable()
     {
-        playerSettings.onSettingsChange -= UpdateSensitivity;
+        //playerSettings.onSettingsChange -= UpdateSensitivity;
     }
 
     private void Update()

@@ -25,7 +25,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool attackPressed;
     [HideInInspector] public bool grabPressed;
     [HideInInspector] public bool pausePressed;
-    private Vector2 horizontalInputValue;
+    [HideInInspector] public Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction pauseMoveAction;
@@ -333,6 +333,10 @@ public class PlayerInputDetection : NetworkBehaviour
     }
 
 
+
+    #endregion
+
+    #region Character Selection Panel
 
     #endregion
 }
