@@ -7,7 +7,7 @@ using static PlayerStateMachine;
 
 public class HellHoundStateMachine : StateManager <HellHoundStateMachine.HoundStates>
 {
-    public enum HoundStates { wander, chase, attack, cooldown, die }
+    public enum HoundStates { wander, chase, attack, cooldown, die, takeHit }
 
     [SerializeField] private HellHoundBase houndBase;
 
@@ -20,7 +20,7 @@ public class HellHoundStateMachine : StateManager <HellHoundStateMachine.HoundSt
         states.Add(HoundStates.chase, new HellHoundChase(HoundStates.chase, houndBase));
         states.Add(HoundStates.attack, new HellHoundAttack(HoundStates.attack, houndBase));
         states.Add(HoundStates.cooldown, new HellHoundCooldown(HoundStates.cooldown, houndBase));
-
+        states.Add(HoundStates.takeHit, new HellHoundTakeHit(HoundStates.takeHit));
         //set current state
         currentState = states[HoundStates.wander];
         TransitionToState(HoundStates.wander);

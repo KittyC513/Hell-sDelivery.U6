@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3195145265521847291}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.19, z: 0.691}
+  m_LocalPosition: {x: 0, y: 0, z: 0.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,14 +47,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.97
-  m_Height: 2.65
+  m_Radius: 0.87
+  m_Height: 3.49
   m_Direction: 1
-  m_Center: {x: 0, y: 0.27, z: 0}
+  m_Center: {x: 0, y: 0.69, z: 0}
 --- !u!1 &3485961379418123806
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8438225c54a81e446bd571e693ed1811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 3
   currentHealth: 0
   invulTime: 0.2
   dropMoney: {fileID: 4068456453717096333}
@@ -222,13 +222,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca845b28e2b79db40a3f72787509873d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckDist: 1.2
+  groundCheckDist: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  deathTime: 0.5
+  deathTime: 0.9
   rotationSpeed: 15
-  playerDetectionRadius: 8
+  playerDetectionRadius: 9
   playerMask:
     serializedVersion: 2
     m_Bits: 192
@@ -236,13 +236,13 @@ MonoBehaviour:
   navAgent: {fileID: 553395823478606192}
   eHealth: {fileID: 215855439663745196}
   animator: {fileID: 6825669411742295912}
-  maxWanderDistance: 5
-  wanderTime: 4
-  visionConeAngle: 45
-  attackDetectionRange: 1.5
+  maxWanderDistance: 8
+  wanderTime: 5
+  visionConeAngle: 180
+  attackDetectionRange: 2
   attackDelayTime: 0.3
   attackDuration: 0.3
-  attackCooldownTime: 0.4
+  attackCooldownTime: 0.6
   attackHitboxObj: {fileID: 3195145265521847291}
   shouldRotate: 1
   showRadius: 1
@@ -283,13 +283,13 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.62
-  m_Speed: 10
+  m_Speed: 9
   m_Acceleration: 13
   avoidancePriority: 50
   m_AngularSpeed: 1000
-  m_StoppingDistance: 0.8
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
@@ -315,7 +315,7 @@ MonoBehaviour:
     y: 8
   moneyCount:
   - moneyPrefab: {fileID: 7599532976038015769, guid: d4efd45510a84324db6dbbfaf6438748, type: 3}
-    amount: 5
+    amount: 3
 --- !u!1 &8251785007394896610
 GameObject:
   m_ObjectHideFlags: 0

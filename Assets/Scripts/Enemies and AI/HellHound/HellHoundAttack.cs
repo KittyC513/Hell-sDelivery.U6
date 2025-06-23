@@ -37,9 +37,14 @@ public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
     public override HellHoundStateMachine.HoundStates GetNextState()
     {
         //when the attack ends or the enemy takes a hit stop attacking
-        if (attackComplete || hellHoundBase.AddKnockback)
+        if (attackComplete)
         {
             return HellHoundStateMachine.HoundStates.cooldown;
+        }
+
+        if (hellHoundBase.TakeHit)
+        {
+            return HellHoundStateMachine.HoundStates.takeHit;
         }
 
         return stateKey;
@@ -59,10 +64,10 @@ public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
         hellHoundBase.shouldRotate = false;
         yield return new WaitForSeconds(attackDelayTime / 4);
         //activate hitbox
-        hellHoundBase.ToggleAttackHitbox(true);
+        if (!hellHoundBase.Dead) hellHoundBase.ToggleAttackHitbox(true);
         yield return new WaitForSeconds(attackDuration);
         //disable hitbox
-        hellHoundBase.ToggleAttackHitbox(false);
+        if (!hellHoundBase.Dead) hellHoundBase.ToggleAttackHitbox(false);
         yield return null;
         //transition to cooldown
         hellHoundBase.shouldRotate = true;

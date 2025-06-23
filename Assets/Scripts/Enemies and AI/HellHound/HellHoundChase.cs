@@ -9,7 +9,7 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
     private HellHoundBase hellHoundBase;
     private NavMeshAgent navAgent;
 
-    private float chaseTimeout = 1;
+    private float chaseTimeout = 3;
     private float chaseTemp = 0;
     private float chaseRange;
 
@@ -27,11 +27,9 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
     public override void EnterState()
     {
         chaseRange = hellHoundBase.PlayerDetectionRadius;
-
+        animName = "Jump In Place";
         if (!hellHoundBase.AddKnockback) hellHoundBase.StartKnockback(Vector3.up * 5);
-
-        //set placeholder animation
-        hellHoundBase.animator.SetFloat("Speed", navAgent.speed);
+        navAgent.speed = hellHoundBase.RunSpeed;
     }
 
     public override void ExitState()
@@ -63,11 +61,20 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
             return HellHoundStateMachine.HoundStates.attack;
         }
 
+        if (hellHoundBase.TakeHit)
+        {
+            return HellHoundStateMachine.HoundStates.takeHit;
+        }
+
         return stateKey;
     }
 
     public override void UpdateState()
     {
+        Vector3 xySpeed = new Vector3(navAgent.velocity.x, 0, navAgent.velocity.z);
+        //set placeholder animation
+        hellHoundBase.animator.SetFloat("Speed", xySpeed.magnitude);
+        hellHoundBase.animator.SetBool("Grounded", hellHoundBase.Grounded);
         if (navAgent.enabled) ChasePlayer();
 
     }

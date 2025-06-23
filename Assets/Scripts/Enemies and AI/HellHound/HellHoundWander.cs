@@ -7,6 +7,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
     float maxWanderDistance;
     private float wanderTime;
     private float wanderTemp = 0;
+    private float startingWander = 0;
 
     private NavMeshAgent navAgent;
     private HellHoundBase hellHoundBase;
@@ -22,11 +23,15 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
 
     public override void EnterState()
     {
-        Debug.Log("EnterState");
+        animName = "Idle";
         maxWanderDistance = hellHoundBase.MaxWanderDistance;
         wanderTime = hellHoundBase.WanderTime;
-
-        if (navAgent.isActiveAndEnabled) navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
+        startingWander = wanderTime;
+        if (navAgent.isActiveAndEnabled)
+        {
+            navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
+            navAgent.speed = hellHoundBase.WalkSpeed;
+        }
 
         //set placeholder animation
 
@@ -43,6 +48,11 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
         {
             return HellHoundStateMachine.HoundStates.chase;
         }
+
+        if (hellHoundBase.TakeHit)
+        {
+            return HellHoundStateMachine.HoundStates.takeHit;
+        }
         return stateKey;
     }
 
@@ -58,14 +68,14 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
         else
         {
             Vector3 targetPos = GetNewPostion(maxWanderDistance, navAgent);
-
+            
             if (targetPos.y - navAgent.transform.position.y < 0.2f)
             {
                 navAgent.SetDestination(targetPos);
                 wanderTemp = 0;
+                wanderTime = Random.Range(startingWander- 2, startingWander + 2);
             }
         }
-
     }
 
     private Vector3 GetNewPostion(float radius, NavMeshAgent agent)
@@ -74,7 +84,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
 
         //get a random position inside a sphere around max wander distance
         Vector3 randomPos = Random.insideUnitSphere * radius;
-
+        randomPos.y = 0;
         //make the position relative to the target
         randomPos += agent.transform.position;
         NavMeshHit meshHit;

@@ -25,10 +25,13 @@ public class EnemyBase : MonoBehaviour
 
     private bool droppedMoney = false;
     protected bool isDead = false;
+    protected bool takeHit = false;
 
     public NavMeshAgent NavAgent { get {  return navAgent; } }
     public GameObject TargetPlayer { get { return targetPlayer; } }
     public float PlayerDetectionRadius { get { return playerDetectionRadius; } }
+    public bool Grounded {  get { return grounded; } }
+    public bool TakeHit { get { return takeHit; } }
     public virtual GameObject DetectPlayer(float range, float angle)
     {
         //if a player is detected in the sphere
@@ -86,9 +89,14 @@ public class EnemyBase : MonoBehaviour
         StartCoroutine(ApplyKnockback(force, navAgent));
     }
 
+    protected void OnHit(Vector3 force)
+    {
+        takeHit = true;
+    }
 
     public IEnumerator ApplyKnockback(Vector3 force, NavMeshAgent navAgent)
     {
+       
         //knockback is being added until this bool is false
         addKnockback = true;
 
@@ -104,7 +112,7 @@ public class EnemyBase : MonoBehaviour
 
         //wait until the force is actually added in fixed update
         yield return new WaitForFixedUpdate();
-
+        takeHit = false;
         //don't go past this line until the velocity of the rigidbody reaches a low number
         yield return new WaitUntil(() => rb.linearVelocity.magnitude < 0.05f && navAgent.isOnNavMesh && grounded);
 
