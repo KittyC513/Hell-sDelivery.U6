@@ -114,7 +114,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     private void OnDisable()
     {
-        playerSettings.onSettingsChange -= UpdateSensitivity;
+        //playerSettings.onSettingsChange -= UpdateSensitivity;
     }
 
     private void Update()

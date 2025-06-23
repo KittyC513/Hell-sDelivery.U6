@@ -111,6 +111,10 @@ public class PlayerManager : MonoBehaviour
             //players[0].GetComponent<PlayerMoneyManager>().playerStats = player1Stats;
             //players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;
 
+
+            #region Character Selection
+            GameManager.instance.isOnCharacterSelection = true;
+            #endregion
             #region Alleyway Scene Cam
             players[0].GetComponent<PlayerLockOn>().CameraManager.alleywayCam.rect = new Rect(0, 0, 0.5f, 1);
             players[1].GetComponent<PlayerLockOn>().CameraManager.alleywayCam.rect = new Rect(0.5f, 0, 0.5f, 1);

@@ -102,7 +102,7 @@ public class CameraManager : MonoBehaviour
             SceneControlBase.Instance.sceneChanged = false;
         }
 
-        playerCam.gameObject.SetActive(false);
+        //playerCam.gameObject.SetActive(false);
         lockCam.gameObject.SetActive(false);
         inputDetection.cam = mainCam;
 
