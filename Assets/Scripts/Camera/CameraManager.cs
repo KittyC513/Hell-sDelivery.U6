@@ -17,6 +17,10 @@ public class CameraManager : MonoBehaviour
     public Camera lockCam;
     public Camera mainCam;
 
+    #region Alleyway Scene Cam
+    public Camera alleywayCam;
+    #endregion
+
     public E_CamType currentCamType;
     public PlayerLockOn playerLockOn;
 
@@ -25,6 +29,7 @@ public class CameraManager : MonoBehaviour
 
     public Transform defaultPos;
     
+    private bool isResetCam = false;
 
 
 
@@ -91,16 +96,14 @@ public class CameraManager : MonoBehaviour
     }
     public void SwitchToMainCam()
     {
-        //once scene changed, the main camera is reset
-        if (mainCam == null || GameManager.instance.sceneChanged)
+        if(mainCam == null || SceneControlBase.Instance.sceneChanged)
         {
             mainCam = Camera.main;
-            GameManager.instance.sceneChanged = false;
+            SceneControlBase.Instance.sceneChanged = false;
         }
 
-        playerCam.GetComponent<Camera>().enabled = false;
+        playerCam.gameObject.SetActive(false);
         lockCam.gameObject.SetActive(false);
-
         inputDetection.cam = mainCam;
 
         //Assign pos on main camera for player1 and player2
@@ -114,6 +117,17 @@ public class CameraManager : MonoBehaviour
             mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
         }
     }
+
+    #region Alleyway Scene Cam
+    public void SwitchToAlleywayCam()
+    {
+        playerCam.gameObject.SetActive(false);
+        lockCam.gameObject.SetActive(false);
+        alleywayCam.gameObject.SetActive(true);
+        inputDetection.cam = alleywayCam;
+
+    }
+    #endregion
 
     //Add culling mask according to player1 and player2
     //if it's player1, don't render p2UI, and vice verse
