@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Header("Character Selection")]
+    public GameObject characterSelectPanel;
     public bool isOnCharacterSelection = false;
 
     [Header("Player Data")]
@@ -34,6 +35,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isOnCharacterSelection)
+        {
+            characterSelectPanel.SetActive(true);
+        }
 
     }
 
