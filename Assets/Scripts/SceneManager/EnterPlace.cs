@@ -9,9 +9,6 @@ public class EnterPlace : MonoBehaviour
 
     public RaycastHit[] hits;
     public Vector3 halfSize = new Vector3(5, 5, 5);
-    public float maxDistance = 5f;
-
-    public Transform enterPlace;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +25,7 @@ public class EnterPlace : MonoBehaviour
     private void DetectEnter()
     {
         //when players are in bark range, the text UI will trigger, otherwise, it will stay bark UI
-        hits = Physics.BoxCastAll(this.transform.position, halfSize, this.transform.forward, Quaternion.identity, maxDistance,
+        hits = Physics.BoxCastAll(this.transform.position, halfSize, this.transform.forward, Quaternion.identity, 0f,
                                                 1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
         // group the hits when it comes from the same object with multiple colliders
         hits = hits.GroupBy(h => h.collider.gameObject).Select(g => g.First()).ToArray();

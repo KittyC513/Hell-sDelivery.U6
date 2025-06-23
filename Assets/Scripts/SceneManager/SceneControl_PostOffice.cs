@@ -12,8 +12,8 @@ public class SceneControl_PostOffice : MonoBehaviour
     void Start()
     {
         //reset players position
-        PlayerManager.Instance.players[0].transform.position = enterPoint.position;
-        PlayerManager.Instance.players[1].transform.position = enterPoint.position;
+        GameManager.instance.player1.transform.position = enterPoint.position;
+        GameManager.instance.player2.transform.position = enterPoint.position;
     }
 
     // Update is called once per frame
