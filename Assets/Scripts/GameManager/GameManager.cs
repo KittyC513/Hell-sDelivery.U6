@@ -46,6 +46,26 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Progress NPCs
     /// </summary>
+    /// 
+    public void FreezePlayer1()
+    {
+        player1.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+    }
+
+    public void UnFreezePlayer1()
+    {
+        player1.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+    }
+
+    public void FreezePlayer2()
+    {
+        player2.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+    }
+
+    public void UnFreezePlayer2()
+    {
+        player2.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+    }
     public void FreezeBothPlayers()
     {
 

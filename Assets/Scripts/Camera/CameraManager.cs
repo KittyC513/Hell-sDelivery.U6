@@ -102,19 +102,22 @@ public class CameraManager : MonoBehaviour
             SceneControlBase.Instance.sceneChanged = false;
         }
 
-        //playerCam.gameObject.SetActive(false);
+        playerCam.gameObject.SetActive(false);
         lockCam.gameObject.SetActive(false);
         inputDetection.cam = mainCam;
 
         //Assign pos on main camera for player1 and player2
-        if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1"))
+        if(SceneManager.GetActiveScene().name != "Level1")
         {
-            mainCam.GetComponent<CameraMovement_Scene>().p1Pos = inputDetection.transform;
-        }
+            if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1"))
+            {
+                mainCam.GetComponent<CameraMovement_Scene>().p1Pos = inputDetection.transform;
+            }
 
-        if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2"))
-        {
-            mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
+            if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2"))
+            {
+                mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
+            }
         }
     }
 
@@ -151,7 +154,7 @@ public class CameraManager : MonoBehaviour
 
     public void DetectScene()
     {
-        if(SceneManager.GetActiveScene().name == "Alleyway" || SceneManager.GetActiveScene().name == "PostOffice")
+        if(SceneManager.GetActiveScene().name == "Alleyway" || SceneManager.GetActiveScene().name == "PostOffice" || EvenData.craneIsActivated)
         {
             currentCamType = E_CamType.mainCam;
         }
