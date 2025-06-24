@@ -14,14 +14,14 @@ public class SceneControl_Alleyway : SceneControlBase
     // Update is called once per frame
     void Update()
     {
-        //if(EvenData.isAcceptedMission_lalah && !enterPlace_Level1.enabled)
-        //{
-        //    enterPlace_Level1.enabled = true;
-        //}
-        //else if(!EvenData.isAcceptedMission_lalah && enterPlace_Level1.enabled)
-        //{
-        //    enterPlace_Level1.enabled = false;
-        //}
+        if (EvenData.isAcceptedMission_lalah && !enterPlace_Level1.enabled)
+        {
+            enterPlace_Level1.enabled = true;
+        }
+        else if (!EvenData.isAcceptedMission_lalah && enterPlace_Level1.enabled)
+        {
+            enterPlace_Level1.enabled = false;
+        }
     }
 
     public void ResetPlayerPos()
