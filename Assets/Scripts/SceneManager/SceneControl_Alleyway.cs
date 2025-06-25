@@ -5,10 +5,21 @@ public class SceneControl_Alleyway : SceneControlBase
     public Transform[] enterPoints;
 
     public EnterPlace enterPlace_Level1;
+    public GameObject[] initialObjects;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ResetPlayerPos();
+
+        //prevent the repeated gameobject creation
+        if (EvenData.firstTimeEnterScene)
+        {
+            for (int i = 0; i < initialObjects.Length; i++)
+            {
+                Destroy(initialObjects[i]);
+            }
+        }
+        EvenData.firstTimeEnterScene = true;
     }
 
     // Update is called once per frame
