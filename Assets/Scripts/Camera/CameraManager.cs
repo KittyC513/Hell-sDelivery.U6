@@ -107,7 +107,7 @@ public class CameraManager : MonoBehaviour
         inputDetection.cam = mainCam;
 
         //Assign pos on main camera for player1 and player2
-        if(SceneManager.GetActiveScene().name != "Level1")
+        if(EvenData.curSceneName != "Level1")
         {
             if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1"))
             {
@@ -154,7 +154,7 @@ public class CameraManager : MonoBehaviour
 
     public void DetectScene()
     {
-        if(SceneManager.GetActiveScene().name == "Alleyway" || SceneManager.GetActiveScene().name == "PostOffice" || EvenData.craneIsActivated)
+        if(EvenData.curSceneName ==  "Alleyway" || EvenData.curSceneName == "PostOffice" || EvenData.craneIsActivated)
         {
             currentCamType = E_CamType.mainCam;
         }

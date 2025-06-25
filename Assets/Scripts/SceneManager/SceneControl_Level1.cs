@@ -17,6 +17,7 @@ public class SceneControl_Level1 : SceneControlBase
     void Start()
     {
         ResetPlayerPos();
+        EvenData.curSceneName = "Level1";
     }
 
     // Update is called once per frame

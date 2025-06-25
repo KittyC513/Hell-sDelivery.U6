@@ -9,6 +9,7 @@ public class SceneControl_Alleyway : SceneControlBase
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        EvenData.curSceneName = "Alleyway";
         ResetPlayerPos();
 
         //prevent the repeated gameobject creation

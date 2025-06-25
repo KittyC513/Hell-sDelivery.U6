@@ -13,6 +13,7 @@ public class SceneControl_PostOffice : MonoBehaviour
     }
     void Start()
     {
+        EvenData.curSceneName = "PostOffice";
         //reset players position
         ResetPlayerPos();
         AddEventtoLalah();
