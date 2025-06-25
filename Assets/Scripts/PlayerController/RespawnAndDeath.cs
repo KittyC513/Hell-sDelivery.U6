@@ -1,0 +1,57 @@
+using UnityEngine;
+
+public class RespawnAndDeath : MonoBehaviour
+{
+    public bool isDead = false;
+    public Vector3 respawnPosition;
+    public Health health;
+
+    public Transform player;
+    public PlayerStateMachine playerStateMachine;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        respawnPosition = player.position; // Initialize respawn position to the player's starting position
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        #region Enter hazard area and die
+        if(other.CompareTag("Hazard"))
+        {
+            if (!isDead)
+            {
+                isDead = true;
+                playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.dead);
+
+                Invoke(nameof(Respawn), 2f); // Respawn after 2 seconds
+                print("player died");
+            }
+        }
+        #endregion
+
+        #region Enter checkpoint and record the position
+        if (other.CompareTag("Checkpoint"))
+        {
+            respawnPosition = other.transform.position;
+            print("Checkpoint reached: " + respawnPosition);
+        }
+
+        #endregion
+    }
+
+    public void Respawn()
+    {
+        isDead = false;
+        player.position = respawnPosition;
+        playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.airborne);
+        print("Player respawned at: " + respawnPosition);
+    }
+}

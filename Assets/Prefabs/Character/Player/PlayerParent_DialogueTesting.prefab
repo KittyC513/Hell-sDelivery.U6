@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 3416450860833816811}
   - component: {fileID: 2846412479338710749}
   - component: {fileID: 5290936013929528091}
+  - component: {fileID: 8828288476546824725}
   m_Layer: 0
   m_Name: CollectHitbox
   m_TagString: Untagged
@@ -245,6 +246,23 @@ CapsuleCollider:
   m_Height: 1.9445591
   m_Direction: 1
   m_Center: {x: 0, y: -0.08184719, z: 0}
+--- !u!114 &8828288476546824725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753464789022311353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f6ca03098b8534492d9e5e6f1b91ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  respawnPosition: {x: 0, y: 0, z: 0}
+  health: {fileID: 2846412479338710749}
+  player: {fileID: 6347196777763878027}
+  playerStateMachine: {fileID: 3534729435414562412}
 --- !u!1 &4013264815362067898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1141,6 @@ MonoBehaviour:
   maxHeight: 68
   totalAirTime: 5
   horizontalDistance: 60
-  playerHealth: {fileID: 2846412479338710749}
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0

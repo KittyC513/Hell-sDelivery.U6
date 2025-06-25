@@ -90,8 +90,13 @@ public class CameraMovement_Player : NetworkBehaviour
         mPitchRotateAxis = Vector3.Cross(upAxis, Vector3.ProjectOnPlane(transform.forward, upAxis));
         
         playerSettings = PlayerSettings.instance;
-        /************************************************************/
-        //playerSettings.onSettingsChange += UpdateSensitivity;
+
+        if(playerSettings != null)
+        {
+            playerSettings.onSettingsChange += UpdateSensitivity;
+        }
+
+
 #if Network
 
         if (!IsOwner)
@@ -114,7 +119,10 @@ public class CameraMovement_Player : NetworkBehaviour
 
     private void OnDisable()
     {
-        //playerSettings.onSettingsChange -= UpdateSensitivity;
+        if (playerSettings != null)
+        {
+            playerSettings.onSettingsChange -= UpdateSensitivity;
+        }
     }
 
     private void Update()

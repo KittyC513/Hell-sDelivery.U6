@@ -126,8 +126,6 @@ public class PlayerController : NetworkBehaviour
     public float totalAirTime = 1.2f;
     public float horizontalDistance = 8f;
 
-    [Space, Header("Health")]
-    public Health playerHealth;
 
 
     //these variables are all accessable to the various states

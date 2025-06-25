@@ -6,4 +6,5 @@ public class EvenData
     public static bool craneIsActivated = false;
     public static bool firstTimeEnterScene = false;
     public static string curSceneName = "";
+
 }

@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
         if (startConversation_p2)
         {
-            player1.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+            player2.GetComponent<PlayerStateMachine>().FreezeStateMachine();
         }
 
     }
