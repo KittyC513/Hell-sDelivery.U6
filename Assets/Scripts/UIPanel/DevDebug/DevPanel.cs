@@ -30,7 +30,7 @@ public class DevPanel : MonoBehaviour
 
         btn_level1.onClick.AddListener(() =>
         {
-            EvenData.isAcceptedMission_lalah = true;
+            EventData.isAcceptedMission_lalah = true;
             SceneManager.LoadScene("Level1");
         });
 

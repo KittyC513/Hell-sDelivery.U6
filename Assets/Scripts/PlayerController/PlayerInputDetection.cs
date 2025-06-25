@@ -45,6 +45,8 @@ public class PlayerInputDetection : NetworkBehaviour
 
     public int playerNum = 1;
 
+    public Health health;
+
     [Header("Device Check")]
     public bool isCheckedDevice;
     public E_InputDeviceType inputDeviceType;

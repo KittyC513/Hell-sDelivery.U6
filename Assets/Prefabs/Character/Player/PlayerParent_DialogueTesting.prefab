@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8438225c54a81e446bd571e693ed1811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dead: 0
   maxHealth: 3
   currentHealth: 0
   invulTime: 0.5
@@ -258,7 +259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f6ca03098b8534492d9e5e6f1b91ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDead: 0
   respawnPosition: {x: 0, y: 0, z: 0}
   health: {fileID: 2846412479338710749}
   player: {fileID: 6347196777763878027}
@@ -803,6 +803,7 @@ MonoBehaviour:
   dropActiveItemTime: 0.3
   currentTime: 0
   playerNum: 1
+  health: {fileID: 2846412479338710749}
   isCheckedDevice: 0
   inputDeviceType: 0
 --- !u!114 &866038887779867377
