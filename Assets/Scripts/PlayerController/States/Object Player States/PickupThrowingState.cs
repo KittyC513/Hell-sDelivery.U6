@@ -31,19 +31,31 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
 
         //get the rigidbody attached to the current object
         rb = oControl.currentObject.GetComponent<Rigidbody>();
+        Rigidbody rb2 = oControl.GetComponent<Rigidbody>();
+        Vector3 softenedVel = new Vector3(rb2.linearVelocity.x, rb2.linearVelocity.y*0.75f, rb2.linearVelocity.z)/2.5f;
 
         //get the forwards direction of our player
         Vector3 throwDirection = oControl.HoldPoint.TransformDirection(Vector3.forward);
 
         //calculate our direction with our forces added
-        Vector3 velDirection = new Vector3(throwDirection.x * throwForce, upwardsThrowForce, throwDirection.z * throwForce);
+        Vector3 velDirection = new Vector3((throwDirection.x * throwForce)+softenedVel.x, upwardsThrowForce + softenedVel.y, (throwDirection.z * throwForce) +softenedVel.z);
 
         //reset the objects velocity just in case
         rb.linearVelocity = Vector3.zero;
 
 
-        //add force to the object
-        rb.AddForce(velDirection, ForceMode.Impulse);
+        if (oControl.currentObject.CompareTag("Player"))
+        {
+            //add force to the object
+            rb.AddForce(velDirection*3, ForceMode.Impulse);
+        }
+        else
+        {
+            //add force to the object
+            rb.AddForce(velDirection, ForceMode.Impulse);
+        }
+
+   
 
         oControl.StartCoroutine(ThrowWait());
     }
