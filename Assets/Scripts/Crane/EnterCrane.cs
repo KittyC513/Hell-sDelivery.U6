@@ -28,7 +28,7 @@ public class EnterCrane : MonoBehaviour
             {
                 p2EnterCrane = true;
             }
-            EvenData.craneIsActivated = true;
+            EventData.craneIsActivated = true;
         }
     }
 }

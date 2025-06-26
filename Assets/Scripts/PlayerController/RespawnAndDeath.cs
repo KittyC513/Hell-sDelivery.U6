@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class RespawnAndDeath : MonoBehaviour
 {
-    public bool isDead = false;
     public Vector3 respawnPosition;
     public Health health;
 
@@ -26,9 +25,10 @@ public class RespawnAndDeath : MonoBehaviour
         #region Enter hazard area and die
         if(other.CompareTag("Hazard"))
         {
-            if (!isDead)
+            if (!health.dead)
             {
-                isDead = true;
+                health.currentHealth = 0;
+                health.dead = true;
                 playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.dead);
 
                 Invoke(nameof(Respawn), 2f); // Respawn after 2 seconds
@@ -49,7 +49,8 @@ public class RespawnAndDeath : MonoBehaviour
 
     public void Respawn()
     {
-        isDead = false;
+        health.dead = false;
+        health.currentHealth = 3;
         player.position = respawnPosition;
         playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.airborne);
         print("Player respawned at: " + respawnPosition);

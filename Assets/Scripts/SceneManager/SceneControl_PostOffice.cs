@@ -13,7 +13,7 @@ public class SceneControl_PostOffice : MonoBehaviour
     }
     void Start()
     {
-        EvenData.curSceneName = "PostOffice";
+        EventData.curSceneName = "PostOffice";
         //reset players position
         ResetPlayerPos();
         AddEventtoLalah();
@@ -41,7 +41,7 @@ public class SceneControl_PostOffice : MonoBehaviour
         dialogueSystemEvents_lalah.conversationEvents.onConversationEnd.AddListener((actor) =>
         {
             GameManager.instance.UnFreezeBothPlayers();
-            EvenData.isAcceptedMission_lalah = true;
+            EventData.isAcceptedMission_lalah = true;
         });
     }
 }

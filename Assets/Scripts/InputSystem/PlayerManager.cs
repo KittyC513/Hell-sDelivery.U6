@@ -71,37 +71,32 @@ public class PlayerManager : MonoBehaviour
     //Modify lock on camera view regarding the numbers of player
     private void UpdatePlayerInfo()
     {
-        GameManager gManager = GameManager.instance;
-
         if (players.Count == 1) 
         {
             players[0].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0, 0, 0.5f, 1);
 
-            if (gManager != null)
-            {
-                GameManager.instance.player1 = players[0].gameObject; // Assign Player 1 to GameManager
-                GameManager.instance.cam_p1 = players[0].GetComponent<PlayerInputDetection>().playerCam;
-                GameManager.instance.uiControl_P1 = players[0].GetComponent<UIControl_NormalNPCs>();
-            }
+            GameManager.instance.player1 = players[0].gameObject; // Assign Player 1 to GameManager
+            GameManager.instance.cam_p1 = players[0].GetComponent<PlayerInputDetection>().playerCam;
+            GameManager.instance.uiControl_P1 = players[0].GetComponent<UIControl_NormalNPCs>();
+            GameManager.instance.health_p1 = players[0].GetComponent<PlayerInputDetection>().health;
+
             //players[0].GetComponent<PlayerMoneyManager>().playerStats = player1Stats;
         }
         if (players.Count == 2)
         {
-            if (gManager != null)
-            {
-                players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
 
-                GameManager.instance.player2 = players[1].gameObject; // Assign Player 2 to GameManager
-                GameManager.instance.cam_p2 = players[1].GetComponent<PlayerInputDetection>().playerCam;
-                GameManager.instance.uiControl_P2 = players[1].GetComponent<UIControl_NormalNPCs>();
-            }
+            players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
+
+
+            GameManager.instance.player2 = players[1].gameObject; // Assign Player 2 to GameManager
+            GameManager.instance.cam_p2 = players[1].GetComponent<PlayerInputDetection>().playerCam;
+            GameManager.instance.uiControl_P2 = players[1].GetComponent<UIControl_NormalNPCs>();
+            GameManager.instance.health_p2 = players[1].GetComponent<PlayerInputDetection>().health;
+
             //players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;
 
             #region Character Selection
-            if (gManager != null)
-            {
-                GameManager.instance.isOnCharacterSelection = true;
-            } 
+            GameManager.instance.isOnCharacterSelection = true;
             #endregion
 
 

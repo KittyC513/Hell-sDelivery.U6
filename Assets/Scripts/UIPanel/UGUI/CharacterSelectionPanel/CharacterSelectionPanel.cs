@@ -118,6 +118,7 @@ public class CharacterSelectionPanel : MonoBehaviour
 
                 if (leftIsSelected_p2)
                 {
+                    EventData.isInverseScreen = true;
                     GameManager.instance.cam_p2.rect = new Rect(0, 0, 0.5f, 1);
                     GameManager.instance.cam_p1.rect = new Rect(0.5f, 0, 0.5f, 1);
                 }

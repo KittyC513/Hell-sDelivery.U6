@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     public bool startConversation_p1 = false;
     public bool startConversation_p2 = false;
 
+    public Health health_p1;
+    public Health health_p2;
+
+
     private void Awake()
     {  
         instance = this;

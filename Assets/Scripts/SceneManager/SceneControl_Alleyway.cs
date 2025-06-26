@@ -9,28 +9,28 @@ public class SceneControl_Alleyway : SceneControlBase
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        EvenData.curSceneName = "Alleyway";
+        EventData.curSceneName = "Alleyway";
         ResetPlayerPos();
 
         //prevent the repeated gameobject creation
-        if (EvenData.firstTimeEnterScene)
+        if (EventData.firstTimeEnterScene)
         {
             for (int i = 0; i < initialObjects.Length; i++)
             {
                 Destroy(initialObjects[i]);
             }
         }
-        EvenData.firstTimeEnterScene = true;
+        EventData.firstTimeEnterScene = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (EvenData.isAcceptedMission_lalah && !enterPlace_Level1.enabled)
+        if (EventData.isAcceptedMission_lalah && !enterPlace_Level1.enabled)
         {
             enterPlace_Level1.enabled = true;
         }
-        else if (!EvenData.isAcceptedMission_lalah && enterPlace_Level1.enabled)
+        else if (!EventData.isAcceptedMission_lalah && enterPlace_Level1.enabled)
         {
             enterPlace_Level1.enabled = false;
         }

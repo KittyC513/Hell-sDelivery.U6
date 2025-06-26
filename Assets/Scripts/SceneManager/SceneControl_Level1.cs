@@ -17,7 +17,7 @@ public class SceneControl_Level1 : SceneControlBase
     void Start()
     {
         ResetPlayerPos();
-        EvenData.curSceneName = "Level1";
+        EventData.curSceneName = "Level1";
     }
 
     // Update is called once per frame
@@ -34,11 +34,11 @@ public class SceneControl_Level1 : SceneControlBase
 
     public void EnterCraneScriptControl()
     {
-        if (EvenData.craneIsActivated && enterCrane.GetComponent<Collider>().enabled)
+        if (EventData.craneIsActivated && enterCrane.GetComponent<Collider>().enabled)
         {
             enterCrane.GetComponent<Collider>().enabled = false;
         }
-        else if (!EvenData.craneIsActivated && !enterCrane.GetComponent<Collider>().enabled)
+        else if (!EventData.craneIsActivated && !enterCrane.GetComponent<Collider>().enabled)
         {
             enterCrane.GetComponent<Collider>().enabled = true;
         }

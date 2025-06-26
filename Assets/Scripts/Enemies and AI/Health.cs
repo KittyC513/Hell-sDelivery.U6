@@ -11,10 +11,10 @@ public class Health : MonoBehaviour
     public delegate void OnDeath();
     public OnDeath onDeath;
 
-    private bool dead = false;
+    public bool dead = false;
 
-    [SerializeField] private int maxHealth = 2; //maximum health of the enemy
-    [SerializeField] private int currentHealth = 0; //current health of the enemy
+    [SerializeField] public int maxHealth = 2; //maximum health of the enemy
+    [SerializeField] public int currentHealth = 0; //current health of the enemy
 
     [SerializeField] private float invulTime = 0.2f; //how long is the enemy not able to take damage after taking a hit
     private float invulTemp = 0;
