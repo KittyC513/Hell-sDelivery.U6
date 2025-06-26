@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharacterSelectionPanel : MonoBehaviour
@@ -136,7 +137,7 @@ public class CharacterSelectionPanel : MonoBehaviour
                 }
 
                 GameManager.instance.isOnCharacterSelection = false;
-                this.gameObject.SetActive(false);         
+                SceneManager.LoadScene("Alleyway");
             }
         }
         else

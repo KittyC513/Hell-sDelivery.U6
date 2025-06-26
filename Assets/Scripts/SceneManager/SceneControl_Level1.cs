@@ -12,35 +12,40 @@ public class SceneControl_Level1 : SceneControlBase
     public float rotationSpeed = 30;
 
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ResetPlayerPos();
+        //ResetPlayerPos();
         EventData.curSceneName = "Level1";
+        EventData.craneIsActivated = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         EnterCraneScriptControl();
+        ResetPlayerPos();
     }
 
     public void ResetPlayerPos()
     {
-        GameManager.instance.player1.transform.position = enterPoints[0].position;
-        GameManager.instance.player2.transform.position = enterPoints[1].position;
+        if (!isResetPos)
+        {
+            GameManager.instance.player1.transform.position = enterPoints[0].position;
+            GameManager.instance.player2.transform.position = enterPoints[1].position;
+            isResetPos = true;
+        }
     }
 
     public void EnterCraneScriptControl()
     {
         if (EventData.craneIsActivated && enterCrane.GetComponent<Collider>().enabled)
         {
-            enterCrane.GetComponent<Collider>().enabled = false;
+            //enterCrane.GetComponent<Collider>().enabled = false;
         }
         else if (!EventData.craneIsActivated && !enterCrane.GetComponent<Collider>().enabled)
         {
-            enterCrane.GetComponent<Collider>().enabled = true;
+            //enterCrane.GetComponent<Collider>().enabled = true;
         }
 
         CraneMovement();
@@ -58,6 +63,10 @@ public class SceneControl_Level1 : SceneControlBase
             float inputX = playerInput.GetHorizontalMovement().x;
             crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
         }
+        else
+        {
+            GameManager.instance.UnFreezePlayer1();
+        }
 
         if (enterCrane.p2EnterCrane)
         {
@@ -66,6 +75,10 @@ public class SceneControl_Level1 : SceneControlBase
             // Calculate rotation based on horizontal input
             float inputX = playerInput.GetHorizontalMovement().x;
             crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+            GameManager.instance.UnFreezePlayer2();
         }
 
     }

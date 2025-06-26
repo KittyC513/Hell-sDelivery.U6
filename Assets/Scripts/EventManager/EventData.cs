@@ -9,7 +9,7 @@ public class EventData
     public static bool craneIsActivated = false;
 
     [Header("Initial setting")]
-    public static bool firstTimeEnterScene = false;
+    public static bool firstTimeEnterScene = true;
 
     [Header("Scene Info")]
     public static string curSceneName = "";
