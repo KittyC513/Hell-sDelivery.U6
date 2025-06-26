@@ -82,6 +82,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.cam_p1 = players[0].GetComponent<PlayerInputDetection>().playerCam;
                 GameManager.instance.uiControl_P1 = players[0].GetComponent<UIControl_NormalNPCs>();
                 GameManager.instance.health_p1 = players[0].GetComponent<PlayerInputDetection>().health;
+                GameManager.instance.stateMachine_p1 = players[0].GetComponent<PlayerStateMachine>();
             }
           
 
@@ -99,6 +100,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.cam_p2 = players[1].GetComponent<PlayerInputDetection>().playerCam;
                 GameManager.instance.uiControl_P2 = players[1].GetComponent<UIControl_NormalNPCs>();
                 GameManager.instance.health_p2 = players[1].GetComponent<PlayerInputDetection>().health;
+                GameManager.instance.stateMachine_p2 = players[1].GetComponent<PlayerStateMachine>();
             }
           
 
