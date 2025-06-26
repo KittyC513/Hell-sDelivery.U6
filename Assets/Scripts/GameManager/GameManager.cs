@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
+    public PlayerStateMachine stateMachine_p1;
+    public PlayerStateMachine stateMachine_p2;
+
     public Camera cam_p1;
     public Camera cam_p2;
 
@@ -53,35 +56,35 @@ public class GameManager : MonoBehaviour
     /// 
     public void FreezePlayer1()
     {
-        player1.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+        stateMachine_p1.FreezeStateMachine();
     }
 
     public void UnFreezePlayer1()
     {
-        player1.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+        stateMachine_p1.UnFreezeStateMachine();
     }
 
     public void FreezePlayer2()
     {
-        player2.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+        stateMachine_p2.FreezeStateMachine();
     }
 
     public void UnFreezePlayer2()
     {
-        player2.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+        stateMachine_p2.UnFreezeStateMachine();
     }
     public void FreezeBothPlayers()
     {
 
         if (player1 != null)
         {
-            player1.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+            stateMachine_p1.FreezeStateMachine();
             //p1cam.rect = changeRect; // Set Player 1's camera to full screen
         }
 
         if (player2 != null)
         {
-            player2.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+            stateMachine_p2.FreezeStateMachine();
             //p2cam.rect = new Rect(changeRect.width, 0, 1- changeRect.width, 1); // Set Player 2's camera to the right side of the screen
         }
         Debug.Log("Freeze both players");
@@ -91,14 +94,14 @@ public class GameManager : MonoBehaviour
     {
         if (player1 != null)
         {
-            player1.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+            stateMachine_p1.UnFreezeStateMachine();
 
             //p1cam.rect = new Rect(0, 0, 0.5f, 1); // Set Player 1's camera to full screen
         }
 
         if (player2 != null)
         {
-            player2.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+            stateMachine_p2.UnFreezeStateMachine();
             //p2cam.rect = new Rect(0.5f, 0, 0.5f, 1);
         }
 
@@ -109,13 +112,13 @@ public class GameManager : MonoBehaviour
     {
         if (startConversation_p1)
         {
-            player1.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+            stateMachine_p1.FreezeStateMachine();
         }
 
 
         if (startConversation_p2)
         {
-            player2.GetComponent<PlayerStateMachine>().FreezeStateMachine();
+            stateMachine_p2.FreezeStateMachine();
         }
 
     }
@@ -124,14 +127,14 @@ public class GameManager : MonoBehaviour
     {
         if (player1 != null)
         {
-            player1.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+            stateMachine_p1.UnFreezeStateMachine();
             cam_p1.rect = new Rect(0, 0, 0.5f, 1);
 
         }
 
         if (player2 != null)
         {
-            player2.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
+            stateMachine_p2.UnFreezeStateMachine();
             cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
         }
 

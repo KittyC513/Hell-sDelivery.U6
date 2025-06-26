@@ -7,7 +7,7 @@ public class EnterCrane : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -28,7 +28,27 @@ public class EnterCrane : MonoBehaviour
             {
                 p2EnterCrane = true;
             }
+
             EventData.craneIsActivated = true;
+            print("Crane is Activated");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player1"))
+            {
+                p1EnterCrane = false;
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Player2"))
+            {
+                p2EnterCrane = false;
+            }
+
+            EventData.craneIsActivated = false;
+            print("Crane is Deactivated");
         }
     }
 }

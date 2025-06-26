@@ -1,7 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
-public class SceneControl_PostOffice : MonoBehaviour
+public class SceneControl_PostOffice : SceneControlBase
 {
     public Transform[] enterPoints;
     public DialogueSystemEvents dialogueSystemEvents_lalah;
@@ -27,8 +27,12 @@ public class SceneControl_PostOffice : MonoBehaviour
 
     public void ResetPlayerPos()
     {
-        GameManager.instance.player1.transform.position = enterPoints[0].position;
-        GameManager.instance.player2.transform.position = enterPoints[1].position;
+        if (!isResetPos)
+        {
+            GameManager.instance.player1.transform.position = enterPoints[0].position;
+            GameManager.instance.player2.transform.position = enterPoints[1].position;
+            isResetPos = true;
+        }
     }
 
     public void AddEventtoLalah()
@@ -42,6 +46,7 @@ public class SceneControl_PostOffice : MonoBehaviour
         {
             GameManager.instance.UnFreezeBothPlayers();
             EventData.isAcceptedMission_lalah = true;
+            print("EventData.isAcceptedMission_lalah:" + EventData.isAcceptedMission_lalah);
         });
     }
 }

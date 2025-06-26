@@ -7,6 +7,8 @@ public class SceneControlBase : MonoBehaviour
 
     public bool sceneChanged = false;
 
+    public bool isResetPos = false;
+
     private void Awake()
     {
         instance = this;
@@ -15,6 +17,7 @@ public class SceneControlBase : MonoBehaviour
     private void Start()
     {
         sceneChanged = true;
+        isResetPos = false;
     }
 
 
