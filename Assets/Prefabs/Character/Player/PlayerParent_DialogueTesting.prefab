@@ -706,6 +706,7 @@ MonoBehaviour:
   anim: {fileID: 3003704552810336728}
   controller: {fileID: 4161022655810438540}
   attackControl: {fileID: 2156524465778351454}
+  objectController: {fileID: 6453902458872554444}
   showCurrentState: 0
 --- !u!114 &6453902458872554444
 MonoBehaviour:
@@ -725,10 +726,11 @@ MonoBehaviour:
   pickupSpeed: 3
   grabbableMask:
     serializedVersion: 2
-    m_Bits: 8256
+    m_Bits: 8384
   inputDetection: {fileID: 3167985525364349275}
-  forwardThrowForce: 6
-  upwardsThrowForce: 4
+  canPickup: 1
+  forwardThrowForce: 29
+  upwardsThrowForce: 19
   currentObject: {fileID: 0}
 --- !u!114 &5350303395643184213
 MonoBehaviour:
@@ -1054,7 +1056,7 @@ MonoBehaviour:
   rotationSpeed: 15
   groundLayers:
     serializedVersion: 2
-    m_Bits: 8448
+    m_Bits: 8640
   visualizeRaycast: 1
   floatHeight: 0.2
   raycastDist: 0.4
@@ -1063,7 +1065,7 @@ MonoBehaviour:
   floatHeightDamping: 3
   maxFallSpeed: 25
   fallAccel: 45
-  maxFallAccelStep: 150
+  maxFallAccelStep: 55
   gravityScale: 1
   fallAccelScale: 1
   jumpHeight: 3

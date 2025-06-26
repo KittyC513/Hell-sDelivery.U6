@@ -20,6 +20,8 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
 
     public override void EnterState()
     {
+        oControl.onItemThrow.Invoke(oControl.currentObject);
+
         //get our throw variables from the object controller
         throwForce = oControl.ForwardThrowForce;
         upwardsThrowForce = oControl.UpwardsThrowForce;
@@ -38,6 +40,7 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
 
         //reset the objects velocity just in case
         rb.linearVelocity = Vector3.zero;
+
 
         //add force to the object
         rb.AddForce(velDirection, ForceMode.Impulse);
@@ -58,6 +61,7 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
     {
         if (thrown)
         {
+          
             return PickupStateMachine.PickupStates.empty;
         }
         return stateKey;

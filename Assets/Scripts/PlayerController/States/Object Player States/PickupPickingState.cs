@@ -43,9 +43,14 @@ public class PickupPickingState : BaseState<PickupStateMachine.PickupStates>
     public override PickupStateMachine.PickupStates GetNextState()
     {
         //if we have reached the final lerp time or our object has reached destination switch to holding the object
-        if (lerpTime >= 1)
+        if (lerpTime >= 1 && oControl.canPickup)
         {
             return PickupStateMachine.PickupStates.holding;
+        }
+        else if (!oControl.canPickup)
+        {
+            oControl.currentObject = null;
+            return PickupStateMachine.PickupStates.empty;
         }
         return stateKey;
     }

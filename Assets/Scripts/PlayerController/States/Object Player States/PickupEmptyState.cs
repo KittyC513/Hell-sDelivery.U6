@@ -25,7 +25,7 @@ public class PickupEmptyState : BaseState<PickupStateMachine.PickupStates>
     public override PickupStateMachine.PickupStates GetNextState()
     {
         //this will be changed with the new input system at a later date
-        if (oControl.GetPickupInput())
+        if (oControl.GetPickupInput() && oControl.canPickup)
         {
             //get our detected gameobject
             GameObject temp = DetectObject();
@@ -35,7 +35,7 @@ public class PickupEmptyState : BaseState<PickupStateMachine.PickupStates>
             {
                 //otherwise set our current object and start to pick it up
                 oControl.currentObject = temp;
-
+                oControl.onItemPickup.Invoke(oControl.currentObject);
                 return PickupStateMachine.PickupStates.pickup;
             }
         }

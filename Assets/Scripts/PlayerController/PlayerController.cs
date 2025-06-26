@@ -400,8 +400,10 @@ public class PlayerController : NetworkBehaviour
         raycastStartPoint = new Vector3(transform.position.x, (transform.position.y + 0.1f + raycastRadius) - (playerHitboxHeight / 2), transform.position.z);
 
         //Cast a ray downwards to detect any objects with the ground layermask
-        if (Physics.SphereCast(raycastStartPoint, raycastRadius, -transform.up, out hit, raycastDist * groundCheckFactor, groundLayers))
+        if (Physics.SphereCast(raycastStartPoint, raycastRadius, -transform.up, out hit, raycastDist * groundCheckFactor, groundLayers) &&
+            hit.collider.isTrigger == false)
         {
+            
             //Direction towards the raycast hit point from the raycast origin
             Vector3 directionToHit = (hit.point - raycastStartPoint).normalized;
 
@@ -442,6 +444,7 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+
             //if we are not grounded reset the factor that multiplies the raycast distance when on a slope
             groundCheckFactor = 1; 
 

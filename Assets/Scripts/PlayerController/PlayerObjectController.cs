@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class PlayerObjectController : MonoBehaviour
@@ -11,6 +12,14 @@ public class PlayerObjectController : MonoBehaviour
     [SerializeField] private float pickupSpeed = 1; //how fast the object moves to the hold point when picking up an object
     [SerializeField] private LayerMask grabbableMask; //what layers can be grabbed
     [SerializeField] private PlayerInputDetection inputDetection;
+
+    public delegate void OnItemPickup(GameObject item);
+    public OnItemPickup onItemPickup;
+
+    public delegate void OnItemThrow(GameObject item);
+    public OnItemThrow onItemThrow;
+
+    public bool canPickup = true;
 
     [Space, Header("Throwing Variables")]
     [SerializeField] private float forwardThrowForce = 8; //how much force forwards to add to an object when throwing
@@ -35,10 +44,19 @@ public class PlayerObjectController : MonoBehaviour
             Debug.Log("Input detection set to get component by default");
         }
     }
-    private void Start()
+
+    private void OnEnable()
     {
-      
+        onItemPickup += CheckPlayerPickup;
+        onItemThrow += CheckPlayerThrow;
     }
+
+    private void OnDisable()
+    {
+        onItemPickup -= CheckPlayerPickup;
+        onItemThrow -= CheckPlayerThrow;
+    }
+
     private void OnDrawGizmos()
     {
         if (showRadius)
@@ -56,6 +74,35 @@ public class PlayerObjectController : MonoBehaviour
     public bool GetThrowInput()
     {
         return inputDetection.attackPressed;
+    }
+
+    private void CheckPlayerPickup(GameObject item)
+    {
+        if (item.CompareTag("Player"))
+        {
+            //get the player's state machine
+            PlayerStateMachine tempMachine = item.GetComponent<PlayerStateMachine>();
+
+            if (tempMachine != null)
+            {
+                tempMachine.OverrideState(PlayerStateMachine.PlayerStates.grabbed);
+            }
+        }
+    }
+
+    private void CheckPlayerThrow(GameObject item)
+    {
+        if (item.CompareTag("Player"))
+        {
+            //get the player's state machine
+            PlayerStateMachine tempMachine = item.GetComponent<PlayerStateMachine>();
+
+
+            if (tempMachine != null)
+            {
+                tempMachine.OverrideState(PlayerStateMachine.PlayerStates.airborne);
+            }
+        }
     }
 
 }

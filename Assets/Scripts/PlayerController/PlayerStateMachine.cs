@@ -6,16 +6,21 @@ using UnityEngine;
 public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
 {
     //create states and add them to the dictionary 
-    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack, headBounce, dead }
+    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack, headBounce, dead, grabbed }
 
     public PlayerController controller;
     public PlayerAttackControl attackControl;
+    public PlayerObjectController objectController;
 
     private PlayerStates defaultState;
     [SerializeField] public PlayerStates showCurrentState;
 
     private void Awake()
     {
+        if (objectController == null)
+        {
+            objectController = GetComponent<PlayerObjectController>();
+        }
         //this is how you initialize and add a state to the dictionary
         //you assign your enum first followed by the script you will assign to that enum
         states.Add(PlayerStates.airborne, new PlayerAirborneState(PlayerStates.airborne, controller));
@@ -28,11 +33,14 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
         states.Add(PlayerStates.ragdoll, new PlayerRagdollState(PlayerStates.ragdoll, controller));
         states.Add(PlayerStates.attack, new PlayerAttackState(PlayerStates.attack, controller, attackControl));
         states.Add(PlayerStates.dead, new PlayerDeadState(PlayerStates.dead, controller));
-        //states.Add(PlayerStates.headBounce, new PlayerHeadBounce(PlayerStates.headBounce, controller));
+        states.Add(PlayerStates.grabbed, new PlayerGrabbedState(PlayerStates.grabbed, controller, objectController));
+        states.Add(PlayerStates.headBounce, new PlayerHeadBounce(PlayerStates.headBounce, controller));
 
         //set our current state to airborne as a default starting state
         currentState = states[PlayerStates.airborne];
         defaultState = PlayerStates.airborne;
+
+       
     }
 
     private void LateUpdate()

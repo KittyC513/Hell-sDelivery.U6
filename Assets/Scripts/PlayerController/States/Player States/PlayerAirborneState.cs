@@ -96,6 +96,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
             if (pControl.GroundObject.CompareTag("Player"))
             {
                 //Debug.Log("HeadBounce");
+                
                 return PlayerStateMachine.PlayerStates.headBounce;
             }
             return PlayerStateMachine.PlayerStates.grounded;
