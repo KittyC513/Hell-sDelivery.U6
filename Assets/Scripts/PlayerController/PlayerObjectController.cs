@@ -87,7 +87,9 @@ public class PlayerObjectController : MonoBehaviour
             {
                 tempMachine.OverrideState(PlayerStateMachine.PlayerStates.grabbed);
             }
+
         }
+   
     }
 
     private void CheckPlayerThrow(GameObject item)
