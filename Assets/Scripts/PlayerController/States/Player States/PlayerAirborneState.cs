@@ -20,6 +20,8 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 
     private bool ledgeDetected = false;
 
+    private float downForce;
+
 
 
     public PlayerAirborneState(PlayerStateMachine.PlayerStates key, PlayerController controller) : base(key)
@@ -38,7 +40,8 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         goalVelocityChange = Vector3.zero;
 
         //set animation 
-        animName = "Player_Fall";
+        animName = "Idle";
+
     }
 
     public override void UpdateState()
@@ -49,9 +52,11 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void PhysicsUpdate()
     {
+        CalculateMovement(rb);
+
         if (!pControl.Grounded)
         {
-            CalculateMovement(rb);
+            
             ledgeDetected = DetectLedge();
         }
     }
@@ -81,6 +86,8 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         //apply our force to our velocity
         rb.AddForce(velocityChange * rb.mass);
         //Debug.Log(velocityChange);
+        downForce = currentVel.y;
+        
     }
 
     public override void ExitState()
@@ -92,6 +99,12 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
     {
         if (pControl.Grounded)
         {
+            if (pControl.GroundObject.CompareTag("BouncePad"))
+            {
+                pControl.GroundObject.GetComponent<BouncePad>().BounceObject(rb, downForce);
+                pControl.remainingJumps = pControl.MaxJumps;
+                return PlayerStateMachine.PlayerStates.jump;
+            }
             //a player is detected as ground below this player
             if (pControl.GroundObject.CompareTag("Player"))
             {
