@@ -24,6 +24,8 @@ public class DoubleJumpState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void EnterState()
     {
+        animName = "Jump In Place";
+
         //setup our rigidbody
         rb = pControl.RB;
         gravityFactor = 1;

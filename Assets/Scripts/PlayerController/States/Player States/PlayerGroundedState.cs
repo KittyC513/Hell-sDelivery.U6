@@ -71,9 +71,14 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
              return PlayerStateMachine.PlayerStates.attack;
        }
 
-       
+        if (pControl.GroundObject.CompareTag("BouncePad"))
+        {
+            pControl.GroundObject.GetComponent<BouncePad>().BounceObject(rb, rb.linearVelocity.y);
+            return PlayerStateMachine.PlayerStates.jump;
+        }
 
-       return stateKey;
+
+        return stateKey;
     }
 
     //could have a way to deal with slope sliding in grounded

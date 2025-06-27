@@ -437,7 +437,7 @@ public class PlayerController : NetworkBehaviour
             }
 
             grounded = true;
-
+          
             currentGround = hit.collider.gameObject;
 
             return hit;
