@@ -22,6 +22,7 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
     {
         oControl.onItemThrow.Invoke(oControl.currentObject);
 
+
         //get our throw variables from the object controller
         throwForce = oControl.ForwardThrowForce;
         upwardsThrowForce = oControl.UpwardsThrowForce;
@@ -33,6 +34,12 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
         rb = oControl.currentObject.GetComponent<Rigidbody>();
         Rigidbody rb2 = oControl.GetComponent<Rigidbody>();
         Vector3 softenedVel = new Vector3(rb2.linearVelocity.x, rb2.linearVelocity.y*0.75f, rb2.linearVelocity.z)/2.5f;
+
+        Vector3 endPos = oControl.currentObject.GetComponent<Collider>().ClosestPoint(oControl.transform.position);
+        Vector3 center = oControl.currentObject.transform.position;
+
+        float dist = Vector3.Distance(center, endPos);
+        rb.position = oControl.HoldPoint.position + (dist * oControl.transform.forward);
 
         //get the forwards direction of our player
         Vector3 throwDirection = oControl.HoldPoint.TransformDirection(Vector3.forward);
