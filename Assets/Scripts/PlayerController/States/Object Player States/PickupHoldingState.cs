@@ -17,8 +17,6 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
     private PlayerObjectController oControl;
     private Rigidbody objRb;
 
-    private Quaternion startRot;
-
     private RigidbodyConstraints constraints;
     public PickupHoldingState(PickupStateMachine.PickupStates key, PlayerObjectController controller) : base(key)
     {
@@ -33,9 +31,11 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
         tempX = new SpringUtils.tDampedSpringMotionParams();
         tempY = new SpringUtils.tDampedSpringMotionParams();
         tempZ = new SpringUtils.tDampedSpringMotionParams();
-        startRot = oControl.currentObject.transform.rotation; //* Quaternion.Euler(0, 1, 1);
+
         objRb = oControl.currentObject.GetComponent<Rigidbody>();
-        //oControl.currentObject.transform.SetParent(oControl.HoldPoint.transform);
+
+        //set the objects parent so that it follows rotations
+        oControl.currentObject.transform.SetParent(oControl.HoldPoint.transform);
 
         //ignore collision between the player holding the object and the object they hold
         Physics.IgnoreCollision(oControl.GetComponent<Collider>(), oControl.currentObject.GetComponent<Collider>(), true);
@@ -104,12 +104,6 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
 
             float dist = Vector3.Distance(center, endPos);
             targetPos = oControl.HoldPoint.position + (dist*oControl.transform.forward);
-        
-            //Vector3 look = oControl.transform.right;
-            //oControl.currentObject.transform.eulerAngles = new Vector3(0, Vector3.Angle(oControl.currentObject.transform.forward, oControl.transform.forward), 0);
-            //rotate object on the global x axis to look at the players facing direction
-            //RotateTowards(oControl.transform.forward, 100, oControl.currentObject);
-            //oControl.HoldPoint.transform.LookAt(oControl.transform.forward);
         }
 
         //calculate all the spring motion values for xyz values of position

@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,9 @@ public class BreakableBox : MonoBehaviour
     private Animator anim;
 
     public bool hasDestroyed = false;
+    [SerializeField] private bool destroyOnBreak = true;
+    [SerializeField] private bool knockback = false;
+    [SerializeField] private float knockbackForce = 10;
 
     private Rigidbody rb;
 
@@ -37,18 +41,18 @@ public class BreakableBox : MonoBehaviour
     {
         //this box has been destroyed
         hasDestroyed = true;
-
-        //freeze the object
-        rb.constraints = RigidbodyConstraints.FreezePosition;
-
-        //disable the collider
-        colliderToDisable.enabled = false;
-
         //update animations to break the box
         //anim.SetTrigger("Destroyed");
-
-        //destroy the box
-        Destroy(this.gameObject, 0.05f);
+       
+        if (destroyOnBreak)
+        {
+            //freeze the object
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+            //disable the collider
+            colliderToDisable.enabled = false;
+            //destroy the box
+            Destroy(this.gameObject, 0.05f);
+        }
     }
 
     private void CheckImpactDestroy()
@@ -64,8 +68,12 @@ public class BreakableBox : MonoBehaviour
     {
         if (collision.collider.CompareTag("PlayerAttack"))
         {
+            ApplyKnockback(collision.collider.gameObject);
             //the player has attacked the box
-            if (!hasDestroyed) onBoxBreak?.Invoke();
+            if (!hasDestroyed)
+            {
+                onBoxBreak?.Invoke();
+            }
         }
         else //this is used to determine if the box has smashed into a surface hard enough to break
         {
@@ -77,8 +85,20 @@ public class BreakableBox : MonoBehaviour
     {
         if (other.CompareTag("PlayerAttack"))
         {
+            ApplyKnockback(other.gameObject);
             //the player has attacked the box
             if (!hasDestroyed) onBoxBreak?.Invoke();
+        }
+    }
+
+    private void ApplyKnockback(GameObject attacker)
+    {
+        if (knockback)
+        {
+            Vector3 dir = (transform.position - attacker.transform.position).normalized;
+            dir = new Vector3(dir.x, dir.y+1f, dir.z);
+            rb.AddForce(dir * knockbackForce, ForceMode.Impulse);
+
         }
     }
 }
