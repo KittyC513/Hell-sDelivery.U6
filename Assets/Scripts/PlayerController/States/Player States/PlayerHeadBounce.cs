@@ -8,11 +8,9 @@ public class PlayerHeadBounce : BaseState<PlayerStateMachine.PlayerStates>
     private float jumpDecay;
 
     private float jumpTime = 0;
-    private float maxJumpTime = 1.7f;
 
     private float gravityFactor = 1;
 
-    private PlayerController otherPlayer;
 
     private Rigidbody rb;
 

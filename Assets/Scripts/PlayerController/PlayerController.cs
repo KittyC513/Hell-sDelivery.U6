@@ -64,6 +64,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float jumpReleaseFactor = 2f; //how much gravity is increased when the jump button is let go of
     [SerializeField] private float jumpPeakFactor = 0.3f; //how much gravity is changed at the peak of the jump to give longer air time
     [SerializeField] private float jumpPeakRange = 1.2f; //what velocity value will slow down velocity at the peak of a jump
+    [SerializeField] private float headSquishForce = 12; //force applied to the player that got jumped on 
 
     [Space, Header ("Double Jump Variables")]
     [SerializeField] private float doubleJumpHeight = 1f; //jump height when double jumping
@@ -164,6 +165,7 @@ public class PlayerController : NetworkBehaviour
     public float JumpReleaseFactor { get { return jumpReleaseFactor; }}
     public float JumpPeakFactor { get { return jumpPeakFactor; }}
     public float JumpPeakRange {  get { return jumpPeakRange; }}
+    public float HeadSquishForce { get { return headSquishForce; }}
 
     //Sliding Variables
     public float MaxSlideSpeed {  get { return maxSlideSpeed; }}
