@@ -102,7 +102,7 @@ public class PlayerObjectController : MonoBehaviour
 
             if (tempMachine != null)
             {
-                tempMachine.OverrideState(PlayerStateMachine.PlayerStates.airborne);
+                tempMachine.OverrideState(PlayerStateMachine.PlayerStates.freeFall);
             }
         }
     }

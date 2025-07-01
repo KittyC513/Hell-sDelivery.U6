@@ -17,6 +17,8 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
     private PlayerObjectController oControl;
     private Rigidbody objRb;
 
+    private Transform oldParent;
+
     private RigidbodyConstraints constraints;
     public PickupHoldingState(PickupStateMachine.PickupStates key, PlayerObjectController controller) : base(key)
     {
@@ -33,7 +35,7 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
         tempZ = new SpringUtils.tDampedSpringMotionParams();
 
         objRb = oControl.currentObject.GetComponent<Rigidbody>();
-
+        oldParent = oControl.currentObject.transform.parent;
         //set the objects parent so that it follows rotations
         oControl.currentObject.transform.SetParent(oControl.HoldPoint.transform);
 
@@ -51,7 +53,15 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
     {
         if (oControl.currentObject != null)
         {
-            oControl.currentObject.transform.SetParent(null);
+            if (oldParent != null)
+            {
+                oControl.currentObject.transform.SetParent(oldParent);
+            }
+            else
+            {
+                oControl.currentObject.transform.SetParent(null);
+            }
+          
             Physics.IgnoreCollision(oControl.GetComponent<Collider>(), oControl.currentObject.GetComponent<Collider>(), false);
             objRb.constraints = constraints;
         }
@@ -69,7 +79,14 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
         {
             Physics.IgnoreCollision(oControl.GetComponent<Collider>(), oControl.currentObject.GetComponent<Collider>(), false);
             objRb.constraints = constraints;
-            oControl.currentObject.transform.SetParent(null);
+            if (oldParent != null)
+            {
+                oControl.currentObject.transform.SetParent(oldParent);
+            }
+            else
+            {
+                oControl.currentObject.transform.SetParent(null);
+            }
             oControl.currentObject = null;
             return PickupStateMachine.PickupStates.empty;
         }

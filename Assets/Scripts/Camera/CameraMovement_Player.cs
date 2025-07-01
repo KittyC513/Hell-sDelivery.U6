@@ -279,7 +279,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
         if (isHit)
         {
-            Debug.Log("Hit obstacle");
+            //Debug.Log("Hit obstacle");
             return hit.point + (-dir * detectorSphereRadius);
         }
 

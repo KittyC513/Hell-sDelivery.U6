@@ -26,6 +26,9 @@ public class PickupPickingState : BaseState<PickupStateMachine.PickupStates>
         //get the rigidbody of our object
         rb = oControl.currentObject.GetComponent<Rigidbody>();
 
+        //ignore collision between the player holding the object and the object they hold
+        Physics.IgnoreCollision(oControl.GetComponent<Collider>(), oControl.currentObject.GetComponent<Collider>(), true);
+
         Debug.Log("ENTER PICKUP");
 
         //reset our lerp time to start the lerp
@@ -37,7 +40,8 @@ public class PickupPickingState : BaseState<PickupStateMachine.PickupStates>
 
     public override void ExitState()
     {
-
+        //ignore collision between the player holding the object and the object they hold
+        Physics.IgnoreCollision(oControl.GetComponent<Collider>(), oControl.currentObject.GetComponent<Collider>(), false);
     }
 
     public override PickupStateMachine.PickupStates GetNextState()
@@ -66,10 +70,6 @@ public class PickupPickingState : BaseState<PickupStateMachine.PickupStates>
             oControl.currentObject.transform.position = Vector3.Lerp(objectStartPos, oControl.HoldPoint.transform.position, lerpTime);
         }
  
-
-        //this doesnt work at the moment
-        //pControl.LimitPlayerVelocity(0f, this.ToString());
-     
     }
 
 }

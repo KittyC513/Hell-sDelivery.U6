@@ -26,7 +26,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
     [SerializeField] private float rotationSpeed = 500; //how fast the player rotates
 
-
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
     private Vector3 leftStickDir;
 
@@ -54,6 +53,10 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxFallAccelStep = 150;
     [SerializeField] public float gravityScale = 1;
     [SerializeField] public float fallAccelScale = 1;
+
+    [SerializeField] public float airStepMult = 0.65f;
+    [SerializeField] public float airDecelMult = 0.45f;
+    [SerializeField] public float airAccelMult = 0.75f;
 
     [Space, Header("Jump Variables")]
     [SerializeField] private float jumpHeight = 2.5f;
@@ -108,7 +111,9 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PickupStateMachine pickMachine;
     private PickupStateMachine.PickupStates pickupState;
     [SerializeField] private Health pHealth;
-
+    [SerializeField] private ApplyKnockback knockback;
+    [SerializeField] private PlayerStateMachine pMachine;
+    [SerializeField] private GameObject playerModel;
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
 
@@ -134,6 +139,7 @@ public class PlayerController : NetworkBehaviour
     public Rigidbody RB { get { return rb; }}
     public bool Grounded { get { return grounded; } }
     public float PlayerHitboxHeight { get { return playerHitboxHeight; } }
+    public GameObject PlayerModel { get { return playerModel; } }   
 
     //Grounded Variables
     public float FloatHeight { get { return floatHeight; } }
@@ -199,11 +205,20 @@ public class PlayerController : NetworkBehaviour
     {
         pHealth.onTakeDamage += KnockbackPlayer;
 
+        if (knockback != null)
+        {
+            knockback.onKnockback += OnPlayerKnockback;
+        }
     }
 
     private void OnDisable()
     {
         pHealth.onTakeDamage -= KnockbackPlayer;
+
+        if (knockback != null)
+        {
+            knockback.onKnockback -= OnPlayerKnockback;
+        }
     }
 
     private void Update()
@@ -236,7 +251,7 @@ public class PlayerController : NetworkBehaviour
         if (!frozen) CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
     }
 
-
+    #region Inputs
     //get our jump inputs from the player input script
     public bool DetectJumpInput() //a single jump press (does not detect holding down the button)
     {
@@ -265,7 +280,9 @@ public class PlayerController : NetworkBehaviour
     {
         return inputDetection.attackPressed;
     }
+    #endregion
 
+    #region Movement Calcs
     //this function needs to run regardless of if the player is grounded or airborne, this is the basic movement
     //therefore it needs to be in the main script
     private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float decelValue, float maxSpeed)
@@ -276,6 +293,7 @@ public class PlayerController : NetworkBehaviour
         
         //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
         Vector3 targetVelocity = targetDir * (maxSpeed);
+        float maxStep = maxAccelStep;
 
         //our current desired velocity direction
         Vector3 unitVel = goalVelocityChange.normalized;
@@ -293,6 +311,22 @@ public class PlayerController : NetworkBehaviour
         //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
         float accel = quickTurnMultiplier.Evaluate(velDot) * accelValue;
         float decel = decelValue;
+
+        //if not grounded make the player decelerate slower to give a sense of momentum
+        if (Grounded)
+        {
+            //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
+            accel = quickTurnMultiplier.Evaluate(velDot) * accelValue;
+            decel = decelValue;
+        }
+        else
+        {
+            //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
+            accel = (quickTurnMultiplier.Evaluate(velDot) * accelValue)*airAccelMult;
+            decel = decelValue*airDecelMult;
+            maxStep = maxAccelStep * airStepMult;
+            targetVelocity = targetDir * maxSpeed;
+        }
 
         //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
         if (targetVelocity.magnitude <= 0.05f)
@@ -351,7 +385,6 @@ public class PlayerController : NetworkBehaviour
 
         if (direction.magnitude > 0)
         {
-
             //calculate our desired rotation
             Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
 
@@ -496,7 +529,7 @@ public class PlayerController : NetworkBehaviour
             canCoyote = false;
         }
     }
-
+    #endregion
 
     private void OnDrawGizmos()
     {
@@ -565,5 +598,14 @@ public class PlayerController : NetworkBehaviour
     {
         Vector3 adjustedForce = new Vector3(force.x, force.y, force.z);
         rb.AddForce(adjustedForce, ForceMode.Impulse);
+    }
+
+    //used when the player is hit by the apply knockback script (not when they take damage)
+    public void OnPlayerKnockback(Vector3 force)
+    {
+        if (pMachine != null && playerModel != null)
+        {
+            pMachine.OverrideState(PlayerStateMachine.PlayerStates.freeFall);
+        }
     }
 }

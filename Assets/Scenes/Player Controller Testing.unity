@@ -6534,6 +6534,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PlrTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 2846412479338710749, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: damageDealers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846412479338710749, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: damageDealers.Array.data[1].tag
+      value: Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846412479338710749, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: damageDealers.Array.data[1].damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846412479338710749, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: damageDealers.Array.data[1].knockbackForce
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3003704552817769984, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 12.856653
@@ -7030,14 +7046,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1194662545
       objectReference: {fileID: 0}
-    - target: {fileID: 4094894041621900929, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.219
-      objectReference: {fileID: 0}
-    - target: {fileID: 4094894041621900929, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.23
-      objectReference: {fileID: 0}
     - target: {fileID: 4242292160371283292, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -7048,7 +7056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4971868892339508933, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6117834857856622084, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_Layer
@@ -7062,13 +7070,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6347196777763878027, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.29
+      objectReference: {fileID: 0}
     - target: {fileID: 6784667347201551197, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.66
       objectReference: {fileID: 0}
     - target: {fileID: 6784667347201551197, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.92
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 6784667347201551197, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12622,7 +12634,7 @@ GameObject:
   - component: {fileID: 1302792796}
   m_Layer: 0
   m_Name: Tire model
-  m_TagString: Untagged
+  m_TagString: LevelObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21093,7 +21105,7 @@ GameObject:
   - component: {fileID: 1740552455}
   m_Layer: 13
   m_Name: Cube (14)
-  m_TagString: Untagged
+  m_TagString: LevelObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29252,7 +29264,7 @@ GameObject:
   - component: {fileID: 2096608921}
   m_Layer: 13
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: LevelObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

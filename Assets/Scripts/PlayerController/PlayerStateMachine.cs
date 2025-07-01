@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
 {
     //create states and add them to the dictionary 
-    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack, headBounce, dead, grabbed }
+    public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack, headBounce, dead, grabbed,
+    freeFall, splat }
 
     public PlayerController controller;
     public PlayerAttackControl attackControl;
@@ -35,6 +36,8 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
         states.Add(PlayerStates.dead, new PlayerDeadState(PlayerStates.dead, controller));
         states.Add(PlayerStates.grabbed, new PlayerGrabbedState(PlayerStates.grabbed, controller, objectController));
         states.Add(PlayerStates.headBounce, new PlayerHeadBounce(PlayerStates.headBounce, controller));
+        states.Add(PlayerStates.freeFall, new PlayerFreeFallState(PlayerStates.freeFall, controller));
+        states.Add(PlayerStates.splat, new PlayerSplatState(PlayerStates.splat, controller));
 
         //set our current state to airborne as a default starting state
         currentState = states[PlayerStates.airborne];
