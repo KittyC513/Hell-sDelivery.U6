@@ -33,7 +33,7 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
         //get the rigidbody attached to the current object
         rb = oControl.currentObject.GetComponent<Rigidbody>();
         Rigidbody rb2 = oControl.GetComponent<Rigidbody>();
-        Vector3 softenedVel = new Vector3(rb2.linearVelocity.x, rb2.linearVelocity.y*0.75f, rb2.linearVelocity.z)/2.5f;
+        Vector3 softenedVel = new Vector3(rb2.linearVelocity.x, rb2.linearVelocity.y*0.65f, rb2.linearVelocity.z)/2f;
 
         Vector3 endPos = oControl.currentObject.GetComponent<Collider>().ClosestPoint(oControl.transform.position);
         Vector3 center = oControl.currentObject.transform.position;

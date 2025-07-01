@@ -132,6 +132,8 @@ public class PlayerController : NetworkBehaviour
     public float totalAirTime = 1.2f;
     public float horizontalDistance = 8f;
 
+    [Space, Header("Splat Variables")]
+    [SerializeField] private float minSplatForce = 30; 
 
 
     //these variables are all accessable to the various states
@@ -596,16 +598,23 @@ public class PlayerController : NetworkBehaviour
 
     }
 
+    //used when a player takes knockback from a damaging force
     public void KnockbackPlayer(Vector3 force)
     {
         Vector3 adjustedForce = new Vector3(force.x, force.y, force.z);
+
+        if (adjustedForce.magnitude >= minSplatForce && pMachine != null && playerModel != null)
+        {
+            pMachine.OverrideState(PlayerStateMachine.PlayerStates.freeFall);
+        }
+
         rb.AddForce(adjustedForce, ForceMode.Impulse);
     }
 
     //used when the player is hit by the apply knockback script (not when they take damage)
     public void OnPlayerKnockback(Vector3 force)
     {
-        if (pMachine != null && playerModel != null)
+        if (pMachine != null && playerModel != null && force.magnitude >= minSplatForce)
         {
             pMachine.OverrideState(PlayerStateMachine.PlayerStates.freeFall);
         }

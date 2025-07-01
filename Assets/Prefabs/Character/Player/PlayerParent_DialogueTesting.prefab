@@ -224,6 +224,9 @@ MonoBehaviour:
   - tag: Enemy
     damage: 1
     knockbackForce: 20
+  - tag: PlayerAttack
+    damage: 0
+    knockbackForce: 15
 --- !u!136 &5290936013929528091
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -763,7 +766,7 @@ MonoBehaviour:
   inputDetection: {fileID: 3167985525364349275}
   canPickup: 1
   forwardThrowForce: 9
-  upwardsThrowForce: 7
+  upwardsThrowForce: 5
   currentObject: {fileID: 0}
 --- !u!114 &5350303395643184213
 MonoBehaviour:
@@ -1110,6 +1113,7 @@ MonoBehaviour:
   jumpReleaseFactor: 2
   jumpPeakFactor: 0.3
   jumpPeakRange: 1.2
+  headSquishForce: 12
   doubleJumpHeight: 1
   doubleJumpDecayRate: 45
   maxJumps: 2
@@ -1183,6 +1187,7 @@ MonoBehaviour:
   maxHeight: 68
   totalAirTime: 5
   horizontalDistance: 60
+  minSplatForce: 30
 --- !u!114 &4923085166841590764
 MonoBehaviour:
   m_ObjectHideFlags: 0
