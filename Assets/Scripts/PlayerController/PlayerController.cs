@@ -25,7 +25,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float decceleration = 2; //how fast the player slows down when no longer inputting
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
     [SerializeField] private float rotationSpeed = 500; //how fast the player rotates
-
+    private Vector3 movingPlatVel = Vector3.zero;
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
     private Vector3 leftStickDir;
 
@@ -234,6 +234,19 @@ public class PlayerController : NetworkBehaviour
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         
+        if (grounded)
+        {
+            if (GroundObject.CompareTag("MovingPlat"))
+            {
+                movingPlatVel = GroundObject.GetComponent<Rigidbody>().linearVelocity;
+            }
+            else
+            {
+                movingPlatVel = Vector3.zero;
+            }
+        }
+      
+
         //reset fallAccelScale to 1
         if(grounded && (fallAccelScale!= 1 || inputDetection.isExploded != false || inputDetection.isResetCam != false))
         {
@@ -294,9 +307,9 @@ public class PlayerController : NetworkBehaviour
         Vector3 currentVel = rb.linearVelocity;
         Vector3 targetDir = dir;
 
-        
+
         //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
-        Vector3 targetVelocity = targetDir * (maxSpeed);
+        Vector3 targetVelocity = (targetDir * (maxSpeed)) + movingPlatVel;
         float maxStep = maxAccelStep;
 
         //our current desired velocity direction
@@ -347,9 +360,11 @@ public class PlayerController : NetworkBehaviour
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             //Debug.Log(velocityChange * rb.mass);
 
+            
+
             //apply our force to our velocity
             rb.AddForce(velocityChange * rb.mass);
-            
+           
         }
         else
         {
@@ -364,7 +379,6 @@ public class PlayerController : NetworkBehaviour
            
             //apply our force to our velocity
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
-
             
             //apply our velocity to the rigidbody
             rb.AddForce(velocityChange * rb.mass);

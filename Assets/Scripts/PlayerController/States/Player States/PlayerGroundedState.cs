@@ -6,34 +6,32 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 {
     private PlayerController pControl;
     private Rigidbody rb;
+
+    private bool movingPlat = false;
+    private Transform startTransform;
     public PlayerGroundedState(PlayerStateMachine.PlayerStates key, PlayerController playerController) : base(key)
     {
         pControl = playerController;
+        startTransform = pControl.transform.parent;
     }
 
     public override void EnterState()
     {
         pControl.gravityScale = 1f;
-        //Debug.Log("ENTER GROUNDED");
+
         if(pControl.RB != null)
             rb = pControl.RB;
-        //rb.AddForce(rb.velocity * -1);
 
         //reset our maximum jumps
         pControl.remainingJumps = pControl.MaxJumps;
 
-        //set animation 
-        //animName = "Player_Land";
-
         //set placeholder animation
         animName = "Idle";
-
-
     }
 
     public override void ExitState()
     {
-        Debug.Log("EXIT GROUNDED");
+        //Debug.Log("EXIT GROUNDED");
     }
 
     public override PlayerStateMachine.PlayerStates GetNextState()
@@ -48,6 +46,10 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 
        if (pControl.DetectJumpInput())
        {
+            if (pControl.GroundObject.CompareTag("MovingPlat"))
+            {
+                pControl.RB.AddForce(pControl.GroundObject.GetComponent<Rigidbody>().linearVelocity, ForceMode.Impulse);
+            }
             return PlayerStateMachine.PlayerStates.jump;
        }
 
@@ -78,6 +80,7 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
         }
 
 
+
         return stateKey;
     }
 
@@ -94,11 +97,15 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
         //Debug.Log("ground update");
         //Debug.Log(pControl.RB.velocity);
         SnapGrounded(pControl.DetectGround());
+
+
     }
 
     public override void PhysicsUpdate()
     {
-        
+
+
+
     }
 
     private void SnapGrounded(RaycastHit hit)
