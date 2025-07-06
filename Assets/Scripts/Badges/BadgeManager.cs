@@ -11,6 +11,7 @@ public class BadgeManager : MonoBehaviour
     [SerializeField] public int levelID; //what index in the array of all levels badges should this level contain
     private BadgeTracker badgeTracker; //the badges earnable in this level
 
+    public List<Badge> badges;
     public List<Badge> player1Badges; //the badges earned by each player
     public List<Badge> player2Badges;
     LevelBadgeList levelBadgeList;

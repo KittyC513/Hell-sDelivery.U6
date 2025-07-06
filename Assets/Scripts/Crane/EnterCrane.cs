@@ -22,11 +22,11 @@ public class EnterCrane : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(other.gameObject.layer == LayerMask.NameToLayer("Player1"))
+            if(other.gameObject.layer == LayerMask.NameToLayer("Player1") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
             {
                 p1EnterCrane = true;
             }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("Player2"))
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Player2") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
             {
                 p2EnterCrane = true;
             }

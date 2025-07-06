@@ -42,7 +42,7 @@ public class UIControl_NormalNPCs : MonoBehaviour
     {
         if (proximitySelector.CurrentUsable.didStart)
         {
-            if(this.gameObject.layer == LayerMask.NameToLayer("Player1"))
+            if(this.gameObject.layer == LayerMask.NameToLayer("Player1") || this.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
             {
                 
                 Debug.Log("Player1cam's rect changed");
@@ -58,7 +58,7 @@ public class UIControl_NormalNPCs : MonoBehaviour
     {
         if (proximitySelector.usablesInRange != null && playerInputDetection.attackPressed)
         {
-            if (this.gameObject.layer == LayerMask.NameToLayer("Player1"))
+            if (this.gameObject.layer == LayerMask.NameToLayer("Player1") || this.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
             {
                 dialogueSystemTrigger = proximitySelector.usablesInRange[0].GetComponent<PixelCrushers.DialogueSystem.DialogueSystemTrigger>();
                 dialogueSystemTrigger.enabled = true; // Enable the DialogueSystemTrigger to start the conversation
@@ -69,7 +69,7 @@ public class UIControl_NormalNPCs : MonoBehaviour
                 GameManager.instance.startConversation_p1 = true;
             }
 
-            if (this.gameObject.layer == LayerMask.NameToLayer("Player2"))
+            if (this.gameObject.layer == LayerMask.NameToLayer("Player2") || this.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
             {
                 dialogueSystemTrigger = proximitySelector.usablesInRange[0].GetComponent<PixelCrushers.DialogueSystem.DialogueSystemTrigger>();
                 dialogueSystemTrigger.enabled = true; // Enable the DialogueSystemTrigger to start the conversation
