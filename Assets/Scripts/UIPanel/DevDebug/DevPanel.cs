@@ -11,17 +11,31 @@ public class DevPanel : MonoBehaviour
     public UnityEngine.UI.Toggle toggle_on_invisible;
     public UnityEngine.UI.Toggle toggle_off_invisible;
 
-
     public GameObject DevFunctionPanel;
     public Button btn_level1;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (EventData.DevModeIsOn)
+        {
+            toggle_on.isOn = true;
+            toggle_off.isOn = false;
+            DevFunctionPanel.SetActive(true);
+        }
+        else
+        {
+            toggle_off.isOn = true;
+            toggle_on.isOn = false;
+            DevFunctionPanel.SetActive(false);
+        }
+
         toggle_on.onValueChanged.AddListener((b) =>
         {
             if (b)
             {
                 DevFunctionPanel.SetActive(true);
+                EventData.DevModeIsOn = true;
             }
         });
 
@@ -30,6 +44,7 @@ public class DevPanel : MonoBehaviour
             if(b)
             {
                 DevFunctionPanel.SetActive(false);
+                EventData.DevModeIsOn = false;
             }
         });
 
@@ -39,25 +54,27 @@ public class DevPanel : MonoBehaviour
             SceneManager.LoadScene("Level1");
         });
 
-        toggle_on_invisible.onValueChanged.AddListener((b) =>
+        if (toggle_off_invisible != null && toggle_on_invisible != null) 
         {
-            if (b)
+            toggle_on_invisible.onValueChanged.AddListener((b) =>
             {
-                GameManager.instance.player1.layer = LayerMask.NameToLayer("Invisible_Player1");
-                GameManager.instance.player2.layer = LayerMask.NameToLayer("Invisible_Player2");
-            }
-        });
+                if (b)
+                {
+                    GameManager.instance.player1.layer = LayerMask.NameToLayer("Invisible_Player1");
+                    GameManager.instance.player2.layer = LayerMask.NameToLayer("Invisible_Player2");
+                }
+            });
 
-        toggle_off_invisible.onValueChanged.AddListener((b) =>
-        {
-            if (b)
+            toggle_off_invisible.onValueChanged.AddListener((b) =>
             {
-                GameManager.instance.player1.layer = LayerMask.NameToLayer("Player1");
-                GameManager.instance.player2.layer = LayerMask.NameToLayer("Player2");
-            }
-        });
+                if (b)
+                {
+                    GameManager.instance.player1.layer = LayerMask.NameToLayer("Player1");
+                    GameManager.instance.player2.layer = LayerMask.NameToLayer("Player2");
+                }
+            });
 
-        DevFunctionPanel.SetActive(false);
+        }
     }
 
     // Update is called once per frame

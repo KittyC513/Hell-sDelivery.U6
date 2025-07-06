@@ -9,6 +9,8 @@ public class RespawnAndDeath : MonoBehaviour
     public PlayerStateMachine playerStateMachine;
     public float spawnTime = 1.5f;
 
+    public Vector3 offset;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -62,7 +64,7 @@ public class RespawnAndDeath : MonoBehaviour
     {
         health.dead = false;
         health.currentHealth = 3;
-        player.position = respawnPosition;
+        player.position = respawnPosition + offset;
         playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.airborne);
         print("Player respawned at: " + respawnPosition);
     }
