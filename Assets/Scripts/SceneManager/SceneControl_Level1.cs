@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class SceneControl_Level1 : SceneControlBase
 {
     public Transform[] enterPoints;
+    public Transform exitCranePoint;
     public EnterCrane enterCrane;
 
     public Transform crane;
@@ -41,11 +42,11 @@ public class SceneControl_Level1 : SceneControlBase
     {
         if (EventData.craneIsActivated && enterCrane.GetComponent<Collider>().enabled)
         {
-            //enterCrane.GetComponent<Collider>().enabled = false;
+            enterCrane.GetComponent<Collider>().enabled = false;
         }
         else if (!EventData.craneIsActivated && !enterCrane.GetComponent<Collider>().enabled)
         {
-            //enterCrane.GetComponent<Collider>().enabled = true;
+            enterCrane.GetComponent<Collider>().enabled = true;
         }
 
         CraneMovement();
@@ -62,10 +63,15 @@ public class SceneControl_Level1 : SceneControlBase
             // Calculate rotation based on horizontal input
             float inputX = playerInput.GetHorizontalMovement().x;
             crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
-        }
-        else
-        {
-            GameManager.instance.UnFreezePlayer1();
+
+            if (playerInput.attackPressed)
+            {
+                enterCrane.p1EnterCrane = false;
+                EventData.craneIsActivated = false;
+                GameManager.instance.UnFreezePlayer1();
+                playerInput.transform.position = exitCranePoint.position;
+                return;
+            }
         }
 
         if (enterCrane.p2EnterCrane)
@@ -75,10 +81,14 @@ public class SceneControl_Level1 : SceneControlBase
             // Calculate rotation based on horizontal input
             float inputX = playerInput.GetHorizontalMovement().x;
             crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
-        }
-        else
-        {
-            GameManager.instance.UnFreezePlayer2();
+            if (playerInput.attackPressed)
+            {
+                enterCrane.p2EnterCrane = false;
+                EventData.craneIsActivated = false;
+                GameManager.instance.UnFreezePlayer2();
+                playerInput.transform.position = exitCranePoint.position;
+                return;
+            }
         }
 
     }

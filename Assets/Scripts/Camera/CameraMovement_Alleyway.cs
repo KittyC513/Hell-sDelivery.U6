@@ -19,11 +19,11 @@ public class CameraMovement_Alleyway : MonoBehaviour
 
     private void Start()
     {
-        if(playerPos.gameObject.layer == LayerMask.NameToLayer("Player1"))
+        if(playerPos.gameObject.layer == LayerMask.NameToLayer("Player1") || playerPos.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
         {
             isP1 = true;
         }
-        else if (playerPos.gameObject.layer == LayerMask.NameToLayer("Player2"))
+        else if (playerPos.gameObject.layer == LayerMask.NameToLayer("Player2") || playerPos.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
         {
             isP2 = true;
 

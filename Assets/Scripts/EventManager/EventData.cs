@@ -16,4 +16,7 @@ public class EventData
 
     public static bool isInverseScreen = false;
 
+    [Header("Dev Setting")]
+    public static bool DevModeIsOn = false;
+
 }

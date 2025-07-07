@@ -39,7 +39,7 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
     {
         //when players are in bark range, the text UI will trigger, otherwise, it will stay bark UI
         hits = Physics.BoxCastAll(this.transform.position, halfSize, this.transform.forward,Quaternion.identity, maxDistance, 
-                                                1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
+                                                1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2") | 1 << LayerMask.NameToLayer("Invisible_Player1") | 1 << LayerMask.NameToLayer("Invisible_Player2"));
         // group the hits when it comes from the same object with multiple colliders
         hits = hits.GroupBy(h => h.collider.gameObject).Select(g => g.First()).ToArray();
         //print(hits.Length);
@@ -53,7 +53,7 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
                 isInRange_P2 = false;
                 break;
             case 1:
-                if (hits[0].transform.gameObject.layer == LayerMask.NameToLayer("Player1"))
+                if (hits[0].transform.gameObject.layer == LayerMask.NameToLayer("Player1") || hits[0].transform.gameObject.layer == LayerMask.NameToLayer("Invisible_layer1"))
                 {
                     isInRange_P1 = true;
                     print("FindPlayer1");
@@ -63,7 +63,7 @@ public class BarkUIControl_FlavourNPC : MonoBehaviour
                     isInRange_P1 = false;
                 }
 
-                if (hits[0].transform.gameObject.layer == LayerMask.NameToLayer("Player2"))
+                if (hits[0].transform.gameObject.layer == LayerMask.NameToLayer("Player2") || hits[0].transform.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
                 {
                     isInRange_P2 = true;
                     print("FindPlayer2");

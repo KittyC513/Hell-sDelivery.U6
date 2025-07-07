@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnterCrane : MonoBehaviour
@@ -7,7 +8,8 @@ public class EnterCrane : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        p1EnterCrane = false; 
+        p2EnterCrane = false;
     }
 
     // Update is called once per frame
@@ -20,11 +22,11 @@ public class EnterCrane : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(other.gameObject.layer == LayerMask.NameToLayer("Player1"))
+            if(other.gameObject.layer == LayerMask.NameToLayer("Player1") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
             {
                 p1EnterCrane = true;
             }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("Player2"))
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Player2") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
             {
                 p2EnterCrane = true;
             }
@@ -34,21 +36,23 @@ public class EnterCrane : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player1"))
-            {
-                p1EnterCrane = false;
-            }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("Player2"))
-            {
-                p2EnterCrane = false;
-            }
 
-            EventData.craneIsActivated = false;
-            print("Crane is Deactivated");
-        }
-    }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        if (other.gameObject.layer == LayerMask.NameToLayer("Player1"))
+    //        {
+    //            p1EnterCrane = false;
+    //        }
+    //        else if (other.gameObject.layer == LayerMask.NameToLayer("Player2"))
+    //        {
+    //            p2EnterCrane = false;
+    //        }
+
+    //        EventData.craneIsActivated = false;
+    //        print("Crane is Deactivated");
+    //    }
+    //}
 }

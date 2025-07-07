@@ -26,7 +26,7 @@ public class EnterPlace : MonoBehaviour
     {
         //when players are in bark range, the text UI will trigger, otherwise, it will stay bark UI
         hits = Physics.BoxCastAll(this.transform.position, halfSize, this.transform.forward, Quaternion.identity, 0f,
-                                                1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
+                                                1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2") | 1 << LayerMask.NameToLayer("Invisible_Player1") | 1 << LayerMask.NameToLayer("Invisible_Player2"));
         // group the hits when it comes from the same object with multiple colliders
         hits = hits.GroupBy(h => h.collider.gameObject).Select(g => g.First()).ToArray();
 

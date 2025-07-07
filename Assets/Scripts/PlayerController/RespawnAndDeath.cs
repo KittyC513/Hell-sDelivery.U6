@@ -7,6 +7,9 @@ public class RespawnAndDeath : MonoBehaviour
 
     public Transform player;
     public PlayerStateMachine playerStateMachine;
+    public float spawnTime = 1.5f;
+
+    public Vector3 offset;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,7 +20,18 @@ public class RespawnAndDeath : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        DetectDeadCondition();
+    }
+
+    private void DetectDeadCondition()
+    {
+        if(health.currentHealth <= 0)
+        {
+            health.dead = true;
+            playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.dead);
+
+            Invoke(nameof(Respawn), spawnTime); // Respawn after 2 seconds
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,8 +45,7 @@ public class RespawnAndDeath : MonoBehaviour
                 health.dead = true;
                 playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.dead);
 
-                Invoke(nameof(Respawn), 2f); // Respawn after 2 seconds
-                print("player died");
+                Invoke(nameof(Respawn), spawnTime); // Respawn after 2 seconds
             }
         }
         #endregion
@@ -51,7 +64,7 @@ public class RespawnAndDeath : MonoBehaviour
     {
         health.dead = false;
         health.currentHealth = 3;
-        player.position = respawnPosition;
+        player.position = respawnPosition + offset;
         playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.airborne);
         print("Player respawned at: " + respawnPosition);
     }
