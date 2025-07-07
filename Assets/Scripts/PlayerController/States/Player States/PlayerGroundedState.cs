@@ -52,7 +52,11 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
             //if the player jumps off a moving platform apply their movement + the platforms movement to the player to add inertia 
             if (pControl.GroundObject.CompareTag("MovingPlat"))
             {
-                rb.AddForce(vel, ForceMode.Impulse);
+                //if the platform is not moving very much don't add force to the player
+                if (vel.magnitude - rb.linearVelocity.magnitude > 0.9)
+                {
+                    rb.AddForce(vel, ForceMode.Impulse);
+                }
             }
             return PlayerStateMachine.PlayerStates.jump;
        }
