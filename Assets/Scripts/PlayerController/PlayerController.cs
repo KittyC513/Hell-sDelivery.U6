@@ -25,12 +25,13 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float decceleration = 2; //how fast the player slows down when no longer inputting
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
     [SerializeField] private float rotationSpeed = 500; //how fast the player rotates
-    private Vector3 movingPlatVel = Vector3.zero;
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
     private Vector3 leftStickDir;
 
-    private bool frozen = false;
+    private Vector3 lastFramePos;
 
+    private bool frozen = false;
+    private Transform originalTransform;
 
     [Header("Ground Check Variables")]
     [SerializeField] private LayerMask groundLayers; //what layers are ground
@@ -194,6 +195,7 @@ public class PlayerController : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
         float unscaledHeight = GetComponent<CapsuleCollider>().height;
         playerHitboxHeight = unscaledHeight * transform.localScale.y;
+        originalTransform = transform.parent;
     }
 
     private void Start()
@@ -230,21 +232,12 @@ public class PlayerController : NetworkBehaviour
 #if Network
         if(!IsOwner) return;
 #endif
+        
 
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
-        
-        if (grounded)
-        {
-            if (GroundObject.CompareTag("MovingPlat"))
-            {
-                movingPlatVel = GroundObject.GetComponent<Rigidbody>().linearVelocity;
-            }
-            else
-            {
-                movingPlatVel = Vector3.zero;
-            }
-        }
+        SetMovingPlatformParent(); //set the player's parent to the moving object/platform
+
       
 
         //reset fallAccelScale to 1
@@ -265,8 +258,14 @@ public class PlayerController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!frozen) CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
+        if (!frozen)
+        {
+            CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
+        }
+
     }
+
+
 
     #region Inputs
     //get our jump inputs from the player input script
@@ -309,7 +308,7 @@ public class PlayerController : NetworkBehaviour
 
 
         //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
-        Vector3 targetVelocity = (targetDir * (maxSpeed)) + movingPlatVel;
+        Vector3 targetVelocity = (targetDir * (maxSpeed));
         float maxStep = maxAccelStep;
 
         //our current desired velocity direction
@@ -345,6 +344,7 @@ public class PlayerController : NetworkBehaviour
             targetVelocity = targetDir * maxSpeed;
         }
 
+
         //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
         if (targetVelocity.magnitude <= 0.05f)
         {
@@ -359,8 +359,6 @@ public class PlayerController : NetworkBehaviour
             velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             //Debug.Log(velocityChange * rb.mass);
-
-            
 
             //apply our force to our velocity
             rb.AddForce(velocityChange * rb.mass);
@@ -383,9 +381,35 @@ public class PlayerController : NetworkBehaviour
             //apply our velocity to the rigidbody
             rb.AddForce(velocityChange * rb.mass);
         }
+
         
         if (!freezeRotation) RotateTowards(targetDir, rotationSpeed);
 
+    }
+
+    private void SetMovingPlatformParent()
+    {
+        if (grounded)
+        {
+            if (GroundObject.CompareTag("MovingPlat"))
+            {
+                transform.SetParent(GroundObject.transform, true);
+            }
+            else
+            {
+                if (transform.parent != originalTransform)
+                {
+                    transform.SetParent(originalTransform);
+                }
+            }
+        }
+        else
+        {
+            if (transform.parent != originalTransform)
+            {
+                transform.SetParent(originalTransform);
+            }
+        }
     }
 
     private void RotateTowards(Vector3 direction, float rotationSpeed)

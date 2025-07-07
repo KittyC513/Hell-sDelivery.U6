@@ -6,9 +6,12 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 {
     private PlayerController pControl;
     private Rigidbody rb;
+    private Vector3 lastFramePos;
 
     private bool movingPlat = false;
     private Transform startTransform;
+    private Vector3 vel;
+
     public PlayerGroundedState(PlayerStateMachine.PlayerStates key, PlayerController playerController) : base(key)
     {
         pControl = playerController;
@@ -46,9 +49,10 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 
        if (pControl.DetectJumpInput())
        {
+            //if the player jumps off a moving platform apply their movement + the platforms movement to the player to add inertia 
             if (pControl.GroundObject.CompareTag("MovingPlat"))
             {
-                pControl.RB.AddForce(pControl.GroundObject.GetComponent<Rigidbody>().linearVelocity, ForceMode.Impulse);
+                rb.AddForce(vel, ForceMode.Impulse);
             }
             return PlayerStateMachine.PlayerStates.jump;
        }
@@ -94,18 +98,37 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void UpdateState()
     {
-        //Debug.Log("ground update");
-        //Debug.Log(pControl.RB.velocity);
         SnapGrounded(pControl.DetectGround());
-
-
     }
 
     public override void PhysicsUpdate()
     {
+        CalculateObjectVelocity();
+    }
 
+    private void CalculateObjectVelocity()
+    {
+        //get the position on the current frame
+        Vector3 thisFramePos = pControl.transform.position;
 
+        //calc in here//
 
+        //get the distance between the position last frame and this frame
+        float dist = Vector3.Distance(thisFramePos, lastFramePos);
+
+        //get the direction the player is moving in
+        Vector3 dir = (thisFramePos - lastFramePos).normalized;
+
+        //calcs end//
+
+        //after calculating set the last frame to the current frame so that next calc will use it 
+        lastFramePos = thisFramePos;
+
+        //the players current movement speed, how far they move over a fixed update interval (0.02f)
+        float spd = dist / 0.02f;
+
+        //velocity (a direction with speed value)
+        vel = (dir * spd);
     }
 
     private void SnapGrounded(RaycastHit hit)

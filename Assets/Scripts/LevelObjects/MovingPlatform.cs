@@ -1,6 +1,6 @@
-using System.Drawing.Printing;
+using Unity.VisualScripting;
 using UnityEngine;
-using Yarn.Unity.Editor;
+
 
 public class MovingPlatform : MonoBehaviour
 {
@@ -8,16 +8,29 @@ public class MovingPlatform : MonoBehaviour
     private Vector3 nextPos;
     private Vector3 startPos;
     private Vector3 currentPos;
+
     [SerializeField] private Transform[] points;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float pointStallTime = 0.1f;
     [SerializeField] private float endPointStallTime = 1;
+    
+    public enum EaseType { None, InQuad, InQuart, InOutSine, OutQuad }
+    [SerializeField] public EaseType easeType = EaseType.InQuad;
+
     private int pointIndex = 0;
     private float t = 0;
     private int dir = 1;
     private bool stall = false;
     private float stallTime = 0;
     private float stallTemp = 0;
+
+    private float distance;
+
+    //easing functions used to determine the platforms smooth movement
+    public static float InQuad(float t) => t * t;
+    public static float InQuart(float t) => t * t * t * t;
+    public static float InOutSine(float t) => (float)(Mathf.Cos(t * Mathf.PI) - 1) / -2;
+    public static float OutQuad(float t) => 1 - InQuad(1 - t);
 
     public enum PlatformType { boomerang, continuous }
     [SerializeField] public PlatformType platformType;
@@ -26,22 +39,20 @@ public class MovingPlatform : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         SetNextPosition();
-    }
 
-    private void Update()
-    {
-        
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(currentPos);
+        //update the position of the object
+        transform.position = currentPos;
 
+        //if not stalling update the time value
         if (!stall)
         {
-            t += Time.fixedDeltaTime * moveSpeed;
+            t += Time.fixedDeltaTime*moveSpeed;
         }
-        else
+        else //otherwise count down until the stall ends
         {
             stallTemp += Time.fixedDeltaTime;
 
@@ -51,10 +62,36 @@ public class MovingPlatform : MonoBehaviour
                 stallTemp = 0;
             }
         }
-     
-        currentPos = Vector3.Lerp(startPos, nextPos, t);
 
-        if (t >= 1)
+        float percent = t / distance;
+
+        float easedTime = percent;
+
+        //use the right easing function 
+        switch (easeType)
+        {
+            case EaseType.None:
+                easedTime = percent;
+                break;
+            case EaseType.InQuad:
+                easedTime = InQuad(percent);
+                break;
+            case EaseType.InQuart:
+                easedTime = InQuart(percent);
+                break;
+            case EaseType.InOutSine:
+                easedTime = InOutSine(percent);
+                break;
+            case EaseType.OutQuad:
+                easedTime = OutQuad(percent);
+                break;
+        }
+        
+        //lerp the position using the eased percent time
+        currentPos = Vector3.Lerp(startPos, nextPos, easedTime);
+
+        //if the time has reached the end set the new position
+        if (t >= distance)
         {
             SetNextPosition();
         }
@@ -62,8 +99,11 @@ public class MovingPlatform : MonoBehaviour
 
     private void SetNextPosition()
     {
+        //set the new start position to the current position (object is at this position now)
         startPos = points[pointIndex].position;
 
+        //select next point based on the style of platform
+        //boomerang goes back and forth, coninuous loops back around to the first point 
         switch (platformType)
         {
             case PlatformType.boomerang:
@@ -111,6 +151,7 @@ public class MovingPlatform : MonoBehaviour
         }
 
         nextPos = points[pointIndex].position;
+        distance = Vector3.Distance(startPos, nextPos);
         t = 0;
     }
 }
