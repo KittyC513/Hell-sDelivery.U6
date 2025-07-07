@@ -81,13 +81,14 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
              return PlayerStateMachine.PlayerStates.attack;
        }
 
-        if (pControl.GroundObject.CompareTag("BouncePad"))
+       if(pControl.GroundObject != null)
         {
-            pControl.GroundObject.GetComponent<BouncePad>().BounceObject(rb, rb.linearVelocity.y);
-            return PlayerStateMachine.PlayerStates.jump;
+            if (pControl.GroundObject.CompareTag("BouncePad"))
+            {
+                pControl.GroundObject.GetComponent<BouncePad>().BounceObject(rb, rb.linearVelocity.y);
+                return PlayerStateMachine.PlayerStates.jump;
+            }
         }
-
-
 
         return stateKey;
     }

@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 //an in level script that keeps track of what badges were earned in this level specifically

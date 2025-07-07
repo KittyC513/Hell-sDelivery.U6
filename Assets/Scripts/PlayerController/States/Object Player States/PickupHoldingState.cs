@@ -75,21 +75,25 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
         }
 
 
-        if (Vector3.Distance(oControl.currentObject.transform.position, oControl.HoldPoint.position) > 5)
+        if(oControl.currentObject != null)
         {
-            Physics.IgnoreCollision(oControl.GetComponent<Collider>(), oControl.currentObject.GetComponent<Collider>(), false);
-            objRb.constraints = constraints;
-            if (oldParent != null)
+            if (Vector3.Distance(oControl.currentObject.transform.position, oControl.HoldPoint.position) > 5)
             {
-                oControl.currentObject.transform.SetParent(oldParent);
+                Physics.IgnoreCollision(oControl.GetComponent<Collider>(), oControl.currentObject.GetComponent<Collider>(), false);
+                objRb.constraints = constraints;
+                if (oldParent != null)
+                {
+                    oControl.currentObject.transform.SetParent(oldParent);
+                }
+                else
+                {
+                    oControl.currentObject.transform.SetParent(null);
+                }
+                oControl.currentObject = null;
+                return PickupStateMachine.PickupStates.empty;
             }
-            else
-            {
-                oControl.currentObject.transform.SetParent(null);
-            }
-            oControl.currentObject = null;
-            return PickupStateMachine.PickupStates.empty;
         }
+        
         return stateKey;
     }
 

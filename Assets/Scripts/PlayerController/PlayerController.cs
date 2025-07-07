@@ -393,7 +393,7 @@ public class PlayerController : NetworkBehaviour
         {
             if (GroundObject.CompareTag("MovingPlat"))
             {
-                transform.SetParent(GroundObject.transform, true);
+                transform.SetParent(GroundObject.transform.parent, true);
             }
             else
             {
