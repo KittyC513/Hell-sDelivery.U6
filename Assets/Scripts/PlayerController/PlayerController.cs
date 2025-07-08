@@ -37,6 +37,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxRunSpeed = 16;
     [SerializeField] private float runAcceleration = 25;
     [SerializeField] private float runDeceleration = 20;
+    private bool atTopSpeed = false;
     private bool running = false;
 
     [Header("Ground Check Variables")]
@@ -60,6 +61,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxFallAccelStep = 150;
     [SerializeField] public float gravityScale = 1;
     [SerializeField] public float fallAccelScale = 1;
+    public float currentFallVel;
 
     [SerializeField] public float airStepMult = 0.65f;
     [SerializeField] public float airDecelMult = 0.45f;
@@ -109,6 +111,7 @@ public class PlayerController : NetworkBehaviour
     private bool freezeRotation = false;
 
     [SerializeField] private AnimationCurve quickTurnMultiplier; //a curve that determines how much velocity gain is multiplied by when turning sharply, makes for a quicker turn around
+    [SerializeField] private AnimationCurve runningQuickTurnMultiplier;
     private float playerHitboxHeight; //the value of the players hitbox with scale transforms applied
 
     [Space, Header("References")]
@@ -128,7 +131,11 @@ public class PlayerController : NetworkBehaviour
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
     [SerializeField] private GameObject runMarker;
+    [SerializeField] private GameObject stopMarker;
     [SerializeField] private bool debugActive = false;
+    [SerializeField] private bool useRunMarkers = false;
+    [SerializeField] private bool useJumpMarkers = false;
+
     private LayerMask thisLayer;
     private int layerIndex;
 
@@ -142,8 +149,7 @@ public class PlayerController : NetworkBehaviour
     public float horizontalDistance = 8f;
 
     [Space, Header("Splat Variables")]
-    [SerializeField] private float minSplatForce = 30; 
-
+    [SerializeField] private float minSplatForce = 30;
 
     //these variables are all accessable to the various states
 
@@ -240,8 +246,8 @@ public class PlayerController : NetworkBehaviour
 #if Network
         if(!IsOwner) return;
 #endif
-        
 
+        currentFallVel = rb.linearVelocity.y;
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         SetMovingPlatformParent(); //set the player's parent to the moving object/platform
@@ -265,33 +271,80 @@ public class PlayerController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!frozen)
+        UpdateRunnning();
+
+       
+    }
+
+    private void DebugMarkers()
+    {
+        //running debug markers
+        if (useRunMarkers)
         {
-            float accel = acceleration;
-            float decel = decceleration;
-            float maxSpeed = maxWalkSpeed;
-
-
             if (DetectRunInput())
             {
-                maxSpeed = maxRunSpeed;
 
-                if (currentSpeed >= maxWalkSpeed + 0.5f && !running)
+                if (currentSpeed >= maxWalkSpeed && !running)
                 {
                     if (debugActive)
                     {
                         Instantiate(runMarker, transform.position, Quaternion.identity);
                     }
-                    running = true;
+
+                }
+            }
+            else
+            {
+                if (running && currentSpeed >= maxRunSpeed)
+                {
+                    Instantiate(stopMarker, transform.position, Quaternion.identity);
                 }
             }
 
-            if (currentSpeed >= maxRunSpeed)
+            if (currentSpeed <= maxWalkSpeed + 0.5f && running)
             {
                 if (debugActive)
                 {
-                    Instantiate(runMarker, transform.position, Quaternion.identity);
+                    Instantiate(stopMarker, transform.position, Quaternion.identity);
                 }
+            }
+        }
+
+       
+    }
+
+    private void UpdateRunnning()
+    {
+        if (!frozen)
+        {
+            //local variables that can be changed before adding to the movement based on if the player is running or not
+            float accel = acceleration;
+            float decel = decceleration;
+            float maxSpeed = maxWalkSpeed;
+            DebugMarkers();
+
+            if (DetectRunInput())
+            {
+                maxSpeed = maxRunSpeed;
+
+                if (currentSpeed >= maxWalkSpeed && !running)
+                {
+
+                    running = true;
+                }
+            }
+            else
+            {
+                if (running && currentSpeed >= maxRunSpeed)
+                {
+                    Instantiate(stopMarker, transform.position, Quaternion.identity);
+                }
+            }
+
+            if (currentSpeed >= maxRunSpeed && !atTopSpeed)
+            {
+                atTopSpeed = true;
+              
             }
 
             //running activates when the player's speed gets above max walk speed
@@ -301,9 +354,16 @@ public class PlayerController : NetworkBehaviour
                 decel = runDeceleration;
             }
 
+
+            //check if the player can stop running
+            if (currentSpeed <= maxWalkSpeed + 0.5f && running)
+            {
+                running = false;
+                atTopSpeed = false;
+            }
+
             CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
         }
-
     }
 
 
@@ -354,6 +414,13 @@ public class PlayerController : NetworkBehaviour
 
         float targetSpeed = maxSpeed;
 
+        AnimationCurve quickTurnCurve = quickTurnMultiplier;
+
+        if (running)
+        {
+            quickTurnCurve = runningQuickTurnMultiplier;
+        }
+
         //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
         Vector3 targetVelocity = (targetDir * (targetSpeed));
 
@@ -375,13 +442,13 @@ public class PlayerController : NetworkBehaviour
         if (Grounded)
         {
             //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
-            accel = quickTurnMultiplier.Evaluate(velDot) * accelValue;
+            accel = quickTurnCurve.Evaluate(velDot) * accelValue;
             decel = decelValue;
         }
         else
         {
             //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
-            accel = (quickTurnMultiplier.Evaluate(velDot) * accelValue)*airAccelMult;
+            accel = (quickTurnCurve.Evaluate(velDot) * accelValue)*airAccelMult;
             decel = decelValue*airDecelMult;
             targetVelocity = targetDir * maxSpeed;
         }
@@ -424,11 +491,6 @@ public class PlayerController : NetworkBehaviour
             rb.AddForce(velocityChange * rb.mass);
         }
 
-        //check if the player can stop running
-        if (currentSpeed <= maxWalkSpeed + 0.5f && running)
-        {
-            running = false;
-        }
 
         
         if (!freezeRotation) RotateTowards(targetDir, rotationSpeed);
@@ -559,6 +621,14 @@ public class PlayerController : NetworkBehaviour
                 groundCheckFactor = 1;
             }
 
+            if (!grounded)
+            {
+                if (debugActive && useJumpMarkers)
+                {
+                    Instantiate(stopMarker, transform.position, Quaternion.identity);
+                }
+            }
+
             grounded = true;
           
             currentGround = hit.collider.gameObject;
@@ -571,6 +641,13 @@ public class PlayerController : NetworkBehaviour
             //if we are not grounded reset the factor that multiplies the raycast distance when on a slope
             groundCheckFactor = 1; 
 
+            if (grounded)
+            {
+                if (debugActive && useJumpMarkers)
+                {
+                    Instantiate(runMarker, transform.position, Quaternion.identity);
+                }
+            }
             //the angle of the ground is 0 (there is no ground)
             groundAngle = 0;
             grounded = false;

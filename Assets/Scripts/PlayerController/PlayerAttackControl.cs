@@ -53,8 +53,6 @@ public class PlayerAttackControl : MonoBehaviour
 
             canAttack = false;
         }
-
-
     }
 
     public void ResetAttackCooldown()
@@ -62,6 +60,7 @@ public class PlayerAttackControl : MonoBehaviour
         attackCooldownTimer = 0;
     }
 
+    //this is called when the attack state starts
     public void ResetHitboxTime()
     {
         hitboxTimer = 0;

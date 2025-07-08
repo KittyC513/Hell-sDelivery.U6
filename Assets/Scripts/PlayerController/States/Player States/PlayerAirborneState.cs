@@ -76,7 +76,6 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         //the amount of velocity change needed to reach our maximum velocity
         Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
 
-
         //maxAccelStep limits how much our velocity can change per step
         velocityChange = Vector3.ClampMagnitude(velocityChange, pControl.MaxFallAccelStep);
 

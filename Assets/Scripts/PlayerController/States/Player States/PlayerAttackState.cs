@@ -36,11 +36,15 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         //reset attack time
         attackTemp = 0;
 
-        //set the starting rotation to the rotation of the player right as this script starts
-        startRotation = pControl.transform.rotation;
+        if (pControl.PlayerModel != null)
+        {
+            //set the starting rotation to the rotation of the player right as this script starts
+            startRotation = pControl.PlayerModel.transform.localRotation;
+        }
+
 
         //don't let the player controller control rotation 
-        pControl.FreezeRotation(true, this.ToString());
+        //pControl.FreezeRotation(true, this.ToString());
 
         //reset goal velocity change for the freezing of y position
         goalVelocityChange = Vector3.zero;
@@ -56,8 +60,13 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
     public override void ExitState()
     {
         //give rotation control back to the player controller
-        pControl.FreezeRotation(false, this.ToString());
-
+        //pControl.FreezeRotation(false, this.ToString());
+        if (pControl.PlayerModel != null)
+        {
+            //rotate our player 360 degrees over the attack duration
+            pControl.PlayerModel.transform.localRotation = startRotation;
+        }
+        
         //reset the attack cooldown
         aControl.ResetAttackCooldown();
     }
@@ -83,8 +92,12 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         //clamp attack temp to attackTime
         attackTemp = Mathf.Clamp(attackTemp, 0, attackTime);
 
-        //rotate our player 360 degrees over the attack duration
-        pControl.transform.rotation = startRotation * Quaternion.AngleAxis((attackTemp / attackTime) * 360f, Vector3.up);
+        if (pControl.PlayerModel != null)
+        {
+            //rotate our player 360 degrees over the attack duration
+            pControl.PlayerModel.transform.rotation = startRotation * Quaternion.AngleAxis((attackTemp / attackTime) * 360f, Vector3.up);
+        }
+     
     }
 
     public override void PhysicsUpdate()

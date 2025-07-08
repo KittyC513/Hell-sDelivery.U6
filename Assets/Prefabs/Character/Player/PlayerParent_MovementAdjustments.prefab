@@ -882,7 +882,7 @@ MonoBehaviour:
   canAttack: 1
   attackHitbox: {fileID: 3350249400347712132}
   attackSpeedBoost: 80
-  maximumVerticalSpeed: 5
+  maximumVerticalSpeed: 0
   stallVelocity: 50
 --- !u!114 &1030846292593310886
 MonoBehaviour:
@@ -1027,8 +1027,8 @@ MonoBehaviour:
   decceleration: 25
   maxAccelStep: 50
   rotationSpeed: 15
-  maxRunSpeed: 16
-  runAcceleration: 10
+  maxRunSpeed: 15
+  runAcceleration: 18
   runDeceleration: 20
   groundLayers:
     serializedVersion: 2
@@ -1039,15 +1039,16 @@ MonoBehaviour:
   raycastRadius: 0.23
   floatHeightStrength: 100
   floatHeightDamping: 3
-  maxFallSpeed: 25
-  fallAccel: 45
-  maxFallAccelStep: 55
+  maxFallSpeed: 32
+  fallAccel: 70
+  maxFallAccelStep: 70
   gravityScale: 1
   fallAccelScale: 1
+  currentFallVel: 0
   airStepMult: 0.65
   airDecelMult: 0.5
   airAccelMult: 0.8
-  jumpHeight: 3
+  jumpHeight: 3.5
   jumpDecayRate: 55
   jumpReleaseFactor: 2
   jumpPeakFactor: 0.3
@@ -1112,6 +1113,48 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  runningQuickTurnMultiplier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1
+      value: 2.999994
+      inSlope: -0.01750326
+      outSlope: -0.01750326
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.31226337
+    - serializedVersion: 3
+      time: -0.25
+      value: 2.9084194
+      inSlope: -0.32725063
+      outSlope: -0.32725063
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.24742463
+      outWeight: 0.4766675
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   inputDetection: {fileID: 7967738429729490233}
   aControl: {fileID: 6346411874817598056}
   anim: {fileID: 2245963899642580221}
@@ -1121,8 +1164,11 @@ MonoBehaviour:
   pMachine: {fileID: 3253212869223572377}
   playerModel: {fileID: 7261094035520370518}
   currentSpeed: 0
-  runMarker: {fileID: 0}
+  runMarker: {fileID: 4586272566002907613, guid: 0f9765eb7001f404080ae83ecfd35553, type: 3}
+  stopMarker: {fileID: 4586272566002907613, guid: 842ac5688dcb1e4489e60cb78f5743a8, type: 3}
   debugActive: 0
+  useRunMarkers: 0
+  useJumpMarkers: 0
   playerLockOn: {fileID: 9104202366394451311}
   isLookAtTriggered: 0
   maxHeight: 68
@@ -2194,7 +2240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3160623424
+  GlobalObjectIdHash: 1706167225
   InScenePlacedSourceGlobalObjectIdHash: 4091438702
   DeferredDespawnTick: 0
   Ownership: 1

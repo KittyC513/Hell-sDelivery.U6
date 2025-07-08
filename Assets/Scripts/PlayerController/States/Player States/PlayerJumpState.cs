@@ -30,8 +30,8 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
     public override void EnterState()
     {
         //set our jump height and decay variables up by grabbing from our player controller
-        if (jumpHeight == 0) jumpHeight = pControl.JumpHeight;
-        if (jumpDecay == 0) jumpDecay = pControl.JumpDecayRate;
+        jumpHeight = pControl.JumpHeight;
+        jumpDecay = pControl.JumpDecayRate;
         
 
         gravityFactor = 1;
