@@ -25,6 +25,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool attackPressed;
     [HideInInspector] public bool grabPressed;
     [HideInInspector] public bool pausePressed;
+    [HideInInspector] public bool runPressed;
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
@@ -82,8 +83,13 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Pause").started += PausePressed;
         playerMap.FindAction("Pause").canceled += PauseCancelled;
 
+        playerMap.FindAction("Run").started += RunPressed;
+        playerMap.FindAction("Run").canceled += RunCanceled;
+
         pauseMap.FindAction("Pause").started += PausePressed;
         pauseMap.FindAction("Pause").canceled += PauseCancelled;
+
+      
 
 
 
@@ -112,6 +118,9 @@ public class PlayerInputDetection : NetworkBehaviour
 
         playerMap.FindAction("Pause").started -= PausePressed;
         playerMap.FindAction("Pause").canceled -= PauseCancelled;
+
+        playerMap.FindAction("Run").started -= RunPressed;
+        playerMap.FindAction("Run").canceled -= RunCanceled;
 
         pauseMap.FindAction("Pause").started -= PausePressed;
         pauseMap.FindAction("Pause").canceled -= PauseCancelled;
@@ -275,6 +284,16 @@ public class PlayerInputDetection : NetworkBehaviour
         {
             return new Vector3(0, 0, 0);
         }
+    }
+
+    private void RunPressed(InputAction.CallbackContext action)
+    {
+        runPressed = true;
+    }
+
+    private void RunCanceled(InputAction.CallbackContext action)
+    {
+        runPressed = false;
     }
     #endregion
 

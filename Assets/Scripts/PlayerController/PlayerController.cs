@@ -20,7 +20,7 @@ using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
 public class PlayerController : NetworkBehaviour
 {
     [Header ("Basic Movement Variables")]
-    [SerializeField] private float maxRunSpeed = 10; //the max speed the player can run
+    [SerializeField] private float maxWalkSpeed = 10; //the max speed the player can run
     [SerializeField] private float acceleration = 2; //how fast speed is added to the player when moving
     [SerializeField] private float decceleration = 2; //how fast the player slows down when no longer inputting
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
@@ -32,6 +32,12 @@ public class PlayerController : NetworkBehaviour
 
     private bool frozen = false;
     private Transform originalTransform;
+
+    [Header("Run Movement Variables")]
+    [SerializeField] private float maxRunSpeed = 16;
+    [SerializeField] private float runAcceleration = 25;
+    [SerializeField] private float runDeceleration = 20;
+    private bool running = false;
 
     [Header("Ground Check Variables")]
     [SerializeField] private LayerMask groundLayers; //what layers are ground
@@ -121,6 +127,8 @@ public class PlayerController : NetworkBehaviour
 
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
+    [SerializeField] private GameObject runMarker;
+    [SerializeField] private bool debugActive = false;
     private LayerMask thisLayer;
     private int layerIndex;
 
@@ -237,7 +245,6 @@ public class PlayerController : NetworkBehaviour
         ReadInputs(); //reads movement inputs
         DetectGround(); //detect ground and slopes
         SetMovingPlatformParent(); //set the player's parent to the moving object/platform
-
       
 
         //reset fallAccelScale to 1
@@ -260,7 +267,41 @@ public class PlayerController : NetworkBehaviour
     {
         if (!frozen)
         {
-            CalculateMovement(rb, leftStickDir, acceleration, decceleration, maxRunSpeed);
+            float accel = acceleration;
+            float decel = decceleration;
+            float maxSpeed = maxWalkSpeed;
+
+
+            if (DetectRunInput())
+            {
+                maxSpeed = maxRunSpeed;
+
+                if (currentSpeed >= maxWalkSpeed + 0.5f && !running)
+                {
+                    if (debugActive)
+                    {
+                        Instantiate(runMarker, transform.position, Quaternion.identity);
+                    }
+                    running = true;
+                }
+            }
+
+            if (currentSpeed >= maxRunSpeed)
+            {
+                if (debugActive)
+                {
+                    Instantiate(runMarker, transform.position, Quaternion.identity);
+                }
+            }
+
+            //running activates when the player's speed gets above max walk speed
+            if (running)
+            {
+                accel = runAcceleration;
+                decel = runDeceleration;
+            }
+
+            CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
         }
 
     }
@@ -296,6 +337,11 @@ public class PlayerController : NetworkBehaviour
     {
         return inputDetection.attackPressed;
     }
+
+    public bool DetectRunInput()
+    {
+        return inputDetection.runPressed;
+    }
     #endregion
 
     #region Movement Calcs
@@ -306,10 +352,10 @@ public class PlayerController : NetworkBehaviour
         Vector3 currentVel = rb.linearVelocity;
         Vector3 targetDir = dir;
 
+        float targetSpeed = maxSpeed;
 
         //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
-        Vector3 targetVelocity = (targetDir * (maxSpeed));
-        float maxStep = maxAccelStep;
+        Vector3 targetVelocity = (targetDir * (targetSpeed));
 
         //our current desired velocity direction
         Vector3 unitVel = goalVelocityChange.normalized;
@@ -317,16 +363,13 @@ public class PlayerController : NetworkBehaviour
         //the difference between our new target direction and our current target direction
         float velDot = Vector3.Dot(targetDir, unitVel);
 
-        //Debug.Log(unitVel + "a" + targetDir);
-
         //the magnitude of only the x and z values
         float xzMagnitude = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude;
 
         currentSpeed = xzMagnitude;
 
-        //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
-        float accel = quickTurnMultiplier.Evaluate(velDot) * accelValue;
-        float decel = decelValue;
+        float accel;
+        float decel;
 
         //if not grounded make the player decelerate slower to give a sense of momentum
         if (Grounded)
@@ -340,7 +383,6 @@ public class PlayerController : NetworkBehaviour
             //affect acceleration based on the difference in our directions this lets us turn around quickly if we input a complete opposite direction 
             accel = (quickTurnMultiplier.Evaluate(velDot) * accelValue)*airAccelMult;
             decel = decelValue*airDecelMult;
-            maxStep = maxAccelStep * airStepMult;
             targetVelocity = targetDir * maxSpeed;
         }
 
@@ -380,6 +422,12 @@ public class PlayerController : NetworkBehaviour
             
             //apply our velocity to the rigidbody
             rb.AddForce(velocityChange * rb.mass);
+        }
+
+        //check if the player can stop running
+        if (currentSpeed <= maxWalkSpeed + 0.5f && running)
+        {
+            running = false;
         }
 
         
