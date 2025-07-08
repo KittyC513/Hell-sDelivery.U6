@@ -120,8 +120,8 @@ public class CharacterSelectionPanel : MonoBehaviour
         {
             img_start.gameObject.SetActive(true);
 
-            if (GameManager.instance.player1.GetComponent<PlayerInputDetection>().attackPressed ||
-                GameManager.instance.player2.GetComponent<PlayerInputDetection>().attackPressed)
+            if (GameManager.instance.player1.GetComponent<PlayerInputDetection>().crouchPressed ||
+                GameManager.instance.player2.GetComponent<PlayerInputDetection>().crouchPressed)
             {
                 if (leftIsSelected_p1)
                 {

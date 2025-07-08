@@ -56,7 +56,7 @@ public class UIControl_NormalNPCs : MonoBehaviour
     /// </summary>
     public void SwitchToConversantCamRect()
     {
-        if (proximitySelector.usablesInRange != null && playerInputDetection.attackPressed)
+        if (proximitySelector.usablesInRange != null && playerInputDetection.crouchPressed)
         {
             if (this.gameObject.layer == LayerMask.NameToLayer("Player1") || this.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
             {
