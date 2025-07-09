@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombItem : MonoBehaviour
+public class BombItem : ItemBase
 {
     public ItemHandler iHandler;
     public PlayerLockOn playerLockOn;

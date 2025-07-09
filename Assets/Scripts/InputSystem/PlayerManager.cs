@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     private List<Transform> startPoints;
     [SerializeField]
     private List<LayerMask> playerLayers;
+    [SerializeField]
+    private List<LayerMask> colliderLayers;
 
     private PlayerInputManager playerInputManager;
 
@@ -53,6 +55,11 @@ public class PlayerManager : MonoBehaviour
 
         //convert layer mask to an int
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
+        
+        //Add colliders layer
+        Transform collider = player.transform.Find("CollectHitbox");
+        collider.gameObject.layer = (int)Mathf.Log(colliderLayers[players.Count - 1].value, 2);
+
 
         //set the layer
         //for future reference

@@ -25,13 +25,13 @@ public class EnemySpawnControl : MonoBehaviour
         if (spawnCount < maxCount)
         {
             timer += Time.deltaTime;
-            print(timer);
+            //print(timer);
 
             if(timer >= spawnTime)
             {
                 Instantiate(spawnObj,this.transform);
                 spawnCount += 1;
-                print(spawnCount);
+                //print(spawnCount);
                 timer = 0;
             }
         }
