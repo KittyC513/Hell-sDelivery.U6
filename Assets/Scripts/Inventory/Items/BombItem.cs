@@ -2,9 +2,9 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombItem : ItemBase
+public class BombItem : ItemBase<BombItem>
 {
-    public ItemHandler iHandler;
+    //public ItemHandler iHandler;
     public PlayerLockOn playerLockOn;
 
     public Transform targetPos;
@@ -29,21 +29,23 @@ public class BombItem : ItemBase
 
     public List<BombMovement> bombsList = new List<BombMovement>();
 
-    private void Awake()
+    protected override void Awake()
     {
-        iHandler = GetComponent<ItemHandler>();
-        if (iHandler == null) Debug.Log(this.ToString() + " needs an itemHandler attached on the gameObject " + this.gameObject.name); 
+        base.Awake();
+        itemHandler = GetComponent<ItemHandler>();
+        //iHandler = GetComponent<ItemHandler>();
+        //if (iHandler == null) Debug.Log(this.ToString() + " needs an itemHandler attached on the gameObject " + this.gameObject.name); 
         rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
-        iHandler.onItemTrigger += ThrowBomb;
+        itemHandler.onItemTrigger += ThrowBomb;
     }
 
     private void OnDisable()
     {
-        iHandler.onItemTrigger -= ThrowBomb; 
+        itemHandler.onItemTrigger -= ThrowBomb; 
     }
 
     private void ThrowBomb()
@@ -58,7 +60,7 @@ public class BombItem : ItemBase
                 bombObj.transform.position = this.transform.position;
                 //bombObj.transform.rotation = iHandler.iControl.transform.rotation;
                 if (Vector3.Distance(bombObj.transform.position, this.transform.position) < 0.1f)
-                    bombObj.transform.parent = iHandler.iControl.transform;
+                    bombObj.transform.parent = itemHandler.iControl.transform;
                 worldCollider.enabled = false;
                 //worldCollider.gameObject.SetActive(false);
 
@@ -87,7 +89,7 @@ public class BombItem : ItemBase
         }
 
         //When the item is equipped, the item will follow player's pos
-        if (iHandler.equipped)
+        if (itemHandler.equipped)
         {
             /**************************************/
             /**************************************/
@@ -97,20 +99,20 @@ public class BombItem : ItemBase
             //parentObj = iHandler.iControl.gameObject.transform.parent;
             //this.transform.position = parentObj.transform.position;
 
-            if (Vector3.Distance(this.transform.position, iHandler.iControl.transform.position + offset) < 0.1f)
-                this.transform.SetParent(iHandler.iControl.transform);
+            if (Vector3.Distance(this.transform.position, itemHandler.iControl.transform.position + offset) < 0.1f)
+                this.transform.SetParent(itemHandler.iControl.transform);
             else
-                this.transform.position = iHandler.iControl.transform.position + offset;
+                this.transform.position = itemHandler.iControl.transform.position + offset;
             //Debug.Log("Parent");
 
             /**************************************/
             /**************************************/
         }
 
-        if (!iHandler.equipped && (worldCollider.enabled == false || iHandler.rb.useGravity == false))
+        if (!itemHandler.equipped && (worldCollider.enabled == false || itemHandler.rb.useGravity == false))
         {
             worldCollider.enabled = true;
-            iHandler.rb.useGravity = true;
+            itemHandler.rb.useGravity = true;
         }
 
     }

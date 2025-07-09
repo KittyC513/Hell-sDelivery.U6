@@ -93,14 +93,14 @@ public class PlayerItemControl : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Item"))
-        {
-            if (activeItem == null)
-            {
-                EquipItem(other.GetComponent<ItemHandler>());
-            }
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Item"))
+    //    {
+    //        if (activeItem == null)
+    //        {
+    //            EquipItem(other.GetComponent<ItemHandler>());
+    //        }
+    //    }
+    //}
 }

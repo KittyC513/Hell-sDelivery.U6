@@ -90,6 +90,8 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.uiControl_P1 = players[0].GetComponent<UIControl_NormalNPCs>();
                 GameManager.instance.health_p1 = players[0].GetComponent<PlayerInputDetection>().health;
                 GameManager.instance.stateMachine_p1 = players[0].GetComponent<PlayerStateMachine>();
+                GameManager.instance.InputDetection_p1 = players[0].GetComponent<PlayerInputDetection>();
+                GameManager.instance.itemControl_p1 = players[0].GetComponent<PlayerItemControl>();
             }
           
 
@@ -108,6 +110,9 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.uiControl_P2 = players[1].GetComponent<UIControl_NormalNPCs>();
                 GameManager.instance.health_p2 = players[1].GetComponent<PlayerInputDetection>().health;
                 GameManager.instance.stateMachine_p2 = players[1].GetComponent<PlayerStateMachine>();
+                GameManager.instance.InputDetection_p2 = players[1].GetComponent<PlayerInputDetection>();
+                GameManager.instance.itemControl_p2 = players[1].GetComponent<PlayerItemControl>();
+
             }
           
 

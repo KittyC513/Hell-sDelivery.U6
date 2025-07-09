@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
+    public PlayerInputDetection InputDetection_p1;
+    public PlayerInputDetection InputDetection_p2;
+
+    public PlayerItemControl itemControl_p1;
+    public PlayerItemControl itemControl_p2;
+
     public PlayerStateMachine stateMachine_p1;
     public PlayerStateMachine stateMachine_p2;
 
