@@ -336,13 +336,6 @@ public class PlayerController : NetworkBehaviour
                     running = true;
                 }
             }
-            else
-            {
-                if (running && currentSpeed >= maxRunSpeed)
-                {
-                    Instantiate(stopMarker, transform.position, Quaternion.identity);
-                }
-            }
 
             if (currentSpeed >= maxRunSpeed && !atTopSpeed)
             {
