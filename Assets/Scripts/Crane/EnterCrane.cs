@@ -36,23 +36,4 @@ public class EnterCrane : MonoBehaviour
         }
     }
 
-
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        if (other.gameObject.layer == LayerMask.NameToLayer("Player1"))
-    //        {
-    //            p1EnterCrane = false;
-    //        }
-    //        else if (other.gameObject.layer == LayerMask.NameToLayer("Player2"))
-    //        {
-    //            p2EnterCrane = false;
-    //        }
-
-    //        EventData.craneIsActivated = false;
-    //        print("Crane is Deactivated");
-    //    }
-    //}
 }

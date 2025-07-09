@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawnControl : MonoBehaviour
@@ -5,13 +6,18 @@ public class EnemySpawnControl : MonoBehaviour
     public GameObject hellHoundPrefab;
     public float spawnTime = 3f;
     public float timer = 0f;
-    public int spawnCount = 0;
     public int maxCount = 7;
 
+
+    private void Awake()
+    {
+       
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -22,7 +28,7 @@ public class EnemySpawnControl : MonoBehaviour
 
     void Spawn(GameObject spawnObj)
     {
-        if (spawnCount < maxCount)
+        if (this.transform.childCount < maxCount)
         {
             timer += Time.deltaTime;
             //print(timer);
@@ -30,7 +36,6 @@ public class EnemySpawnControl : MonoBehaviour
             if(timer >= spawnTime)
             {
                 Instantiate(spawnObj,this.transform);
-                spawnCount += 1;
                 //print(spawnCount);
                 timer = 0;
             }

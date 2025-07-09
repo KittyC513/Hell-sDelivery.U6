@@ -214,7 +214,7 @@ public class BombMovement : MonoBehaviour
                 Vector3 dir = (colliders_p[i].transform.position - this.transform.position).normalized;
                 colliders_p[i].GetComponent<PlayerController>().GainExplodedForce(dir);
                 //colliders_p[i].GetComponent<Rigidbody>().AddForce(dir * explosionForce_pH + Vector3.up * explosionForce_pV, ForceMode.Impulse);
-                colliders_p[i].GetComponent<PlayerStateMachine>().OverrideState(PlayerStateMachine.PlayerStates.airborne);
+                colliders_p[i].GetComponent<PlayerStateMachine>().OverrideState(PlayerStateMachine.PlayerStates.freeFall);
                 colliders_p[i].GetComponent<PlayerController>().fallAccelScale = 0.5f;
             }
         }
