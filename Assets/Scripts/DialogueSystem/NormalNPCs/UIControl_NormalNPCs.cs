@@ -79,22 +79,6 @@ public class UIControl_NormalNPCs : MonoBehaviour
                 GameManager.instance.cam_p1.rect = new Rect(0, 0, 1 - camRect_P2.width, 1);
                 GameManager.instance.startConversation_p2 = true;
             }
-            //print("ButtonDown" + proximitySelector.IsUseButtonDown());
-            //if (this.gameObject.layer == LayerMask.NameToLayer("Player1"))
-            //{
-            //    playerManager.p1cam.rect = camRect;
-            //    Debug.Log("Player1cam's rect changed");
-            //    playerManager.p2cam.rect = new Rect(camRect.width, 0, 1 - camRect.width, 1);
-            //    playerManager.StartConversation();
-            //}
-
-            //if (this.gameObject.layer == LayerMask.NameToLayer("Player2"))
-            //{
-            //    playerManager.p2cam.rect = camRect;
-            //    Debug.Log("Player2cam's rect changed");
-            //    playerManager.p1cam.rect = new Rect(camRect.width, 0, 1 - camRect.width, 1);
-            //    playerManager.StartConversation();
-            //}
         }
     }
 }

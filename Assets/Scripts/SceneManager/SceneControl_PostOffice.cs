@@ -35,18 +35,21 @@ public class SceneControl_PostOffice : SceneControlBase
         }
     }
 
+    #region Conversation Even
     public void AddEventtoLalah()
     {
         dialogueSystemEvents_lalah.conversationEvents.onConversationStart.AddListener((actor) =>
         {
-            GameManager.instance.FreezeBothPlayers();
+            GameManager.instance.StartConversationWithNormalNpcs();
         });
 
         dialogueSystemEvents_lalah.conversationEvents.onConversationEnd.AddListener((actor) =>
         {
-            GameManager.instance.UnFreezeBothPlayers();
+            GameManager.instance.EndConversationWithNormalNpcs();
             EventData.isAcceptedMission_lalah = true;
             print("EventData.isAcceptedMission_lalah:" + EventData.isAcceptedMission_lalah);
         });
     }
+    #endregion
+
 }
