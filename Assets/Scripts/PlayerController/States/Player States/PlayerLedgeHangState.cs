@@ -7,6 +7,9 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
     private PlayerController pControl;
     private Rigidbody rb;
 
+    private Vector3 objStartPos;
+    private bool fullySnapped = false;
+
     
     public PlayerLedgeHangState(PlayerStateMachine.PlayerStates key, PlayerController controller) : base(key)
     {
@@ -17,7 +20,11 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
     public override void EnterState()
     {
         rb = pControl.RB;
-        
+        fullySnapped = false;
+        objStartPos = pControl.LastLedgeObj.transform.position;
+
+        //pControl.transform.SetParent(pControl.LastLedgeObj.transform);
+
         //freeze player movement to stick to the ledge
         pControl.SetFreezeState(true, this.ToString());
 
@@ -27,6 +34,7 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void ExitState()
     {
+       // pControl.transform.SetParent(pControl.OriginalTransform);
         pControl.SetFreezeState(false, this.ToString());
     }
 
@@ -42,7 +50,7 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void UpdateState()
     {
-
+      
     }
 
     public override void PhysicsUpdate()
@@ -50,8 +58,27 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
         //get our target hang position from the player controller
         Vector3 targetPos = new Vector3(pControl.LastLedgeXZ.x, pControl.LastLedgeY, pControl.LastLedgeXZ.z);
 
-        //lerp to the target hang position 
-        pControl.transform.position = Vector3.Lerp(pControl.transform.position, targetPos, 15 * Time.deltaTime);
+        //target position + the change in position since the target position
+        Vector3 changeInPos = objStartPos - pControl.LastLedgeObj.transform.position;
+
+        targetPos = targetPos - changeInPos;
+
+        if (Vector3.Distance(pControl.transform.position, targetPos) < 0.5f)
+        {
+            fullySnapped = true;
+        }
+
+        if (!fullySnapped)
+        {
+            //lerp to the target hang position 
+            pControl.transform.position = Vector3.Lerp(pControl.transform.position, targetPos, 25 * Time.deltaTime);
+        }   
+        else
+        {
+            //lerp to the target hang position 
+            pControl.transform.position = targetPos;
+        }
+  
     }
 
 }

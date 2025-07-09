@@ -173,7 +173,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
                     Vector3 targetXZPos = forwardHit.point - direction * pControl.XZHangOffset;
                    
                     //set our position variables to be used by the ledge hang script
-                    pControl.SetLedgeSnapVariables(targetXZPos, targetYPos);
+                    pControl.SetLedgeSnapVariables(targetXZPos, targetYPos, hit.transform.gameObject);
                     return true;
                 }
             }

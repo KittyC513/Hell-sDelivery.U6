@@ -55,7 +55,13 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
                 //if the platform is not moving very much don't add force to the player
                 if (vel.magnitude - rb.linearVelocity.magnitude > 0.9)
                 {
-                    rb.AddForce(vel, ForceMode.Impulse);
+                    //soften the velocity by removing some of the rigidbody movement
+                    Vector3 softenedVel = vel - (rb.linearVelocity/3);
+
+                    //clamp the value to avoid some crazy niche scenarios where the velocity is crazy high for a frame
+                    softenedVel = Vector3.ClampMagnitude(softenedVel, 60);
+
+                    rb.AddForce(softenedVel, ForceMode.Impulse);
                 }
             }
             return PlayerStateMachine.PlayerStates.jump;

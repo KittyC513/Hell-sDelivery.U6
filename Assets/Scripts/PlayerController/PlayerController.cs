@@ -47,6 +47,7 @@ public class PlayerController : NetworkBehaviour
     private float groundCheckFactor = 1; //how much our raycast distance is multiplied by, this is used for sticking to slopes better might find a better solution in the future
     [SerializeField] private bool visualizeRaycast = false;
     private Vector3 raycastStartPoint; //where the ground check raycast starts
+    private bool onMovingPlat = false;
 
     [Space, Header("Land Spring Variables")]
     [SerializeField] private float floatHeight = 0.2f; //how far the player hitbox floats above the ground
@@ -97,7 +98,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float yHangOffset = 0.3f; //how far away from the ledge on the y axis the player is while ledge hanging
 
     [SerializeField] private LayerMask ledgeGrabMask; //what layermasks can be ledge grabbed (usually same as ground)
-    
+    private GameObject lastLedgeObject;
 
     private Vector3 lastLedgeXZ; //the location of the last ledge detection on the X and Z plane
     private float lastLedgeY; //the location of the last ledge detecting on the Y plane
@@ -158,6 +159,7 @@ public class PlayerController : NetworkBehaviour
     public bool Grounded { get { return grounded; } }
     public float PlayerHitboxHeight { get { return playerHitboxHeight; } }
     public GameObject PlayerModel { get { return playerModel; } }   
+    public Transform OriginalTransform { get { return originalTransform; } }    
 
     //Grounded Variables
     public float FloatHeight { get { return floatHeight; } }
@@ -199,6 +201,7 @@ public class PlayerController : NetworkBehaviour
 
     public Vector3 LastLedgeXZ { get { return lastLedgeXZ; }}
     public float LastLedgeY {  get { return lastLedgeY; }}
+    public GameObject LastLedgeObj { get { return lastLedgeObject; }}
 
 
     //QOL Variables
@@ -503,20 +506,23 @@ public class PlayerController : NetworkBehaviour
         {
             if (GroundObject.CompareTag("MovingPlat"))
             {
+                onMovingPlat = true; 
                 transform.SetParent(GroundObject.transform.parent, true);
             }
             else
             {
-                if (transform.parent != originalTransform)
+                if (transform.parent != originalTransform && onMovingPlat)
                 {
+                    onMovingPlat = false;
                     transform.SetParent(originalTransform);
                 }
             }
         }
         else
         {
-            if (transform.parent != originalTransform)
+            if (transform.parent != originalTransform && onMovingPlat)
             {
+                onMovingPlat = false;
                 transform.SetParent(originalTransform);
             }
         }
@@ -737,10 +743,11 @@ public class PlayerController : NetworkBehaviour
         Debug.Log("Player freeze rotation state set to " + freezeState + " by " + scriptName);
     }
 
-    public void SetLedgeSnapVariables(Vector3 xz, float y)
+    public void SetLedgeSnapVariables(Vector3 xz, float y, GameObject obj)
     {
         lastLedgeXZ = xz;
         lastLedgeY = y;
+        lastLedgeObject = obj;
     }
 
     public bool CheckCanAttack()
