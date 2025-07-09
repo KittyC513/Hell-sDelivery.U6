@@ -598,6 +598,7 @@ GameObject:
   - component: {fileID: 1290623826351122846}
   - component: {fileID: 4161022655810438540}
   - component: {fileID: 4923085166841590764}
+  - component: {fileID: 7060599881787527121}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -835,6 +836,7 @@ MonoBehaviour:
   attackPressed: 0
   grabPressed: 0
   pausePressed: 0
+  runPressed: 0
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
   isExploded: 0
@@ -1088,11 +1090,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxRunSpeed: 11
+  maxWalkSpeed: 10
   acceleration: 30
   decceleration: 25
   maxAccelStep: 70
   rotationSpeed: 15
+  maxRunSpeed: 11
+  runAcceleration: 25
+  runDeceleration: 20
   groundLayers:
     serializedVersion: 2
     m_Bits: 6300096
@@ -1107,6 +1112,7 @@ MonoBehaviour:
   maxFallAccelStep: 55
   gravityScale: 1
   fallAccelScale: 1
+  currentFallVel: 0
   airStepMult: 0.65
   airDecelMult: 0.5
   airAccelMult: 0.8
@@ -1175,6 +1181,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  runningQuickTurnMultiplier:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   inputDetection: {fileID: 3167985525364349275}
   aControl: {fileID: 2156524465778351454}
   anim: {fileID: 3003704552810336728}
@@ -1184,6 +1196,11 @@ MonoBehaviour:
   pMachine: {fileID: 3534729435414562412}
   playerModel: {fileID: 4145771580469297692}
   currentSpeed: 0
+  runMarker: {fileID: 0}
+  stopMarker: {fileID: 0}
+  debugActive: 0
+  useRunMarkers: 0
+  useJumpMarkers: 0
   playerLockOn: {fileID: 2126423918051728224}
   isLookAtTriggered: 0
   maxHeight: 68
@@ -1207,6 +1224,19 @@ MonoBehaviour:
   - tag: LevelObject
     requiredVel: 7
     knockbackMultiplier: 3
+--- !u!114 &7060599881787527121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117834857856622084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2e7c17157321c47a9d8361e070e8f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bag: []
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0

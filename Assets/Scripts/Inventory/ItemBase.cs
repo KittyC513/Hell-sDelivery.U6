@@ -2,10 +2,10 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemBase<T> : MonoBehaviour where T:class
+public class ItemBase : MonoBehaviour
 {
-    private static T instance;
-    public static T Instance => instance;
+    private static ItemBase instance;
+    public static ItemBase Instance => instance;
 
     private bool withPickupRange_p1 = false;
     private bool withPickupRange_p2 = false;
@@ -17,7 +17,7 @@ public class ItemBase<T> : MonoBehaviour where T:class
 
     protected virtual void Awake()
     {
-        instance = this as T;
+        instance = this;
     }
     protected void Start()
     {
@@ -79,13 +79,32 @@ public class ItemBase<T> : MonoBehaviour where T:class
         //3. press button to pick up
         if(withPickupRange_p1 && GameManager.instance.InputDetection_p1.grabPressed)
         {
-            itemHandler.EquipItem(GameManager.instance.itemControl_p1);
-            isAvaliable = false;
+            if(GameManager.instance.bag_p1.bag.Count < 2)
+            {
+                itemHandler.EquipItem(GameManager.instance.itemControl_p1);
+                isAvaliable = false;
+                GameManager.instance.bag_p1.AddItem(this);
+                print("Added to bag");
+            }
+            else
+            {
+                print("p1 bag is full");
+            }
+
         }
         else if(withPickupRange_p2 && GameManager.instance.InputDetection_p2.grabPressed)
         {
-            itemHandler.EquipItem(GameManager.instance.itemControl_p2);
-            isAvaliable = false;
+            if(GameManager.instance.bag_p2.bag.Count < 2)
+            {
+                itemHandler.EquipItem(GameManager.instance.itemControl_p2);
+                isAvaliable = false;
+                GameManager.instance.bag_p2.AddItem(this);
+                print("Added to bag");
+            }
+            else
+            {
+                print("p2 bag is full");
+            }
         }
 
     }

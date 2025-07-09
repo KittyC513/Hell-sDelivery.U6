@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public PlayerStateMachine stateMachine_p1;
     public PlayerStateMachine stateMachine_p2;
 
+    public Bag bag_p1;
+    public Bag bag_p2;
+
     public Camera cam_p1;
     public Camera cam_p2;
 
