@@ -26,6 +26,8 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool grabPressed;
     [HideInInspector] public bool pausePressed;
     [HideInInspector] public bool runPressed;
+    [HideInInspector] public bool swapItemPressed_left;
+    [HideInInspector] public bool swapItemPressed_right;
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
@@ -86,8 +88,16 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Run").started += RunPressed;
         playerMap.FindAction("Run").canceled += RunCanceled;
 
+        playerMap.FindAction("SwapItemLeft").started += SwapItemPressed_left;
+        playerMap.FindAction("SwapItemLeft").canceled += SwapItemCanceled_left;
+
+        playerMap.FindAction("SwapItemRight").started += SwapItemPressed_right;
+        playerMap.FindAction("SwapItemRight").canceled += SwapItemCanceled_right;
+
         pauseMap.FindAction("Pause").started += PausePressed;
         pauseMap.FindAction("Pause").canceled += PauseCancelled;
+
+
 
       
 
@@ -121,6 +131,12 @@ public class PlayerInputDetection : NetworkBehaviour
 
         playerMap.FindAction("Run").started -= RunPressed;
         playerMap.FindAction("Run").canceled -= RunCanceled;
+
+        playerMap.FindAction("SwapItemLeft").started -= SwapItemPressed_left;
+        playerMap.FindAction("SwapItemLeft").canceled -= SwapItemCanceled_left;
+
+        playerMap.FindAction("SwapItemRight").started -= SwapItemPressed_right;
+        playerMap.FindAction("SwapItemRight").canceled -= SwapItemCanceled_right;
 
         pauseMap.FindAction("Pause").started -= PausePressed;
         pauseMap.FindAction("Pause").canceled -= PauseCancelled;
@@ -294,6 +310,26 @@ public class PlayerInputDetection : NetworkBehaviour
     private void RunCanceled(InputAction.CallbackContext action)
     {
         runPressed = false;
+    }
+
+    private void SwapItemPressed_left(InputAction.CallbackContext action)
+    {
+        swapItemPressed_left = true;
+    }
+
+    private void SwapItemCanceled_left(InputAction.CallbackContext action)
+    {
+        swapItemPressed_left = false;
+    }
+
+    private void SwapItemPressed_right(InputAction.CallbackContext action)
+    {
+        swapItemPressed_right = true;
+    }
+
+    private void SwapItemCanceled_right(InputAction.CallbackContext action)
+    {
+        swapItemPressed_right = false;
     }
     #endregion
 
