@@ -15,6 +15,8 @@ public class ItemBase : MonoBehaviour
 
     private bool isAvaliable = true;
 
+    public bool isOnUse = false;
+
     protected virtual void Awake()
     {
         instance = this;
@@ -35,6 +37,11 @@ public class ItemBase : MonoBehaviour
         {
             DetectInPickUpRange();
             PickUp();
+        }
+
+        if(isOnUse)
+        {
+            UseFunction();
         }
 
     }
@@ -111,21 +118,20 @@ public class ItemBase : MonoBehaviour
 
     public virtual void Throw()
     {
-        if (OnUse())
+        if (isOnUse)
         {
-            //throw function
+
         }
-    }
-
-
-    public virtual bool OnUse()
-    {
-        return false;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(this.transform.position, pickupRadium);
+    }
+
+    public virtual void UseFunction()
+    {
+
     }
 
 }

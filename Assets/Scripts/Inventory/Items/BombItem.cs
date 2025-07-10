@@ -48,6 +48,10 @@ public class BombItem : ItemBase
         itemHandler.onItemTrigger -= ThrowBomb; 
     }
 
+    public override void UseFunction()
+    {
+        ThrowBomb();
+    }
     private void ThrowBomb()
     {
         if(numOfBombs < maxBombs)
@@ -88,32 +92,32 @@ public class BombItem : ItemBase
             }
         }
 
-        //When the item is equipped, the item will follow player's pos
-        if (itemHandler.equipped)
-        {
-            /**************************************/
-            /**************************************/
-            //Set object as a child of a player 
+        ////When the item is equipped, the item will follow player's pos
+        //if (itemHandler.equipped)
+        //{
+        //    /**************************************/
+        //    /**************************************/
+        //    //Set object as a child of a player 
 
 
-            //parentObj = iHandler.iControl.gameObject.transform.parent;
-            //this.transform.position = parentObj.transform.position;
+        //    //parentObj = iHandler.iControl.gameObject.transform.parent;
+        //    //this.transform.position = parentObj.transform.position;
 
-            if (Vector3.Distance(this.transform.position, itemHandler.iControl.transform.position + offset) < 0.1f)
-                this.transform.SetParent(itemHandler.iControl.transform);
-            else
-                this.transform.position = itemHandler.iControl.transform.position + offset;
-            //Debug.Log("Parent");
+        //    if (Vector3.Distance(this.transform.position, itemHandler.iControl.transform.position + offset) < 0.1f)
+        //        this.transform.SetParent(itemHandler.iControl.transform);
+        //    else
+        //        this.transform.position = itemHandler.iControl.transform.position + offset;
+        //    //Debug.Log("Parent");
 
-            /**************************************/
-            /**************************************/
-        }
+        //    /**************************************/
+        //    /**************************************/
+        //}
 
-        if (!itemHandler.equipped && (worldCollider.enabled == false || itemHandler.rb.useGravity == false))
-        {
-            worldCollider.enabled = true;
-            itemHandler.rb.useGravity = true;
-        }
+        //if (!itemHandler.equipped && (worldCollider.enabled == false || itemHandler.rb.useGravity == false))
+        //{
+        //    worldCollider.enabled = true;
+        //    itemHandler.rb.useGravity = true;
+        //}
 
     }
 }

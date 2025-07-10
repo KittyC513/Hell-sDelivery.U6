@@ -88,11 +88,11 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Run").started += RunPressed;
         playerMap.FindAction("Run").canceled += RunCanceled;
 
-        playerMap.FindAction("SwapItemLeft").started += SwapItemPressed_left;
-        playerMap.FindAction("SwapItemLeft").canceled += SwapItemCanceled_left;
+        playerMap.FindAction("SwapItem_left").started += SwapItemPressed_left;
+        playerMap.FindAction("SwapItem_left").canceled += SwapItemCanceled_left;
 
-        playerMap.FindAction("SwapItemRight").started += SwapItemPressed_right;
-        playerMap.FindAction("SwapItemRight").canceled += SwapItemCanceled_right;
+        playerMap.FindAction("SwapItem_right").started += SwapItemPressed_right;
+        playerMap.FindAction("SwapItem_right").canceled += SwapItemCanceled_right;
 
         pauseMap.FindAction("Pause").started += PausePressed;
         pauseMap.FindAction("Pause").canceled += PauseCancelled;
@@ -132,11 +132,11 @@ public class PlayerInputDetection : NetworkBehaviour
         playerMap.FindAction("Run").started -= RunPressed;
         playerMap.FindAction("Run").canceled -= RunCanceled;
 
-        playerMap.FindAction("SwapItemLeft").started -= SwapItemPressed_left;
-        playerMap.FindAction("SwapItemLeft").canceled -= SwapItemCanceled_left;
+        playerMap.FindAction("SwapItem_left").started -= SwapItemPressed_left;
+        playerMap.FindAction("SwapItem_left").canceled -= SwapItemCanceled_left;
 
-        playerMap.FindAction("SwapItemRight").started -= SwapItemPressed_right;
-        playerMap.FindAction("SwapItemRight").canceled -= SwapItemCanceled_right;
+        playerMap.FindAction("SwapItem_right").started -= SwapItemPressed_right;
+        playerMap.FindAction("SwapItem_right").canceled -= SwapItemCanceled_right;
 
         pauseMap.FindAction("Pause").started -= PausePressed;
         pauseMap.FindAction("Pause").canceled -= PauseCancelled;
