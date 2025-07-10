@@ -96,10 +96,10 @@ public class CameraManager : MonoBehaviour
     }
     public void SwitchToMainCam()
     {
-        if(mainCam == null || SceneControlBase.Instance.sceneChanged)
+        if(mainCam == null || GameManager.Instance.isSceneChanged)
         {
             mainCam = Camera.main;
-            SceneControlBase.Instance.sceneChanged = false;
+            GameManager.Instance.isSceneChanged = false;
         }
 
         playerCam.gameObject.SetActive(false);
@@ -154,7 +154,7 @@ public class CameraManager : MonoBehaviour
 
     public void DetectScene()
     {
-        if(EventData.curSceneName ==  "Alleyway" || EventData.curSceneName == "PostOffice" || EventData.craneIsActivated)
+        if(EventData.curSceneName ==  "Alleyway" || EventData.curSceneName == "PostOffice" || EventData.curSceneName == "StartScene" || EventData.craneIsActivated)
         {
             currentCamType = E_CamType.mainCam;
         }

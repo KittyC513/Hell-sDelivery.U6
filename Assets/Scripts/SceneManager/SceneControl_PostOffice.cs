@@ -1,7 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
-public class SceneControl_PostOffice : SceneControlBase
+public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
 {
     public Transform[] enterPoints;
     public DialogueSystemEvents dialogueSystemEvents_lalah;

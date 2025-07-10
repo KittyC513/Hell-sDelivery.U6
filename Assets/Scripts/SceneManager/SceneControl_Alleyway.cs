@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SceneControl_Alleyway : SceneControlBase
+public class SceneControl_Alleyway : SceneControlBase<SceneControl_Alleyway>
 {
     public Transform[] enterPoints;
 
@@ -10,8 +10,6 @@ public class SceneControl_Alleyway : SceneControlBase
     void Start()
     {
         EventData.curSceneName = "Alleyway";
-
-
     }
 
     // Update is called once per frame
@@ -38,7 +36,4 @@ public class SceneControl_Alleyway : SceneControlBase
         }
 
     }
-
-
-
 }

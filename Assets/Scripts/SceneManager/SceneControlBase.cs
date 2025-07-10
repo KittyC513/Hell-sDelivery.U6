@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class SceneControlBase : MonoBehaviour
+public class SceneControlBase<T> : MonoBehaviour where T: class
 {
-    private static SceneControlBase instance;
-    public static SceneControlBase Instance => instance;
+    private static T instance;
+    public static T Instance => instance;
 
     public bool sceneChanged = false;
 
@@ -11,12 +11,12 @@ public class SceneControlBase : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        instance = this as T;
     }
 
     private void Start()
     {
-        sceneChanged = true;
+        GameManager.instance.isSceneChanged = true;
         isResetPos = false;
     }
 

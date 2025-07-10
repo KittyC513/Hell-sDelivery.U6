@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SceneControl_Level1 : SceneControlBase
+public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
 {
     public Transform[] enterPoints;
     public Transform exitCranePoint;

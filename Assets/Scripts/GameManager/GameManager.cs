@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.InputSystem.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager
 {
-    public static GameManager instance;
+    public static GameManager instance = new GameManager();
+    public static GameManager Instance => instance;
 
     [Header("Character Selection")]
-    public GameObject characterSelectPanel;
     public bool isOnCharacterSelection = false;
 
     [Header("Player Data")]
@@ -37,26 +36,10 @@ public class GameManager : MonoBehaviour
     public Health health_p1;
     public Health health_p2;
 
+    [Header("Scene Info")]
+    public bool isSceneChanged = false;
 
-    private void Awake()
-    {  
-        instance = this;
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isOnCharacterSelection)
-        {
-            characterSelectPanel.SetActive(true);
-        }
-
-    }
 
     #region Conversation Control
     /// <summary>
