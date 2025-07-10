@@ -10,6 +10,9 @@ public class ItemBase : MonoBehaviour
     private bool withPickupRange_p1 = false;
     private bool withPickupRange_p2 = false;
 
+    public PlayerLockOn playerLockOn;
+    public PlayerInputDetection inputDetection;
+
     [SerializeField]
     protected ItemHandler itemHandler;
 
@@ -23,9 +26,13 @@ public class ItemBase : MonoBehaviour
     }
     protected void Start()
     {
-        
+        Initialize();
     }
 
+    public virtual void Initialize()
+    {
+        // Initialization logic can be added here if needed
+    }
 
     public float pickupRadium = 1f;
     Collider[] colliders;
@@ -41,11 +48,13 @@ public class ItemBase : MonoBehaviour
 
         if(isOnUse)
         {
-            UseFunction();
+            if(inputDetection.crouchPressed )
+            {
+                UseFunction();
+            }
         }
 
     }
-
     private void FixedUpdate()
     {
 
@@ -86,11 +95,15 @@ public class ItemBase : MonoBehaviour
         //3. press button to pick up
         if(withPickupRange_p1 && GameManager.instance.InputDetection_p1.grabPressed)
         {
-            if(GameManager.instance.bag_p1.bag.Count < 2)
+
+            if (GameManager.instance.bag_p1.bag.Count < 2)
             {
                 itemHandler.EquipItem(GameManager.instance.itemControl_p1);
                 isAvaliable = false;
                 GameManager.instance.bag_p1.AddItem(this);
+
+                playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
+                inputDetection = GameManager.instance.InputDetection_p1;
                 print("Added to bag");
             }
             else
@@ -107,6 +120,9 @@ public class ItemBase : MonoBehaviour
                 isAvaliable = false;
                 GameManager.instance.bag_p2.AddItem(this);
                 print("Added to bag");
+
+                playerLockOn = GameManager.instance.player2.GetComponent<PlayerLockOn>();
+                inputDetection = GameManager.instance.InputDetection_p2;
             }
             else
             {

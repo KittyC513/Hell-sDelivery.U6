@@ -5,7 +5,6 @@ using UnityEngine;
 public class BombItem : ItemBase
 {
     //public ItemHandler iHandler;
-    public PlayerLockOn playerLockOn;
 
     public Transform targetPos;
     public float dropSpeed = 5f;
@@ -14,7 +13,6 @@ public class BombItem : ItemBase
     public Rigidbody rb;
 
     public GameObject bombPrefab;
-    public bool isSpawned = false;
 
     [Header("Bomb")]
     public Vector3 offset; //to replace bombs
@@ -23,9 +21,7 @@ public class BombItem : ItemBase
 
     //cooldown setting
     public float cdSpawn = 0.3f;
-    private float timer = 0;
-    public bool canStartTimer = false;
-
+    public float timer = 0;
 
     public List<BombMovement> bombsList = new List<BombMovement>();
 
@@ -38,9 +34,11 @@ public class BombItem : ItemBase
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    //In Start method
+    public override void Initialize()
     {
         itemHandler.onItemTrigger += ThrowBomb;
+        print("BombItem initialized and ready to use");
     }
 
     private void OnDisable()
@@ -51,15 +49,17 @@ public class BombItem : ItemBase
     public override void UseFunction()
     {
         ThrowBomb();
+        print("Bomb is thrown");
     }
     private void ThrowBomb()
     {
         if(numOfBombs < maxBombs)
         {
-            if (!isSpawned && timer >= cdSpawn)
+            if (timer >= cdSpawn)
             {
+                print(cdSpawn + " seconds cooldown is over, you can throw a bomb now");
                 // while throwing bomb, generating a bomb object and reset the position to player's pos
-              
+
                 GameObject bombObj = Instantiate(bombPrefab);
                 bombObj.transform.position = this.transform.position;
                 //bombObj.transform.rotation = iHandler.iControl.transform.rotation;
@@ -70,7 +70,6 @@ public class BombItem : ItemBase
 
                 bombsList.Add(bombObj.GetComponent<BombMovement>());
                 numOfBombs++;
-                isSpawned = true;
                 timer = 0;
             }
 
@@ -80,17 +79,15 @@ public class BombItem : ItemBase
     public void FixedUpdate()
     {
         //cooldown timer starts
-        if (canStartTimer)
+        if (timer < cdSpawn)
         {
-            if (timer < cdSpawn)
-            {
-                timer += Time.deltaTime;
-            }
-            else
-            {
-                timer = cdSpawn;
-            }
+            timer += Time.deltaTime;
         }
+        else
+        {
+            timer = cdSpawn;
+        }
+        
 
         ////When the item is equipped, the item will follow player's pos
         //if (itemHandler.equipped)

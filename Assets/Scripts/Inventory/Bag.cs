@@ -65,19 +65,17 @@ public class Bag : MonoBehaviour
 
             //9. update the swap timer
             if (swapTimer <= swapCooldown)
+            {                
+                // If the swap button is not pressed, start the timer
+                if (!inputDetection.swapItemPressed_left)
+                {
+                    swapTimer += Time.deltaTime;
+                }
+                
+            }
+            else
             {
-                if(swapTimer >= 1f)
-                {
-                    swapTimer = 1f;
-                }
-                else
-                {
-                    // If the swap button is not pressed, start the timer
-                    if (!inputDetection.swapItemPressed_left)
-                    {
-                        swapTimer += Time.deltaTime;
-                    }
-                }
+                swapTimer = swapCooldown;
             }
         }
     }

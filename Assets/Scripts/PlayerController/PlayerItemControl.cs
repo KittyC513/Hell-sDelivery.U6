@@ -39,17 +39,17 @@ public class PlayerItemControl : MonoBehaviour
     #region Bomb Event
     private void UseBomb()
     {
-        if (inputDetection.crouchPressed)
-        {
-            UseItem();
-            activeItem.gameObject.GetComponent<BombItem>().canStartTimer = false;
-        }
+        //if (inputDetection.crouchPressed)
+        //{
+        //    UseItem();
+        //    activeItem.gameObject.GetComponent<BombItem>().canStartTimer = false;
+        //}
 
-        if (!inputDetection.crouchPressed)
-        {
-            activeItem.gameObject.GetComponent<BombItem>().canStartTimer = true;
-            activeItem.gameObject.GetComponent<BombItem>().isSpawned = false;
-        }
+        //if (!inputDetection.crouchPressed)
+        //{
+        //    activeItem.gameObject.GetComponent<BombItem>().canStartTimer = true;
+        //    activeItem.gameObject.GetComponent<BombItem>().isSpawned = false;
+        //}
     }
     #endregion
 
