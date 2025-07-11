@@ -101,6 +101,12 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
             if (pControl.GroundObject.CompareTag("BouncePad"))
             {
                 pControl.GroundObject.GetComponent<BouncePad>().BounceObject(rb, downForce);
+
+                if (pControl.GroundObject.GetComponent<Rigidbody>() != null && pControl.GroundObject.layer == LayerMask.NameToLayer("DynamicGround"))
+                {
+                    pControl.GroundObject.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, downForce, 0), pControl.CurrentHit.point, ForceMode.Impulse);
+                }
+
                 pControl.remainingJumps = pControl.MaxJumps;
                 return PlayerStateMachine.PlayerStates.jump;
             }

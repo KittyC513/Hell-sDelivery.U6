@@ -27,6 +27,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float rotationSpeed = 500; //how fast the player rotates
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
     private Vector3 leftStickDir;
+    [SerializeField] private float weight = 10;
 
     private Vector3 lastFramePos;
 
@@ -48,6 +49,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private bool visualizeRaycast = false;
     private Vector3 raycastStartPoint; //where the ground check raycast starts
     private bool onMovingPlat = false;
+    private RaycastHit currentHit;
 
     [Space, Header("Land Spring Variables")]
     [SerializeField] private float floatHeight = 0.2f; //how far the player hitbox floats above the ground
@@ -168,6 +170,7 @@ public class PlayerController : NetworkBehaviour
     public float GroundAngle { get { return groundAngle; } }
     public float MaxSlopeAngle { get { return maxSlopeAngle; } }
     public GameObject GroundObject { get { return currentGround; } }
+    public RaycastHit CurrentHit { get { return currentHit; } }
 
     //Falling Variables
     public float MaxFallSpeed { get { return maxFallSpeed; }}
@@ -252,7 +255,7 @@ public class PlayerController : NetworkBehaviour
 
         currentFallVel = rb.linearVelocity.y;
         ReadInputs(); //reads movement inputs
-        DetectGround(); //detect ground and slopes
+        currentHit = DetectGround(); //detect ground and slopes
         SetMovingPlatformParent(); //set the player's parent to the moving object/platform
       
 
@@ -557,7 +560,6 @@ public class PlayerController : NetworkBehaviour
         if (Physics.SphereCast(raycastStartPoint, raycastRadius, -transform.up, out hit, raycastDist * groundCheckFactor, groundLayers) &&
             hit.collider.isTrigger == false)
         {
-            
             //Direction towards the raycast hit point from the raycast origin
             Vector3 directionToHit = (hit.point - raycastStartPoint).normalized;
 
@@ -589,7 +591,7 @@ public class PlayerController : NetworkBehaviour
             {
                 groundCheckFactor = 1;
             }
-
+ 
             if (!grounded)
             {
                 if (debugActive && useJumpMarkers)
@@ -601,6 +603,11 @@ public class PlayerController : NetworkBehaviour
             grounded = true;
           
             currentGround = hit.collider.gameObject;
+
+            if (currentGround.GetComponent<Rigidbody>() != null && currentGround.layer == LayerMask.NameToLayer("DynamicGround"))
+            {
+                currentGround.GetComponent<Rigidbody>().AddForceAtPosition(weight * Vector3.down, hit.point);
+            }
 
             return hit;
         }
