@@ -384,6 +384,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3003704552817770042}
+  - {fileID: 4094894041621900929}
+  - {fileID: 8135251215635467218}
   m_Father: {fileID: 6347196777763878027}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4242292160371283292
@@ -620,12 +622,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3988629250834300323}
-  - {fileID: 4094894041621900929}
   - {fileID: 1609799438346312396}
   - {fileID: 198884333018987069}
   - {fileID: 1673121963761400438}
   - {fileID: 6031217146697166979}
-  - {fileID: 8135251215635467218}
   m_Father: {fileID: 6784667347201551197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5316770225156586138
@@ -755,22 +755,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6117834857856622084}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2b91b71ff6c4d64283bcbb2856445b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRadius: 1.6
+  pickupRadius: 0
   showRadius: 0
-  holdPoint: {fileID: 4094894041621900929}
-  pickupSpeed: 3
+  holdPoint: {fileID: 0}
+  pickupSpeed: 1
   grabbableMask:
     serializedVersion: 2
-    m_Bits: 8384
-  inputDetection: {fileID: 3167985525364349275}
+    m_Bits: 0
+  inputDetection: {fileID: 0}
   canPickup: 1
-  forwardThrowForce: 9
-  upwardsThrowForce: 5
+  forwardThrowForce: 8
+  upwardsThrowForce: 4
   currentObject: {fileID: 0}
 --- !u!114 &5350303395643184213
 MonoBehaviour:
@@ -779,7 +779,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6117834857856622084}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 894c469af2fe36d439e92d90ea022369, type: 3}
   m_Name: 
@@ -1093,13 +1093,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxWalkSpeed: 10
-  acceleration: 30
+  maxWalkSpeed: 11
+  acceleration: 35
   decceleration: 25
-  maxAccelStep: 70
+  maxAccelStep: 50
   rotationSpeed: 15
-  maxRunSpeed: 11
-  runAcceleration: 25
+  maxRunSpeed: 16
+  runAcceleration: 18
   runDeceleration: 20
   groundLayers:
     serializedVersion: 2
@@ -1110,16 +1110,16 @@ MonoBehaviour:
   raycastRadius: 0.23
   floatHeightStrength: 100
   floatHeightDamping: 3
-  maxFallSpeed: 25
-  fallAccel: 45
-  maxFallAccelStep: 55
+  maxFallSpeed: 32
+  fallAccel: 70
+  maxFallAccelStep: 70
   gravityScale: 1
   fallAccelScale: 1
   currentFallVel: 0
   airStepMult: 0.65
   airDecelMult: 0.5
   airAccelMult: 0.8
-  jumpHeight: 3
+  jumpHeight: 3.5
   jumpDecayRate: 55
   jumpReleaseFactor: 2
   jumpPeakFactor: 0.3
@@ -1186,7 +1186,43 @@ MonoBehaviour:
     m_RotationOrder: 4
   runningQuickTurnMultiplier:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: -1
+      value: 2.999994
+      inSlope: -0.01750326
+      outSlope: -0.01750326
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.31226337
+    - serializedVersion: 3
+      time: -0.25
+      value: 2.9084194
+      inSlope: -0.32725063
+      outSlope: -0.32725063
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.24742463
+      outWeight: 0.4766675
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1199,8 +1235,8 @@ MonoBehaviour:
   pMachine: {fileID: 3534729435414562412}
   playerModel: {fileID: 4145771580469297692}
   currentSpeed: 0
-  runMarker: {fileID: 0}
-  stopMarker: {fileID: 0}
+  runMarker: {fileID: 4586272566002907613, guid: 0f9765eb7001f404080ae83ecfd35553, type: 3}
+  stopMarker: {fileID: 4586272566002907613, guid: 842ac5688dcb1e4489e60cb78f5743a8, type: 3}
   debugActive: 0
   useRunMarkers: 0
   useJumpMarkers: 0
@@ -1227,6 +1263,9 @@ MonoBehaviour:
   - tag: LevelObject
     requiredVel: 7
     knockbackMultiplier: 3
+  - tag: BaseballBat
+    requiredVel: 3
+    knockbackMultiplier: 6
 --- !u!114 &7060599881787527121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,6 +1284,7 @@ MonoBehaviour:
   bagPoint: {fileID: 8135251215635467218}
   swapCooldown: 0.15
   swapTimer: 0
+  playerModel: {fileID: 4145771580469297692}
 --- !u!1 &7086874114475970151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1314,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6347196777763878027}
+  m_Father: {fileID: 6031217146697166979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7444431499547966150
 GameObject:
@@ -1590,12 +1630,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8270794364779868873}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.686}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6347196777763878027}
+  m_Father: {fileID: 6031217146697166979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8594543135185838301
 GameObject:

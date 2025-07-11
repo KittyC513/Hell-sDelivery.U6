@@ -10,19 +10,31 @@ public class ItemBase : MonoBehaviour
     private bool withPickupRange_p1 = false;
     private bool withPickupRange_p2 = false;
 
-    public PlayerLockOn playerLockOn;
-    public PlayerInputDetection inputDetection;
+    [HideInInspector] public PlayerLockOn playerLockOn;
+    [HideInInspector] public PlayerInputDetection inputDetection;
 
     [SerializeField]
     protected ItemHandler itemHandler;
 
+    [SerializeField] public Vector3 holdRotation = Vector3.zero;
+    [SerializeField] public Vector3 bagRotation = Vector3.zero;
+
     private bool isAvaliable = true;
 
-    public bool isOnUse = false;
+    [HideInInspector] public bool isOnUse = false;
+
+    private Rigidbody rb;
+    public RigidbodyConstraints rbContraints;
 
     protected virtual void Awake()
     {
         instance = this;
+        rb = GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rbContraints = rb.constraints;
+        }
     }
     protected void Start()
     {
@@ -48,7 +60,7 @@ public class ItemBase : MonoBehaviour
 
         if(isOnUse)
         {
-            if(inputDetection.crouchPressed )
+            if(inputDetection.crouchPressed)
             {
                 UseFunction();
             }
@@ -98,7 +110,8 @@ public class ItemBase : MonoBehaviour
 
             if (GameManager.instance.bag_p1.bag.Count < 2)
             {
-                itemHandler.EquipItem(GameManager.instance.itemControl_p1);
+                if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
+
                 isAvaliable = false;
                 GameManager.instance.bag_p1.AddItem(this);
 
@@ -116,7 +129,8 @@ public class ItemBase : MonoBehaviour
         {
             if(GameManager.instance.bag_p2.bag.Count < 2)
             {
-                itemHandler.EquipItem(GameManager.instance.itemControl_p2);
+                if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p2);
+
                 isAvaliable = false;
                 GameManager.instance.bag_p2.AddItem(this);
                 print("Added to bag");

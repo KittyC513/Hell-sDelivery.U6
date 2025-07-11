@@ -12,6 +12,9 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
     SpringUtils.tDampedSpringMotionParams tempX;
     SpringUtils.tDampedSpringMotionParams tempY;
     SpringUtils.tDampedSpringMotionParams tempZ;
+
+
+
     private Vector3 targetPos;
 
     private PlayerObjectController oControl;
