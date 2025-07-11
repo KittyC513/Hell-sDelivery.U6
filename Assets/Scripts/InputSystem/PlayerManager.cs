@@ -81,7 +81,7 @@ public class PlayerManager : MonoBehaviour
         GameManager gameManager = GameManager.instance;
         if (players.Count == 1) 
         {
-            //players[0].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0, 0, 0.5f, 1);
+            players[0].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0, 0, 0.5f, 1);
 
             if (gameManager != null)
             {
@@ -100,7 +100,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (players.Count == 2)
         {
-            players[0].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0, 0, 0.5f, 1);
+
             players[1].GetComponent<PlayerLockOn>().CameraManager.lockCam.rect = new Rect(0.5f, 0, 0.5f, 1);
 
 

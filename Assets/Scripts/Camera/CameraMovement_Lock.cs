@@ -25,15 +25,11 @@ public class CameraMovement_Lock : MonoBehaviour
     public float collisionOffset = 0.3f; // how close the camera can get to a wall
     private RaycastHit hit;
 
-    public Transform crosshair;
-    private Camera lockCam;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         lockCamType = E_LockCamType.three;
-        lockCam = this.GetComponent<Camera>();
     }
     private void Update()
     {
@@ -116,9 +112,6 @@ public class CameraMovement_Lock : MonoBehaviour
             transform.LookAt(playerLockOn.lockTarget.transform.position + Vector3.up * 1.5f);
             // Look at the midpoint
             //transform.LookAt(midpoint);
-
-            crosshair.position = lockCam.WorldToScreenPoint(playerLockOn.lockTarget.transform.position);
-
 
         }
 
