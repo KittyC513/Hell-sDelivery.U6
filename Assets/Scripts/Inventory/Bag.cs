@@ -87,24 +87,31 @@ public class Bag : MonoBehaviour
 
     public void EquipItem()
     {
-        //1.check if bag has items
-        if (bag.Count > 0)
+        switch(bag.Count)
         {
-            //2. check if the first item in the bag is on use
-            if (bag[0].isOnUse)
-            {
-                //3. if the item is on use and we press the swap button, swap it to the bag point
-                if (inputDetection.swapItemPressed_left && swapTimer > swapCooldown)
+            case 0:
+                //if there are no items in the bag, set the active item to null
+                activeItemBase = null;
+                activeItem = null;
+                activeRB = null;
+                break;
+            case 1:
+                //if there is only one item in the bag, set it as the active item
+                activeItemBase = bag[0];
+                activeItemBase.isOnUse = true;
+                activeItem = bag[0].gameObject;
+                activeRB = activeItem.GetComponent<Rigidbody>();
+                break;
+            case 2:
+                if(activeItemBase == bag[0])
                 {
-
-                    //4. reset the swap timer and set the item to not on use
-                    swapTimer = 0;
-                    bag[0].isOnUse = false;
-                    bag[0].GetComponent<Collider>().isTrigger = true;
-
-                    //check if there is another item in the bag and if so swap it to the active spot
-                    if (bag.Count > 1)
+                    if (inputDetection.swapItemPressed_left && swapTimer >= swapCooldown)
                     {
+                        swapTimer = 0;
+                        bag[0].isOnUse = false;
+                        bag[0].GetComponent<Collider>().isTrigger = true;
+
+                        //switch to the second item in the bag
                         bag[1].isOnUse = true;
                         bag[1].GetComponent<Collider>().isTrigger = false;
                         activeItemBase = bag[1];
@@ -114,64 +121,123 @@ public class Bag : MonoBehaviour
                         //reset the spring params
                         ResetSprings();
                     }
-                    else
-                    {
-                        activeItemBase = null;
-                        activeItem = null;
-                        activeRB = null;
-                    }
-                }
 
-                if (bag.Count > 1)
-                {
-                    //8. set the item's position to the bag point
                     bag[1].transform.position = bagPoint.position;
                 }
-       
-            }
-            else
-            {
-                //6. if the item is not on use and we press the swap button, swap it to the equip point
-                if (inputDetection.swapItemPressed_left && swapTimer > swapCooldown)
+
+                if (activeItemBase == bag[1])
                 {
-                    //7. reset the swap timer and set the item to on use
-                    swapTimer = 0;
-                    bag[0].isOnUse = true;
-                    bag[0].GetComponent<Collider>().isTrigger = false;
-                    activeItem = bag[0].gameObject;
-                    activeItemBase = bag[0];
-                    activeRB = activeItem.GetComponent<Rigidbody>();
-
-                    //reset the spring params
-                    ResetSprings();
-
-                    //check if there is another item in the bag and if so swap it to the back spot
-                    if (bag.Count > 1)
+                    if (inputDetection.swapItemPressed_left && swapTimer >= swapCooldown)
                     {
+                        swapTimer = 0;
                         bag[1].isOnUse = false;
                         bag[1].GetComponent<Collider>().isTrigger = true;
+                        bag[1].transform.position = bagPoint.position;
+
+                        //switch to the second item in the bag
+                        bag[0].isOnUse = true;
+                        bag[0].GetComponent<Collider>().isTrigger = false;
+                        activeItemBase = bag[0];
+                        activeItem = bag[0].gameObject;
+                        activeRB = activeItem.GetComponent<Rigidbody>();
+
+                        //reset the spring params
+                        ResetSprings();
                     }
+
+                    bag[0].transform.position = bagPoint.position;
                 }
 
-                //8. set the item's position to the bag point
-                bag[0].transform.position = bagPoint.position;
-            }
+                break;
+        }
+        ////1.check if bag has items
+        //if (bag.Count > 0)
+        //{
+        //    //2. check if the first item in the bag is on use
+        //    if (bag[0].isOnUse)
+        //    {
+        //        //3. if the item is on use and we press the swap button, swap it to the bag point
+        //        if (inputDetection.swapItemPressed_left && swapTimer > swapCooldown)
+        //        {
 
-            //9. update the swap timer
-            if (swapTimer <= swapCooldown)
-            {                
-                // If the swap button is not pressed, start the timer
-                if (!inputDetection.swapItemPressed_left)
-                {
-                    swapTimer += Time.deltaTime;
-                }
-                
+        //            //4. reset the swap timer and set the item to not on use
+        //            swapTimer = 0;
+        //            bag[0].isOnUse = false;
+        //            bag[0].GetComponent<Collider>().isTrigger = true;
+
+        //            //check if there is another item in the bag and if so swap it to the active spot
+        //            if (bag.Count > 1)
+        //            {
+        //                bag[1].isOnUse = true;
+        //                bag[1].GetComponent<Collider>().isTrigger = false;
+        //                activeItemBase = bag[1];
+        //                activeItem = bag[1].gameObject;
+        //                activeRB = activeItem.GetComponent<Rigidbody>();
+
+        //                //reset the spring params
+        //                ResetSprings();
+        //            }
+        //            else
+        //            {
+        //                activeItemBase = null;
+        //                activeItem = null;
+        //                activeRB = null;
+        //            }
+        //        }
+
+        //        if (bag.Count > 1)
+        //        {
+        //            //8. set the item's position to the bag point
+        //            bag[1].transform.position = bagPoint.position;
+        //        }
+       
+        //    }
+        //    else
+        //    {
+        //        //6. if the item is not on use and we press the swap button, swap it to the equip point
+        //        if (inputDetection.swapItemPressed_left && swapTimer > swapCooldown)
+        //        {
+        //            //7. reset the swap timer and set the item to on use
+        //            swapTimer = 0;
+        //            bag[0].isOnUse = true;
+        //            bag[0].GetComponent<Collider>().isTrigger = false;
+        //            activeItem = bag[0].gameObject;
+        //            activeItemBase = bag[0];
+        //            activeRB = activeItem.GetComponent<Rigidbody>();
+
+        //            //reset the spring params
+        //            ResetSprings();
+
+        //            //check if there is another item in the bag and if so swap it to the back spot
+        //            if (bag.Count > 1)
+        //            {
+        //                bag[1].isOnUse = false;
+        //                bag[1].GetComponent<Collider>().isTrigger = true;
+        //            }
+        //        }
+
+        //        //8. set the item's position to the bag point
+        //        bag[0].transform.position = bagPoint.position;
+        //    }
+
+        //9. update the swap timer
+        // If the swap button is not pressed, start the timer
+        if (!inputDetection.swapItemPressed_left)
+        {
+            if (swapTimer < swapCooldown)
+            {
+                swapTimer += Time.deltaTime;
             }
             else
             {
                 swapTimer = swapCooldown;
             }
+
         }
+                
+        
+
+        
     }
 
     private void OnRemoveItem(ItemBase item)
