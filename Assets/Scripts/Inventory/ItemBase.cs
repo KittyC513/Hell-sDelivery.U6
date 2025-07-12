@@ -13,8 +13,8 @@ public class ItemBase : MonoBehaviour
     [HideInInspector] public PlayerLockOn playerLockOn;
     [HideInInspector] public PlayerInputDetection inputDetection;
 
-    [SerializeField]
-    protected ItemHandler itemHandler;
+    //[SerializeField]
+    //protected ItemHandler itemHandler;
 
     [SerializeField] public Vector3 holdRotation = Vector3.zero;
     [SerializeField] public Vector3 bagRotation = Vector3.zero;
@@ -26,6 +26,8 @@ public class ItemBase : MonoBehaviour
     private Rigidbody rb;
     public RigidbodyConstraints rbContraints;
 
+
+
     protected virtual void Awake()
     {
         instance = this;
@@ -35,6 +37,7 @@ public class ItemBase : MonoBehaviour
         {
             rbContraints = rb.constraints;
         }
+
     }
     protected void Start()
     {
@@ -56,19 +59,20 @@ public class ItemBase : MonoBehaviour
         {
             DetectInPickUpRange();
             PickUp();
+            rb.isKinematic = true;
+        }
+        else
+        {
+            rb.isKinematic = false;
         }
 
-        if(isOnUse)
+        if (isOnUse)
         {
-            if(inputDetection.crouchPressed)
+            if (inputDetection.crouchPressed)
             {
                 UseFunction();
             }
         }
-
-    }
-    private void FixedUpdate()
-    {
 
     }
 
@@ -76,7 +80,6 @@ public class ItemBase : MonoBehaviour
     {
         //2. check if in pickup range
         colliders = Physics.OverlapSphere(this.transform.position, pickupRadium, 1 << LayerMask.NameToLayer("HitCollider_p1") | 1 << LayerMask.NameToLayer("HitCollider_p2"));
-        print(colliders.Length);
 
         switch (colliders.Length)
         {
@@ -110,14 +113,16 @@ public class ItemBase : MonoBehaviour
 
             if (GameManager.instance.bag_p1.bag.Count < 2)
             {
-                if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
+                //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
 
                 isAvaliable = false;
                 GameManager.instance.bag_p1.AddItem(this);
 
                 playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
                 inputDetection = GameManager.instance.InputDetection_p1;
-                print("Added to bag");
+
+                this.transform.SetParent(GameManager.instance.bag_p1.transform);
+                print("Added to p1's bag");
             }
             else
             {
@@ -129,14 +134,16 @@ public class ItemBase : MonoBehaviour
         {
             if(GameManager.instance.bag_p2.bag.Count < 2)
             {
-                if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p2);
+                //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p2);
 
                 isAvaliable = false;
                 GameManager.instance.bag_p2.AddItem(this);
-                print("Added to bag");
 
                 playerLockOn = GameManager.instance.player2.GetComponent<PlayerLockOn>();
                 inputDetection = GameManager.instance.InputDetection_p2;
+
+                this.transform.SetParent(GameManager.instance.bag_p2.transform);
+                print("Added to p2's bag");
             }
             else
             {

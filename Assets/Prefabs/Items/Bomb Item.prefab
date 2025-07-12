@@ -148,7 +148,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8087672114146570963}
-  - component: {fileID: 1571825517159795241}
   - component: {fileID: 5109137475608522771}
   - component: {fileID: 7096520512475733162}
   - component: {fileID: 7175358789177868804}
@@ -177,23 +176,6 @@ Transform:
   - {fileID: 4619606137218671052}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1571825517159795241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8877193240737726625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d95355991ba966458ec7b0d098d6500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipped: 0
-  rotationSpeed: 100
-  rotationAxis: {x: 0, y: 1, z: 0}
-  iControl: {fileID: 0}
-  rb: {fileID: 0}
 --- !u!65 &5109137475608522771
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -254,19 +236,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235ba8288a9dd46458e2a0c1abd82da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iHandler: {fileID: 0}
   playerLockOn: {fileID: 0}
+  inputDetection: {fileID: 0}
+  holdRotation: {x: 0, y: 0, z: 0}
+  bagRotation: {x: 0, y: 0, z: 0}
+  isOnUse: 0
+  rbContraints: 0
+  pickupRadium: 1
   targetPos: {fileID: 0}
   dropSpeed: 5
-  worldCollider: {fileID: 2711751163785116801}
   rb: {fileID: 0}
   bombPrefab: {fileID: 3435195785975598480, guid: 15563e57cb35e1f498b1f152ed51092d, type: 3}
-  isSpawned: 0
   offset: {x: 0, y: 0, z: 0}
   maxBombs: 2
   numOfBombs: 0
   cdSpawn: 0.3
-  canStartTimer: 0
+  timer: 0
   bombsList: []
 --- !u!1001 &2428798326590027989
 PrefabInstance:

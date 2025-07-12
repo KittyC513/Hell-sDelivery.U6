@@ -9,9 +9,6 @@ public class BombItem : ItemBase
     public Transform targetPos;
     public float dropSpeed = 5f;
 
-    public Collider worldCollider;
-    public Rigidbody rb;
-
     public GameObject bombPrefab;
 
     [Header("Bomb")]
@@ -25,26 +22,25 @@ public class BombItem : ItemBase
 
     public List<BombMovement> bombsList = new List<BombMovement>();
 
-    protected override void Awake()
-    {
-        base.Awake();
-        itemHandler = GetComponent<ItemHandler>();
-        //iHandler = GetComponent<ItemHandler>();
-        //if (iHandler == null) Debug.Log(this.ToString() + " needs an itemHandler attached on the gameObject " + this.gameObject.name); 
-        rb = GetComponent<Rigidbody>();
-    }
+    //protected override void Awake()
+    //{
+    //    base.Awake();
+    //    //itemHandler = GetComponent<ItemHandler>();
+    //    //iHandler = GetComponent<ItemHandler>();
+    //    //if (iHandler == null) Debug.Log(this.ToString() + " needs an itemHandler attached on the gameObject " + this.gameObject.name); 
+    //}
 
     //In Start method
-    public override void Initialize()
-    {
-        itemHandler.onItemTrigger += ThrowBomb;
-        print("BombItem initialized and ready to use");
-    }
+    //public override void Initialize()
+    //{
+    //    //itemHandler.onItemTrigger += ThrowBomb;
+    //    print("BombItem initialized and ready to use");
+    //}
 
-    private void OnDisable()
-    {
-        itemHandler.onItemTrigger -= ThrowBomb; 
-    }
+    //private void OnDisable()
+    //{
+    //    //itemHandler.onItemTrigger -= ThrowBomb; 
+    //}
 
     public override void UseFunction()
     {
@@ -63,12 +59,14 @@ public class BombItem : ItemBase
                 GameObject bombObj = Instantiate(bombPrefab);
                 bombObj.transform.position = this.transform.position;
                 //bombObj.transform.rotation = iHandler.iControl.transform.rotation;
-                if (Vector3.Distance(bombObj.transform.position, this.transform.position) < 0.1f)
-                    bombObj.transform.parent = itemHandler.iControl.transform;
-                worldCollider.enabled = false;
-                //worldCollider.gameObject.SetActive(false);
+                //if (Vector3.Distance(bombObj.transform.position, this.transform.position) < 0.1f)
+                BombMovement bombMovement = bombObj.GetComponent<BombMovement>();
+                bombMovement.playerLockOn = this.transform.parent.GetComponent<PlayerLockOn>();
+                
+                if (bombMovement.playerLockOn.lockTarget != null)
+                    bombMovement.targetPos = bombMovement.playerLockOn.lockTarget.transform;
 
-                bombsList.Add(bombObj.GetComponent<BombMovement>());
+                bombsList.Add(bombMovement);
                 numOfBombs++;
                 timer = 0;
             }

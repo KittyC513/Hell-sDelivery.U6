@@ -15,25 +15,25 @@ public class PlayerItemControl : MonoBehaviour
     private void Update()
     {
         //if we input the button to use an item and we have an active item try to invoke it
-        if (inputDetection.crouchPressed && activeItem != null && activeItem.name != "Bomb Item")
-        {
-            UseItem();
-        }
+        //if (inputDetection.crouchPressed && activeItem != null && activeItem.name != "Bomb Item")
+        //{
+        //    UseItem();
+        //}
 
-        if(activeItem != null)
-        {
-            //Bomb 
-            if (activeItem.name == "Bomb Item")
-                UseBomb();
-            //Detonator
-            else if (activeItem.name == "Detonator Item")
-                UseDetonator();
-        } 
+        //if(activeItem != null)
+        //{
+        //    //Bomb 
+        //    if (activeItem.name == "Bomb Item")
+        //        UseBomb();
+        //    //Detonator
+        //    else if (activeItem.name == "Detonator Item")
+        //        UseDetonator();
+        //} 
 
-        if(activeItem != null && inputDetection.IsDropActiveItem())
-        {
-            UnequipItem();
-        }
+        //if(activeItem != null && inputDetection.IsDropActiveItem())
+        //{
+        //    UnequipItem();
+        //}
 
     }
     #region Bomb Event
@@ -56,17 +56,16 @@ public class PlayerItemControl : MonoBehaviour
     #region Detonator Event
     private void UseDetonator()
     {
-        if (inputDetection.crouchPressed && activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count > 0)
-        {
-            UseItem();
-            Debug.Log("bomb list :" + activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count);
-            activeItem.gameObject.GetComponent<DetonatorItem>().canStartTimer = false;
-            //activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Clear();
-        }
-        if (!inputDetection.crouchPressed)
-        {
-            activeItem.gameObject.GetComponent<DetonatorItem>().canStartTimer = true;
-        }
+        //if (inputDetection.crouchPressed && activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count > 0)
+        //{
+        //    UseItem();
+        //    Debug.Log("bomb list :" + activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Count);
+        //    //activeItem.gameObject.GetComponent<DetonatorItem>().bombItem.bombsList.Clear();
+        //}
+        //if (!inputDetection.crouchPressed)
+        //{
+
+        //}
     }
     #endregion
 

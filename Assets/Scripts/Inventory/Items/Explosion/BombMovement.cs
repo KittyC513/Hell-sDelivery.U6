@@ -47,11 +47,9 @@ public class BombMovement : MonoBehaviour
     {
         startPoint = this.transform.position;
         //print("Bomb Pos" + this.transform.position);
-        playerLockOn = this.transform.GetComponentInParent<PlayerLockOn>();
-        if(playerLockOn.lockTarget != null)
-            targetPos = playerLockOn.lockTarget.transform;
 
-        this.transform.parent = null;
+        //if(playerLockOn.lockTarget != null)
+        //    targetPos = playerLockOn.lockTarget.transform;
     }
 
     // Update is called once per frame

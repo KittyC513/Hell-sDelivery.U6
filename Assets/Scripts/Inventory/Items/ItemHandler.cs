@@ -21,15 +21,16 @@ public class ItemHandler : MonoBehaviour
     public delegate void OnItemTrigger();
     public OnItemTrigger onItemTrigger;
 
-    private Collider triggerCollider;
+    public Collider worldCollider;
+    private Collider collider_itself;
 
     [HideInInspector]
     public Rigidbody rb;
 
     private void Awake()
     {
-        triggerCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
+        collider_itself = this.GetComponent<Collider>();
     }
     //player equips this item
     public void EquipItem(PlayerItemControl playerItemControl)
@@ -43,7 +44,8 @@ public class ItemHandler : MonoBehaviour
         rotationSpeed = 0;
         this.transform.rotation = iControl.transform.rotation;
 
-        triggerCollider.enabled = false;
+        worldCollider.enabled = false;
+        collider_itself.enabled = false;
         rb.useGravity = false;
 
     }
@@ -69,7 +71,7 @@ public class ItemHandler : MonoBehaviour
         rotationSpeed = 100;
         iControl = null;
         yield return new WaitForSeconds(1f);
-        triggerCollider.enabled = true;
+        collider_itself.enabled = true;
 
     }
     #endregion
