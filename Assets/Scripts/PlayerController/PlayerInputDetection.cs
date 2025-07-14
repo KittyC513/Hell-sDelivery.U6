@@ -12,6 +12,14 @@ public enum E_InputDeviceType
     Gamepad,
 }
 
+public static class InputActionButtonExtensions
+{
+    public static bool GetButton(this InputAction action) => action.ReadValue<float>() > 0;
+    public static bool GetButtonDown(this InputAction action) => action.triggered && action.ReadValue<float>() > 0;
+    public static bool GetButtonUp(this InputAction action) => action.triggered && action.ReadValue<float>() == 0;
+}
+
+
 public class PlayerInputDetection : NetworkBehaviour
 {
     private PlayerInput playerInput;
@@ -28,11 +36,13 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool runPressed;
     [HideInInspector] public bool swapItemPressed_left;
     [HideInInspector] public bool swapItemPressed_right;
+    [HideInInspector] public bool interactPressed;
     private Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction pauseMoveAction;
     private PauseManager pauseManager;
+    private InputAction interactAction;
 
     public Camera cam;
     public Camera playerCam;
@@ -60,7 +70,7 @@ public class PlayerInputDetection : NetworkBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerMap = inputActionAsset.FindActionMap("Player");
         pauseMap = inputActionAsset.FindActionMap("Pause Menu");
-
+        interactAction = playerMap.FindAction("Interact");
       
     }
 
@@ -96,10 +106,6 @@ public class PlayerInputDetection : NetworkBehaviour
 
         pauseMap.FindAction("Pause").started += PausePressed;
         pauseMap.FindAction("Pause").canceled += PauseCancelled;
-
-
-
-      
 
 
 
@@ -218,6 +224,8 @@ public class PlayerInputDetection : NetworkBehaviour
     {
         crouchPressed = false;
     }
+
+
 
     private void Lock(InputAction.CallbackContext action)
     {
@@ -371,8 +379,11 @@ public class PlayerInputDetection : NetworkBehaviour
                 pauseManager.PauseGame(this);
             }
         }
+
+        interactPressed = InputActionButtonExtensions.GetButtonDown(interactAction);
       
     }
+
 
     private void SwitchToPlayerMap()
     {

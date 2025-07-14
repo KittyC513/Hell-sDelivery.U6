@@ -14,6 +14,15 @@ public class DropMoney : MonoBehaviour
     //a simple struct that combines a prefab and amount of that prefab to drop
     [SerializeField] private MoneyCounts[] moneyCount;
 
+    [SerializeField] private Transform dropPoint;
+
+    private void Start()
+    {
+        if (dropPoint == null)
+        {
+            dropPoint = this.transform;
+        }
+    }
     public void Update()
     {
         //a debug function to test the dropping of money
@@ -24,12 +33,13 @@ public class DropMoney : MonoBehaviour
     }
     public void SpawnCurrency()
     {
+
         for (int i = 0; i < moneyCount.Length; i++)
         {
             for(int j = 0; j < moneyCount[i].amount; j++)
             {
                 //spawn a money prefab and get its rigidbody
-                GameObject temp = Instantiate(moneyCount[i].moneyPrefab, transform.position, Quaternion.identity);
+                GameObject temp = Instantiate(moneyCount[i].moneyPrefab, dropPoint.position, Quaternion.identity);
                 Rigidbody tempRB = temp.GetComponent<Rigidbody>();
 
                 //if the rigidbody is not null
