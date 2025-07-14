@@ -28,7 +28,7 @@ public class HellHoundStateMachine : StateManager <HellHoundStateMachine.HoundSt
 
 
 
-    private void OverrideState(HoundStates newState)
+    public void OverrideState(HoundStates newState)
     {
         TransitionToState(newState);
     }

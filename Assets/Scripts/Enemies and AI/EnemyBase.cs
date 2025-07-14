@@ -1,7 +1,8 @@
-using UnityEngine;
-using UnityEngine.AI;
 using System;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
+using static HellHoundStateMachine;
 
 public class EnemyBase : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected Rigidbody rb; //the rigidbody attached to the enemy
     [SerializeField] protected NavMeshAgent navAgent; //the nav agent
     [SerializeField] protected Health eHealth; //the enemy health script
+    [SerializeField] protected HellHoundStateMachine houndStateMachine;
 
 
     private bool droppedMoney = false;
@@ -39,6 +41,14 @@ public class EnemyBase : MonoBehaviour
         if (players.Length > 0)
         {
             Collider player = players[0];
+
+            //Detect if target player layer has been changed
+            if (LayerMask.LayerToName(players[0].gameObject.layer) == "Invisible_Player1" ||
+                LayerMask.LayerToName(players[0].gameObject.layer) == "Invisible_Player2")
+            {
+                houndStateMachine.OverrideState(HoundStates.wander);
+                return null;
+            }
 
             //the direction towards the player from the enemy
             Vector3 targetDir = player.transform.position - transform.position;
@@ -164,6 +174,5 @@ public class EnemyBase : MonoBehaviour
         //poof / destroy object after timer / animation finishes
         Destroy(this.gameObject, deathTime);
     }
-
   
 }

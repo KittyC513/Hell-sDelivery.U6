@@ -34,7 +34,7 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
 
     public override void ExitState()
     {
-        
+
     }
 
     public override HellHoundStateMachine.HoundStates GetNextState()
@@ -58,7 +58,8 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
 
         if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) < hellHoundBase.AttackDetectionRange)
         {
-            return HellHoundStateMachine.HoundStates.attack;
+            if (!hellHoundBase.TargetPlayer.GetComponent<Bag>().isInvisible)
+                return HellHoundStateMachine.HoundStates.attack;
         }
 
         if (hellHoundBase.TakeHit)
@@ -81,6 +82,13 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
 
     private void ChasePlayer()
     {
+        //if (hellHoundBase.TargetPlayer.GetComponent<Bag>().isInvisible)
+        //{
+        //    hellHoundBase.ClearPlayer();
+        //    hellHoundBase.hellHoundStateMachine.OverrideState(HellHoundStateMachine.HoundStates.wander);
+        //    return;
+        //}
+
         navAgent.destination = hellHoundBase.TargetPlayer.transform.position;
     }
 }

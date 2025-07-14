@@ -22,6 +22,8 @@ public class HellHoundBase : EnemyBase
 
     [SerializeField] private bool showRadius = true; //use this to see player detection radius and ground ray with gizmos
 
+    public HellHoundStateMachine hellHoundStateMachine;
+
     //accessible variables
     public float MaxWanderDistance { get { return maxWanderDistance; } }
     public float WanderTime { get { return wanderTime; } }
@@ -110,6 +112,5 @@ public class HellHoundBase : EnemyBase
             Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckDist, transform.position.z));
         }
     }
-
 
 }

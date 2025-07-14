@@ -43,6 +43,9 @@ public class Bag : MonoBehaviour
 
     private Vector3 targetPos;
 
+    [Header("Invisible State")]
+    public bool isInvisible = false;
+
     private void Awake()
     {
         bag = new List<ItemBase>();

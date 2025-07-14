@@ -7,8 +7,8 @@ public class ItemBase : MonoBehaviour
     private static ItemBase instance;
     public static ItemBase Instance => instance;
 
-    private bool withPickupRange_p1 = false;
-    private bool withPickupRange_p2 = false;
+    [SerializeField] private bool withPickupRange_p1 = false;
+    [SerializeField] private bool withPickupRange_p2 = false;
 
     [HideInInspector] public PlayerLockOn playerLockOn;
     [HideInInspector] public PlayerInputDetection inputDetection;
@@ -16,13 +16,15 @@ public class ItemBase : MonoBehaviour
     //[SerializeField]
     //protected ItemHandler itemHandler;
 
-    [SerializeField] public Vector3 holdRotation = Vector3.zero;
-    [SerializeField] public Vector3 bagRotation = Vector3.zero;
+    public Vector3 holdRotation = Vector3.zero;
+    public Vector3 bagRotation = Vector3.zero;
 
+    [SerializeField]
     private bool isAvaliable = true;
 
     [HideInInspector] public bool isOnUse = false;
 
+    [SerializeField]
     private Rigidbody rb;
     public RigidbodyConstraints rbContraints;
 
@@ -52,7 +54,7 @@ public class ItemBase : MonoBehaviour
     public float pickupRadium = 1f;
     Collider[] colliders;
 
-    protected void Update()
+    protected virtual void Update()
     {
         //1. check if it's not picked up
         if (isAvaliable)
