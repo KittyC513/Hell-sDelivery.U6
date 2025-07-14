@@ -45,6 +45,7 @@ public class Bag : MonoBehaviour
 
     [Header("Invisible State")]
     public bool isInvisible = false;
+    public GameObject playerMod;
 
     private void Awake()
     {
@@ -135,7 +136,7 @@ public class Bag : MonoBehaviour
                         swapTimer = 0;
                         bag[1].isOnUse = false;
                         bag[1].GetComponent<Collider>().isTrigger = true;
-                        bag[1].transform.position = bagPoint.position;
+                        //bag[1].transform.position = bagPoint.position;
 
                         //switch to the second item in the bag
                         bag[0].isOnUse = true;
