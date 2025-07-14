@@ -9,6 +9,8 @@ public class HidingItem : ItemBase
     private Bag bag;
 
     private string playerLayerName;
+
+    public Animator animator;
     public override void UseFunction()
     {
         itemHolder = playerLockOn.gameObject;
@@ -19,7 +21,10 @@ public class HidingItem : ItemBase
             bag = itemHolder.GetComponent<Bag>();
             bag.isInvisible = true;
             isChanged_layer = true;
+
+            bag.playerMod.SetActive(false);
         }
+        animator.SetBool("isHiding",true);
     }
 
     protected override void Update()
@@ -36,12 +41,20 @@ public class HidingItem : ItemBase
                     isChanged_layer = false;
                     bag.isInvisible = false;
                 }
+                animator.SetBool("isHiding", false);
+                bag.playerMod.SetActive(true);
             }
+
+
         }
         else
         {
             bag = null;
             playerLayerName = "";
+
+            animator.SetBool("isHiding", false);            
+            if(bag  != null)
+                bag.playerMod.SetActive(false);
         }
 
     }
