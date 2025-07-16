@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &318297063684407223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1832669445013550494}
+  m_Layer: 13
+  m_Name: PosFollow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1832669445013550494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318297063684407223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.98, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3977539192417576009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6151602572758073711
 GameObject:
   m_ObjectHideFlags: 0
@@ -18,6 +49,8 @@ GameObject:
   - component: {fileID: 6317712278489817717}
   - component: {fileID: 263898948575150006}
   - component: {fileID: 3555583550401918451}
+  - component: {fileID: 3164782168495628356}
+  - component: {fileID: 8456402832343615733}
   m_Layer: 13
   m_Name: GarbageBin
   m_TagString: LevelObject
@@ -39,6 +72,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 621966712473175463}
+  - {fileID: 1832669445013550494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8560584561671765314
@@ -2361,7 +2395,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 172
+  m_VersionIndex: 178
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2555,6 +2589,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detachables:
   - {fileID: 6196500097165686532}
+--- !u!114 &3164782168495628356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151602572758073711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb3d605848c810c4aae989609e3237de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  withPickupRange_p1: 0
+  withPickupRange_p2: 0
+  playerLockOn: {fileID: 0}
+  inputDetection: {fileID: 0}
+  usePhysics: 1
+  holdRotation: {x: 0, y: 0, z: 90}
+  bagRotation: {x: 0, y: 0, z: 0}
+  isAvaliable: 1
+  pickupIcon: {fileID: 8456402832343615733}
+  isOnUse: 0
+  rb: {fileID: 0}
+  rbContraints: 0
+  maxButtonHoldTime: 2
+  buttonHoldForce: 18
+  pickupRadium: 1.94
+--- !u!114 &8456402832343615733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151602572758073711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213fe578ec3fd5647985791e0c219f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  billboardPrefab: {fileID: 4668376425706960398, guid: 08131882d1fae5044ad924e136710469, type: 3}
+  player1Active: 0
+  player2Active: 0
+  yOffset: 1.2
+  applySine: 1
+  frequency: 2.5
+  amplitude: 0.12
 --- !u!1 &6196500097165686532
 GameObject:
   m_ObjectHideFlags: 0

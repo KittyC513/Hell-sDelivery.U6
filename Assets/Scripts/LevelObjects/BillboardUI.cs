@@ -9,16 +9,28 @@ public class BillboardUI : MonoBehaviour
     private Camera p2Cam;
 
     [SerializeField] private Canvas billboardPrefab;
-    [SerializeField] private Transform positionFollow;
+    //[SerializeField] private Transform positionFollow;
 
     [SerializeField] private bool player1Active = false;
     [SerializeField] private bool player2Active = false;
+
+    [SerializeField] private float yOffset = 0.5f;
+
+    [SerializeField] private bool applySine = true;
+    [SerializeField] private float frequency = 2.5f;
+    [SerializeField] private float amplitude = 0.15f;
+
+    private Vector3 pos;
+    private Vector3 startPos;
+    private Vector3 changeInPos;
 
     private List<GameObject> images;
 
 
     private void Start()
     {
+        
+
         p1Cam = GameManager.instance.cam_p1;
         p2Cam = GameManager.instance.cam_p2;
         images = new List<GameObject>();
@@ -46,6 +58,9 @@ public class BillboardUI : MonoBehaviour
 
     private void Update()
     {
+        //update the unaltered position
+        startPos = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+
         //set the camera if its still null
         if (p1Cam == null) p1Cam = GameManager.instance.cam_p1;
         if (p2Cam == null) p2Cam = GameManager.instance.cam_p2;
@@ -74,10 +89,21 @@ public class BillboardUI : MonoBehaviour
 
     private void BillboardToCamera(Camera cam, GameObject img)
     {
-        img.transform.position = positionFollow.position;
+        //apply the y offset from the sin wave
+        float yPos = amplitude * Mathf.Sin(Time.time * frequency);
+        pos = new Vector3(startPos.x, startPos.y + yPos, startPos.z);
+
+        img.transform.position = pos;
 
         img.transform.LookAt(cam.transform.position);
 
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z), new Vector3(0.25f, 0.25f + amplitude, 0.25f));
+    }
+
 }
 

@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System.Collections.Generic;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class Bag : MonoBehaviour
 
     [SerializeField] private GameObject playerModel;
 
-    private ItemBase activeItemBase;
+    [HideInInspector] public ItemBase activeItemBase;
     private GameObject activeItem;
     private Rigidbody activeRB;
     private RigidbodyConstraints oldContraints;
@@ -57,10 +58,23 @@ public class Bag : MonoBehaviour
     {
         bag.Add(item);
         OnEquipItem(item.gameObject);
+
+        if (activeItem == null)
+        {
+            //if there is only one item in the bag, set it as the active item
+            activeItemBase = item;
+            activeItemBase.isOnUse = true;
+            activeItem = item.gameObject;
+            activeRB = activeItem.GetComponent<Rigidbody>();
+        }
+
     }
 
     public void RemoveItem(ItemBase item)
     {
+        item.transform.parent = null;
+        item.isAvaliable = true;
+        OnRemoveItem(item);
         bag.Remove(item);
     }
 
@@ -100,17 +114,54 @@ public class Bag : MonoBehaviour
                 activeRB = null;
                 break;
             case 1:
-                //if there is only one item in the bag, set it as the active item
-                activeItemBase = bag[0];
-                activeItemBase.isOnUse = true;
-                activeItem = bag[0].gameObject;
-                activeRB = activeItem.GetComponent<Rigidbody>();
+
+                if (!bag[0].isOnUse)
+                {
+                    bag[0].transform.position = bagPoint.position;
+                }
+
+                if (inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right && swapTimer >= swapCooldown)
+                {
+                    //if the only item we have is in use then swap it to the back and leave the player empty handed
+                    if (bag[0].isOnUse)
+                    {
+                        activeItemBase.OnItemSwap();
+
+                        swapTimer = 0;
+                        bag[0].isOnUse = false;
+                        bag[0].GetComponent<Collider>().isTrigger = true;
+                      
+                        activeItemBase = null;
+                        activeItem = null;
+                        activeRB = null;
+
+                        //reset the spring params
+                        ResetSprings();
+                    }
+                    else //otherwise bring the only item from the bag to the hand
+                    {
+                        
+                        swapTimer = 0;
+                        bag[0].isOnUse = true;
+                        bag[0].GetComponent<Collider>().isTrigger = true;
+
+                        activeItemBase = bag[0];
+                        activeItem = bag[0].gameObject;
+                        activeRB = activeItem.GetComponent<Rigidbody>();
+                       
+                        //reset the spring params
+                        ResetSprings();
+                    }
+                    
+                }
                 break;
             case 2:
                 if(activeItemBase == bag[0])
                 {
                     if (inputDetection.swapItemPressed_left && swapTimer >= swapCooldown)
                     {
+                        activeItemBase.OnItemSwap();
+
                         swapTimer = 0;
                         bag[0].isOnUse = false;
                         bag[0].GetComponent<Collider>().isTrigger = true;
@@ -121,7 +172,6 @@ public class Bag : MonoBehaviour
                         activeItemBase = bag[1];
                         activeItem = bag[1].gameObject;
                         activeRB = activeItem.GetComponent<Rigidbody>();
-
                         //reset the spring params
                         ResetSprings();
                     }
@@ -133,6 +183,8 @@ public class Bag : MonoBehaviour
                 {
                     if (inputDetection.swapItemPressed_left && swapTimer >= swapCooldown)
                     {
+                        activeItemBase.OnItemSwap();
+
                         swapTimer = 0;
                         bag[1].isOnUse = false;
                         bag[1].GetComponent<Collider>().isTrigger = true;
@@ -248,6 +300,9 @@ public class Bag : MonoBehaviour
     {
         //reset the rigidbody contraints on dropping the item
         item.GetComponent<Rigidbody>().constraints = item.rbContraints;
+        Physics.IgnoreCollision(this.GetComponent<Collider>(), item.GetComponent<Collider>(), false);
+        item.GetComponent<Collider>().isTrigger = false;
+        activeItem = null;
     }
 
     private void OnEquipItem(GameObject obj)

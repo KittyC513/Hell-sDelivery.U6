@@ -3920,7 +3920,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1204
+  m_VersionIndex: 1207
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3950,6 +3950,7 @@ GameObject:
   - component: {fileID: 5253922713463235235}
   - component: {fileID: 1993788244074734279}
   - component: {fileID: 405202517337191543}
+  - component: {fileID: 3318443013190693095}
   m_Layer: 13
   m_Name: Throwable Tire
   m_TagString: BouncePad
@@ -7783,7 +7784,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1870
+  m_VersionIndex: 1873
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7953,11 +7954,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb3d605848c810c4aae989609e3237de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  withPickupRange_p1: 0
+  withPickupRange_p2: 0
   playerLockOn: {fileID: 0}
   inputDetection: {fileID: 0}
-  itemHandler: {fileID: 0}
+  usePhysics: 1
   holdRotation: {x: 0, y: 0, z: 90}
   bagRotation: {x: 0, y: 90, z: 90}
+  isAvaliable: 1
+  pickupIcon: {fileID: 3318443013190693095}
   isOnUse: 0
+  rb: {fileID: 0}
   rbContraints: 0
-  pickupRadium: 1.5
+  maxButtonHoldTime: 2
+  buttonHoldForce: 18
+  pickupRadium: 2.51
+--- !u!114 &3318443013190693095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873265835063261041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213fe578ec3fd5647985791e0c219f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  billboardPrefab: {fileID: 4668376425706960398, guid: 08131882d1fae5044ad924e136710469, type: 3}
+  player1Active: 0
+  player2Active: 0
+  yOffset: 1.38
+  applySine: 1
+  frequency: 2.5
+  amplitude: 0.15

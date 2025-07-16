@@ -3,7 +3,7 @@ using UnityEngine;
 //a very simple script to quickly apply downwards force with a custom gravity value instead of using unity's built in gravity
 public class CustomGravity : MonoBehaviour 
 {
-    [SerializeField] private float gravity = 9.81f;
+    [SerializeField] public float gravity = 9.81f;
 
     public enum PhysicsStyle { Rigidbody, Transform };
     [SerializeField] public PhysicsStyle physicsStyle = PhysicsStyle.Rigidbody;
