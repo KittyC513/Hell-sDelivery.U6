@@ -32,8 +32,8 @@ public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
     {
         if (!isResetPos)
         {
-            GameManager.instance.player1.transform.position = enterPoints[0].position;
-            GameManager.instance.player2.transform.position = enterPoints[1].position;
+            //GameManager.instance.player1.transform.position = enterPoints[0].position;
+            //GameManager.instance.player2.transform.position = enterPoints[1].position;
             isResetPos = true;
         }
     }
