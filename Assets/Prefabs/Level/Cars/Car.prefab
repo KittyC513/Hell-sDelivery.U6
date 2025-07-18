@@ -540,8 +540,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5492466412278812602}
   serializedVersion: 4
-  m_Mass: 8
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 5
   m_AngularDrag: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -572,8 +572,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHeight: 0.85
-  frequency: 200
-  damping: 10
+  frequency: 25
+  damping: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -583,6 +583,10 @@ MonoBehaviour:
   frontRTire: {fileID: 8732629386342600776}
   backRTire: {fileID: 3796839611876687019}
   tireRadius: 0.5
+  maxDriveSpeed: 18
+  acceleration: 25
+  maxAccelStep: 55
+  driving: 0
 --- !u!1 &7389525039446593543
 GameObject:
   m_ObjectHideFlags: 0

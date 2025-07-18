@@ -16,13 +16,18 @@ public class InteractableObject : MonoBehaviour
 
     [SerializeField] private bool limitInteracts = true;
     [SerializeField] private int maxNumberOfInteracts = 1;
+    [SerializeField] private bool requireItem = false;
+    [SerializeField] private string validItemTag;
     private bool canInteract = true;
 
     private int interactCount = 0;
 
+    private bool setupComplete = false;
+
+    [SerializeField] private PlayerData[] playerData;
     [SerializeField] private Collider[] players;
-    private Collider[] oldPlayers;
-    private PlayerInputDetection[] pInput;
+    
+
     private bool colliding = false;
 
     [SerializeField] private LayerMask playerMask;
@@ -31,8 +36,13 @@ public class InteractableObject : MonoBehaviour
     {
         //initialize the array that holds players in range
         players = new Collider[2];
-        oldPlayers = new Collider[2];
-        pInput = new PlayerInputDetection[2];
+
+
+        //create the playerData array
+        playerData = new PlayerData[2];
+
+        playerData[0] = new PlayerData();
+        playerData[1] = new PlayerData();
     }
 
     private void OnDrawGizmosSelected()
@@ -42,20 +52,29 @@ public class InteractableObject : MonoBehaviour
 
     private void Update()
     {
+
         if (colliding && canInteract)
         {
-            for (int i = 0; i < pInput.Length; i++)
+            for (int i = 0; i < playerData.Length; i++)
             {
-                if (pInput[i] != null)
+                if (playerData[i] != null && playerData[i].pInput != null)
                 {
                     //a player has pressed the crouch input
-                    if (pInput[i].interactPressed)
+                    if (playerData[i].pInput.interactPressed && playerData[i].canInteract)
                     {
                         //interact with this object and pass in the player object
                         OnInteract.Invoke();
+
+                        if (requireItem)
+                        {
+                            ItemBase item = playerData[i].pBag.activeItemBase;
+                            playerData[i].pBag.RemoveItem(item);
+                            Destroy(item.gameObject, 0.1f);
+                        }
+
                         interactCount++;
                     }
-                }
+                }    
             }
         }
 
@@ -82,11 +101,10 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void DetectPlayers()
+    public virtual void DetectPlayers()
     {
         int numColliders = Physics.OverlapSphereNonAlloc(transform.position, interactRange, players, playerMask);
 
-        //check if any collisions are happening
         if (numColliders > 0)
         {
             colliding = true;
@@ -96,29 +114,85 @@ public class InteractableObject : MonoBehaviour
             colliding = false;
         }
 
-        //numColliders is how many players are colliding
-        //0 is always going to be the first player to collide
-        for (int i = 0; i < numColliders; i++)
+        //players outputs the active objects in the array
+        //remove old colliders from the array
+        for (int i = 0; i < players.Length; i++)
         {
-            //set the player input
-            pInput[i] = players[i].GetComponentInParent<PlayerInputDetection>();
+            int pNum;
 
-            //check which player is colliding and show ui to them
-            interactUI.ShowIconToPlayer(true, pInput[i].playerNum);
-        }
-
-        for (int i = 0; i < pInput.Length; i++)
-        {
-            if (i >= numColliders)
+            if (players[i] != null)
             {
-                if (pInput[i] != null)
+                pNum = players[i].GetComponentInParent<PlayerInputDetection>().playerNum;
+                //if the player has not been setup yet, set it up
+                if (playerData[pNum - 1].pInput == null)
                 {
-                    //stop showing UI to the player that left
-                    interactUI.ShowIconToPlayer(false, pInput[i].playerNum);
+                    playerData[pNum - 1].pInput = players[i].GetComponentInParent<PlayerInputDetection>();
+                    playerData[pNum - 1].pBag = players[i].GetComponentInParent<Bag>();
                 }
+            }
 
-                pInput[i] = null;
+            //if the current loop of the player is greater than the number of colliders, clear out the newest addition
+            if (i >= numColliders && players[i] != null)
+            {
+                pNum = players[i].GetComponentInParent<PlayerInputDetection>().playerNum;
+                playerData[pNum - 1].canInteract = false;
+                interactUI.ShowIconToPlayer(false, pNum);
+
+                //here is where a player gets deleted
+                players[i] = null;
+
+                //clear out both players and reset them both
+                //this is neccesary because theres some weird issues where the wrong player will leave because of the order of how the array is handled
+                //I don't know a solution other than reworking the way this script works so for now this works
+                playerData[0].canInteract = false;
+                interactUI.ShowIconToPlayer(false, 1);
+                playerData[1].canInteract = false;
+                interactUI.ShowIconToPlayer(false, 2);
+            }
+            else if (players[i] != null)//if the current index is currently in the number of colliders 
+            {
+                pNum = players[i].GetComponentInParent<PlayerInputDetection>().playerNum;
+
+                if (requireItem)
+                {
+                    if (playerData[pNum - 1].pBag.activeItemBase != null)
+                    {
+                        if (playerData[pNum - 1].pBag.activeItemBase.CompareTag(validItemTag))
+                        {
+                            interactUI.ShowIconToPlayer(true, pNum);
+                            playerData[pNum - 1].canInteract = true;
+                        }
+                        else
+                        {
+                            playerData[pNum - 1].canInteract = false;
+                            interactUI.ShowIconToPlayer(false, pNum);
+                        }
+                    }
+                    else
+                    {
+                        playerData[pNum - 1].canInteract = false;
+                        interactUI.ShowIconToPlayer(false, pNum);
+                    }
+                   
+                }
+                else
+                {
+                    //this player can interact, show them the icon
+                    interactUI.ShowIconToPlayer(true, pNum);
+                    playerData[pNum - 1].canInteract = true;
+                }
             }
         }
+
+
     }
+
+}
+
+[System.Serializable]
+public class PlayerData
+{
+    public PlayerInputDetection pInput = null;
+    public Bag pBag = null;
+    public bool canInteract = true;
 }

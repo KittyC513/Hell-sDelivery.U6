@@ -56,6 +56,18 @@ public class BillboardUI : MonoBehaviour
         }
     }
 
+    public bool IsShowingToPlayer(int player)
+    {
+        if (player == 1)
+        {
+            return player1Active;
+        }
+        else
+        {
+            return player2Active;
+        }
+    }
+
     private void Update()
     {
         //update the unaltered position

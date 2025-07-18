@@ -1,7 +1,5 @@
 using System;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-
 public class CarObject : MonoBehaviour
 {
     [SerializeField] private float targetHeight;
@@ -17,6 +15,13 @@ public class CarObject : MonoBehaviour
     [SerializeField] private Transform backRTire;
 
     [SerializeField] private float tireRadius = 0.5f;
+
+    [SerializeField] private float maxDriveSpeed = 18f;
+    [SerializeField] private float acceleration = 25f;
+    [SerializeField] private float maxAccelStep = 55;
+    [SerializeField] private bool driving = false;
+
+    private Vector3 goalVelocityChange;
 
     //how do i apply force in 4 spots for each tire???
 
@@ -42,6 +47,18 @@ public class CarObject : MonoBehaviour
         //clamp the rotation so that the car won't flip over
         rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.rotation.x, -maxRotationAngles.x, maxRotationAngles.x), Mathf.Clamp(rb.rotation.y, -maxRotationAngles.y, maxRotationAngles.y),
         Mathf.Clamp(rb.rotation.z, -maxRotationAngles.z, maxRotationAngles.z));
+
+        if (driving)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            CalculateMovement(rb, transform.forward, acceleration, maxDriveSpeed, maxAccelStep);
+            tag = "LevelObject";
+        }
+    }
+
+    public void TriggerDriving()
+    {
+        driving = true;
     }
 
 
@@ -78,6 +95,41 @@ public class CarObject : MonoBehaviour
         float springForce = (targetY * springStrength) - (rayVel * springDamping);
 
         //add this force multiplied by our desired direction to our rigidbody
-        rb.AddForceAtPosition(rayDir * springForce, forcePos);
+        rb.AddForceAtPosition((rayDir * springForce) * rb.mass, forcePos);
+    }
+
+    private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float maxSpeed, float maxAccelStep)
+    {
+        Vector3 currentVel = rb.linearVelocity;
+        Vector3 targetDir = dir;
+
+        float targetSpeed = maxSpeed;
+
+        //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
+        Vector3 targetVelocity = (targetDir * (targetSpeed));
+
+        //our current desired velocity direction
+        Vector3 unitVel = goalVelocityChange.normalized;
+
+        //the difference between our new target direction and our current target direction
+        float velDot = Vector3.Dot(targetDir, unitVel);
+
+        float accel = accelValue;
+
+     
+        //how much we will change our velocity next step with smoothing by vector3.movetowards
+        goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, accel * 0.02f);
+
+        //the amount of velocity change needed to reach our maximum velocity
+        Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
+
+        //maxAccelStep limits how much our velocity can change per step
+        velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
+
+        //apply our force to our velocity
+        velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
+
+        //apply our velocity to the rigidbody
+        rb.AddForce(velocityChange * rb.mass);
     }
 }

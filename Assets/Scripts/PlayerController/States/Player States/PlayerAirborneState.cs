@@ -104,7 +104,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 
                 if (pControl.GroundObject.GetComponent<Rigidbody>() != null && pControl.GroundObject.layer == LayerMask.NameToLayer("DynamicGround"))
                 {
-                    pControl.GroundObject.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, downForce, 0), pControl.CurrentHit.point, ForceMode.Impulse);
+                    pControl.GroundObject.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, downForce * pControl.GroundObject.GetComponent<Rigidbody>().mass, 0), pControl.CurrentHit.point, ForceMode.Impulse);
                 }
 
                 pControl.remainingJumps = pControl.MaxJumps;

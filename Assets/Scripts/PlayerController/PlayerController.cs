@@ -606,7 +606,7 @@ public class PlayerController : NetworkBehaviour
 
             if (currentGround.GetComponent<Rigidbody>() != null && currentGround.layer == LayerMask.NameToLayer("DynamicGround"))
             {
-                currentGround.GetComponent<Rigidbody>().AddForceAtPosition(weight * Vector3.down, hit.point);
+                currentGround.GetComponent<Rigidbody>().AddForceAtPosition((weight * currentGround.GetComponent<Rigidbody>().mass) * Vector3.down, hit.point);
             }
 
             return hit;
