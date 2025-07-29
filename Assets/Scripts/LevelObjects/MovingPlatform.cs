@@ -13,7 +13,9 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float pointStallTime = 0.1f;
     [SerializeField] private float endPointStallTime = 1;
-    
+
+    public bool isActive = true;
+    private bool reachedDestiation = false;
     public enum EaseType { None, InQuad, InQuart, InOutSine, OutQuad }
     [SerializeField] public EaseType easeType = EaseType.InQuad;
 
@@ -32,7 +34,7 @@ public class MovingPlatform : MonoBehaviour
     public static float InOutSine(float t) => (float)(Mathf.Cos(t * Mathf.PI) - 1) / -2;
     public static float OutQuad(float t) => 1 - InQuad(1 - t);
 
-    public enum PlatformType { boomerang, continuous }
+    public enum PlatformType { boomerang, continuous, oneWay }
     [SerializeField] public PlatformType platformType;
 
     private void Start()
@@ -40,17 +42,34 @@ public class MovingPlatform : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         SetNextPosition();
 
+        //update the position of the object
+        transform.position = points[0].position;
+
     }
 
     private void FixedUpdate()
     {
-        //update the position of the object
-        transform.position = currentPos;
+        if (isActive && !reachedDestiation)
+        {
+            MovePlatform();
+        }
+    }
 
+    public void ActivatePlatform()
+    {
+        if (!isActive)
+        {
+            isActive = true;
+        }
+      
+    }
+
+    private void MovePlatform()
+    {
         //if not stalling update the time value
         if (!stall)
         {
-            t += Time.fixedDeltaTime*moveSpeed;
+            t += Time.fixedDeltaTime * moveSpeed;
         }
         else //otherwise count down until the stall ends
         {
@@ -86,7 +105,7 @@ public class MovingPlatform : MonoBehaviour
                 easedTime = OutQuad(percent);
                 break;
         }
-        
+
         //lerp the position using the eased percent time
         currentPos = Vector3.Lerp(startPos, nextPos, easedTime);
 
@@ -95,6 +114,9 @@ public class MovingPlatform : MonoBehaviour
         {
             SetNextPosition();
         }
+
+        //update the position of the object
+        transform.position = currentPos;
     }
 
     private void SetNextPosition()
@@ -146,6 +168,20 @@ public class MovingPlatform : MonoBehaviour
                     stallTime = pointStallTime;
                     stall = true;
                    
+                }
+                break;
+            case PlatformType.oneWay:
+                if (pointIndex + (1 * dir) > points.Length - 1)
+                {
+                    reachedDestiation = true;
+                }
+                else
+                {
+                    pointIndex += 1 * dir;
+
+                    //start stalling
+                    stallTime = pointStallTime;
+                    stall = true;
                 }
                 break;
         }
