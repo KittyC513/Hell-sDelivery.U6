@@ -15,6 +15,7 @@ public class BombMovement : MonoBehaviour
     public float radius;
     public Collider[] colliders_e;
     public Collider[] colliders_p;
+    private Collider[] colliders_o;
     public float explosionForce_e;
     public float explosionUpForce_e;
 
@@ -46,6 +47,7 @@ public class BombMovement : MonoBehaviour
     void Start()
     {
         startPoint = this.transform.position;
+        colliders_o = new Collider[5];
         //print("Bomb Pos" + this.transform.position);
 
         //if(playerLockOn.lockTarget != null)
@@ -178,6 +180,19 @@ public class BombMovement : MonoBehaviour
         //Detect the explosion area, it's a sphere detector, set LayerMask that to be affected
         colliders_e = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable") | 1 << LayerMask.NameToLayer("Enemy"));
         colliders_p = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2") | 1 << LayerMask.NameToLayer("Invisible_Player1") | 1 << LayerMask.NameToLayer("Invisible_Player2"));
+        
+        int o = Physics.OverlapSphereNonAlloc(this.transform.position, radius, colliders_o, 1 << LayerMask.NameToLayer("Explodable"));
+        
+        if (o > 0)
+        {
+            for (int i = 0; i < o; i++)
+            {
+                if (colliders_o[i].CompareTag("Switch"))
+                {
+                    colliders_o[i].GetComponent<BombSwitch>().TriggerSwitch();
+                }
+            }
+        }
 
         Debug.Log(colliders_e.Length + "_enemy/enemies in the explosion range");
         Debug.Log(colliders_p.Length + "player/players in the explosion range");
@@ -240,13 +255,24 @@ public class BombMovement : MonoBehaviour
     {
         //Ground check method
 
-        if (Physics.Raycast(this.transform.position, Vector3.down, groundCheckDist, 1 << LayerMask.NameToLayer("Ground")))
+        if (Physics.Raycast(this.transform.position, Vector3.down, out RaycastHit hit, groundCheckDist, 1 << LayerMask.NameToLayer("Ground")))
         {
             Debug.Log("Bomb is grounded");
+            StickToSurface(hit.transform);
+            
+
             return true;
         }
         return false;
 
+    }
+
+    private void StickToSurface(Transform obj)
+    {
+        if (this.transform.parent != obj)
+        {
+            this.transform.parent = obj.transform;
+        }
     }
     #endregion
 
