@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager
 {
@@ -36,8 +38,16 @@ public class GameManager
     public Health health_p1;
     public Health health_p2;
 
+    [Header("PointerControl")]
+    public UIPointerControl uiPointerControl_p1;
+    public UIPointerControl uiPointerControl_p2;
+    public bool pointerIsReady = false;
+
+
+
     [Header("Scene Info")]
     public bool isSceneChanged = false;
+
 
 
 
@@ -147,6 +157,28 @@ public class GameManager
 
 
     }
+    #endregion
+
+    #region Pointer Control
+    public void AssignPointerToPlayer()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            uiPointerControl_p1.targetPlayer = player2.transform;
+            Sprite sprPointer = Resources.Load<Sprite>("Art/UI/Indicator/Indicator_P2");
+            uiPointerControl_p1.playerPointer.GetComponent<Image>().sprite = sprPointer;
+
+
+            uiPointerControl_p2.targetPlayer = player1.transform;       
+            sprPointer = Resources.Load<Sprite>("Art/UI/Indicator/Indicator_P1");
+            uiPointerControl_p2.playerPointer.GetComponent <Image>().sprite = sprPointer;
+
+            pointerIsReady = true;
+
+            Debug.Log("pointerIsReady" + pointerIsReady);
+        }
+    }
+
     #endregion
 
 }

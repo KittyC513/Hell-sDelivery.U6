@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
 
 public enum E_InputDeviceType 
 {
@@ -63,6 +64,9 @@ public class PlayerInputDetection : NetworkBehaviour
     [Header("Device Check")]
     public bool isCheckedDevice;
     public E_InputDeviceType inputDeviceType;
+
+    [Header("PointerControl")]
+    public UIPointerControl uiPointerControl;
 
     private void Awake()
     {
@@ -381,7 +385,9 @@ public class PlayerInputDetection : NetworkBehaviour
         }
 
         interactPressed = InputActionButtonExtensions.GetButtonDown(interactAction);
-      
+
+        if(GameManager.instance.pointerIsReady)
+            uiPointerControl.DisplayPlayerPointer(cam);
     }
 
 

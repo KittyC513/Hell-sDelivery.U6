@@ -45,6 +45,12 @@ public class PlayerManager : MonoBehaviour
         playerInputManager.onPlayerJoined -= AddPlayer;
     }
 
+    public void Update()
+    {
+        if(players.Count == 2)
+            GameManager.instance.AssignPointerToPlayer();
+    }
+
     public void AddPlayer(PlayerInput player)
     {
         players.Add(player);
@@ -93,6 +99,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.InputDetection_p1 = players[0].GetComponent<PlayerInputDetection>();
                 GameManager.instance.itemControl_p1 = players[0].GetComponent<PlayerItemControl>();
                 GameManager.instance.bag_p1 = players[0].GetComponent<Bag>();
+                GameManager.instance.uiPointerControl_p1 = players[0].GetComponent<UIPointerControl>();
             }
           
 
@@ -114,7 +121,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.InputDetection_p2 = players[1].GetComponent<PlayerInputDetection>();
                 GameManager.instance.itemControl_p2 = players[1].GetComponent<PlayerItemControl>();
                 GameManager.instance.bag_p2 = players[1].GetComponent<Bag>();
-
+                GameManager.instance.uiPointerControl_p2 = players[1].GetComponent<UIPointerControl>();
             }
           
 
