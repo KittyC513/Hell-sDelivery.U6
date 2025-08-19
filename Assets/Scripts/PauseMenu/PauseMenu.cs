@@ -73,6 +73,12 @@ public class PauseMenu : MonoBehaviour
         playerSettings.SetSensitivity(playerInput.playerNum, (slider.value / slider.maxValue) * 300);
     }
 
+    public void OnInvertCameraToggle(Toggle toggle)
+    {
+        playerSettings.SetCameraInvert(playerInput.playerNum, toggle.isOn);
+    }
+
+
 
     private void OpenPauseMenu()
     {

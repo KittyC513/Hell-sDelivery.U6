@@ -7,6 +7,9 @@ public class GameData
     public int p1CoinCount;
     public int p2CoinCount;
 
+    public bool p1Invert;
+    public bool p2Invert;
+
     public float p1Sens;
     public float p2Sens;
 
@@ -21,5 +24,7 @@ public class GameData
         this.p2CoinCount = 0;
         this.p1Sens = 160;
         this.p2Sens = 160;
+        this.p1Invert = false;
+        this.p2Invert = false;
     }
 }
