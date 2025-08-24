@@ -353,12 +353,12 @@ public class PlayerInputDetection : NetworkBehaviour
         {
             if (Keyboard.current.anyKey.wasPressedThisFrame)
             {
+                
                 inputDeviceType = E_InputDeviceType.keyboard;         
                 //Cursor.visible = false;
-
                 isCheckedDevice = true;
             }
-            else if (Gamepad.current != null && Gamepad.current.aButton.wasPressedThisFrame)
+            else if (Gamepad.current.aButton.wasPressedThisFrame)
             {
                 inputDeviceType = E_InputDeviceType.Gamepad;
                 //Cursor.lockState = CursorLockMode.Locked;
