@@ -232,6 +232,7 @@ public class Bag : MonoBehaviour
         Physics.IgnoreCollision(this.GetComponent<Collider>(), item.GetComponent<Collider>(), false);
         item.GetComponent<Collider>().isTrigger = false;
         activeItem = null;
+        item.isOnUse = false;
     }
 
     private void OnEquipItem(GameObject obj)
