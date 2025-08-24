@@ -120,7 +120,7 @@ public class Bag : MonoBehaviour
                     bag[0].transform.position = bagPoint.position;
                 }
 
-                if (inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right && swapTimer >= swapCooldown)
+                if ((inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right) && swapTimer >= swapCooldown)
                 {
                     //if the only item we have is in use then swap it to the back and leave the player empty handed
                     if (bag[0].isOnUse)
@@ -158,7 +158,7 @@ public class Bag : MonoBehaviour
             case 2:
                 if(activeItemBase == bag[0])
                 {
-                    if (inputDetection.swapItemPressed_left && swapTimer >= swapCooldown)
+                    if ((inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right) && swapTimer >= swapCooldown)
                     {
                         activeItemBase.OnItemSwap();
 
@@ -181,7 +181,7 @@ public class Bag : MonoBehaviour
 
                 if (activeItemBase == bag[1])
                 {
-                    if (inputDetection.swapItemPressed_left && swapTimer >= swapCooldown)
+                    if ((inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right) && swapTimer >= swapCooldown)
                     {
                         activeItemBase.OnItemSwap();
 
@@ -278,7 +278,7 @@ public class Bag : MonoBehaviour
 
         //9. update the swap timer
         // If the swap button is not pressed, start the timer
-        if (!inputDetection.swapItemPressed_left)
+        if (!inputDetection.swapItemPressed_left && !inputDetection.swapItemPressed_right)
         {
             if (swapTimer < swapCooldown)
             {
