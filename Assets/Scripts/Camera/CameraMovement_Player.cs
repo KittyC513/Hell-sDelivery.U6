@@ -89,11 +89,13 @@ public class CameraMovement_Player : NetworkBehaviour
         mYawRotateAxis = upAxis;
         mPitchRotateAxis = Vector3.Cross(upAxis, Vector3.ProjectOnPlane(transform.forward, upAxis));
         
+        //reference the player settings script
         playerSettings = PlayerSettings.instance;
 
         if(playerSettings != null)
         {
             playerSettings.onSettingsChange += UpdateSensitivity;
+            UpdateSensitivity();
         }
 
 
@@ -142,6 +144,8 @@ public class CameraMovement_Player : NetworkBehaviour
                 {
                     rotateSpeed = playerSettings.p1Sensitivity;
                 }
+
+                invertPitch = playerSettings.p1InvertCam;
             }
             else
             {
@@ -149,8 +153,9 @@ public class CameraMovement_Player : NetworkBehaviour
                 {
                     rotateSpeed = playerSettings.p2Sensitivity;
                 }
-            }
 
+                invertPitch = playerSettings.p2InvertCam;
+            }
         }
     }
 
