@@ -56,6 +56,7 @@ public class PlayerInputDetection : NetworkBehaviour
 
     [SerializeField] private float dropActiveItemTime = 0.3f;
     public float currentTime = 0;
+    public float grabCurrentTime = 0;
 
     public int playerNum = 1;
 
@@ -280,6 +281,7 @@ public class PlayerInputDetection : NetworkBehaviour
     {
         grabPressed = false;
         currentTime = 0;
+        grabCurrentTime = 0;
     }
 
     private Vector3 GetRelativeInputDirection(Camera camera, Vector2 inputValue)

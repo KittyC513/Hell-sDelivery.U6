@@ -35,6 +35,7 @@ public class ItemBase : MonoBehaviour
     [Space, Header("Throwing Variables")]
     [SerializeField] private float maxButtonHoldTime = 2f;
     [SerializeField] private float buttonHoldForce = 18;
+    [SerializeField] private float throwHoldTimer = 0.2f;
     private float baseThrowForce = 2;
     private float yStartForce = 0.8f;
     private float yEndForce = 0.15f;
@@ -44,6 +45,7 @@ public class ItemBase : MonoBehaviour
     private Vector3 throwDirection = Vector3.zero;
     private float pickupCooldown = 0.45f;
     private float pickupTime;
+    
 
     protected virtual void Awake()
     {
@@ -119,7 +121,8 @@ public class ItemBase : MonoBehaviour
     public virtual void DetectInPickUpRange()
     {
         //2. check if in pickup range
-        colliders = Physics.OverlapSphere(this.transform.position, pickupRadium, 1 << LayerMask.NameToLayer("HitCollider_p1") | 1 << LayerMask.NameToLayer("HitCollider_p2"));
+        colliders = Physics.OverlapSphere(this.transform.position, pickupRadium, 1 << LayerMask.NameToLayer("HitCollider_p1") 
+                                                                               | 1 << LayerMask.NameToLayer("HitCollider_p2"));
 
         switch (colliders.Length)
         {
@@ -238,23 +241,32 @@ public class ItemBase : MonoBehaviour
         {
             if (inputDetection.grabPressed)
             {
-                throwArc = currentBag.gameObject.GetComponent<ThrowArc>();
-
-                //read how long the grab button is pressed for
-                if (buttonHoldTime < maxButtonHoldTime)
+                if(inputDetection.grabCurrentTime >= throwHoldTimer)
                 {
-                    buttonHoldTime += Time.deltaTime;
+                    inputDetection.grabCurrentTime = throwHoldTimer;
+                    throwArc = currentBag.gameObject.GetComponent<ThrowArc>();
+
+                    //read how long the grab button is pressed for
+                    if (buttonHoldTime < maxButtonHoldTime)
+                    {
+                        buttonHoldTime += Time.deltaTime;
+                    }
+
+                    buttonHoldTime = Mathf.Clamp(buttonHoldTime, 0, maxButtonHoldTime);
+
+                    float throwForce = baseThrowForce + ((buttonHoldTime / maxButtonHoldTime) * buttonHoldForce);
+                    Vector3 startArc = new Vector3(currentBag.transform.forward.x, yStartForce, currentBag.transform.forward.z).normalized;
+                    Vector3 endArc = new Vector3(currentBag.transform.forward.x, yEndForce, currentBag.transform.forward.z).normalized;
+                    Vector3 direction = Vector3.Lerp(startArc, endArc, (buttonHoldTime / maxButtonHoldTime));
+                    Vector3 velocity = throwForce * direction;
+                    Debug.Log(velocity);
+                    throwArc.ShowThrowArc(velocity, transform.position, (buttonHoldTime / maxButtonHoldTime), gravity);
+                }
+                else
+                {
+                    inputDetection.grabCurrentTime += Time.deltaTime;
                 }
 
-                buttonHoldTime = Mathf.Clamp(buttonHoldTime, 0, maxButtonHoldTime);
-
-                float throwForce = baseThrowForce + ((buttonHoldTime / maxButtonHoldTime) * buttonHoldForce);
-                Vector3 startArc = new Vector3(currentBag.transform.forward.x, yStartForce, currentBag.transform.forward.z).normalized;
-                Vector3 endArc = new Vector3(currentBag.transform.forward.x, yEndForce, currentBag.transform.forward.z).normalized;
-                Vector3 direction = Vector3.Lerp(startArc, endArc, (buttonHoldTime / maxButtonHoldTime));
-                Vector3 velocity = throwForce * direction;
-                Debug.Log(velocity);
-                throwArc.ShowThrowArc(velocity, transform.position, (buttonHoldTime / maxButtonHoldTime), gravity);
             }
             else
             {

@@ -218,11 +218,7 @@ public class Bag : MonoBehaviour
                 swapTimer = swapCooldown;
             }
 
-        }
-                
-        
-
-        
+        }                              
     }
 
     private void OnRemoveItem(ItemBase item)
