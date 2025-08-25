@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum E_PickupType
+{
+    one,
+    two,
+    three,
+}
 public class ItemBase : MonoBehaviour
 {
     private static ItemBase instance;
@@ -45,6 +51,9 @@ public class ItemBase : MonoBehaviour
     private Vector3 throwDirection = Vector3.zero;
     private float pickupCooldown = 0.45f;
     private float pickupTime;
+
+    public E_PickupType pickupType = E_PickupType.two;
+    public bool autoSwitch = false;
     
 
     protected virtual void Awake()
@@ -183,25 +192,62 @@ public class ItemBase : MonoBehaviour
         //3. press button to pick up
         if(withPickupRange_p1 && GameManager.instance.InputDetection_p1.grabPressed)
         {
-
-            if (GameManager.instance.bag_p1.bag.Count < 2 && GameManager.instance.bag_p1.activeItemBase == null)
+            switch (pickupType)
             {
-                //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
-                isAvaliable = false;
-                GameManager.instance.bag_p1.AddItem(this);
-                
-                playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
-                inputDetection = GameManager.instance.InputDetection_p1;
-                currentBag = GameManager.instance.bag_p1;
-                this.transform.SetParent(GameManager.instance.bag_p1.transform);
+                case E_PickupType.one:
 
-                pickupTime = Time.time;
-                print("Added to p1's bag");
+                    if (GameManager.instance.bag_p1.bag.Count < 2 && GameManager.instance.bag_p1.activeItemBase == null)
+                    {
+                        //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
+                        isAvaliable = false;
+                        GameManager.instance.bag_p1.AddItem(this);
+
+                        playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
+                        inputDetection = GameManager.instance.InputDetection_p1;
+                        currentBag = GameManager.instance.bag_p1;
+                        this.transform.SetParent(GameManager.instance.bag_p1.transform);
+
+                        pickupTime = Time.time;
+                        print("Added to p1's bag");
+                    }
+                    else
+                    {
+                        print("p1 bag is full");
+                    }
+                    break;
+
+                case E_PickupType.two:
+                    
+                    if (GameManager.instance.bag_p1.bag.Count < 2)
+                    {
+                        isAvaliable = false;
+                        GameManager.instance.bag_p1.AddItem(this);
+
+                        playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
+                        inputDetection = GameManager.instance.InputDetection_p1;
+                        currentBag = GameManager.instance.bag_p1;
+                        this.transform.SetParent(GameManager.instance.bag_p1.transform);
+
+                        pickupTime = Time.time;
+                        print("Added to p1's bag");
+
+                        if(GameManager.instance.bag_p1.activeItemBase != null)
+                        {
+                            autoSwitch = true;
+                        }
+                    }
+                    else
+                    {
+                        print("p1 bag is full");
+                    }
+                    break;
+                case E_PickupType.three:
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                print("p1 bag is full");
-            }
+
+            
 
         }
         else if(withPickupRange_p2 && GameManager.instance.InputDetection_p2.grabPressed)

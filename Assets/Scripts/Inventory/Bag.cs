@@ -176,6 +176,28 @@ public class Bag : MonoBehaviour
                         ResetSprings();
                     }
 
+                    #region Auto-switch
+                    if (bag[1].autoSwitch)
+                    {
+                        activeItemBase.OnItemSwap();
+
+                        bag[0].isOnUse = false;
+                        bag[0].GetComponent<Collider>().isTrigger = true;
+
+                        //switch to the second item in the bag
+                        bag[1].isOnUse = true;
+                        bag[1].GetComponent<Collider>().isTrigger = false;
+                        activeItemBase = bag[1];
+                        activeItem = bag[1].gameObject;
+                        activeRB = activeItem.GetComponent<Rigidbody>();
+                        //reset the spring params
+                        ResetSprings();
+                        bag[1].autoSwitch = false;
+                        Debug.Log(bag[1].autoSwitch);
+                    }
+                    #endregion
+
+
                     bag[1].transform.position = bagPoint.position;
                 }
 
@@ -201,6 +223,26 @@ public class Bag : MonoBehaviour
                         ResetSprings();
                     }
 
+                    #region Auto-switch
+                    if (bag[0].autoSwitch)
+                    {
+                        activeItemBase.OnItemSwap();
+
+                        bag[0].isOnUse = false;
+                        bag[0].GetComponent<Collider>().isTrigger = true;
+
+                        //switch to the second item in the bag
+                        bag[1].isOnUse = true;
+                        bag[1].GetComponent<Collider>().isTrigger = false;
+                        activeItemBase = bag[1];
+                        activeItem = bag[1].gameObject;
+                        activeRB = activeItem.GetComponent<Rigidbody>();
+                        //reset the spring params
+                        ResetSprings();
+                        bag[0].autoSwitch = false;
+                        Debug.Log(bag[0].autoSwitch);
+                    }
+                    #endregion
                     bag[0].transform.position = bagPoint.position;
                 }
 
