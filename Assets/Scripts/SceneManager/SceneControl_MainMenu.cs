@@ -5,8 +5,10 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 {
     public GameObject characterSelectPanel;
     public GameObject JoinGamePanel;
+
+    //Character Selected Control
     public GameObject cutscene_characterSelected;
-    public Camera cam_cutscene_characterSelected;
+
     private void Start()
     {
         JoinGamePanel.SetActive(false);
