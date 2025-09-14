@@ -5839,6 +5839,7 @@ MonoBehaviour:
   sceneChanged: 0
   isResetPos: 0
   characterSelectPanel: {fileID: 1059883866}
+  JoinGamePanel: {fileID: 659499588}
 --- !u!1 &584669044
 GameObject:
   m_ObjectHideFlags: 0
@@ -6751,6 +6752,7 @@ GameObject:
   - component: {fileID: 659499589}
   - component: {fileID: 659499591}
   - component: {fileID: 659499590}
+  - component: {fileID: 659499592}
   m_Layer: 5
   m_Name: CharacterJoinPanel
   m_TagString: Untagged
@@ -6817,6 +6819,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 659499588}
   m_CullTransparentMesh: 1
+--- !u!114 &659499592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659499588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: a768ba520a50a5c42a61cc5c2739892c, type: 2}
+    - {fileID: 11400000, guid: ef0dba40e7c672e4d9435318c093cf6a, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 659499590}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 659499590}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!43 &697896781
 Mesh:
   m_ObjectHideFlags: 0
