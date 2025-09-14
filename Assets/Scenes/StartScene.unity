@@ -6753,6 +6753,7 @@ GameObject:
   - component: {fileID: 659499591}
   - component: {fileID: 659499590}
   - component: {fileID: 659499592}
+  - component: {fileID: 659499593}
   m_Layer: 5
   m_Name: CharacterJoinPanel
   m_TagString: Untagged
@@ -6864,6 +6865,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &659499593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659499588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaac9f571c6331544884f5c6dccd31c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text_joinP1: {fileID: 870117894}
+  image_p1: {fileID: 1451293808}
+  text_joinP2: {fileID: 1099855490}
+  image_p2: {fileID: 1771144457}
+  playerManager: {fileID: 1519034990}
+  cutscene_characterSelected: {fileID: 1849997694}
 --- !u!43 &697896781
 Mesh:
   m_ObjectHideFlags: 0
@@ -7039,7 +7058,6 @@ GameObject:
   m_Component:
   - component: {fileID: 705567820}
   - component: {fileID: 705567819}
-  - component: {fileID: 705567818}
   - component: {fileID: 705567817}
   m_Layer: 0
   m_Name: Camera
@@ -7092,14 +7110,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &705567818
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705567816}
-  m_Enabled: 1
 --- !u!20 &705567819
 Camera:
   m_ObjectHideFlags: 0
@@ -12555,6 +12565,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8937f58418c684eb018173b1276ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1519034990 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7444697608796572238, guid: 450f686e0e33b344eb10c153b85d97ff, type: 3}
+  m_PrefabInstance: {fileID: 1986647441}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519034988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc9d11aaf4d425468cfddd197e22fe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1546970112
 GameObject:
   m_ObjectHideFlags: 0
@@ -14661,6 +14682,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+--- !u!1 &1849997694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1849997695}
+  m_Layer: 0
+  m_Name: cutscene_characterSelected
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1849997695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849997694}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.871633, y: 2.4677043, z: 1.6000001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1853982932
 Mesh:
   m_ObjectHideFlags: 0
@@ -18863,3 +18915,4 @@ SceneRoots:
   - {fileID: 331038790}
   - {fileID: 1659737094}
   - {fileID: 141698378}
+  - {fileID: 1849997695}

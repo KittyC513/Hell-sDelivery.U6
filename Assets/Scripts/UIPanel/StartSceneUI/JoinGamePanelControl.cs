@@ -1,0 +1,48 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class JoinGamePanelControl : MonoBehaviour
+{
+    [SerializeField]
+    private Text text_joinP1;
+    [SerializeField]
+    private Image image_p1;
+    [SerializeField]
+    private Text text_joinP2;
+    [SerializeField]
+    private Image image_p2;
+
+    public PlayerManager playerManager;
+    public GameObject cutscene_characterSelected;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        text_joinP1.text = "Join";
+        text_joinP2.text = "Join";
+        cutscene_characterSelected.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        OnPlayerJoined();
+    }
+
+    public void OnPlayerJoined()
+    {
+        if (playerManager.players.Count == 1 && text_joinP1.text != "Ready")
+        {
+            text_joinP1.text = "Ready";
+            image_p1.gameObject.SetActive(false);
+        }
+
+        if (playerManager.players.Count == 2)
+        {
+            text_joinP2.text = "Ready";
+            image_p2.gameObject.SetActive(false);
+            cutscene_characterSelected.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
+    }
+}

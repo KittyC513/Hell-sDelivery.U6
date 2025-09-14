@@ -22,7 +22,7 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 
     IEnumerator ShowJoinGamePanel()
     {
-        yield return new WaitForSeconds(10.2f);
+        yield return new WaitForSeconds(16.7f);
         JoinGamePanel.SetActive(true);
     }
 }
