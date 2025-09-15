@@ -1,5 +1,7 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharacterSelectedControl : MonoBehaviour
@@ -31,6 +33,7 @@ public class CharacterSelectedControl : MonoBehaviour
     {
         OnCharacterSelected();
         TextDemonstrate();
+        OnReady();
     }
 
     public void OnCharacterSelected()
@@ -39,18 +42,15 @@ public class CharacterSelectedControl : MonoBehaviour
         if (Time.time - lastInputTime_p1 < inputCd_p1) return;
         if(GameManager.instance.player1 != null)
         {
-            if (GameManager.instance.player1.GetComponent<PlayerInputDetection>().GetHorizontalMovement().x < -0.5f)
+            PlayerInputDetection playerInput = GameManager.instance.player1.GetComponent<PlayerInputDetection>();
+            if (playerInput.GetHorizontalMovement().x < -0.5f)
             {
                 rightIsSelected_p1 = false;
                 leftIsSelected_p1 = true;
                 lastInputTime_p1 = Time.time;
-                print("Left is selected for Player 1");
-                print("right is selected for Player 2");
-
-
             }
 
-            if (GameManager.instance.player1.GetComponent<PlayerInputDetection>().GetHorizontalMovement().x > 0.5)
+            if (playerInput.GetHorizontalMovement().x > 0.5)
             {
                 rightIsSelected_p1 = true;
                 leftIsSelected_p1 = false;
@@ -63,14 +63,16 @@ public class CharacterSelectedControl : MonoBehaviour
         if (Time.time - lastInputTime_p2 < inputCd_p2) return;
         if(GameManager.instance.player2 != null)
         {
-            if (GameManager.instance.player2.GetComponent<PlayerInputDetection>().GetHorizontalMovement().x < -0.5f)
+            PlayerInputDetection playerInput = GameManager.instance.player2.GetComponent<PlayerInputDetection>();
+
+            if (playerInput.GetHorizontalMovement().x < -0.5f)
             {
                 rightIsSelected_p2 = false;
                 leftIsSelected_p2 = true;
                 lastInputTime_p2 = Time.time;
             }
 
-            if (GameManager.instance.player2.GetComponent<PlayerInputDetection>().GetHorizontalMovement().x > 0.5f)
+            if (playerInput.GetHorizontalMovement().x > 0.5f)
             {
                 leftIsSelected_p2 = false;
                 rightIsSelected_p2 = true;
@@ -92,6 +94,7 @@ public class CharacterSelectedControl : MonoBehaviour
         }
         else if(leftIsSelected_p1 && leftIsSelected_p2)
         {
+            text_leftSelected.color = Color.grey;
             text_leftSelected.text = "P1 & P2";
         }
         else
@@ -115,7 +118,39 @@ public class CharacterSelectedControl : MonoBehaviour
         {
             text_rightSelected.text = "";
         }
-
-
     }
+
+    public void OnReady()
+    {
+        //When players select their respective characters, a 3-second countdown will begin before the game starts
+        if (leftIsSelected_p1 && rightIsSelected_p2 ||
+            rightIsSelected_p1 && leftIsSelected_p2)
+            StartCoroutine(StartGameCountDown());
+
+        if (onReady)
+        {
+            if (leftIsSelected_p1)
+            {
+                GameManager.instance.cam_p1.rect = new Rect(0, 0, 0.5f, 1);
+                GameManager.instance.cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
+            }
+
+            if (leftIsSelected_p2)
+            {
+                EventData.isInverseScreen = true;
+                GameManager.instance.cam_p2.rect = new Rect(0, 0, 0.5f, 1);
+                GameManager.instance.cam_p1.rect = new Rect(0.5f, 0, 0.5f, 1);
+            }
+
+            SceneManager.LoadScene("Alleyway");
+        }
+    }
+
+    IEnumerator StartGameCountDown()
+    {
+        print("Game starts in 3 seconds");
+        yield return new WaitForSeconds(3f);
+        onReady = true;
+    }
+
 }
