@@ -811,8 +811,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4971868892339508933}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.190525, y: 1.52, z: 12.228565}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1196,6 +1196,7 @@ MonoBehaviour:
   jumpBufferTime: 0.2
   dropActiveItemTime: 0.3
   currentTime: 0
+  grabCurrentTime: 0
   playerNum: 1
   health: {fileID: 2846412479338710749}
   isCheckedDevice: 0
@@ -1256,8 +1257,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
-  m_Height: 2
+  m_Radius: 2.5
+  m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2126423918051728224
@@ -1324,8 +1325,8 @@ MonoBehaviour:
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   textStyle: 1
   textStyleColor: {r: 0, g: 0, b: 0, a: 1}
-  m_defaultUseMessage: (tab to interact)
-  useKey: 9
+  m_defaultUseMessage: (E to interact)
+  useKey: 101
   useButton: Fire2
   enableTouch: 0
   touchArea:
