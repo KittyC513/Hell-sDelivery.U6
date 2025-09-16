@@ -17,7 +17,7 @@ public class CharacterSelectedControl : MonoBehaviour
 
     public bool leftIsSelected_p1 = false;
     public bool leftIsSelected_p2 = false;
-    public bool rightIsSelected_p1 = false;
+    public bool rightIsSelected_p1 = false; 
     public bool rightIsSelected_p2 = false;
 
     public bool onReady = false;
@@ -31,9 +31,12 @@ public class CharacterSelectedControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OnCharacterSelected();
-        TextDemonstrate();
-        OnReady();
+        if (GameManager.instance.isOnCharacterSelection)
+        {
+            OnCharacterSelected();
+            TextDemonstrate();
+            OnReady();
+        }
     }
 
     public void OnCharacterSelected()
@@ -126,6 +129,13 @@ public class CharacterSelectedControl : MonoBehaviour
         if (leftIsSelected_p1 && rightIsSelected_p2 ||
             rightIsSelected_p1 && leftIsSelected_p2)
             StartCoroutine(StartGameCountDown());
+        else
+        {
+            onReady = false;
+            StopCoroutine(StartGameCountDown());
+        }
+
+
 
         if (onReady)
         {
@@ -141,7 +151,7 @@ public class CharacterSelectedControl : MonoBehaviour
                 GameManager.instance.cam_p2.rect = new Rect(0, 0, 0.5f, 1);
                 GameManager.instance.cam_p1.rect = new Rect(0.5f, 0, 0.5f, 1);
             }
-
+            GameManager.instance.isOnCharacterSelection = false;
             SceneManager.LoadScene("Alleyway");
         }
     }

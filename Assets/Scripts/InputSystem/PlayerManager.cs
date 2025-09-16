@@ -122,21 +122,8 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.itemControl_p2 = players[1].GetComponent<PlayerItemControl>();
                 GameManager.instance.bag_p2 = players[1].GetComponent<Bag>();
                 GameManager.instance.uiPointerControl_p2 = players[1].GetComponent<UIPointerControl>();
-            }
-          
-
+            }         
             //players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;
-
-            #region Character Selection
-
-            if (gameManager != null)
-            {
-                GameManager.instance.isOnCharacterSelection = true;
-            }
-            
-            #endregion
-
-
         }
     }
 }

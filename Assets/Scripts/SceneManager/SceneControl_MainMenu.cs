@@ -18,18 +18,11 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         cutscene_characterSelected.SetActive(false);
         //cam_cutscene_characterSelected.gameObject.SetActive(false);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        if(GameManager.instance.isOnCharacterSelection)
-        {
-            //characterSelectPanel.SetActive(true);
-        }
-    }
 
     IEnumerator ShowJoinGamePanel()
     {
         yield return new WaitForSeconds(16.7f);
         JoinGamePanel.SetActive(true);
+        GameManager.instance.isOnCharacterSelection = true;
     }
 }
