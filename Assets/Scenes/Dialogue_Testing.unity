@@ -3848,11 +3848,11 @@ MonoBehaviour:
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
   conversation: RV Squatter Intro
-  conversationConversant: {fileID: 0}
-  conversationActor: {fileID: 0}
+  conversationConversant: {fileID: 6784667347201551197, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
+  conversationActor: {fileID: 807386198}
   startConversationEntryID: -1
   startConversationEntryTitle: 
-  overrideDialogueUI: {fileID: 5947601361675808649, guid: 5f946e4c9149d97459f4a8aef22c7092, type: 3}
+  overrideDialogueUI: {fileID: 1136013008}
   exclusive: 0
   replace: 0
   queue: 0
@@ -4575,6 +4575,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086431116}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1136013008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 254486243989984745, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+  m_PrefabInstance: {fileID: 1287089343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1136013010 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1274795048752025601, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+  m_PrefabInstance: {fileID: 1287089343}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136013008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9888f0d13032ad4bb14acdba3472d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1176009968
 GameObject:
   m_ObjectHideFlags: 0
@@ -4834,6 +4850,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 977654970953754097, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1497550532601909757, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
       propertyPath: m_Name
       value: DialogueCenter
@@ -4842,6 +4862,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2399541769199242183, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: dialogueUI
+      value: 
+      objectReference: {fileID: 1136013010}
     - target: {fileID: 2462720893431163595, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4930,25 +4954,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
-      propertyPath: initialDatabase
-      value: 
-      objectReference: {fileID: 11400000, guid: caef9316bad96e5459e2b6a9f6a745d9, type: 2}
+    - target: {fileID: 6049126513176336460, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: _text
+      value: New Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049126513176336460, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049126513176336460, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: defaultAppearancesTags.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
       propertyPath: displaySettings.cameraSettings.cameraAngles
       value: 
       objectReference: {fileID: 258524229}
     - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
-      propertyPath: displaySettings.alertSettings.minAlertSeconds
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
-      propertyPath: displaySettings.subtitleSettings.minSubtitleSeconds
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
-      propertyPath: displaySettings.cameraSettings.alternateCameraObject
-      value: 
+      propertyPath: displaySettings.subtitleSettings.continueButton
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
