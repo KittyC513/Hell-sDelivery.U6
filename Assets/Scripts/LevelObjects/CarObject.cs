@@ -21,7 +21,12 @@ public class CarObject : MonoBehaviour
     [SerializeField] private float maxAccelStep = 55;
     [SerializeField] private bool driving = false;
 
+    private bool grounded = false;
+
+    public Quaternion rbRot;
+
     private Vector3 goalVelocityChange;
+    private Vector3 startRot;
 
     //how do i apply force in 4 spots for each tire???
 
@@ -31,22 +36,34 @@ public class CarObject : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        startRot = transform.rotation.eulerAngles;
     }
 
     private void FixedUpdate()
     {
-        //snap to the ground at each tire position
-        DetectGround(frontLTire.position, targetHeight + 1f, groundMask, frontLTire.GetChild(0).gameObject);
-        DetectGround(frontRTire.position, targetHeight + 1f, groundMask, frontRTire.GetChild(0).gameObject);
-        DetectGround(backLTire.position, targetHeight + 1f, groundMask, backLTire.GetChild(0).gameObject);
-        DetectGround(backRTire.position, targetHeight + 1f, groundMask, backRTire.GetChild(0).gameObject);
+        //check for ground first then snap each tire to position
+        DetectGrounded(transform.position, targetHeight + 1.05f, groundMask);
+
+        if (grounded)
+        {
+            //snap to the ground at each tire position
+            DetectTireGround(frontLTire.position, targetHeight + 1f, groundMask, frontLTire.GetChild(0).gameObject);
+            DetectTireGround(frontRTire.position, targetHeight + 1f, groundMask, frontRTire.GetChild(0).gameObject);
+            DetectTireGround(backLTire.position, targetHeight + 1f, groundMask, backLTire.GetChild(0).gameObject);
+            DetectTireGround(backRTire.position, targetHeight + 1f, groundMask, backRTire.GetChild(0).gameObject);
+        }
+        else
+        {
+            rb.AddForce(Vector3.down * (65 * rb.mass));
+        }
 
         //clamp the velocity to stop the car gaining any massive forces from weird physics interactions
         rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, frequency*4);
 
         //clamp the rotation so that the car won't flip over
-        rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.rotation.x, -maxRotationAngles.x, maxRotationAngles.x), Mathf.Clamp(rb.rotation.y, -maxRotationAngles.y, maxRotationAngles.y),
-        Mathf.Clamp(rb.rotation.z, -maxRotationAngles.z, maxRotationAngles.z));
+        rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.rotation.eulerAngles.x, -maxRotationAngles.x, maxRotationAngles.x), transform.localEulerAngles.y,
+        Mathf.Clamp(rb.rotation.eulerAngles.z, -maxRotationAngles.z, maxRotationAngles.z));
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, startRot.y, transform.rotation.eulerAngles.z);
 
         if (driving)
         {
@@ -61,8 +78,20 @@ public class CarObject : MonoBehaviour
         driving = true;
     }
 
+    private void DetectGrounded(Vector3 startPos, float checkDist, LayerMask groundMask)
+    {
+        if (Physics.Raycast(startPos, Vector3.down, out RaycastHit hit, checkDist + 0.25f, groundMask))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
+    }
 
-    private void DetectGround(Vector3 startPos, float checkDist, LayerMask groundMask, GameObject tireObj)
+
+    private void DetectTireGround(Vector3 startPos, float checkDist, LayerMask groundMask, GameObject tireObj)
     {
         //set the y position a little bit inside the car incase the car recives so much force that the base is on the ground
         Vector3 sPos = new Vector3(startPos.x, startPos.y + 0.25f, startPos.z);
@@ -76,6 +105,7 @@ public class CarObject : MonoBehaviour
         else
         {
             tireObj.transform.position = new Vector3(startPos.x, startPos.y - checkDist, startPos.z);
+
         }
     }
 

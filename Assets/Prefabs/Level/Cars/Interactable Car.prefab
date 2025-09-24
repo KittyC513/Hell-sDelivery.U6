@@ -255,7 +255,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 50
   m_Drag: 5
-  m_AngularDrag: 2
+  m_AngularDrag: 8
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -290,7 +290,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  maxRotationAngles: {x: 40, y: 0, z: 30}
+  maxRotationAngles: {x: 0, y: 0, z: 0}
   frontLTire: {fileID: 1376362720422597364}
   backLTire: {fileID: 7097482957456841153}
   frontRTire: {fileID: 8649215882899745423}
@@ -300,6 +300,7 @@ MonoBehaviour:
   acceleration: 25
   maxAccelStep: 55
   driving: 0
+  rbRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &5612842979550981247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,6 +715,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c0f1652b459cc4288e7818c5233eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frequency: 1
+  amplitude: 1
 --- !u!1 &7706474645318341112
 GameObject:
   m_ObjectHideFlags: 0

@@ -542,7 +542,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 50
   m_Drag: 5
-  m_AngularDrag: 2
+  m_AngularDrag: 8
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -577,16 +577,17 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  maxRotationAngles: {x: 40, y: 0, z: 30}
+  maxRotationAngles: {x: 0, y: 0, z: 0}
   frontLTire: {fileID: 8646832537571390083}
   backLTire: {fileID: 4250110959405708641}
   frontRTire: {fileID: 8732629386342600776}
   backRTire: {fileID: 3796839611876687019}
   tireRadius: 0.5
-  maxDriveSpeed: 18
+  maxDriveSpeed: 50
   acceleration: 25
   maxAccelStep: 55
   driving: 0
+  rbRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7389525039446593543
 GameObject:
   m_ObjectHideFlags: 0
