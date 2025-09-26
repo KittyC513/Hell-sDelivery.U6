@@ -60,9 +60,7 @@ public class CarObject : MonoBehaviour
         //clamp the velocity to stop the car gaining any massive forces from weird physics interactions
         rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, frequency*4);
 
-        //clamp the rotation so that the car won't flip over
-        rb.rotation = Quaternion.Euler(Mathf.Clamp(rb.rotation.eulerAngles.x, -maxRotationAngles.x, maxRotationAngles.x), transform.localEulerAngles.y,
-        Mathf.Clamp(rb.rotation.eulerAngles.z, -maxRotationAngles.z, maxRotationAngles.z));
+        //freeze the cars y rotation
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, startRot.y, transform.rotation.eulerAngles.z);
 
         if (driving)
