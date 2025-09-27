@@ -84,6 +84,13 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private int maxJumps = 2; //maximum jumps including grounded jump
     [HideInInspector] public float remainingJumps; //how many jumps the player currently has 
 
+    [Space, Header("Spin Jump Variables")]
+    [SerializeField] private float spinJumpHeight = 4.25f;
+    [SerializeField] private float spinJumpDecay = 25;
+    [SerializeField] private float maxSpinFallSpeed = 25;
+    [SerializeField] private float spinFallAccel = 25;
+  
+
     [Space, Header("Sliding Variables")]
     [SerializeField] private float maxSlideSpeed = 14; //how fast the player can slide at maximum speed
     [SerializeField] private float slideAccel = 50; //how fast player builds up speed while sliding
@@ -188,6 +195,12 @@ public class PlayerController : NetworkBehaviour
     public float JumpPeakFactor { get { return jumpPeakFactor; }}
     public float JumpPeakRange {  get { return jumpPeakRange; }}
     public float HeadSquishForce { get { return headSquishForce; }}
+
+    //Spin Jump Variables
+    public float SpinJumpHeight { get { return spinJumpHeight; }}
+    public float MaxSpinFallSpeed {  get { return maxSpinFallSpeed; }}
+    public float SpinJumpDecay {  get { return spinJumpDecay; }}
+    public float SpinFallAccel { get { return  spinFallAccel; }}
 
     //Sliding Variables
     public float MaxSlideSpeed {  get { return maxSlideSpeed; }}

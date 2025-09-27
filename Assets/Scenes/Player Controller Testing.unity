@@ -6280,6 +6280,9 @@ MonoBehaviour:
   rbContraints: 0
   maxButtonHoldTime: 2
   buttonHoldForce: 18
+  throwHoldTimer: 0.2
+  pickupType: 1
+  autoSwitch: 0
   pickupRadium: 1
 --- !u!65 &734571102
 BoxCollider:
@@ -23779,6 +23782,7 @@ MonoBehaviour:
   acceleration: 25
   maxAccelStep: 55
   driving: 0
+  rbRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &6687867262733062654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23791,7 +23795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3b097d663c32843b7fef462adeb3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactRange: 4
   interactUI: {fileID: 7096929055188315007}
   OnInteract:
     m_PersistentCalls:
@@ -23800,11 +23803,6 @@ MonoBehaviour:
   maxNumberOfInteracts: 1
   requireItem: 0
   validItemTag: 
-  playerData: []
-  players: []
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &6799158265516607412
 GameObject:
   m_ObjectHideFlags: 0

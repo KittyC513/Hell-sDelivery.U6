@@ -16,6 +16,11 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
 
     private Vector3 goalVelocityChange;
 
+    //spin jumping variables
+    private Vector3 vel;
+    private Vector3 lastFramePos;
+    private Rigidbody rb;
+
     public PlayerAttackState(PlayerStateMachine.PlayerStates key, PlayerController controller, PlayerAttackControl attackController) : base(key)
     {
         pControl = controller;
@@ -35,6 +40,9 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
 
         //reset attack time
         attackTemp = 0;
+
+        if (pControl.RB != null)
+            rb = pControl.RB;
 
         if (pControl.PlayerModel != null)
         {
@@ -81,6 +89,27 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         {
             return PlayerStateMachine.PlayerStates.airborne;
         }
+
+        if (pControl.DetectJumpInput() && pControl.Grounded)
+        {
+            //if the player jumps off a moving platform apply their movement + the platforms movement to the player to add inertia 
+            if (pControl.GroundObject.CompareTag("MovingPlat"))
+            {
+                //if the platform is not moving very much don't add force to the player
+                if (vel.magnitude - rb.linearVelocity.magnitude > 0.9)
+                {
+                    //soften the velocity by removing some of the rigidbody movement
+                    Vector3 softenedVel = vel - (rb.linearVelocity / 3);
+
+                    //clamp the value to avoid some crazy niche scenarios where the velocity is crazy high for a frame
+                    softenedVel = Vector3.ClampMagnitude(softenedVel, 60);
+
+                    rb.AddForce(softenedVel, ForceMode.Impulse);
+                }
+            }
+            return PlayerStateMachine.PlayerStates.spinJump;
+        }
+
         return stateKey;
     }
 
@@ -98,6 +127,31 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
             pControl.PlayerModel.transform.rotation = startRotation * Quaternion.AngleAxis((attackTemp / attackTime) * 360f, Vector3.up);
         }
      
+    }
+
+    private void CalculateObjectVelocity()
+    {
+        //get the position on the current frame
+        Vector3 thisFramePos = pControl.transform.position;
+
+        //calc in here//
+
+        //get the distance between the position last frame and this frame
+        float dist = Vector3.Distance(thisFramePos, lastFramePos);
+
+        //get the direction the player is moving in
+        Vector3 dir = (thisFramePos - lastFramePos).normalized;
+
+        //calcs end//
+
+        //after calculating set the last frame to the current frame so that next calc will use it 
+        lastFramePos = thisFramePos;
+
+        //the players current movement speed, how far they move over a fixed update interval (0.02f)
+        float spd = dist / 0.02f;
+
+        //velocity (a direction with speed value)
+        vel = (dir * spd);
     }
 
     public override void PhysicsUpdate()

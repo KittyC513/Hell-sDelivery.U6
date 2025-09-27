@@ -7,20 +7,24 @@ using UnityEngine.Rendering;
 public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
 {
     //reference to our player controller
-    private PlayerController pControl;
-    
-    private Vector3 goalVelocityChange;
-    private Rigidbody rb;
+    protected PlayerController pControl;
 
-    private float ledgeGrabHorizontalRange;
-    private float ledgeGrabUpwardsRange;
-    private LayerMask ledgeGrabMask;
+    protected Vector3 goalVelocityChange;
+    protected Rigidbody rb;
 
-    private float playerHitboxHeight;
+    protected float ledgeGrabHorizontalRange;
+    protected float ledgeGrabUpwardsRange;
+    protected LayerMask ledgeGrabMask;
 
-    private bool ledgeDetected = false;
+    protected float playerHitboxHeight;
+
+    protected bool ledgeDetected = false;
 
     private float downForce;
+
+    protected float maxFallSpeed;
+    protected float fallAccel;
+    
 
 
 
@@ -32,13 +36,15 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         ledgeGrabMask = pControl.LedgeGrabMask;
     }
 
+
     public override void EnterState()
     {
         ledgeDetected = false;
         rb = pControl.RB;
         playerHitboxHeight = pControl.PlayerHitboxHeight;
         goalVelocityChange = Vector3.zero;
-
+        maxFallSpeed = pControl.MaxFallSpeed;
+        fallAccel = pControl.FallAccel;
         //set animation 
         animName = "Idle";
 
@@ -68,10 +74,10 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         Vector3 xzVel = new Vector3(currentVel.x, 0, currentVel.z);
 
         //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
-        Vector3 targetVelocity = targetDir * (pControl.MaxFallSpeed * pControl.GravityScale);
+        Vector3 targetVelocity = targetDir * (maxFallSpeed * pControl.GravityScale);
        
         //how much we will change our velocity next step with smoothing by vector3.movetowards
-        goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity + xzVel, (pControl.FallAccel * pControl.fallAccelScale) * 0.02f);
+        goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity + xzVel, (fallAccel * pControl.fallAccelScale) * 0.02f);
         
         //the amount of velocity change needed to reach our maximum velocity
         Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;

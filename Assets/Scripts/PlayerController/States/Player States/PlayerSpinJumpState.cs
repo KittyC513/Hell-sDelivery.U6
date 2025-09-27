@@ -1,11 +1,6 @@
-#define placeholder_animation
-#undef placeholder_animation
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
+public class PlayerSpinJumpState : BaseState<PlayerStateMachine.PlayerStates>
 {
     private PlayerController pControl;
     private Rigidbody rb;
@@ -17,8 +12,11 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
     private float jumpDecay;
 
     private float gravityFactor = 1;
+    private bool falling = false;
 
-    public PlayerJumpState(PlayerStateMachine.PlayerStates key, PlayerController playerController) : base(key)
+    private Quaternion startRotation;
+    private Vector3 goalVelocityChange;
+    public PlayerSpinJumpState(PlayerStateMachine.PlayerStates key, PlayerController playerController) : base(key)
     {
         pControl = playerController;
     }
@@ -26,22 +24,30 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void EnterState()
     {
+        //are we still jumping
+        falling = false;
+
         //set our jump height and decay variables up by grabbing from our player controller
-        jumpHeight = pControl.JumpHeight;
-        jumpDecay = pControl.JumpDecayRate;
-        
+        jumpHeight = pControl.SpinJumpHeight;
+        jumpDecay = pControl.SpinJumpDecay;
+
+        if (pControl.PlayerModel != null)
+        {
+            //set the starting rotation to the rotation of the player right as this script starts
+            startRotation = pControl.PlayerModel.transform.localRotation;
+        }
 
         gravityFactor = 1;
 
         //reset the jump time to 0
         jumpTime = 0;
-        
+
         //setup our rigidbody
         if (rb == null) rb = pControl.RB;
 
         //make sure our y velocity does not affect our current jump by setting it to 0
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-        
+
         //calculate how much force we need to reach our desired jump height in unity meters
         float jumpForce = Mathf.Sqrt(jumpHeight * (-jumpDecay) * -2) * rb.mass;
 
@@ -54,7 +60,7 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         //animName = "Player_Jump";
 
         //set placeholder animation to jump
-        animName = "Jump In Place";
+        animName = "Idle";
 
 
     }
@@ -62,6 +68,14 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
     public override void ExitState()
     {
         jumpTime = 0;
+
+        //if we touch the ground make us grounded
+        if (pControl.PlayerModel != null)
+        {
+            //rotate our player 360 degrees over the attack duration
+            pControl.PlayerModel.transform.localRotation = startRotation;
+        }
+
     }
 
     public override PlayerStateMachine.PlayerStates GetNextState()
@@ -69,33 +83,24 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         if (rb.linearVelocity.y <= 0 && jumpTime > 0.1f)
         {
             //if our jump is no longer providing upwards force transition to falling
-            return PlayerStateMachine.PlayerStates.airborne;
+            return PlayerStateMachine.PlayerStates.spinFall;
         }
 
         if (pControl.Grounded && jumpTime > 0.4f)
         {
-            //if we touch the ground make us grounded
+            
+
             return PlayerStateMachine.PlayerStates.grounded;
-        }
-
-        if (pControl.remainingJumps > 0 && pControl.DetectJumpInput() && jumpTime > 0.6f)
-        {
-            return PlayerStateMachine.PlayerStates.doubleJump;
-        }
-
-        //TEMPORARY
-        if (pControl.DetectAttackInput() && pControl.CheckCanAttack() && jumpTime > 0.1f)
-        {
-            return PlayerStateMachine.PlayerStates.attack;
         }
 
         if (pControl.Grounded)
         {
             //a player is detected as ground below this player
-            if(pControl.GroundObject != null)
+            if (pControl.GroundObject != null)
             {
                 if (pControl.GroundObject.CompareTag("Player"))
                 {
+
                     pControl.GroundObject.GetComponent<Rigidbody>().AddForce(pControl.HeadSquishForce * Vector3.down, ForceMode.Impulse);
                     return PlayerStateMachine.PlayerStates.headBounce;
                 }
@@ -111,6 +116,9 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         jumpTime += Time.deltaTime;
 
         ChangeGravity(pControl.JumpReleaseFactor, pControl.JumpPeakFactor);
+
+        //pControl.PlayerModel.transform.rotation = startRotation * Quaternion.AngleAxis((Time.deltaTime / 0.15f) * 360f, Vector3.up);
+        pControl.PlayerModel.transform.Rotate(Vector3.up, Time.deltaTime * 1500);
     }
 
     private void ChangeGravity(float releaseFactor, float peakFactor)
@@ -135,8 +143,11 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void PhysicsUpdate()
     {
+
         //decay our upwards velocity by our decay rate, a faster decay rate means a faster jump upwards
         rb.AddForce((-jumpDecay * gravityFactor) * Vector3.up);
+        
+       
     }
 
 }
