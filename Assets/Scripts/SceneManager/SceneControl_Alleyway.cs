@@ -10,6 +10,7 @@ public class SceneControl_Alleyway : SceneControlBase<SceneControl_Alleyway>
     void Start()
     {
         EventData.curSceneName = "Alleyway";
+        GameManager.instance.FreezeBothPlayers();
     }
 
     // Update is called once per frame
@@ -34,6 +35,11 @@ public class SceneControl_Alleyway : SceneControlBase<SceneControl_Alleyway>
             GameManager.instance.player2.transform.position = enterPoints[1].position;
             isResetPos = true;
         }
+    }
 
+    public void UnfreezePlayers()
+    {
+        GameManager.instance.UnFreezeBothPlayers();
+        Camera.main.gameObject.SetActive(false);
     }
 }

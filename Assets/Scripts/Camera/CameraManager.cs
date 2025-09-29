@@ -86,6 +86,7 @@ public class CameraManager : MonoBehaviour
         lockCam.gameObject.SetActive(false);
         playerCam.gameObject.SetActive(true);
         inputDetection.cam = playerCam;
+        print("Switch to player cam");
     }
 
     public void SwitchToLockCam()
@@ -100,6 +101,7 @@ public class CameraManager : MonoBehaviour
         {
             mainCam = Camera.main;
             GameManager.Instance.isSceneChanged = false;
+            print("Main cam assigned");
         }
 
         playerCam.gameObject.SetActive(false);
@@ -154,7 +156,8 @@ public class CameraManager : MonoBehaviour
 
     public void DetectScene()
     {
-        if(EventData.curSceneName ==  "Alleyway" || EventData.curSceneName == "PostOffice" || EventData.curSceneName == "StartScene" || EventData.craneIsActivated)
+
+        if (EventData.curSceneName == "PostOffice" || EventData.curSceneName == "StartScene" || EventData.craneIsActivated)
         {
             currentCamType = E_CamType.mainCam;
         }
