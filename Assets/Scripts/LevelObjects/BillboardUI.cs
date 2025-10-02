@@ -14,6 +14,8 @@ public class BillboardUI : MonoBehaviour
     [SerializeField] private bool player1Active = false;
     [SerializeField] private bool player2Active = false;
 
+    [SerializeField] private bool globalIcons = false;
+
     [SerializeField] private float yOffset = 0.5f;
 
     [SerializeField] private bool applySine = true;
@@ -30,7 +32,9 @@ public class BillboardUI : MonoBehaviour
     private void Start()
     {
         
-
+        //change this to grab an instance from the active player to get their current camera
+        //rather than the player camera so that it can be used with different camera types such as
+        //the minigame camera
         p1Cam = GameManager.instance.cam_p1;
         p2Cam = GameManager.instance.cam_p2;
         images = new List<GameObject>();
@@ -40,8 +44,18 @@ public class BillboardUI : MonoBehaviour
 
         //0 = player 1
         //1 = player 2
-        images[0].layer = LayerMask.NameToLayer("UI_P2Ignore");
-        images[1].layer = LayerMask.NameToLayer("UI_P1Ignore");
+
+        if (!globalIcons)
+        {
+            images[0].layer = LayerMask.NameToLayer("UI_P2Ignore");
+            images[1].layer = LayerMask.NameToLayer("UI_P1Ignore");
+        }
+        else
+        {
+            images[0].GetComponentInChildren<Image>().color = Color.red;
+            images[1].GetComponentInChildren<Image>().color = Color.blue;
+        }
+
     }
 
     public void ShowIconToPlayer(bool show, int player)
@@ -97,6 +111,8 @@ public class BillboardUI : MonoBehaviour
         {
             images[1].SetActive(false);
         }
+        
+     
     }
 
     private void BillboardToCamera(Camera cam, GameObject img)
