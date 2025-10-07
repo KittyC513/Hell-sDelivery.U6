@@ -152,7 +152,8 @@ public class CharacterSelectedControl : MonoBehaviour
                 GameManager.instance.cam_p1.rect = new Rect(0.5f, 0, 0.5f, 1);
             }
             GameManager.instance.isOnCharacterSelection = false;
-            SceneManager.LoadScene("Alleyway_tutorial_testing");
+            //SceneManager.LoadScene("Alleyway_tutorial_testing");
+            SceneManager.LoadScene("Dialogue_Testing");
         }
     }
 

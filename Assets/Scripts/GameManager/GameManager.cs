@@ -157,6 +157,19 @@ public class GameManager
 
 
     }
+
+    public void DisableBothPlayersCam()
+    {
+        cam_p1.enabled = false;
+        cam_p2.enabled = false;
+    }
+
+    public void EnableBothPlayersCam()
+    {
+        cam_p1.enabled = true;
+        cam_p2.enabled = true;
+    }
+
     #endregion
 
     #region Pointer Control
