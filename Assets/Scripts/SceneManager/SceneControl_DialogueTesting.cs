@@ -3,6 +3,7 @@ using UnityEngine;
 public class SceneControl_DialogueTesting : SceneControlBase<SceneControl_PostOffice>
 {
     public Transform[] enterPoints;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

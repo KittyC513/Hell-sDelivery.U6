@@ -38,7 +38,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool swapItemPressed_left;
     [HideInInspector] public bool swapItemPressed_right;
     [HideInInspector] public bool interactPressed;
-    private Vector2 horizontalInputValue;
+    [HideInInspector] public Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction pauseMoveAction;
@@ -188,6 +188,7 @@ public class PlayerInputDetection : NetworkBehaviour
     {
         return GetRelativeInputDirection(cam, horizontalInputValue = moveAction.ReadValue<Vector2>());
     }
+
 
     public Vector2 GetCameraMovement()
     {

@@ -25,6 +25,7 @@ public class EnterCrane : MonoBehaviour
             if(other.gameObject.layer == LayerMask.NameToLayer("Player1") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
             {
                 p1EnterCrane = true;
+                print("Player 1 Enter Crane");
             }
             else if (other.gameObject.layer == LayerMask.NameToLayer("Player2") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
             {
