@@ -11,6 +11,9 @@ public class CarjackMinigameManager : MonoBehaviour
 
     [SerializeField] private Transform startPos;
 
+    [SerializeField] public CarUnlockSlider p1Slider;
+    [SerializeField] public CarUnlockSlider p2Slider;
+
     private void Start()
     {
         //spawn cars across the x
