@@ -14017,6 +14017,26 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1646855185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6438556591919390988, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+  m_PrefabInstance: {fileID: 1792959331}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1646855191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646855185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f19c58ea7c708fa40b4601341abbdf2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueUI: {fileID: 1792125921}
+  textAnimatorPlayer: {fileID: 1713658078}
+  hideContinueButtonOnContinue: 1
 --- !u!1 &1658062097
 GameObject:
   m_ObjectHideFlags: 0
@@ -14467,6 +14487,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1713658078 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 977654970953754097, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+  m_PrefabInstance: {fileID: 1792959331}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a6945b90dcd0c4b81619c0d8b5c283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1732107279
 GameObject:
   m_ObjectHideFlags: 0
@@ -15970,6 +16001,17 @@ Transform:
   - {fileID: 466300430}
   m_Father: {fileID: 1292889925}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1792125921 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1274795048752025601, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+  m_PrefabInstance: {fileID: 1792959331}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9888f0d13032ad4bb14acdba3472d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1792959331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15978,6 +16020,19 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 53012895037651330, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1646855191}
+    - target: {fileID: 53012895037651330, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnFastForward
+      objectReference: {fileID: 0}
+    - target: {fileID: 53012895037651330, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PixelCrushers.DialogueSystem.TextAnimatorContinueButtonFastForward,
+        Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
     - target: {fileID: 235372873777615794, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -16087,17 +16142,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6049126513176336460, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: _text
+      value: New Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049126513176336460, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049126513176336460, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: defaultAppearancesTags.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
       propertyPath: displaySettings.subtitleSettings.continueButton
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2399541769199242183, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6438556591919390988, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1646855191}
   m_SourcePrefab: {fileID: 100100000, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
 --- !u!1 &1849997694
 GameObject:
