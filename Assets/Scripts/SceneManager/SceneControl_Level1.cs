@@ -11,12 +11,15 @@ public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
     public Transform crane;
     private PlayerInputDetection playerInput;
 
-    public float rotationSpeed = 30;
+    [Header("Crane Surface Movement Variables")]
+    //public float rotationSpeed = 30;
+    public float moveSpeed = 2;
 
     [Header("Testing Scene")]
     public GameObject playerObj;
     public PlayerStateMachine playerStateMachine;
     public PlayerInputDetection playerInputDetection;
+    public float inputXValue;
     public GameObject craneMagneticSurface;
     public float surfaceSizeY;
     public Vector3 surfaceSize;
@@ -81,13 +84,17 @@ public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
             //playerInput = GameManager.instance.player1.GetComponent<PlayerInputDetection>();
 
             // Calculate rotation based on horizontal input
-            float inputX = playerInputDetection.GetHorizontalMovement().x;
-            float inputY = playerInputDetection.horizontalInputValue.y;
-            print(inputY);
-            crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
-            if(Mathf.Abs(inputY) >= 0.2)
+            inputXValue = playerInputDetection.GetHorizontalMovement().x;
+            //float inputY = playerInputDetection.horizontalInputValue.y;
+            //print(inputY);
+            //crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
+            if(Mathf.Abs(inputXValue) >= 0.02)
             {
-                craneMagneticSurface.transform.Translate(Vector3.right * inputY * rotationSpeed * Time.deltaTime);
+                Transform surfacePos = craneMagneticSurface.transform;
+                Vector3 afterPos = surfacePos.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
+
+                surfacePos.position = afterPos;
+
             }
 
 
@@ -115,7 +122,7 @@ public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
             playerInput = GameManager.instance.player2.GetComponent<PlayerInputDetection>();
             // Calculate rotation based on horizontal input
             float inputX = playerInput.GetHorizontalMovement().x;
-            crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
+            //crane.Rotate(Vector3.up, inputX * rotationSpeed * Time.deltaTime);
             if (playerInput.attackPressed)
             {
                 enterCrane.p2EnterCrane = false;
@@ -137,12 +144,18 @@ public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
                                         1 << LayerMask.NameToLayer("Magnetic"), QueryTriggerInteraction.UseGlobal);
         print("Colliders Length: " + colliders.Length);
 
-        if(colliders.Length > 0 )
+        //apply the force to the first object detected within the magnetic surface area
+        if (colliders.Length > 0 )
         {
-            colliders[0].gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * magneticForce, ForceMode.Impulse);
-            print(colliders[0].name + "is moving up");
-            Transform magObjPos = colliders[0].transform;
-            magObjPos.Translate(playerInputDetection.GetHorizontalMovement());
+            //colliders[0].gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * magneticForce, ForceMode.Impulse);
+            //print(colliders[0].name + "is moving up");
+            //Transform magObjPos = colliders[0].transform;
+            //magObjPos.Translate(playerInputDetection.GetHorizontalMovement());
+            Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
+            rigi_mo.linearVelocity = Vector3.up * magneticForce;
+            Transform magneticObj = colliders[0].transform;
+            Vector3 afterPos = magneticObj.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
+            magneticObj.position = afterPos;
         }
 
 

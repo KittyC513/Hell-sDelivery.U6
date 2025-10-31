@@ -38,7 +38,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool swapItemPressed_left;
     [HideInInspector] public bool swapItemPressed_right;
     [HideInInspector] public bool interactPressed;
-    [HideInInspector] public Vector2 horizontalInputValue;
+    public Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction pauseMoveAction;
@@ -290,7 +290,7 @@ public class PlayerInputDetection : NetworkBehaviour
         if (camera != null)
         {
             //get camera forward and right
-            Vector3 camForward = camera.transform.forward;
+            Vector3 camForward = camera.transform.up;
             Vector3 camRight = camera.transform.right;
 
             camForward.y = 0;
@@ -301,10 +301,13 @@ public class PlayerInputDetection : NetworkBehaviour
 
             //get our stick input
             Vector3 stickInput = inputValue;
+            print("stickInput: " + stickInput);
             stickInput = stickInput.normalized;
             //multiply our stick value by our cam right and forward to get a camera relative input
             Vector3 horizontal = stickInput.x * camRight;
+            print("camRight: " + camRight);
             Vector3 vertical = stickInput.y * camForward;
+            print("camForward: " + camForward);
 
             Vector3 input = horizontal + vertical;
             input = input.normalized;

@@ -26,7 +26,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
     [SerializeField] private float rotationSpeed = 500; //how fast the player rotates
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
-    private Vector3 leftStickDir;
+    [SerializeField] private Vector3 leftStickDir;
     [SerializeField] private float weight = 10;
 
     private Vector3 lastFramePos;
@@ -375,6 +375,8 @@ public class PlayerController : NetworkBehaviour
             }
 
             CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
+
+            print("leftStickDir: " + leftStickDir);
         }
     }
 
@@ -433,7 +435,11 @@ public class PlayerController : NetworkBehaviour
             quickTurnCurve = runningQuickTurnMultiplier;
         }
 
-        //this is the speed we are trying to reach / our maximum speed with a direction provided by a camera dependant input
+        //this is the speed we are trying to reach / our maximum speed with a direction provided by a
+        //
+        //
+        //
+        //era dependant input
         Vector3 targetVelocity = (targetDir * (targetSpeed));
 
         //our current desired velocity direction
