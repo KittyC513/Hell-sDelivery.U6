@@ -290,8 +290,12 @@ public class PlayerInputDetection : NetworkBehaviour
         if (camera != null)
         {
             //get camera forward and right
-            Vector3 camForward = camera.transform.up;
+            Vector3 camForward = camera.transform.forward;
             Vector3 camRight = camera.transform.right;
+
+            //make sure y is 0 to prevent moving up and down
+            if (camera == Camera.main)
+                camForward = camera.transform.up;
 
             camForward.y = 0;
             camRight.y = 0;

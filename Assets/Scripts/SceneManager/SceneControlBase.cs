@@ -16,7 +16,7 @@ public class SceneControlBase<T> : MonoBehaviour where T: class
 
     private void Start()
     {
-        GameManager.instance.isSceneChanged = true;
+        EventData.isSceneChanged = true;
         isResetPos = false;
     }
 

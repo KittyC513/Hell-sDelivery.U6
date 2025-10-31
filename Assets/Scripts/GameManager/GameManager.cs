@@ -44,9 +44,6 @@ public class GameManager
     public bool pointerIsReady = false;
 
 
-    [Header("Scene Info")]
-    public bool isSceneChanged = false;
-
     [Header("Crane")]
     public GameObject craneObject;
 

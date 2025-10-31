@@ -97,10 +97,10 @@ public class CameraManager : MonoBehaviour
     }
     public void SwitchToMainCam()
     {
-        if(mainCam == null || GameManager.Instance.isSceneChanged)
+        if(mainCam == null || EventData.isSceneChanged)
         {
             mainCam = Camera.main;
-            GameManager.Instance.isSceneChanged = false;
+            EventData.isSceneChanged = false;
             print("Main cam assigned");
         }
 
