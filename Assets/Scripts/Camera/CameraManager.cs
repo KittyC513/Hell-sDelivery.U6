@@ -108,19 +108,22 @@ public class CameraManager : MonoBehaviour
         lockCam.gameObject.SetActive(false);
         inputDetection.cam = mainCam;
 
-        //Assign pos on main camera for player1 and player2
-        if(EventData.curSceneName != "Level1")
-        {
-            if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1") || inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
-            {
-                mainCam.GetComponent<CameraMovement_Scene>().p1Pos = inputDetection.transform;
-            }
+        ////Assign pos on main 
+        ///era for player1 and player2
+        //if(EventData.curSceneName != "Level1")
+        //{
+        //    if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1") || 
+        //        inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
+        //    {
+        //        mainCam.GetComponent<CameraMovement_Scene>().p1Pos = inputDetection.transform;
+        //    }
 
-            if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2") || inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
-            {
-                mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
-            }
-        }
+        //    if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2") || 
+        //        inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
+        //    {
+        //        mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
+        //    }
+        //}
     }
 
     #region Alleyway Scene Cam
@@ -138,13 +141,15 @@ public class CameraManager : MonoBehaviour
     //if it's player1, don't render p2UI, and vice verse
     void AddCullingMaskOnPlayers()
     {
-        if(inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1") || inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
+        if(inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1") || 
+            inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
         {
             playerCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P1Ignore"));
             lockCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P1Ignore"));
         }
 
-        if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2") || inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
+        if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2") || 
+            inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
         {
             playerCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P2Ignore"));
             lockCam.cullingMask &= ~(1 << LayerMask.NameToLayer("UI_P2Ignore"));
@@ -157,7 +162,11 @@ public class CameraManager : MonoBehaviour
     public void DetectScene()
     {
 
-        if (EventData.curSceneName == "PostOffice" || EventData.curSceneName == "StartScene" || EventData.craneIsActivated)
+        if (EventData.curSceneName == "PostOffice" || 
+            EventData.curSceneName == "StartScene" || 
+            EventData.curSceneName == "minigame" ||
+            EventData.curSceneName == "StartTesting" ||
+            EventData.craneIsActivated)
         {
             currentCamType = E_CamType.mainCam;
         }

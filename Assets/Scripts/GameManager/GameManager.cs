@@ -196,4 +196,19 @@ public class GameManager
 
     #endregion
 
+    #region Player 
+
+    public void ResetPlayersPosition(Transform p1SpawnPoint, Transform p2SpawnPoint)
+    {
+        if (player1 != null)
+        {
+            player1.transform.position = p1SpawnPoint.position;
+        }
+        if (player2 != null)
+        {
+            player2.transform.position = p2SpawnPoint.position;
+        }
+    }
+    #endregion
+
 }

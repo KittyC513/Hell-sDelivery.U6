@@ -153,7 +153,7 @@ public class CharacterSelectedControl : MonoBehaviour
             }
             GameManager.instance.isOnCharacterSelection = false;
             //SceneManager.LoadScene("Alleyway_tutorial_testing");
-            SceneManager.LoadScene("Dialogue_Testing");
+            SceneManager.LoadScene("Minigame Testing Scene");
         }
     }
 
