@@ -101,29 +101,11 @@ public class CameraManager : MonoBehaviour
         {
             mainCam = Camera.main;
             EventData.isSceneChanged = false;
-            print("Main cam assigned");
         }
 
         playerCam.gameObject.SetActive(false);
         lockCam.gameObject.SetActive(false);
         inputDetection.cam = mainCam;
-
-        ////Assign pos on main 
-        ///era for player1 and player2
-        //if(EventData.curSceneName != "Level1")
-        //{
-        //    if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player1") || 
-        //        inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
-        //    {
-        //        mainCam.GetComponent<CameraMovement_Scene>().p1Pos = inputDetection.transform;
-        //    }
-
-        //    if (inputDetection.gameObject.layer == LayerMask.NameToLayer("Player2") || 
-        //        inputDetection.gameObject.layer == LayerMask.NameToLayer("Invisible_Player2"))
-        //    {
-        //        mainCam.GetComponent<CameraMovement_Scene>().p2Pos = inputDetection.transform;
-        //    }
-        //}
     }
 
     #region Alleyway Scene Cam
@@ -165,8 +147,7 @@ public class CameraManager : MonoBehaviour
         if (EventData.curSceneName == "PostOffice" || 
             EventData.curSceneName == "StartScene" || 
             EventData.curSceneName == "minigame" ||
-            EventData.curSceneName == "StartTesting" ||
-            EventData.craneIsActivated)
+            EventData.curSceneName == "StartTesting")
         {
             currentCamType = E_CamType.mainCam;
         }

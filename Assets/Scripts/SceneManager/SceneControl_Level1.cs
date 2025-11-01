@@ -37,4 +37,3 @@ public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
 
 }
 
-
