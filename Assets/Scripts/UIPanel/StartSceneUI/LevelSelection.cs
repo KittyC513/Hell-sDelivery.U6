@@ -29,4 +29,9 @@ public class LevelSelection : MonoBehaviour
     {
         SceneManager.LoadScene("Alleyway_tutorial_testing");
     }
+
+    public void OnClick_Crane()
+    {
+        SceneManager.LoadScene("Crane_testing");
+    }
 }

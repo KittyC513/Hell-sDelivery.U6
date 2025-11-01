@@ -305,13 +305,10 @@ public class PlayerInputDetection : NetworkBehaviour
 
             //get our stick input
             Vector3 stickInput = inputValue;
-            print("stickInput: " + stickInput);
             stickInput = stickInput.normalized;
             //multiply our stick value by our cam right and forward to get a camera relative input
             Vector3 horizontal = stickInput.x * camRight;
-            print("camRight: " + camRight);
             Vector3 vertical = stickInput.y * camForward;
-            print("camForward: " + camForward);
 
             Vector3 input = horizontal + vertical;
             input = input.normalized;

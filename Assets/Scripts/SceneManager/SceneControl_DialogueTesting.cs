@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SceneControl_DialogueTesting : SceneControlBase<SceneControl_PostOffice>
 {
-    public Transform[] enterPoints;
+    public Transform[] spawnpoints;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,7 +22,7 @@ public class SceneControl_DialogueTesting : SceneControlBase<SceneControl_PostOf
     {
         if (!isResetPos)
         {
-            GameManager.instance.ResetPlayersPosition(enterPoints[0], enterPoints[1]);
+            GameManager.instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
             isResetPos = true;
         }
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EventData
 {
-    [Header("Lalah Event")]
+    [Header("NPC Event")]
     public static bool isAcceptedMission_lalah = false;
 
     [Header("Level1")]

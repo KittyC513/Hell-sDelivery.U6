@@ -44,17 +44,7 @@ public class GameManager
     public bool pointerIsReady = false;
 
 
-    [Header("Crane")]
-    public GameObject craneObject;
-
-
-
-
-    #region Conversation Control
-    /// <summary>
-    /// Progress NPCs
-    /// </summary>
-    /// 
+    #region Player State Machine Control
     public void FreezePlayer1()
     {
         stateMachine_p1.FreezeStateMachine();
@@ -109,6 +99,10 @@ public class GameManager
         Debug.Log("UnFreeze both players");
     }
 
+    #endregion
+
+    #region Conversation witH Npcs
+
     public void StartConversationWithNormalNpcs()
     {
         if (startConversation_p1)
@@ -157,19 +151,9 @@ public class GameManager
 
     }
 
-    public void DisableBothPlayersCam()
-    {
-        cam_p1.enabled = false;
-        cam_p2.enabled = false;
-    }
-
-    public void EnableBothPlayersCam()
-    {
-        cam_p1.enabled = true;
-        cam_p2.enabled = true;
-    }
-
+    
     #endregion
+
 
     #region Pointer Control
     public void AssignPointerToPlayer()
@@ -195,16 +179,64 @@ public class GameManager
 
     #region Player 
 
-    public void ResetPlayersPosition(Transform p1SpawnPoint, Transform p2SpawnPoint)
+    public void ResetPlayersPosition(Transform pos_p1, Transform pos_p2)
     {
         if (player1 != null)
         {
-            player1.transform.position = p1SpawnPoint.position;
+            player1.transform.position = pos_p1.position;
         }
         if (player2 != null)
         {
-            player2.transform.position = p2SpawnPoint.position;
+            player2.transform.position = pos_p2.position;
         }
+    }
+
+    public void ResetPlayer1Position(Transform pos_p1)
+    {
+        if (player1 != null)
+        {
+            player1.transform.position = pos_p1.position;
+        }
+    }
+
+    public void ResetPlayer2Position(Transform pos_p2)
+    {
+        if (player2 != null)
+        {
+            player2.transform.position = pos_p2.position;
+        }
+    }
+
+    public void DisableBothPlayersCam()
+    {
+        cam_p1.enabled = false;
+        cam_p2.enabled = false;
+    }
+
+    public void EnableBothPlayersCam()
+    {
+        cam_p1.enabled = true;
+        cam_p2.enabled = true;
+    }
+
+    public void DisablePlayer1Cam()
+    {
+        cam_p1.enabled = false;
+    }
+
+    public void EnablePlayer1Cam()
+    {
+        cam_p1.enabled = true;
+    }
+
+    public void DisablePlayer2Cam()
+    {
+        cam_p2.enabled = false;
+    }
+
+    public void EnablePlayer2Cam()
+    {
+        cam_p2.enabled = true;
     }
     #endregion
 

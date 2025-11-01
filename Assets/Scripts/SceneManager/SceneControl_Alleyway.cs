@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SceneControl_Alleyway : SceneControlBase<SceneControl_Alleyway>
 {
-    public Transform[] enterPoints;
+    public Transform[] spawnpoints;
 
     public EnterPlace enterPlace_Level1;
 
@@ -31,8 +31,7 @@ public class SceneControl_Alleyway : SceneControlBase<SceneControl_Alleyway>
     {
         if (!isResetPos)
         {
-            GameManager.instance.player1.transform.position = enterPoints[0].position;
-            GameManager.instance.player2.transform.position = enterPoints[1].position;
+            GameManager.instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
             isResetPos = true;
         }
     }

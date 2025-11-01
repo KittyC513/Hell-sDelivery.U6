@@ -1,23 +1,13 @@
-using NUnit.Framework.Constraints;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
+public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTestinhg>
 {
     public Transform[] spawnpoints;
-
-
-    private void Awake()
-    {
-
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //ResetPlayerPos();
-        EventData.curSceneName = "Level1";
-
+        EventData.curSceneName = "CraneTesting";
+        EventData.craneIsActivated = false;
     }
 
     // Update is called once per frame
@@ -34,7 +24,4 @@ public class SceneControl_Level1 : SceneControlBase<SceneControl_Level1>
             isResetPos = true;
         }
     }
-
 }
-
-
