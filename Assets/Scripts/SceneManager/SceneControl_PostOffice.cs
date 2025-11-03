@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
 {
-    public Transform[] enterPoints;
+    public Transform[] spawnpoints;
     public DialogueSystemEvents dialogueSystemEvents_lalah;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -29,8 +29,7 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
     {
         if (!isResetPos)
         {
-            GameManager.instance.player1.transform.position = enterPoints[0].position;
-            GameManager.instance.player2.transform.position = enterPoints[1].position;
+            GameManager.instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
             isResetPos = true;
         }
     }

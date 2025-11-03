@@ -38,7 +38,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool swapItemPressed_left;
     [HideInInspector] public bool swapItemPressed_right;
     [HideInInspector] public bool interactPressed;
-    [HideInInspector] public Vector2 horizontalInputValue;
+    public Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction pauseMoveAction;
@@ -292,6 +292,10 @@ public class PlayerInputDetection : NetworkBehaviour
             //get camera forward and right
             Vector3 camForward = camera.transform.forward;
             Vector3 camRight = camera.transform.right;
+
+            //make sure y is 0 to prevent moving up and down
+            if (camera == Camera.main)
+                camForward = camera.transform.up;
 
             camForward.y = 0;
             camRight.y = 0;

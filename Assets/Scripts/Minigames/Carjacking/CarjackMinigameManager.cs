@@ -33,6 +33,7 @@ public class CarjackMinigameManager : MonoBehaviour
                 Instantiate(carPrefab, positionY, Quaternion.identity);
             }
         }
+        //GameManager.Instance.DisableBothPlayersCam();
     }
 
     private void OnDrawGizmosSelected()

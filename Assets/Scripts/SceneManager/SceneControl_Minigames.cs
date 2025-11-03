@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public class SceneControl_DialogueTesting : SceneControlBase<SceneControl_PostOffice>
+public class SceneControl_Minigames : SceneControlBase<SceneControl_Minigames>
 {
-    public Transform[] spawnpoints;
+    public Transform[] spawnPoints;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        EventData.curSceneName = "DialogueTesting";
-        //reset players position
+        EventData.curSceneName = "minigame";
 
     }
 
@@ -22,7 +21,7 @@ public class SceneControl_DialogueTesting : SceneControlBase<SceneControl_PostOf
     {
         if (!isResetPos)
         {
-            GameManager.instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
+            GameManager.Instance.ResetPlayersPosition(spawnPoints[0], spawnPoints[1]);
             isResetPos = true;
         }
     }
