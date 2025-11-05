@@ -1,3 +1,4 @@
+using System.Drawing.Printing;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
@@ -10,8 +11,10 @@ public class CarUnlockSlider : MonoBehaviour
 
     private float sliderProgression = 0;
     [SerializeField] private float sliderSpeed = 1;
+    private float startSpeed;
 
-    [SerializeField] private int cyclesToComplete = 4;
+    [SerializeField] private int cyclesToComplete = 3;
+    private int cyclesFinished = 0;
 
     private float startValue;
     private float endValue;
@@ -19,17 +22,21 @@ public class CarUnlockSlider : MonoBehaviour
 
     public bool completed = false;
     public bool active = false;
+    [SerializeField] private float speedIncrease = 3;
 
     private void Start()
     {
         slider.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-
+        startSpeed = sliderSpeed;
         
     }
 
     public void ResetMinigame()
     {
         //reset variables
+        cyclesFinished = 0;
+        sliderSpeed = startSpeed;
+        PickNewSection(Random.Range(0.75f, 2.5f));
     }
 
     public void Activate(Vector3 position)
@@ -92,7 +99,17 @@ public class CarUnlockSlider : MonoBehaviour
         //if the slider is on the target and the player inputs then they successfully cleared one cycle
         if (CheckSliderToTarget())
         {
-            PickNewSection(Random.Range(0.75f, 2.5f));
+            if (cyclesFinished + 1 >= cyclesToComplete)
+            {
+                EndMinigame(true);
+            }
+            else
+            {
+                cyclesFinished += 1;
+                sliderSpeed += speedIncrease;
+                PickNewSection(Random.Range(0.75f, 2.5f));
+            }            
+            
         }
         else //the player missed
         {
