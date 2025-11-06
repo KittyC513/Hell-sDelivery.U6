@@ -22,6 +22,7 @@ public class CarUnlockSlider : MonoBehaviour
 
     public bool completed = false;
     public bool active = false;
+    private GameObject targetObj;
     [SerializeField] private float speedIncrease = 3;
 
     private void Start()
@@ -39,8 +40,10 @@ public class CarUnlockSlider : MonoBehaviour
         PickNewSection(Random.Range(0.75f, 2.5f));
     }
 
-    public void Activate(Vector3 position)
+    public void Activate(GameObject target)
     {
+        targetObj = target;
+        Vector3 position = target.transform.position;
         transform.position = new Vector3(position.x, position.y + 1, position.z);
         slider.gameObject.SetActive(true);
         active = true;
@@ -49,22 +52,25 @@ public class CarUnlockSlider : MonoBehaviour
         endValue = slider.position.x + (slider.rect.width / 2);
     }
 
-    public void EndMinigame(bool compeleted)
+    public void EndMinigame(bool win)
     {
-        if (completed)
+        
+        if (win)
         {
+            Debug.Log("Unlocked");
             //unlock the car
-
+            targetObj.GetComponent<CarjackCar>().UnlockCar();
         }
         else
         {
             //fail the minigame
-            
+            Debug.Log("Failed");
         }
 
         //set back to inactive
         active = false;
         slider.gameObject.SetActive(false);
+        targetObj = null;
     }
 
     private void Update()
