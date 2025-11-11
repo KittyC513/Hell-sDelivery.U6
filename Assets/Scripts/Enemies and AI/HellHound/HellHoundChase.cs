@@ -11,7 +11,10 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
 
     private float chaseTimeout = 3;
     private float chaseTemp = 0;
+    private float lungeTime = 3;
+    private float lungeTemp = 0;
     private float chaseRange;
+    private float lungeRange = 10;
 
     private Rigidbody rb;
 
@@ -30,6 +33,9 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
         animName = "Jump In Place";
         if (!hellHoundBase.AddKnockback) hellHoundBase.StartKnockback(Vector3.up * 5);
         navAgent.speed = hellHoundBase.RunSpeed;
+        lungeTemp = 0;
+        lungeRange = hellHoundBase.lungeRange;
+        lungeTime = hellHoundBase.lungeTimer;
     }
 
     public override void ExitState()
@@ -54,6 +60,21 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
         else
         {
             chaseTemp = 0;
+        }
+
+        //player is within lunge range
+        if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) < lungeRange)
+        {
+            lungeTemp += Time.deltaTime;
+
+            if (lungeTemp >= lungeTime)
+            {
+                return HellHoundStateMachine.HoundStates.lunge;
+            }
+        }
+        else
+        {
+           
         }
 
         if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) < hellHoundBase.AttackDetectionRange)

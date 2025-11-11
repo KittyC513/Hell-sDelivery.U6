@@ -124,7 +124,7 @@ public class EnemyBase : MonoBehaviour
         yield return new WaitForFixedUpdate();
         takeHit = false;
         //don't go past this line until the velocity of the rigidbody reaches a low number
-        yield return new WaitUntil(() => rb.linearVelocity.magnitude < 0.05f && navAgent.isOnNavMesh && grounded);
+        yield return new WaitUntil(() => rb.linearVelocity.magnitude < 0.1f && navAgent.isOnNavMesh && grounded);
 
         //stun time before moving again
         yield return new WaitForSeconds(0.1f);

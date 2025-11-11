@@ -4,14 +4,24 @@ public class HellHoundTakeHit : BaseState<HellHoundStateMachine.HoundStates>
 {
     private float hitTime = 0.5f;
     private float timeTemp = 0;
-    public HellHoundTakeHit(HellHoundStateMachine.HoundStates key) : base(key)
+    private HellHoundBase hellHoundBase;
+    public HellHoundTakeHit(HellHoundStateMachine.HoundStates key, HellHoundBase houndBase) : base(key)
     {
-
+        hellHoundBase = houndBase;
     }
 
     public override void EnterState()
     {
-        animName = "Take Damage";
+        hellHoundBase.ToggleAttackHitbox(false);
+        if (!hellHoundBase.Dead)
+        {
+            animName = "Take Damage";
+        }
+        else
+        {
+            animName = "Die";
+        }
+        
     }
 
     public override void ExitState()
@@ -21,7 +31,7 @@ public class HellHoundTakeHit : BaseState<HellHoundStateMachine.HoundStates>
 
     public override HellHoundStateMachine.HoundStates GetNextState()
     {
-        if (timeTemp >= hitTime)
+        if (timeTemp >= hitTime && hellHoundBase.NavAgent.enabled == true && !hellHoundBase.Dead)
         {
             return HellHoundStateMachine.HoundStates.wander;
         }

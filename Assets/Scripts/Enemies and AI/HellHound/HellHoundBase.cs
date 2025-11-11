@@ -19,6 +19,10 @@ public class HellHoundBase : EnemyBase
     [SerializeField] private float attackCooldownTime = 1f; //how long the enemy stalls after attacking
     [SerializeField] private GameObject attackHitboxObj;
     [HideInInspector] public bool shouldRotate = true;
+    [SerializeField] public float lungeRange = 9;
+    [SerializeField] public float lungeTimer = 3;
+    [SerializeField] public float lungeLockTime = 1;
+    [SerializeField] public float lungeWindup = 1.5f;
 
     [SerializeField] private bool showRadius = true; //use this to see player detection radius and ground ray with gizmos
 
