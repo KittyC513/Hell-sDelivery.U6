@@ -376,7 +376,7 @@ public class PlayerController : NetworkBehaviour
 
             CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
 
-            print("leftStickDir: " + leftStickDir);
+            //print("leftStickDir: " + leftStickDir);
         }
     }
 
@@ -547,7 +547,7 @@ public class PlayerController : NetworkBehaviour
     {
 
         /********************************************************************************/
-        if (playerLockOn.isLockedOn)
+        if (playerLockOn.isLockedOn && !playerLockOn.isWithDetonator)
         {
             //the direction vector from the player to the enemy
             direction = (playerLockOn.lockTarget.transform.position - transform.position);

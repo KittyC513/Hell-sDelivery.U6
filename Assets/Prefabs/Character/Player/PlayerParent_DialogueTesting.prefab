@@ -1288,6 +1288,17 @@ MonoBehaviour:
   CameraManager: {fileID: 1062957148588737322}
   lockTarget: {fileID: 0}
   isLockedOn: 0
+  viewAngle: 90
+  viewRadius: 10
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 8
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 67108864
+  isWithDetonator: 1
+  canSeeTarget: 1
+  visibleTargets: []
 --- !u!114 &2156524465778351454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1451,6 +1462,7 @@ MonoBehaviour:
   decceleration: 25
   maxAccelStep: 50
   rotationSpeed: 15
+  leftStickDir: {x: 0, y: 0, z: 0}
   weight: 2
   maxRunSpeed: 16
   runAcceleration: 18

@@ -32,12 +32,18 @@ public class CameraMovement_Lock : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        lockCamType = E_LockCamType.three;
+        //lockCamType = E_LockCamType.three;
         lockCam = this.GetComponent<Camera>();
     }
     private void Update()
     {
 
+    }
+
+    private void OnEnable()
+    {
+        if (playerLockOn.isWithDetonator) lockCamType = E_LockCamType.one;
+        else lockCamType = E_LockCamType.three;
     }
 
     // Update is called once per frame
@@ -61,7 +67,6 @@ public class CameraMovement_Lock : MonoBehaviour
     #region camera movement Method 1 - only follow player.x and z
     private void CameraMovementMethod1()
     {
-       
 
         afterPos = player.position + offSet;
         this.transform.position = afterPos;

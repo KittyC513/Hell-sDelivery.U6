@@ -1,4 +1,7 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerLockOn : MonoBehaviour
 {
@@ -25,6 +28,18 @@ public class PlayerLockOn : MonoBehaviour
 
     private bool canSwitchTarget = true;
 
+    [Header("Detonator LockOn")]
+    public float viewAngle = 90f;
+    public float viewRadius = 15f;
+
+    public LayerMask obstacleMask;
+    public LayerMask targetMask;
+
+    public bool isWithDetonator = true;
+    public bool canSeeTarget = true;   
+
+    public List<Transform> visibleTargets = new List<Transform>();
+
 
     // Update is called once per frame
     private void Awake()
@@ -43,26 +58,40 @@ public class PlayerLockOn : MonoBehaviour
         playerCam = inputDetection.cam;
         if (DetectLockInput())
         {
-
-            if ((lockTarget != null))
+            if (isWithDetonator)
             {
-
                 CameraManager.currentCamType = E_CamType.lockCam;
-                print("Lock_on" + lockTarget.transform.position);
+                ConeSightDetection();
+
                 if (!isLockedOn)
                 {
                     CameraManager.ResetCamTransition();
                     playerController.isLookAtTriggered = false;
                     isLockedOn = true;
                 }
-
             }
             else
             {
-                lockTarget = GetNewTarget(playerCam, playerObj);
+                if ((lockTarget != null))
+                {
+
+                    CameraManager.currentCamType = E_CamType.lockCam;
+                    print("Lock_on" + lockTarget.transform.position);
+                    if (!isLockedOn)
+                    {
+                        CameraManager.ResetCamTransition();
+                        playerController.isLookAtTriggered = false;
+                        isLockedOn = true;
+                    }
+
+                }
+                else
+                {
+                    lockTarget = GetNewTarget(playerCam, playerObj);
+
+                }
 
             }
-
         }
         else
         {
@@ -219,14 +248,80 @@ public class PlayerLockOn : MonoBehaviour
         return lockTarget;
     }
 
-    private void OnDrawGizmos()
+    public void ConeSightDetection()
     {
-        if (debug)
-        {
-            Gizmos.DrawLine(lastRayStart, lastRayEnd);
+        //clear the list of visible targets
+        visibleTargets.Clear();
 
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(lastRayStart, tempDir);
+        //1. find all colliders within view radius
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+
+        foreach (Collider col in targetsInViewRadius)
+        {
+            Transform target = col.transform;
+            Vector3 dirToTarget = target.position - transform.position;
+            float disToTarget = dirToTarget.magnitude;
+
+            Vector3 dirNormalized = dirToTarget.normalized;
+
+            //2. check if target is within view angle
+            float dot = Vector3.Dot(transform.forward, dirNormalized);
+            float angleToTarget = Mathf.Cos(viewAngle * 0.5f * Mathf.Deg2Rad);
+
+            if (dot < angleToTarget)
+            {
+                continue;
+            }
+
+            //3. check for obstacles between the player and target
+            if (Physics.Raycast(transform.position, dirNormalized, out RaycastHit hit, disToTarget, obstacleMask))
+            {
+                //Something in the way
+                continue;
+            }
+
+            visibleTargets.Add(target);
+
+
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        //if (debug)
+        //{
+        //    Gizmos.DrawLine(lastRayStart, lastRayEnd);
+
+        //    Gizmos.color = Color.yellow;
+        //    Gizmos.DrawRay(lastRayStart, tempDir);
+        //}
+
+        // 1. Draw view radius
+        Gizmos.DrawWireSphere(transform.position, viewRadius);
+
+        // 2. Draw cone edges
+        Vector3 leftDir = DirFromAngle(-viewAngle / 2f);
+        Vector3 rightDir = DirFromAngle(viewAngle / 2f);
+
+        Gizmos.DrawLine(transform.position, transform.position + leftDir * viewRadius);
+        Gizmos.DrawLine(transform.position, transform.position + rightDir * viewRadius);
+
+        // 3. Draw line to target (if assigned)
+
+        if(visibleTargets.Count != 0)
+        {
+            foreach (Transform target in visibleTargets)
+            {
+                Gizmos.color = canSeeTarget ? Color.cyan : Color.gray;
+                Gizmos.DrawLine(transform.position, target.position);
+            }
+        }
+    }
+
+    Vector3 DirFromAngle(float angleInDegrees)
+    {
+        float rad = (angleInDegrees + transform.eulerAngles.y) * Mathf.Deg2Rad;
+        return new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));
+    }
 }
+
