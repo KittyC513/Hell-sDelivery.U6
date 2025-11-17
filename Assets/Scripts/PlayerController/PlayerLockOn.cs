@@ -60,15 +60,15 @@ public class PlayerLockOn : MonoBehaviour
         {
             if (isWithDetonator)
             {
-                CameraManager.currentCamType = E_CamType.lockCam;
+                //CameraManager.currentCamType = E_CamType.playerCam;
                 ConeSightDetection();
 
-                if (!isLockedOn)
-                {
-                    CameraManager.ResetCamTransition();
-                    playerController.isLookAtTriggered = false;
-                    isLockedOn = true;
-                }
+                //if (!isLockedOn)
+                //{
+                //    CameraManager.ResetCamTransition();
+                //    playerController.isLookAtTriggered = false;
+                //    isLockedOn = true;
+                //}
             }
             else
             {

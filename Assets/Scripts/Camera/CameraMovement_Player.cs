@@ -17,6 +17,8 @@ public class CameraMovement_Player : NetworkBehaviour
 {
     public Transform playerTransform;
     public PlayerInputDetection inputDetection;
+    public PlayerLockOn playerLockOn;
+    public Vector3 camOffset;
 
     [Header("Camera Variables")]
     Vector3 mDefaultDir;
@@ -34,6 +36,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     public bool invertPitch;
     public Vector2 pitchLimit = new Vector2(-40f, 70f);
+    public Vector2 pitchLimitCD = new Vector2(-10f, 50f);
 
     private Vector2 inputDelta;
     private Quaternion horizontalQuat;
@@ -162,27 +165,29 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
+
         if (inputDetection.isExploded && !inputDetection.isResetCam)
         {
             SwitchToTopDownCam();
             inputDetection.isResetCam = true;
         }
-        else if (!inputDetection.isExploded && (distance != oriDistance || moveSpeed != oriMoveSpeed)) 
+        else if (!inputDetection.isExploded && (distance != oriDistance || moveSpeed != oriMoveSpeed))
         {
             distance = oriDistance;
             moveSpeed = oriMoveSpeed;
         }
-            CameraMovement();
 
-        //if (!resetPos)
-        //{
-        //    resetPos = true;
-        //    //ResetPos(defaultPos);
-        //}
-        //else
-        //{      
-        //    CameraMovement();
-        //}
+        if (playerLockOn.isWithDetonator)
+        {
+            ConeSightCamMovement();
+        }
+        else
+        {
+            CameraMovement();
+        }
+
+
+
 
     }
     #region Topdown Cam while gaining exploded force
@@ -290,6 +295,54 @@ public class CameraMovement_Player : NetworkBehaviour
 
         return to;
 
+    }
+    #endregion
+
+    #region ConeSightDetection
+    public void ConeSightCamMovement()
+    {
+        if (playerTransform == null) return;
+
+        // 1. Get input (keep your device handling)
+        Vector2 rawInput = inputDetection.GetCameraMovement();
+        inputDelta = new Vector2(
+            inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? rawInput.x : rawInput.x * keyboardMoveSpeed,
+            inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? rawInput.y : rawInput.y * keyboardMoveSpeed
+        );
+
+        //Update rotate value
+        //x
+        mRotateValue.x += inputDelta.x * rotateSpeed * Time.smoothDeltaTime;
+        //mRotateValue.x = AngleCorrection(mRotateValue.x);
+        //y
+        mRotateValue.y += inputDelta.y * rotateSpeed * Time.smoothDeltaTime;
+        //mRotateValue.y = AngleCorrection(mRotateValue.y);
+        mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
+
+        // 3. Build camera rotation
+        Quaternion camRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+
+        // 4. Place camera behind player using rotated offset
+        Vector3 desiredPos = playerTransform.position + camRot * camOffset;
+        Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, moveSpeed * Time.deltaTime);
+
+        transform.position = smoothedPos;
+        transform.rotation = camRot;
+
+        RotatePlayerToCamera(camRot);
+    }
+
+    void RotatePlayerToCamera(Quaternion camRot)
+    {
+        if(playerTransform == null) return;
+        Vector3 forward = camRot * Vector3.forward;
+        forward.y = 0f;
+
+        if (forward.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(forward);
+            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRot, moveSpeed * Time.deltaTime);
+        }
     }
     #endregion
 }
