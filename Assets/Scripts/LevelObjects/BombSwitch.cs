@@ -19,8 +19,8 @@ public class BombSwitch : MonoBehaviour
 
     private void Start()
     {
-        render1.material.SetInt("_Triggered", 0);
-        render2.material.SetInt("_Triggered", 0);
+        //render1?.material.SetInt("_Triggered", 0);
+        //render2?.material.SetInt("_Triggered", 0);
     }
 
     private void Update()
@@ -44,8 +44,8 @@ public class BombSwitch : MonoBehaviour
             onSwitchTrigger.Invoke();
         }
 
-        render1.material.SetInt("_Triggered", 1);
-        render2.material.SetInt("_Triggered", 1);
+        //render1?.material.SetInt("_Triggered", 1);
+        //render2?.material.SetInt("_Triggered", 1);
         timeTemp = 0;
         triggered = true;
     }
@@ -56,8 +56,8 @@ public class BombSwitch : MonoBehaviour
         {
             onSwitchExit.Invoke();
         }
-        render1.material.SetInt("_Triggered", 0);
-        render2.material.SetInt("_Triggered", 0);
+        //render1?.material.SetInt("_Triggered", 0);
+        //render2?.material.SetInt("_Triggered", 0);
         triggered = false;
     }
     private void TimedSwitch()
