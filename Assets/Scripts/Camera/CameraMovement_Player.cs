@@ -71,6 +71,7 @@ public class CameraMovement_Player : NetworkBehaviour
     [Header("Camera Moving Speed")]
     public Vector3 movePos;
     public float moveSpeed = 5f;
+    public float moveSpeed_coneSight = 7f;
     public float oriMoveSpeed;
     public float topdownMoveSpeed;
     public Transform defaultPos;
@@ -177,7 +178,7 @@ public class CameraMovement_Player : NetworkBehaviour
             moveSpeed = oriMoveSpeed;
         }
 
-        if (playerLockOn.isWithDetonator)
+        if (playerLockOn.isWithDetonator && inputDetection.lockPressed)
         {
             ConeSightCamMovement();
         }
@@ -185,9 +186,6 @@ public class CameraMovement_Player : NetworkBehaviour
         {
             CameraMovement();
         }
-
-
-
 
     }
     #region Topdown Cam while gaining exploded force
@@ -324,7 +322,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
         // 4. Place camera behind player using rotated offset
         Vector3 desiredPos = playerTransform.position + camRot * camOffset;
-        Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, moveSpeed * Time.deltaTime);
+        Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, moveSpeed_coneSight * Time.deltaTime);
 
         transform.position = smoothedPos;
         transform.rotation = camRot;

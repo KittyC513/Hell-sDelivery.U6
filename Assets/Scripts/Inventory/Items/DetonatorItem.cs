@@ -29,19 +29,39 @@ public class DetonatorItem : ItemBase
 
     public void Ignite()
     {
-        if(bombItem.bombsList.Count > 0 && timer >= cdSpawn)
-        {
-            for (int i = 0; i <= bombItem.bombsList.Count - 1; i++)
-            {
-                bombItem.bombsList[i].ApplyExplosionForce();
-            }
+        ////detonate all bombs in the bomb list
+        //if (bombItem.bombsList.Count > 0 && timer >= cdSpawn)
+        //{
+        //    for (int i = 0; i <= bombItem.bombsList.Count - 1; i++)
+        //    {
+        //        bombItem.bombsList[i].ApplyExplosionForce();
+        //    }
 
-            bombItem.bombsList.Clear();
-            bombItem.numOfBombs = 0;
+        //    bombItem.bombsList.Clear();
+        //    bombItem.numOfBombs = 0;
+        //    timer = 0;
+        //    canStartTimer = false;
+        //}
+
+        //detonate all bombs in cone sight detection
+        if(playerLockOn.visibleTargets.Count > 0 && timer >= cdSpawn)
+        {
+            for (int i = 0; i <= playerLockOn.visibleTargets.Count - 1; i++)
+            {
+                BombMovement bomb = playerLockOn.visibleTargets[i].GetComponent<BombMovement>();
+                print("GainBomb");
+
+                if (bomb != null)
+                {
+                    bomb.ApplyExplosionForce();
+                    bombItem.bombsList.Remove(bomb);
+                    playerLockOn.visibleTargets.RemoveAt(i);
+                    bombItem.numOfBombs--;
+                }
+            }
             timer = 0;
             canStartTimer = false;
         }
-
     }
 
     private void FixedUpdate()

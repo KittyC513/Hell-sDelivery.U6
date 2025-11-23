@@ -1289,7 +1289,7 @@ MonoBehaviour:
   lockTarget: {fileID: 0}
   isLockedOn: 0
   viewAngle: 90
-  viewRadius: 10
+  viewRadius: 30
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
@@ -1650,6 +1650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bag: []
   inputDetection: {fileID: 3167985525364349275}
+  playerLockOn: {fileID: 2126423918051728224}
   equipPoint: {fileID: 4094894041621900929}
   bagPoint: {fileID: 8135251215635467218}
   swapCooldown: 0.15
@@ -2466,6 +2467,7 @@ MonoBehaviour:
   distanceRecoveryDelay: 1
   movePos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
+  moveSpeed_coneSight: 7
   oriMoveSpeed: 5
   topdownMoveSpeed: 12
   defaultPos: {fileID: 5113240428649811745}

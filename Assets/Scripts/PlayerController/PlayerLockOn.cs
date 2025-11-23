@@ -99,6 +99,8 @@ public class PlayerLockOn : MonoBehaviour
             lockTarget = null;
             CameraManager.currentCamType = E_CamType.playerCam;
             isLockedOn = false;
+
+            visibleTargets.Clear();
         }
 
         if (lockTarget != null && DetectLockInput() && inputDetection.GetCameraMovement() != Vector2.zero && canSwitchTarget)
@@ -281,8 +283,6 @@ public class PlayerLockOn : MonoBehaviour
             }
 
             visibleTargets.Add(target);
-
-
         }
     }
 

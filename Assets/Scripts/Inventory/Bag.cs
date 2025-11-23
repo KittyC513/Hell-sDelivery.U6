@@ -8,6 +8,7 @@ public class Bag : MonoBehaviour
     public List<ItemBase> bag;
 
     public PlayerInputDetection inputDetection;
+    public PlayerLockOn playerLockOn;
 
     public Transform equipPoint;
     public Transform bagPoint;
@@ -96,6 +97,18 @@ public class Bag : MonoBehaviour
         SpringUtils.UpdateDampedSpringMotion(ref springRotation.x, ref rotVelocity.x, targetRotation.x, rotX);
         SpringUtils.UpdateDampedSpringMotion(ref springRotation.y, ref rotVelocity.y, targetRotation.y, rotY);
         SpringUtils.UpdateDampedSpringMotion(ref springRotation.z, ref rotVelocity.z, targetRotation.z, rotZ);
+
+        if (activeItemBase != null)
+        {
+            if (activeItem.name == "Detonator Item" && activeItemBase.isOnUse)
+            {
+                playerLockOn.isWithDetonator = true;
+            }
+            else
+            {
+                playerLockOn.isWithDetonator = false;
+            }
+        }
     }
 
     public void FixedUpdate()
