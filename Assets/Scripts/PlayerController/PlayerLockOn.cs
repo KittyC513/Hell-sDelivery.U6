@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
+
 public class PlayerLockOn : MonoBehaviour
 {
     private Camera playerCam; //the main camera attached to the player
@@ -40,6 +43,10 @@ public class PlayerLockOn : MonoBehaviour
 
     public List<Transform> visibleTargets = new List<Transform>();
 
+    [Header("Cone Mesh Generator")]
+    public int resolution = 40;
+    Mesh mesh;
+
 
     // Update is called once per frame
     private void Awake()
@@ -49,7 +56,8 @@ public class PlayerLockOn : MonoBehaviour
 
     private void Start()
     {
-        
+        mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = mesh;
 
     }
 
@@ -114,6 +122,51 @@ public class PlayerLockOn : MonoBehaviour
         {
             canSwitchTarget = true;
         }
+    }
+
+    private void LateUpdate()
+    {
+        if(DetectLockInput() && isWithDetonator)
+            GenerateConeMesh();
+    }
+
+    public void GenerateConeMesh()
+    {
+
+        int vertexCount = resolution + 2;
+        Vector3[] vertices = new Vector3[vertexCount];
+        int[] triangles = new int[(resolution) * 3];
+
+        // origin
+        vertices[0] = Vector3.zero;
+
+        float step = viewAngle / resolution;
+        float half = viewAngle / 2f;
+
+        // generate boundary vertices
+        for (int i = 0; i <= resolution; i++)
+        {
+            float angle = -half + step * i;
+            float rad = angle * Mathf.Deg2Rad;
+
+            Vector3 dir = new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));
+            vertices[i + 1] = dir * viewRadius;
+        }
+
+        // triangles
+        int triIndex = 0;
+        for (int i = 0; i < resolution; i++)
+        {
+            triangles[triIndex++] = 0;
+            triangles[triIndex++] = i + 1;
+            triangles[triIndex++] = i + 2;
+        }
+
+        mesh.Clear();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+
     }
 
     public bool DetectLockInput()
