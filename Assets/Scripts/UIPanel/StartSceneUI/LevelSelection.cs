@@ -34,4 +34,14 @@ public class LevelSelection : MonoBehaviour
     {
         SceneManager.LoadScene("Crane_testing");
     }
+
+    public void OnClick_BombDetonator()
+    {
+        SceneManager.LoadScene("BombDetonator_testing");
+    }
+
+    public void OnClick_Playtest()
+    {
+        SceneManager.LoadScene("Playtest-11-2025");
+    }
 }

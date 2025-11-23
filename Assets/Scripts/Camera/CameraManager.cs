@@ -21,7 +21,7 @@ public class CameraManager : MonoBehaviour
     public Camera alleywayCam;
     #endregion
 
-    public E_CamType currentCamType;
+    public E_CamType currentCamType = E_CamType.playerCam;
     public PlayerLockOn playerLockOn;
 
     public CameraMovement_Lock cameraMovement_Lock;
@@ -151,6 +151,7 @@ public class CameraManager : MonoBehaviour
         {
             currentCamType = E_CamType.mainCam;
         }
+
     }
 
     #endregion
