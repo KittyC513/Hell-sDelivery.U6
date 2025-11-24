@@ -48,6 +48,7 @@ public class CombatSequence : MonoBehaviour
         if (!sequenceActive)
         {
             sequenceActive = true;
+            print("Combat Sequence Started");
         }
     
         onSequenceStart.Invoke();
