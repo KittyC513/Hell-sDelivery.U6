@@ -5491,7 +5491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3403284878287510905, guid: 450f686e0e33b344eb10c153b85d97ff, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7444697608796572238, guid: 450f686e0e33b344eb10c153b85d97ff, type: 3}
       propertyPath: 'startPoints.Array.data[0]'
@@ -6575,9 +6575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneChanged: 0
   isResetPos: 0
-  enterPoints:
-  - {fileID: 591680813}
-  - {fileID: 346002683}
+  spawnpoints: []
 --- !u!4 &900702758
 Transform:
   m_ObjectHideFlags: 0
@@ -8366,6 +8364,10 @@ PrefabInstance:
       propertyPath: defaultAppearancesTags.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+      propertyPath: initialDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c0f1c2b544c3494eba9fe478d4f8690, type: 2}
     - target: {fileID: 6262590587047868542, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
       propertyPath: displaySettings.cameraSettings.cameraAngles
       value: 
@@ -13000,7 +13002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4971868892339508933, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5213446573483736595, guid: 677aa4ed738f1344ca7ac9288d689f0f, type: 3}
       propertyPath: m_IsActive
@@ -13329,7 +13331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3456400284770355496, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3741851670433619098, guid: 16dc7b40a5b6cf442a8b044418b89e6c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14696,6 +14698,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085412525}
   m_Mesh: {fileID: -8039613103989778838, guid: 359a9fc2065735e46a79f4b14a6355f0, type: 3}
+--- !u!1001 &6478096552237057430
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: conversation
+      value: Pee Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -59.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8656213
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5006993
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 60.093
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582183046413773645, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: m_Name
+      value: Demon NPC
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bd835450df769734cbed171ba42c3a47, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -14714,3 +14777,4 @@ SceneRoots:
   - {fileID: 1423877316}
   - {fileID: 1016019257}
   - {fileID: 900702758}
+  - {fileID: 6478096552237057430}
