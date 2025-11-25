@@ -128,6 +128,8 @@ public class PlayerLockOn : MonoBehaviour
     {
         if(DetectLockInput() && isWithDetonator)
             GenerateConeMesh();
+        else
+            mesh.Clear();
     }
 
     public void GenerateConeMesh()

@@ -81,6 +81,8 @@ public class CameraMovement_Player : NetworkBehaviour
     public float offsetY;
 
     private PlayerSettings playerSettings;
+
+    public bool hasInitialisedConeCam = false;
     private void Start()
     {
         distance = oriDistance;
@@ -185,6 +187,7 @@ public class CameraMovement_Player : NetworkBehaviour
         else
         {
             CameraMovement();
+            hasInitialisedConeCam = false;
         }
 
     }
@@ -301,6 +304,29 @@ public class CameraMovement_Player : NetworkBehaviour
     {
         if (playerTransform == null) return;
 
+        if (!hasInitialisedConeCam)
+        {
+            hasInitialisedConeCam = true;
+
+            // Make camera yaw match player facing
+            mRotateValue.x = playerTransform.eulerAngles.y;
+
+            // Clamp pitch just in case
+            mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
+
+            // Build rotation from these angles
+            Quaternion initRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+
+            // Put camera behind player using camOffset
+            Vector3 initPos = playerTransform.position + initRot * camOffset;
+
+            transform.position = initPos;
+            transform.rotation = initRot;
+
+            // Don't do rest of logic this frame
+            return;
+        }
+
         // 1. Get input (keep your device handling)
         Vector2 rawInput = inputDetection.GetCameraMovement();
         inputDelta = new Vector2(
@@ -327,7 +353,15 @@ public class CameraMovement_Player : NetworkBehaviour
         transform.position = smoothedPos;
         transform.rotation = camRot;
 
-        RotatePlayerToCamera(camRot);
+        if (!hasInitialisedConeCam && rawInput.magnitude!=0)
+        {
+            hasInitialisedConeCam = true;
+        }
+        else if(hasInitialisedConeCam)
+        {
+            RotatePlayerToCamera(camRot);
+        }
+
     }
 
     void RotatePlayerToCamera(Quaternion camRot)
