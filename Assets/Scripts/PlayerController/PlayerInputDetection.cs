@@ -69,6 +69,8 @@ public class PlayerInputDetection : NetworkBehaviour
     [Header("PointerControl")]
     public UIPointerControl uiPointerControl;
 
+  
+
     private void Awake()
     {
         inputActionAsset = GetComponent<PlayerInput>().actions;
@@ -172,6 +174,7 @@ public class PlayerInputDetection : NetworkBehaviour
             pauseManager.onGameResume += SwitchToPlayerMap;
 
         }
+
 
         //set the player number to be used by the settings based on the player's layer
         if (this.gameObject.layer == 7)
@@ -383,13 +386,25 @@ public class PlayerInputDetection : NetworkBehaviour
 
     private void Update()
     {
-        if (pauseManager != null)
+        if (pausePressed)
         {
-            if (pausePressed)
+            if (pauseManager == null)
+            {
+                pauseManager = PauseManager.Instance;
+
+                if (pauseManager != null)
+                {
+                    pauseManager.onGamePause += SwitchToPauseMap;
+                    pauseManager.onGameResume += SwitchToPlayerMap;
+                }
+            }
+
+            if (pauseManager != null)
             {
                 pauseManager.PauseGame(this);
             }
         }
+        
 
         interactPressed = InputActionButtonExtensions.GetButtonDown(interactAction);
 
