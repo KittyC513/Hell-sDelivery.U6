@@ -51,14 +51,14 @@ public class CarUnlockSlider : MonoBehaviour
         endValue = slider.position.x + (slider.rect.width / 2);
     }
 
+    //called from the active minigame slider
     public void EndMinigame(bool win)
     {
-        
         if (win)
         {
             Debug.Log("Unlocked");
             //unlock the car
-            targetObj.GetComponent<CarjackCar>().UnlockCar();
+            
         }
         else
         {
@@ -66,10 +66,13 @@ public class CarUnlockSlider : MonoBehaviour
             Debug.Log("Failed");
         }
 
+        targetObj.GetComponent<CarjackCar>().FinishMinigame(win);
         //set back to inactive
         active = false;
         slider.gameObject.SetActive(false);
         targetObj = null;
+
+       
     }
 
     private void Update()

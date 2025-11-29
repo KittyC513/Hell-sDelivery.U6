@@ -67,32 +67,34 @@ public class CarjackCar : MonoBehaviour
                 }
             }
 
-            if (!activeSlider.active)
-            {
-                //check if the game was completed
-                if (activeSlider.completed == true)
-                {
-                    active = false;
-                    currentPlayer = null;
-                    activeSlider = null;
-                }
-                else
-                {
-                    //the game was failed
-                    active = false;
-                    currentPlayer = null;
-                    activeSlider = null;
-                }
-            }
 
         }
         
     
     }
+
+    public void FinishMinigame(bool win)
+    {
+         //check if the game was completed
+        if (win == true)
+        {
+            UnlockCar();
+            active = false;
+            currentPlayer = null;
+            activeSlider = null;
+        }
+        else
+        {
+            //the game was failed
+            active = false;
+            currentPlayer = null;
+            activeSlider = null;
+        }
+    }
     
     public void UnlockCar()
     {
-        heat = minigameManager.CheckDistance(this.transform.position);
+        heat = minigameManager.CheckDistance(this.transform.position, currentPlayer);
         Debug.Log(heat);
         switch (heat)
         {
