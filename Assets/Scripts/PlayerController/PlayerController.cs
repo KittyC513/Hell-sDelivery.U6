@@ -29,6 +29,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Vector3 leftStickDir;
     [SerializeField] private float weight = 10;
 
+    public float weightMultiplier = 1f;
+
     private Vector3 lastFramePos;
 
     private bool frozen = false;
@@ -118,7 +120,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float coyoteTime = 0.1f; //how long after running off a ledge can the player still input jump
     private float coyoteCurrent = 0;
     private bool canCoyote = false;
-    private bool freezeRotation = false;
+    public bool freezeRotation = false;
 
     [SerializeField] private AnimationCurve quickTurnMultiplier; //a curve that determines how much velocity gain is multiplied by when turning sharply, makes for a quicker turn around
     [SerializeField] private AnimationCurve runningQuickTurnMultiplier;
@@ -342,39 +344,51 @@ public class PlayerController : NetworkBehaviour
             float maxSpeed = maxWalkSpeed;
             DebugMarkers();
 
-            if (DetectRunInput())
+            if (!playerLockOn.isWithDetonator)
             {
-                maxSpeed = maxRunSpeed;
-
-                if (currentSpeed >= maxWalkSpeed && !running)
+                if (DetectRunInput())
                 {
+                    maxSpeed = maxRunSpeed;
 
-                    running = true;
+                    if (currentSpeed >= maxWalkSpeed && !running)
+                    {
+
+                        running = true;
+                    }
+                }
+
+                if (currentSpeed >= maxRunSpeed && !atTopSpeed)
+                {
+                    atTopSpeed = true;
+
+                }
+
+                //running activates when the player's speed gets above max walk speed
+                if (running)
+                {
+                    accel = runAcceleration;
+                    decel = runDeceleration;
+                }
+
+
+                //check if the player can stop running
+                if (currentSpeed <= maxWalkSpeed + 0.5f && running)
+                {
+                    running = false;
+                    atTopSpeed = false;
                 }
             }
-
-            if (currentSpeed >= maxRunSpeed && !atTopSpeed)
+            else
             {
-                atTopSpeed = true;
-              
-            }
-
-            //running activates when the player's speed gets above max walk speed
-            if (running)
-            {
-                accel = runAcceleration;
-                decel = runDeceleration;
-            }
-
-
-            //check if the player can stop running
-            if (currentSpeed <= maxWalkSpeed + 0.5f && running)
-            {
+                //using detonator lockon values
+                accel = acceleration * weightMultiplier ;
+                decel = decceleration * weightMultiplier;
+                maxSpeed = maxWalkSpeed * weightMultiplier;
                 running = false;
-                atTopSpeed = false;
             }
 
-            CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
+
+                CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
 
             //print("leftStickDir: " + leftStickDir);
         }
@@ -511,7 +525,7 @@ public class PlayerController : NetworkBehaviour
 
 
         
-        if (!freezeRotation) RotateTowards(targetDir, rotationSpeed);
+        if (!freezeRotation && !playerLockOn.isWithDetonator) RotateTowards(targetDir, rotationSpeed);
 
     }
 

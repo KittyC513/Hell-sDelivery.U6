@@ -1465,6 +1465,7 @@ MonoBehaviour:
   rotationSpeed: 9
   leftStickDir: {x: 0, y: 0, z: 0}
   weight: 2
+  weightMultiplier: 0.3
   maxRunSpeed: 16
   runAcceleration: 35
   runDeceleration: 30
@@ -1513,6 +1514,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   coyoteTime: 0.1
+  freezeRotation: 0
   quickTurnMultiplier:
     serializedVersion: 2
     m_Curve:
@@ -2468,13 +2470,14 @@ MonoBehaviour:
   distanceRecoveryDelay: 1
   movePos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
-  moveSpeed_coneSight: 7
+  moveSpeed_coneSight: 9
   oriMoveSpeed: 5
   topdownMoveSpeed: 12
   defaultPos: {fileID: 5113240428649811745}
   resetPos: 0
   cameraManager: {fileID: 1062957148588737322}
   offsetY: 70
+  hasInitialisedConeCam: 0
 --- !u!1001 &2660546766662916825
 PrefabInstance:
   m_ObjectHideFlags: 0
