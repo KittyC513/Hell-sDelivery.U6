@@ -1297,6 +1297,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 67108864
   isWithDetonator: 0
+  isDetonatorLockOn: 0
   canSeeTarget: 1
   visibleTargets: []
   resolution: 40
@@ -2325,7 +2326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7141576590397492036
 Transform:
   m_ObjectHideFlags: 0
@@ -2459,7 +2460,7 @@ MonoBehaviour:
   rotateSpeed: 120
   offset: {x: 0, y: 1.5, z: 0}
   invertPitch: 0
-  pitchLimit: {x: -10, y: 70}
+  pitchLimit: {x: -10, y: 100}
   pitchLimitCD: {x: -10, y: 50}
   keyboardMoveSpeed: 0.3
   obstacleMask:

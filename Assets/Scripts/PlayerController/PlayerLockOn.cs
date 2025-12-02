@@ -39,6 +39,7 @@ public class PlayerLockOn : MonoBehaviour
     public LayerMask targetMask;
 
     public bool isWithDetonator = true;
+    public bool isDetonatorLockOn = false;
     public bool canSeeTarget = true;   
 
     public List<Transform> visibleTargets = new List<Transform>();
@@ -70,7 +71,7 @@ public class PlayerLockOn : MonoBehaviour
             {
                 //CameraManager.currentCamType = E_CamType.playerCam;
                 ConeSightDetection();
-
+                isDetonatorLockOn = true;
                 //if (!isLockedOn)
                 //{
                 //    CameraManager.ResetCamTransition();
@@ -80,6 +81,8 @@ public class PlayerLockOn : MonoBehaviour
             }
             else
             {
+                isDetonatorLockOn = false;
+
                 if ((lockTarget != null))
                 {
 
@@ -107,6 +110,7 @@ public class PlayerLockOn : MonoBehaviour
             lockTarget = null;
             CameraManager.currentCamType = E_CamType.playerCam;
             isLockedOn = false;
+            isDetonatorLockOn = false;
 
             visibleTargets.Clear();
         }
