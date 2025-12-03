@@ -236,16 +236,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235ba8288a9dd46458e2a0c1abd82da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  withPickupRange_p1: 0
+  withPickupRange_p2: 0
   playerLockOn: {fileID: 0}
   inputDetection: {fileID: 0}
+  usePhysics: 0
   holdRotation: {x: 0, y: 0, z: 0}
   bagRotation: {x: 0, y: 0, z: 0}
+  isAvaliable: 1
+  pickupIcon: {fileID: 0}
   isOnUse: 0
+  rb: {fileID: 0}
   rbContraints: 0
+  maxButtonHoldTime: 2
+  buttonHoldForce: 18
+  throwHoldTimer: 0.2
+  pickupType: 1
+  autoSwitch: 0
   pickupRadium: 1
   targetPos: {fileID: 0}
   dropSpeed: 5
-  rb: {fileID: 0}
   bombPrefab: {fileID: 3435195785975598480, guid: 15563e57cb35e1f498b1f152ed51092d, type: 3}
   offset: {x: 0, y: 0, z: 0}
   maxBombs: 2
@@ -253,6 +263,11 @@ MonoBehaviour:
   cdSpawn: 0.3
   timer: 0
   bombsList: []
+  pStateMachine: {fileID: 0}
+  validatedUse: 0
+  maxChargeTime: 1.5
+  maximumThrowForce: 10
+  minimumThrowForce: 10
 --- !u!1001 &2428798326590027989
 PrefabInstance:
   m_ObjectHideFlags: 0

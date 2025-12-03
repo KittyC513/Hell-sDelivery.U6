@@ -16,7 +16,7 @@ public class ItemBase : MonoBehaviour
 
     [HideInInspector] public PlayerLockOn playerLockOn;
     [HideInInspector] public PlayerInputDetection inputDetection;
-    private Bag currentBag;
+    protected Bag currentBag;
     [SerializeField] private bool usePhysics = false;
     //[SerializeField]
     //protected ItemHandler itemHandler;
@@ -29,7 +29,7 @@ public class ItemBase : MonoBehaviour
 
     [SerializeField] private BillboardUI pickupIcon;
 
-    private ThrowArc throwArc;
+    protected ThrowArc throwArc;
 
     [HideInInspector] public bool isOnUse = false;
 
@@ -45,12 +45,14 @@ public class ItemBase : MonoBehaviour
     private float baseThrowForce = 2;
     private float yStartForce = 0.8f;
     private float yEndForce = 0.15f;
-    private float gravity;
+    protected float gravity;
 
     private float buttonHoldTime = 0;
     private Vector3 throwDirection = Vector3.zero;
     private float pickupCooldown = 0.45f;
     private float pickupTime;
+
+    private bool usePressed = false;
 
     public E_PickupType pickupType = E_PickupType.two;
     public bool autoSwitch = false;
@@ -121,7 +123,16 @@ public class ItemBase : MonoBehaviour
         {
             if (inputDetection.crouchPressed)
             {
-                UseFunction();
+                if (!usePressed)
+                {
+                    UseFunction();
+                }
+                usePressed = true;
+                
+            }
+            else
+            {
+                usePressed = false;
             }
         }
 
