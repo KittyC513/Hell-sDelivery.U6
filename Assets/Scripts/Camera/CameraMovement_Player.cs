@@ -225,8 +225,17 @@ public class CameraMovement_Player : NetworkBehaviour
 
         //update yam
         horizontalQuat = Quaternion.AngleAxis(mRotateValue.x, mYawRotateAxis);
+
+        //apply yaw around up axis
+        Vector3 yawedDir = horizontalQuat * mDefaultDir;
+
+        //recompute pitch axis based on yawed direction
+        Vector3 flatForward = Vector3.ProjectOnPlane(yawedDir, mYawRotateAxis);
+        mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
+
         verticalQuat = Quaternion.AngleAxis(mRotateValue.y, mPitchRotateAxis);
-        finalDir = horizontalQuat * verticalQuat * mDefaultDir;
+        //finalDir = horizontalQuat * verticalQuat * mDefaultDir;
+        finalDir = verticalQuat * yawedDir;
 
         from = playerTransform.localToWorldMatrix.MultiplyPoint3x4(offset);
         to = from + finalDir * distance;
@@ -267,10 +276,16 @@ public class CameraMovement_Player : NetworkBehaviour
     private float AngleCorrection(float angle)
     {
         angle %= 360f;
-        if (angle > 180f)
-            return mRotateValue.x - 360f;
-        else if (angle < -180)
-            return mRotateValue.x + 360;
+        //if (angle > 180f)
+        //    return mRotateValue.x - 360f;
+        //else if (angle < -180)
+        //    return mRotateValue.x + 360;
+        //return angle;
+
+        if(angle > 180f)
+            angle -= 360f;
+        else if(angle < -180f)
+            angle += 360f;
         return angle;
     }
     #endregion
