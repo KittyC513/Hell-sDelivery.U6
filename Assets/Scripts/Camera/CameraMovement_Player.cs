@@ -321,10 +321,13 @@ public class CameraMovement_Player : NetworkBehaviour
 
         if (!hasInitialisedConeCam)
         {
-            hasInitialisedConeCam = true;
+            //hasInitialisedConeCam = true;
 
             // Make camera yaw match player facing
-            mRotateValue.x = playerTransform.eulerAngles.y;
+            //mRotateValue.x = playerTransform.eulerAngles.y;
+
+            //keep cam yam 
+            mRotateValue.x = this.transform.eulerAngles.y;
 
             // Clamp pitch just in case
             mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
@@ -338,8 +341,10 @@ public class CameraMovement_Player : NetworkBehaviour
             transform.position = initPos;
             transform.rotation = initRot;
 
+            //rotate player to face same direction as camera
+            RotatePlayerToCamera(initRot);
             // Don't do rest of logic this frame
-            return;
+            //return;
         }
 
         // 1. Get input (keep your device handling)
@@ -368,11 +373,12 @@ public class CameraMovement_Player : NetworkBehaviour
         transform.position = smoothedPos;
         transform.rotation = camRot;
 
-        if (!hasInitialisedConeCam && rawInput.magnitude!=0)
+        if (!hasInitialisedConeCam && rawInput.magnitude != 0)
         {
+
             hasInitialisedConeCam = true;
         }
-        else if(hasInitialisedConeCam)
+        else if (hasInitialisedConeCam)
         {
             RotatePlayerToCamera(camRot);
         }
