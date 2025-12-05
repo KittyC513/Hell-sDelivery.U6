@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BombItem : ItemBase
@@ -25,15 +26,121 @@ public class BombItem : ItemBase
     public PlayerStateMachine pStateMachine;
     public bool validatedUse = false;
 
+    [Header("Bomb Throwing")]
+    public float maxChargeTime;
+    private float chargeHoldTime;
+    public float maximumThrowForce;
+    public float minimumThrowForce;
+    private bool bombPulled = false;
+    private bool charging = false;
 
+    private Vector3 bombHoldPoint;
+    private GameObject bomb;
+
+   
     public override void UseFunction()
     {
         if (validatedUse)
         {
-            ThrowBomb();
-            print("Bomb is thrown");
+            //Heres the way its gonna work
+            //on use pull out a bomb and hold it above your head
+                //in the future this should override animation
+                //bomb pulled is now true (player cannot pull another bomb)
+            //on another press down start throwing the bomb
+            //on release throw the bomb with maximum force * buttonHoldTime / maxChargeTime
+
+            //use the throw arc to show the bomb trajectory
+
+            if (!bombPulled)
+            {
+                PullBomb();
+                return;
+            }
+            else //bomb is already pulled
+            {
+                // start charging
+                charging = true;
+            }
+
+            //ThrowBomb();
+            //print("Bomb is thrown");
         }
     }
+
+    
+    private void PullBomb()
+    {
+        
+        bombHoldPoint = new Vector3(currentBag.transform.position.x, currentBag.transform.position.y + 2, currentBag.transform.position.z);
+        bomb = Instantiate(bombPrefab, bombHoldPoint, Quaternion.identity);
+
+        bomb.transform.position = bombHoldPoint;
+        bombPulled = true;
+        
+        
+    }
+
+    private void HoldBomb()
+    {
+        bombHoldPoint = new Vector3(currentBag.transform.position.x, currentBag.transform.position.y + 2, currentBag.transform.position.z);
+
+        bomb.transform.position = bombHoldPoint;
+    }
+
+    private void ChargeBombThrow()
+    {
+        //player is holding down the button, charge the bomb throw
+        if (inputDetection.crouchPressed)
+        {
+            throwArc = currentBag.gameObject.GetComponent<ThrowArc>();
+
+            if (chargeHoldTime < maxChargeTime)
+            {
+                chargeHoldTime += Time.deltaTime;
+            }
+            //clamp the charge hold time value
+            chargeHoldTime = Mathf.Clamp(chargeHoldTime, 0, maxChargeTime);
+
+            //get a percentage of charge completion
+            float percent = chargeHoldTime / maxChargeTime;
+            Camera cam = GameManager.Instance.cam_p1;
+            if (inputDetection.playerNum == 2) cam = GameManager.Instance.cam_p2;
+            //get the forward direction (y value is temporary)
+            Vector3 dir = new Vector3(currentBag.transform.forward.x, cam.transform.forward.y, currentBag.transform.forward.z).normalized;
+            
+            //velocity is direction * force
+            Vector3 velocity = dir * (maximumThrowForce * percent);
+
+            throwArc.ShowThrowArc(velocity, bomb.transform.position, percent, gravity);
+        }
+        else
+        {
+            throwArc = currentBag.gameObject.GetComponent<ThrowArc>();
+             //get a percentage of charge completion
+            float percent = chargeHoldTime / maxChargeTime;
+            
+            Camera cam = GameManager.Instance.cam_p1;
+            if (inputDetection.playerNum == 2) cam = GameManager.Instance.cam_p2;
+
+            //get the forward direction (y value is temporary)
+            Vector3 dir = new Vector3(currentBag.transform.forward.x, cam.transform.forward.y, currentBag.transform.forward.z).normalized;
+            
+            //velocity is direction * force
+            Vector3 velocity = dir * (maximumThrowForce * percent);
+
+            throwArc.StopThrowArc();
+            bomb.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            bomb.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.Impulse);
+            bombsList.Add(bomb.GetComponent<BombMovement>());
+            chargeHoldTime = 0;
+            bomb = null;
+            charging = false;
+            bombPulled = false;
+            //apply the force to the bomb we pulled
+        }
+        
+    }
+
     private void ThrowBomb()
     {
         if (numOfBombs < maxBombs)
@@ -79,6 +186,9 @@ public class BombItem : ItemBase
     {
         base.Update();
         ValidatedCheck();
+
+        if (bombPulled) HoldBomb();
+        if (charging && bombPulled) ChargeBombThrow();
     }
     private void ValidatedCheck()
     {

@@ -63,13 +63,13 @@ public class BombMovement : MonoBehaviour
             //When a target is locked on
             if(targetPos != null)
             {
-                MoveTowardTarget(targetPos);
+                //MoveTowardTarget(targetPos);
             }
             //No target is locked on
             else
             {
-                if (!GroundCheck())
-                    ThrowBombWithoutTarget();
+                //if (!GroundCheck())
+                    //ThrowBombWithoutTarget();
 
             }
 

@@ -525,7 +525,7 @@ public class PlayerController : NetworkBehaviour
 
 
         
-        if (!freezeRotation && !playerLockOn.isWithDetonator) RotateTowards(targetDir, rotationSpeed);
+        if (!freezeRotation && !playerLockOn.isDetonatorLockOn) RotateTowards(targetDir, rotationSpeed);
 
     }
 
