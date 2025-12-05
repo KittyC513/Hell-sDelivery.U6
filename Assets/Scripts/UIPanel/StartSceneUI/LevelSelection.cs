@@ -44,4 +44,9 @@ public class LevelSelection : MonoBehaviour
     {
         SceneManager.LoadScene("Playtest-11-2025");
     }
+
+    public void OnClick_GreyBox()
+    {
+        SceneManager.LoadScene("Level_greyBox");
+    }
 }
