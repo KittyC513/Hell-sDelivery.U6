@@ -17,6 +17,8 @@ public class CarjackCar : MonoBehaviour
     [SerializeField] private Material coolMaterial;
     [SerializeField] private Material coldMaterial;
 
+    public bool unlocked = false;
+
     private void Start()
     {
         minigameManager = FindFirstObjectByType<CarjackMinigameManager>();
@@ -27,17 +29,27 @@ public class CarjackCar : MonoBehaviour
 
     public void StartUnlockMinigame(PlayerInputDetection playerInput)
     {
-        if (!active)
+        if (!unlocked)
         {
             CarUnlockSlider slider;
             active = true;
 
-            if (playerInput.playerNum == 1) slider = p1Slider;
-            else slider = p2Slider;
-
+            //freeze the inputs of the player who started the minigame
+            //and grab the correct slider to activate
+            if (playerInput.playerNum == 1) 
+            {
+                slider = p1Slider;
+                GameManager.instance.FreezePlayer1();
+            }
+            else 
+            {
+                slider = p2Slider;
+                GameManager.instance.FreezePlayer2();
+            }
+            
             //reset the slider minigame
             slider.ResetMinigame();
-            slider.Activate(this.gameObject);
+            slider.Activate(this.gameObject, playerInput.gameObject.transform.position, playerInput);
 
             //set the variables
             activeSlider = slider;
@@ -46,56 +58,12 @@ public class CarjackCar : MonoBehaviour
        
     }
 
-    private void Update()
+
+    public void UnlockCar(PlayerInputDetection player)
     {
-        if (active)
-        {
-            //read inputs for the active slider
-            if (currentPlayer?.jumpPressed == true && canInput)
-            {
-                canInput = false;
-                activeSlider?.CallInput();
-            }
-
-
-            //make sure they cant hold down the button
-            if (currentPlayer?.jumpPressed != true)
-            {
-                if (canInput == false)
-                {
-                    canInput = true;
-                }
-            }
-
-
-        }
-        
-    
-    }
-
-    public void FinishMinigame(bool win)
-    {
-         //check if the game was completed
-        if (win == true)
-        {
-            UnlockCar();
-            active = false;
-            currentPlayer = null;
-            activeSlider = null;
-        }
-        else
-        {
-            //the game was failed
-            active = false;
-            currentPlayer = null;
-            activeSlider = null;
-        }
-    }
-    
-    public void UnlockCar()
-    {
-        heat = minigameManager.CheckDistance(this.transform.position, currentPlayer);
+        heat = minigameManager.CheckDistance(this.transform.position, player);
         Debug.Log(heat);
+        unlocked = true;
         switch (heat)
         {
             case CarjackMinigameManager.HeatCheck.target:

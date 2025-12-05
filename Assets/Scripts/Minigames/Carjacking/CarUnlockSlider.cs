@@ -23,12 +23,17 @@ public class CarUnlockSlider : MonoBehaviour
     public bool active = false;
     private GameObject targetObj;
     [SerializeField] private float speedIncrease = 3;
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private Image lockImg;
+    private bool canInput = true;
+    private PlayerInputDetection currentPlayer;
+
 
     private void Start()
     {
         slider.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         startSpeed = sliderSpeed;
-        
+        //PickNewSection(Random.Range(0.55f, 1.5f));
     }
 
     public void ResetMinigame()
@@ -36,29 +41,63 @@ public class CarUnlockSlider : MonoBehaviour
         //reset variables
         cyclesFinished = 0;
         sliderSpeed = startSpeed;
-        PickNewSection(Random.Range(0.75f, 2.5f));
+        PickNewSection(Random.Range(0.55f, 1.5f));
     }
 
-    public void Activate(GameObject target)
+    public void Activate(GameObject target, Vector3 playerPos, PlayerInputDetection playerInput)
     {
+        //setup variables
+        
+        //the car gameobject
         targetObj = target;
-        Vector3 position = target.transform.position;
+
+        //the position to place this object (car unlock slider)
+        Vector3 position = playerPos;
         transform.position = new Vector3(position.x, position.y + 1, position.z);
         slider.gameObject.SetActive(true);
+
+
+        //get a reference to the inputting player
+        currentPlayer = playerInput;
+
         active = true;
+
         //find the start and end of the slider 
         startValue = slider.position.x - (slider.rect.width / 2);
         endValue = slider.position.x + (slider.rect.width / 2);
+
+        //set a new section
+        PickNewSection(Random.Range(0.55f, 1.5f));
     }
 
-    //called from the active minigame slider
+    public void PlayUnlockUI(Vector3 worldPos)
+    {
+        //plays a simple UI indicating a car was unlocked
+        Vector3 worldToScreen = mainCam.WorldToScreenPoint(worldPos);
+        lockImg.gameObject.SetActive(true);
+        lockImg.rectTransform.position = worldToScreen;
+        lockImg.GetComponent<Animator>().Play("LockBreak", -1, 0f);
+        
+    }
+
     public void EndMinigame(bool win)
     {
+        //unfreeze the player who just ended their minigame
+        if (currentPlayer.playerNum == 1)
+        {
+            GameManager.instance.UnFreezePlayer1();
+        }
+        else
+        {
+            GameManager.instance.UnFreezePlayer2();
+        }
+
         if (win)
         {
             Debug.Log("Unlocked");
             //unlock the car
-            
+            PlayUnlockUI(targetObj.transform.position);
+            targetObj.GetComponent<CarjackCar>().UnlockCar(currentPlayer);
         }
         else
         {
@@ -66,13 +105,10 @@ public class CarUnlockSlider : MonoBehaviour
             Debug.Log("Failed");
         }
 
-        targetObj.GetComponent<CarjackCar>().FinishMinigame(win);
         //set back to inactive
         active = false;
         slider.gameObject.SetActive(false);
         targetObj = null;
-
-       
     }
 
     private void Update()
@@ -96,7 +132,36 @@ public class CarUnlockSlider : MonoBehaviour
                 sliderProgression = 0;
                 dir = 1;
             }
+
+            //read inputs for the active slider
+            if (currentPlayer?.jumpPressed == true && canInput)
+            {
+                canInput = false;
+                CallInput();
+            }
+
+
+            //make sure they cant hold down the button
+            if (currentPlayer?.jumpPressed != true)
+            {
+                if (canInput == false)
+                {
+                    canInput = true;
+                }
+            }
+
+            if (targetObj != null)
+            {
+                //check if the car got unlocked, if so boot the player out
+                if (targetObj.GetComponent<CarjackCar>().unlocked)
+                {
+                    EndMinigame(false);
+                }
+            }
+            
         }
+
+       
        
     }
 

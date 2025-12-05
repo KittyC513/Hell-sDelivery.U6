@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +24,9 @@ public class CarjackMinigameManager : MonoBehaviour
     [SerializeField] private float coolDist = 29;
     private GameObject targetCar;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Image p1Indicator;
+    [SerializeField] private Image p2Indicator;
+    [SerializeField] private Camera mainCam;
     
 
     public enum HeatCheck { cold, cool, warm, hot, target }
@@ -68,6 +71,19 @@ public class CarjackMinigameManager : MonoBehaviour
         GameObject chosenCar = carList[num];
         targetCar = chosenCar;
         chosenCar.GetComponentInChildren<MeshRenderer>().material = null;
+    }
+
+
+    private void Update()
+    {
+        DisplayPlayerIndicators(GameManager.Instance.player1.transform.position, p1Indicator);
+        DisplayPlayerIndicators(GameManager.Instance.player2.transform.position, p2Indicator);
+    }
+    private void DisplayPlayerIndicators(Vector3 pPos, Image indicator)
+    {
+        Vector3 worldToScreen = mainCam.WorldToScreenPoint(pPos);
+        Vector3 targetPos = new Vector3(worldToScreen.x, worldToScreen.y + 35,  indicator.rectTransform.position.z);
+        indicator.rectTransform.position = targetPos;
     }
 
     public HeatCheck CheckDistance(Vector3 position, PlayerInputDetection player)
