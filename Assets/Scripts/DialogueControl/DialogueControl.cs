@@ -14,6 +14,7 @@ public class DialogueControl : MonoBehaviour
     {
         GameManager.instance.UnFreezeBothPlayers();
         GameManager.instance.EnableBothPlayersCam();
+        isResetPos = false;
     }
 
     public void ResetPlayerPos()
@@ -22,6 +23,10 @@ public class DialogueControl : MonoBehaviour
         {
             GameManager.instance.player1.transform.position = enterPoints[0].position;
             GameManager.instance.player2.transform.position = enterPoints[1].position;
+            
+            /***********rotation related to camera direction****************/
+
+            
             isResetPos = true;
         }
     }

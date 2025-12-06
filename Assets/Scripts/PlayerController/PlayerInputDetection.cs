@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
 using System.Runtime.CompilerServices;
 using Unity.Netcode;
@@ -69,7 +70,9 @@ public class PlayerInputDetection : NetworkBehaviour
     [Header("PointerControl")]
     public UIPointerControl uiPointerControl;
 
-  
+    public ProximitySelector proximitySelector;
+
+
 
     private void Awake()
     {
@@ -184,6 +187,10 @@ public class PlayerInputDetection : NetworkBehaviour
 
         if (NGO_PanelControl.instance != null)
             NGO_PanelControl.instance.inputDetector = this;
+
+
+        /*******************dialogue button control **********************/
+        //proximitySelector.enabled = false;
     }
 
     #region Movement Inputs
