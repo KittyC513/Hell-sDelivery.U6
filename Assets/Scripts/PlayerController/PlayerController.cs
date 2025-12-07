@@ -734,6 +734,8 @@ public class PlayerController : NetworkBehaviour
         frozen = state;
         if (state == true)
         {
+            //freeze the player's position on the y axis and set velocity to 0
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
             rb.linearVelocity = Vector3.zero;
             goalVelocityChange = Vector3.zero;
         }
@@ -744,6 +746,18 @@ public class PlayerController : NetworkBehaviour
     {
         freezeRotation = freezeState;
         Debug.Log("Player freeze rotation state set to " + freezeState + " by " + scriptName);
+    }
+
+    public void UnFreezePlayerY()
+    {
+        StartCoroutine(WaitToMove());
+    }
+
+    IEnumerator WaitToMove()
+    {
+        yield return new WaitForSeconds(0.3f);
+        rb.constraints |= RigidbodyConstraints.FreezePositionY;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     public void SetLedgeSnapVariables(Vector3 xz, float y, GameObject obj)

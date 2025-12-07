@@ -191,6 +191,18 @@ public class GameManager
         }
     }
 
+    public void RotatePlayersTo(Transform targetRot)
+    {
+        if (player1 != null)
+        {
+            player1.transform.rotation = targetRot.rotation;
+        }
+        if (player2 != null)
+        {
+            player2.transform.rotation = targetRot.rotation;
+        }
+    }
+
     public void ResetPlayer1Position(Transform pos_p1)
     {
         if (player1 != null)
