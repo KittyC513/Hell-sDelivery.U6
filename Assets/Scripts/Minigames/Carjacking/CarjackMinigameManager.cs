@@ -70,7 +70,7 @@ public class CarjackMinigameManager : MonoBehaviour
 
         GameObject chosenCar = carList[num];
         targetCar = chosenCar;
-        chosenCar.GetComponentInChildren<MeshRenderer>().material = null;
+        //chosenCar.GetComponentInChildren<MeshRenderer>().material = null;
     }
 
 
