@@ -344,7 +344,7 @@ public class PlayerController : NetworkBehaviour
             float maxSpeed = maxWalkSpeed;
             DebugMarkers();
 
-            if (!playerLockOn.isWithDetonator)
+            if (!playerLockOn.isDetonatorLockOn)
             {
                 if (DetectRunInput())
                 {
@@ -387,8 +387,7 @@ public class PlayerController : NetworkBehaviour
                 running = false;
             }
 
-
-                CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
+            CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
 
             //print("leftStickDir: " + leftStickDir);
         }

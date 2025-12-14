@@ -19,6 +19,7 @@ public class CameraMovement_Player : NetworkBehaviour
     public PlayerInputDetection inputDetection;
     public PlayerLockOn playerLockOn;
     public Vector3 camOffset;
+    public Vector3 resetCamOffset;
 
     [Header("Camera Variables")]
     Vector3 mDefaultDir;
@@ -76,6 +77,10 @@ public class CameraMovement_Player : NetworkBehaviour
     public float topdownMoveSpeed;
     public Transform defaultPos;
     public bool resetPos = false;
+    public bool resetCamPos = false;
+    public float defaultPitch = -15f;
+
+    public Vector3 resetCamMovePos;
 
     public CameraManager cameraManager;
     public float offsetY;
@@ -83,6 +88,7 @@ public class CameraMovement_Player : NetworkBehaviour
     private PlayerSettings playerSettings;
 
     public bool hasInitialisedConeCam = false;
+    public bool didSyncAfterReset = false;
     private void Start()
     {
         distance = oriDistance;
@@ -183,6 +189,7 @@ public class CameraMovement_Player : NetworkBehaviour
         if (playerLockOn.isWithDetonator && inputDetection.lockPressed)
         {
             ConeSightCamMovement();
+            resetCamPos = false;
         }
         else
         {
@@ -208,6 +215,44 @@ public class CameraMovement_Player : NetworkBehaviour
     #region Player Camera movement(Base)
     void CameraMovement()
     {
+        if (playerTransform == null) return;
+
+        if (!resetCamPos)
+        {
+            mRotateValue.x = playerTransform.eulerAngles.y; // face behind player
+            mRotateValue.y = Mathf.Clamp(defaultPitch, pitchLimit.x, pitchLimit.y); // default pitch
+
+            Quaternion initRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+            resetCamMovePos = playerTransform.position + initRot * resetCamOffset;
+            //transform.position = initPos;
+            //transform.rotation = initRot;
+            transform.position = Vector3.Lerp(this.transform.position, resetCamMovePos, Time.deltaTime * moveSpeed);
+
+            // smooth rotation during reset
+            Vector3 lookFrom = playerTransform.localToWorldMatrix.MultiplyPoint3x4(offset);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookFrom - transform.position), Time.deltaTime * rotateSpeed);
+
+            // If player moves camera input, exit reset mode
+            inputDelta = new Vector2(
+                inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? inputDetection.GetCameraMovement().x : inputDetection.GetCameraMovement().x * keyboardMoveSpeed,
+                inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? inputDetection.GetCameraMovement().y : inputDetection.GetCameraMovement().y * keyboardMoveSpeed
+            );
+
+            if (inputDelta.sqrMagnitude > 0.0001f || inputDetection.GetHorizontalMovement().sqrMagnitude > 0.0001f)
+            {
+                resetCamPos = true;
+                didSyncAfterReset = false;
+            }
+
+            return; 
+        }
+
+        if (!didSyncAfterReset)
+        {
+            SyncRotateValueFromCamera();
+            didSyncAfterReset = true;
+        }
+
 
         //get input value
         inputDelta = new Vector2(inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ?
@@ -231,6 +276,11 @@ public class CameraMovement_Player : NetworkBehaviour
 
         //recompute pitch axis based on yawed direction
         Vector3 flatForward = Vector3.ProjectOnPlane(yawedDir, mYawRotateAxis);
+        if (flatForward.sqrMagnitude < 0.0001f)
+            mPitchRotateAxis = transform.right;
+        else
+            mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
+
         mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
 
         verticalQuat = Quaternion.AngleAxis(mRotateValue.y, mPitchRotateAxis);
@@ -238,6 +288,7 @@ public class CameraMovement_Player : NetworkBehaviour
         finalDir = verticalQuat * yawedDir;
 
         from = playerTransform.localToWorldMatrix.MultiplyPoint3x4(offset);
+
         to = from + finalDir * distance;
 
         exceptTo = ObstacleProcess(from, to);
@@ -260,10 +311,46 @@ public class CameraMovement_Player : NetworkBehaviour
         movePos = from + finalDir * mCurrentDistance;
 
         transform.position = Vector3.Lerp(this.transform.position, movePos, Time.deltaTime * moveSpeed);
-        //transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalDir), Time.deltaTime * rotateSpeed);
-        this.transform.LookAt(from);
+        Quaternion targetRot = Quaternion.LookRotation(from - transform.position, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * rotateSpeed);
+        //this.transform.LookAt(from);
 
+        //if (!resetCamPos && inputDelta.magnitude != 0)
+        //{
+        //    resetCamPos = true;
+        //}
+        //else if(resetCamPos)
+        //{
+        //    //transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalDir), Time.deltaTime * rotateSpeed);
+        //    transform.position = Vector3.Lerp(this.transform.position, movePos, Time.deltaTime * moveSpeed);
+        //    this.transform.LookAt(from);
+        //}
 
+    }
+    #endregion
+
+    #region Sync Rotate Value
+
+    public void SyncRotateValueFromCamera()
+    {
+        Vector3 pivot = playerTransform.localToWorldMatrix.MultiplyPoint3x4(offset);
+
+        // direction from pivot -> camera (orbit direction)
+        Vector3 orbitDir = (transform.position - pivot).normalized;
+
+        // 1) Update default yaw reference (THIS is the missing piece)
+        Vector3 planar = Vector3.ProjectOnPlane(orbitDir, mYawRotateAxis);
+        if (planar.sqrMagnitude < 0.0001f)
+            planar = Vector3.ProjectOnPlane(transform.forward, mYawRotateAxis); // fallback
+
+        mDefaultDir = planar.normalized;
+
+        // 2) Reset yaw so the current direction is treated as yaw = 0 (no snapping)
+        mRotateValue.x = 0f;
+
+        // 3) Sync pitch from current orbit direction
+        float pitch = -Mathf.Asin(Vector3.Dot(orbitDir, mYawRotateAxis)) * Mathf.Rad2Deg;
+        mRotateValue.y = Mathf.Clamp(pitch, pitchLimit.x, pitchLimit.y);
     }
     #endregion
 
