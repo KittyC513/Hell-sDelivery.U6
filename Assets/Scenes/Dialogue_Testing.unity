@@ -3347,12 +3347,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 487491803}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: 32
+  trigger: 64
   condition:
     luaConditions: []
     questConditions: []
@@ -6915,6 +6915,11 @@ MonoBehaviour:
   - {fileID: 880335411}
   - {fileID: 1912218383}
   dialogueCam: {fileID: 1691674474}
+  dialogueSystemTrigger_camNPC: {fileID: 487491807}
+  dialogueUsable_camNPC: {fileID: 487491805}
+  IsTriggered_p1: 0
+  IsTriggered_p2: 0
+  currentDialogueState: 0
 --- !u!4 &1016019257
 Transform:
   m_ObjectHideFlags: 0
@@ -12424,7 +12429,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

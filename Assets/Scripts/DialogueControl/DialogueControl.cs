@@ -1,10 +1,39 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
+
+public enum E_DialogueState
+{
+    None,
+    WaitingForButtonPress_p1,
+    WaitingForButtonPress_p2,
+    TalkingToCamNPC,
+}
 public class DialogueControl : MonoBehaviour
 {
     public Transform[] spawnPoints;
     private bool isResetPos = false;
     public Transform dialogueCam;
+
+    [Header("Cam_NPC")]
+    public DialogueSystemTrigger dialogueSystemTrigger_camNPC;
+    public Usable dialogueUsable_camNPC;
+    Collider[] c_players;
+    public bool IsTriggered_p1 = false;
+    public bool IsTriggered_p2 = false;
+
+    public E_DialogueState currentDialogueState = E_DialogueState.None;
+
+    private void Awake()
+    {
+        dialogueSystemTrigger_camNPC.enabled = false;
+    }
+
+    private void Update()
+    {
+        OnButtonCheck();
+        DialogueState();
+    }
 
     public void OnConversation()
     {
@@ -24,15 +53,69 @@ public class DialogueControl : MonoBehaviour
         {
             print("resetting pos");
             Transform rotTransform = dialogueCam;
-            //GameManager.Instance.player1.transform.position = spawnPoints[0].position;
-            //GameManager.Instance.player2.transform.position = spawnPoints[1].position;
             GameManager.Instance.ResetPlayersPosition(spawnPoints[0], spawnPoints[1]);
 
             /***********rotation related to camera direction****************/
-            //GameManager.Instance.player1.transform.rotation = Quaternion.Euler(0, rotTransform.eulerAngles.y, 0);
-            //GameManager.Instance.player2.transform.rotation = Quaternion.Euler(0, rotTransform.eulerAngles.y, 0);
             GameManager.instance.RotatePlayersTo(dialogueCam);
             isResetPos = true;
+        }
+    }
+
+    public void OnButtonCheck()
+    {
+        //Detect players in range of usable
+        c_players = Physics.OverlapSphere(dialogueUsable_camNPC.transform.position, dialogueUsable_camNPC.maxUseDistance, 
+            1 << LayerMask.NameToLayer("Player1") | 1 << LayerMask.NameToLayer("Player2"));
+
+        if (c_players.Length > 0)
+        {
+            //check for each player if jump is pressed
+            int p1Layer = LayerMask.NameToLayer("Player1");
+            int p2Layer = LayerMask.NameToLayer("Player2");
+
+            foreach (var col in c_players)
+            {
+                if (col.gameObject.layer == p1Layer)
+                {
+                    PlayerInputDetection inputDetection = col.GetComponent<PlayerInputDetection>();
+                    if (inputDetection != null && inputDetection.jumpPressed)
+                        IsTriggered_p1 = true;
+                }
+
+                if (col.gameObject.layer == p2Layer)
+                {
+                    PlayerInputDetection inputDetection = col.GetComponent<PlayerInputDetection>();
+                    if (inputDetection != null && inputDetection.jumpPressed)
+                        IsTriggered_p2 = true;
+                }
+            }
+        }
+        else
+        {
+            IsTriggered_p1 = false;
+            IsTriggered_p2 = false;
+        }
+    }
+
+    public void DialogueState()
+    {
+        switch(E_DialogueState.None)
+        {
+            case E_DialogueState.None:
+
+                break;
+            case E_DialogueState.WaitingForButtonPress_p1:
+                print("Waiting for Button Press P1");
+                break;
+            case E_DialogueState.WaitingForButtonPress_p2:
+                print("Waiting for Button Press P2");
+                break;
+
+            case E_DialogueState.TalkingToCamNPC:
+                //handled by the dialogue system events
+                print("dialogue trigger");
+                dialogueSystemTrigger_camNPC.enabled = true;
+                break;
         }
     }
 }
