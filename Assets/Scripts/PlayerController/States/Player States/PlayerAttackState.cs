@@ -168,7 +168,7 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         else
         {
             //move y velocity towards 0
-            CalculateMovement(pControl.RB, Vector3.up, stallVelocity, maximumVerticalSpeed);
+            //CalculateMovement(pControl.RB, Vector3.up, stallVelocity, maximumVerticalSpeed);
         }
     }
 

@@ -7,6 +7,7 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private LayerMask interactMask;
 
     private InteractableObject lastInteractable;
+    public bool canInteract = true;
 
     private void Update()
     {
@@ -14,11 +15,17 @@ public class PlayerInteractor : MonoBehaviour
         //interact with one interactable (the closest one)
         if (GetInteractable() != null)
         {
-            if (inputDetection.interactPressed)
+            if (inputDetection.interactPressed && canInteract)
             {
                 GetInteractable().Interact(inputDetection);
             }
         }
+    }
+
+    public void ToggleCanInteract(bool state, string scriptName)
+    {
+        canInteract = state;
+        Debug.Log("Player interact state set to " + state + " by " + scriptName);
     }
 
     //Gets nearby interactable objects and returns the closest

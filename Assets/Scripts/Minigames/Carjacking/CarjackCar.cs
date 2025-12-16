@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CarjackCar : MonoBehaviour
@@ -7,7 +8,7 @@ public class CarjackCar : MonoBehaviour
     private CarUnlockSlider p2Slider;
     private CarUnlockSlider activeSlider;
     private bool active = false;
-    private PlayerInputDetection currentPlayer;
+
 
     private bool canInput = true;
     private CarjackMinigameManager.HeatCheck heat;
@@ -53,7 +54,7 @@ public class CarjackCar : MonoBehaviour
 
             //set the variables
             activeSlider = slider;
-            currentPlayer = playerInput;
+            //currentPlayer = playerInput;
         }
        
     }

@@ -738,6 +738,11 @@ public class PlayerController : NetworkBehaviour
             rb.linearVelocity = Vector3.zero;
             goalVelocityChange = Vector3.zero;
         }
+        else
+        {
+            rb.constraints |= RigidbodyConstraints.FreezePositionY;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        }
         Debug.Log("Player controller freeze state set to " + state + " by " + scriptName);
     }
 
@@ -784,7 +789,7 @@ public class PlayerController : NetworkBehaviour
 
     }
 
-    //used when a player takes knockback from a damaging force
+    //used when a player takes knockback from any attack (including player to player attacks)
     public void KnockbackPlayer(Vector3 force)
     {
         Vector3 adjustedForce = new Vector3(force.x, force.y, force.z);
@@ -797,7 +802,7 @@ public class PlayerController : NetworkBehaviour
         rb.AddForce(adjustedForce, ForceMode.Impulse);
     }
 
-    //used when the player is hit by the apply knockback script (not when they take damage)
+    //used when the player is hit by the apply knockback script (usually by an object moving with enough force)
     public void OnPlayerKnockback(Vector3 force)
     {
         if (pMachine != null && playerModel != null && force.magnitude >= minSplatForce)

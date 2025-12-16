@@ -49,7 +49,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         animName = "Idle";
 
         //Unfreeze Y position
-        pControl.UnFreezePlayerY();
+        //pControl.UnFreezePlayerY();
 
     }
     public override void UpdateState()

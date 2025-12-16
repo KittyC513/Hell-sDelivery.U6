@@ -27,6 +27,8 @@ public class CarUnlockSlider : MonoBehaviour
     [SerializeField] private Image lockImg;
     private bool canInput = true;
     private PlayerInputDetection currentPlayer;
+    private PlayerInteractor playerInteractor;
+    private Health playerHealth;
 
 
     private void Start()
@@ -44,10 +46,26 @@ public class CarUnlockSlider : MonoBehaviour
         PickNewSection(Random.Range(0.55f, 1.5f));
     }
 
+    private void OnDisable()
+    {
+        playerHealth.onTakeDamage -= CancelMinigame;
+        playerHealth = null;
+    }
+
     public void Activate(GameObject target, Vector3 playerPos, PlayerInputDetection playerInput)
     {
         //setup variables
         
+        if (playerHealth == null)
+        {
+            playerHealth = playerInput.GetComponentInChildren<Health>();
+            playerHealth.onTakeDamage += CancelMinigame;
+        }
+
+        //make the interacting player unable to interact with other objects while this game is active
+        playerInteractor = playerInput.GetComponent<PlayerInteractor>();
+        playerInteractor.ToggleCanInteract(false, this.name);
+
         //the car gameobject
         targetObj = target;
 
@@ -80,6 +98,11 @@ public class CarUnlockSlider : MonoBehaviour
         
     }
 
+    public void CancelMinigame(Vector3 dir)
+    {
+        EndMinigame(false);
+    }
+
     public void EndMinigame(bool win)
     {
         //unfreeze the player who just ended their minigame
@@ -104,6 +127,9 @@ public class CarUnlockSlider : MonoBehaviour
             //fail the minigame
             Debug.Log("Failed");
         }
+
+        //Allow the player to interact with objects again
+        playerInteractor.ToggleCanInteract(true, this.name);
 
         //set back to inactive
         active = false;
@@ -134,7 +160,7 @@ public class CarUnlockSlider : MonoBehaviour
             }
 
             //read inputs for the active slider
-            if (currentPlayer?.jumpPressed == true && canInput)
+            if (currentPlayer?.interactPressed == true && canInput)
             {
                 canInput = false;
                 CallInput();
@@ -142,7 +168,7 @@ public class CarUnlockSlider : MonoBehaviour
 
 
             //make sure they cant hold down the button
-            if (currentPlayer?.jumpPressed != true)
+            if (currentPlayer?.interactPressed!= true)
             {
                 if (canInput == false)
                 {
