@@ -4,8 +4,8 @@ using UnityEngine;
 public class CarjackCar : MonoBehaviour
 {
     private CarjackMinigameManager minigameManager;
-    private CarUnlockSlider p1Slider;
-    private CarUnlockSlider p2Slider;
+    [HideInInspector] public CarUnlockSlider p1Slider;
+    [HideInInspector] public CarUnlockSlider p2Slider;
     private CarUnlockSlider activeSlider;
     private bool active = false;
 
@@ -20,7 +20,7 @@ public class CarjackCar : MonoBehaviour
 
     public bool unlocked = false;
 
-    private void Start()
+    public virtual void Start()
     {
         minigameManager = FindFirstObjectByType<CarjackMinigameManager>();
         p1Slider = minigameManager.p1Slider;
@@ -60,7 +60,7 @@ public class CarjackCar : MonoBehaviour
     }
 
 
-    public void UnlockCar(PlayerInputDetection player)
+    public virtual void UnlockCar(PlayerInputDetection player)
     {
         heat = minigameManager.CheckDistance(this.transform.position, player);
         Debug.Log(heat);
