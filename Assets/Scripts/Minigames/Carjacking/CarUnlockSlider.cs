@@ -30,6 +30,14 @@ public class CarUnlockSlider : MonoBehaviour
     private PlayerInteractor playerInteractor;
     private Health playerHealth;
 
+    //attemping to fit the slider into world space at any rotation
+    private Vector3 startPos;
+    private Vector3 endPos;
+    [SerializeField] private bool isMinigameCar = false;
+
+    [SerializeField] private Transform startTransform;
+    [SerializeField] private Transform endTransform;
+
 
     private void Start()
     {
@@ -48,8 +56,12 @@ public class CarUnlockSlider : MonoBehaviour
 
     private void OnDisable()
     {
-        playerHealth.onTakeDamage -= CancelMinigame;
-        playerHealth = null;
+        if (playerHealth != null)
+        {
+            playerHealth.onTakeDamage -= CancelMinigame;
+            playerHealth = null;
+        }
+        
     }
 
     public void Activate(GameObject target, Vector3 playerPos, PlayerInputDetection playerInput)
@@ -68,6 +80,8 @@ public class CarUnlockSlider : MonoBehaviour
 
         //the car gameobject
         targetObj = target;
+
+       
 
         //the position to place this object (car unlock slider)
         Vector3 position = playerPos;
@@ -90,8 +104,17 @@ public class CarUnlockSlider : MonoBehaviour
 
     public void PlayUnlockUI(Vector3 worldPos)
     {
+        Vector3 worldToScreen;
         //plays a simple UI indicating a car was unlocked
-        Vector3 worldToScreen = mainCam.WorldToScreenPoint(worldPos);
+        if (isMinigameCar)
+        {
+            worldToScreen = mainCam.WorldToScreenPoint(worldPos);
+        }
+        else
+        {
+             worldToScreen = currentPlayer.cam.WorldToScreenPoint(worldPos);
+        }
+        
         lockImg.gameObject.SetActive(true);
         lockImg.rectTransform.position = worldToScreen;
         lockImg.GetComponent<Animator>().Play("LockBreak", -1, 0f);
@@ -141,9 +164,22 @@ public class CarUnlockSlider : MonoBehaviour
     {
         if (slider.gameObject.activeSelf)
         {
-            //move the handle position from the start to the end
-            handle.position = new Vector3(Mathf.Lerp(startValue, endValue, sliderProgression / 10), handle.position.y, handle.position.z);
 
+            //startPos = slider.position.x - (slider.rect.width / 2);
+            //endValue = slider.position.x + (slider.rect.width / 2);
+            
+            //width * direction to the start of the slider
+            Vector3 dirToStart = (startTransform.position - slider.position).normalized;
+            Vector3 dirToEnd = (endTransform.position - slider.position).normalized;
+            
+            startPos = slider.position + (slider.rect.width / 2 * dirToStart);
+            endPos = slider.position + (slider.rect.width / 2 * dirToEnd);
+
+            //move the handle position from the start to the end
+            //handle.position = new Vector3(Mathf.Lerp(startValue, endValue, sliderProgression / 10), handle.position.y, handle.position.z);
+
+        
+            handle.position = Vector3.Lerp(startPos, endPos, sliderProgression / 10);
             //progress the slider
             sliderProgression += (sliderSpeed * dir) * Time.deltaTime;
 
@@ -184,6 +220,11 @@ public class CarUnlockSlider : MonoBehaviour
                     EndMinigame(false);
                 }
             }
+
+            if (!isMinigameCar && currentPlayer.playerCam != null && active)
+            {
+                this.transform.LookAt(currentPlayer.cam.transform.position);
+            }
             
         }
 
@@ -223,7 +264,15 @@ public class CarUnlockSlider : MonoBehaviour
         hitArea.sizeDelta = new Vector2(xSize, hitArea.rect.height);
 
         float randomPercent = Random.Range(0, 1f);
-        Vector3 startPos = new Vector3(Mathf.Lerp(startValue, endValue, randomPercent), slider.position.y, slider.position.z);
+
+        //width * direction to the start of the slider
+        Vector3 dirToStart = (startTransform.position - slider.position).normalized;
+        Vector3 dirToEnd = (endTransform.position - slider.position).normalized;
+        
+        Vector3 _startPos = slider.position + (slider.rect.width / 2 * dirToStart);
+        Vector3 _endPos = slider.position + (slider.rect.width / 2 * dirToEnd);
+  
+        Vector3 startPos = Vector3.Lerp(_startPos, _endPos, randomPercent);
 
         //check if the target area will go over the slider values
         if (startPos.x + (xSize / 2) > endValue)
@@ -244,16 +293,18 @@ public class CarUnlockSlider : MonoBehaviour
         bool onTarget = false;
 
         //get the leftmost position of the current target section
-        float leftPos = hitArea.position.x - (hitArea.sizeDelta.x / 2);
+        float leftPos = hitArea.localPosition.x - (hitArea.sizeDelta.x / 2);
 
         //get the rightmost pos
-        float rightPos = hitArea.position.x + (hitArea.sizeDelta.x / 2);
+        float rightPos = hitArea.localPosition.x + (hitArea.sizeDelta.x / 2);
 
         //compare the ends of the handle to the ends of the target position to check if the handle is within the bounds of the target area
-        if (handle.position.x + handle.sizeDelta.x > leftPos && handle.position.x - handle.sizeDelta.x < rightPos)
+        if (handle.localPosition.x + handle.sizeDelta.x > leftPos && handle.localPosition.x - handle.sizeDelta.x < rightPos)
         {
             onTarget = true;
         }
+
+       
 
         return onTarget;
     }
