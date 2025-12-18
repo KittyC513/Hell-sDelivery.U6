@@ -234,8 +234,8 @@ public class CameraMovement_Player : NetworkBehaviour
 
             // If player moves camera input, exit reset mode
             inputDelta = new Vector2(
-                inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? inputDetection.GetCameraMovement().x : inputDetection.GetCameraMovement().x * keyboardMoveSpeed,
-                inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? inputDetection.GetCameraMovement().y : inputDetection.GetCameraMovement().y * keyboardMoveSpeed
+                inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? inputDetection.GetCameraMovement().x : inputDetection.GetCameraMovement().x * keyboardMoveSpeed,
+                inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? inputDetection.GetCameraMovement().y : inputDetection.GetCameraMovement().y * keyboardMoveSpeed
             );
 
             if (inputDelta.sqrMagnitude > 0.0001f || inputDetection.GetHorizontalMovement().sqrMagnitude > 0.0001f)
@@ -255,9 +255,9 @@ public class CameraMovement_Player : NetworkBehaviour
 
 
         //get input value
-        inputDelta = new Vector2(inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ?
+        inputDelta = new Vector2(inputDetection.inputDeviceType == E_InputDeviceType.gamepad ?
                         inputDetection.GetCameraMovement().x : inputDetection.GetCameraMovement().x * keyboardMoveSpeed,
-                        inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ?
+                        inputDetection.inputDeviceType == E_InputDeviceType.gamepad ?
                         inputDetection.GetCameraMovement().y : inputDetection.GetCameraMovement().y * keyboardMoveSpeed);
         //Update rotate value
         //x
@@ -437,8 +437,8 @@ public class CameraMovement_Player : NetworkBehaviour
         // 1. Get input (keep your device handling)
         Vector2 rawInput = inputDetection.GetCameraMovement();
         inputDelta = new Vector2(
-            inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? rawInput.x : rawInput.x * keyboardMoveSpeed,
-            inputDetection.inputDeviceType == E_InputDeviceType.Gamepad ? rawInput.y : rawInput.y * keyboardMoveSpeed
+            inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.x : rawInput.x * keyboardMoveSpeed,
+            inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.y : rawInput.y * keyboardMoveSpeed
         );
 
         //Update rotate value

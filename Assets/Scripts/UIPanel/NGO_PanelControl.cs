@@ -39,7 +39,7 @@ public class NGO_PanelControl : MonoBehaviour
         {
             if (value)
             {
-                inputDetector.inputDeviceType = E_InputDeviceType.Gamepad;
+                inputDetector.inputDeviceType = E_InputDeviceType.gamepad;
             }
         };
 

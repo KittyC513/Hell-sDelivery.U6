@@ -251,5 +251,4 @@ public class GameManager
         cam_p2.enabled = true;
     }
     #endregion
-
 }
