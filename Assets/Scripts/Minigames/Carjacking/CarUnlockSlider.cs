@@ -37,6 +37,7 @@ public class CarUnlockSlider : MonoBehaviour
 
     [SerializeField] private Transform startTransform;
     [SerializeField] private Transform endTransform;
+    [SerializeField] private Vector2 targetBarRange = new Vector2(0.55f, 1.5f);
 
 
     private void Start()
@@ -51,7 +52,7 @@ public class CarUnlockSlider : MonoBehaviour
         //reset variables
         cyclesFinished = 0;
         sliderSpeed = startSpeed;
-        PickNewSection(Random.Range(0.55f, 1.5f));
+        PickNewSection(Random.Range(targetBarRange.x, targetBarRange.y));
     }
 
     private void OnDisable()
@@ -99,7 +100,7 @@ public class CarUnlockSlider : MonoBehaviour
         endValue = slider.position.x + (slider.rect.width / 2);
 
         //set a new section
-        PickNewSection(Random.Range(0.55f, 1.5f));
+        PickNewSection(Random.Range(targetBarRange.x, targetBarRange.y));
     }
 
     public void PlayUnlockUI(Vector3 worldPos)
@@ -247,7 +248,7 @@ public class CarUnlockSlider : MonoBehaviour
             {
                 cyclesFinished += 1;
                 sliderSpeed += speedIncrease;
-                PickNewSection(Random.Range(0.75f, 2.5f));
+                PickNewSection(Random.Range(targetBarRange.x, targetBarRange.y));
             }            
             
         }
