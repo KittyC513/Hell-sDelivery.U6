@@ -19,8 +19,11 @@ public class DialogueControl : MonoBehaviour
     public DialogueSystemTrigger dialogueSystemTrigger_camNPC;
     public Usable dialogueUsable_camNPC;
     Collider[] c_players;
-    public bool IsTriggered_p1 = false;
-    public bool IsTriggered_p2 = false;
+    public bool isTriggered_p1 = false;
+    public bool isTriggered_p2 = false;
+
+    public bool  isInRange_p1 = false;
+    public bool  isInRange_p2 = false;
 
     public E_DialogueState currentDialogueState = E_DialogueState.None;
 
@@ -33,6 +36,7 @@ public class DialogueControl : MonoBehaviour
     {
         OnButtonCheck();
         DialogueState();
+        SetDialogueState();
     }
 
     public void OnConversation()
@@ -77,29 +81,58 @@ public class DialogueControl : MonoBehaviour
             {
                 if (col.gameObject.layer == p1Layer)
                 {
+                    isInRange_p1 = true;
                     PlayerInputDetection inputDetection = col.GetComponent<PlayerInputDetection>();
                     if (inputDetection != null && inputDetection.jumpPressed)
-                        IsTriggered_p1 = true;
+                    {
+                        isTriggered_p1 = true;
+                    }              
                 }
 
                 if (col.gameObject.layer == p2Layer)
                 {
+                    isInRange_p2 = true;
                     PlayerInputDetection inputDetection = col.GetComponent<PlayerInputDetection>();
                     if (inputDetection != null && inputDetection.jumpPressed)
-                        IsTriggered_p2 = true;
+                    {
+                        isTriggered_p2 = true;
+                    }
+
                 }
             }
         }
         else
         {
-            IsTriggered_p1 = false;
-            IsTriggered_p2 = false;
+            isInRange_p1 = false;
+            isInRange_p2 = false;
+            isTriggered_p1 = false;
+            isTriggered_p2 = false;
+        }
+    }
+
+    public void SetDialogueState()
+    {
+        if(isTriggered_p1 && isTriggered_p2 && isInRange_p1 && isInRange_p2)
+        {
+            currentDialogueState = E_DialogueState.TalkingToCamNPC;
+        }
+        else if(isTriggered_p1 && isInRange_p1)
+        {
+            currentDialogueState = E_DialogueState.WaitingForButtonPress_p2;
+        }
+        else if(isTriggered_p2 && isInRange_p2)
+        {
+            currentDialogueState = E_DialogueState.WaitingForButtonPress_p1;
+        }
+        else
+        {
+            currentDialogueState = E_DialogueState.None;
         }
     }
 
     public void DialogueState()
     {
-        switch(E_DialogueState.None)
+        switch(currentDialogueState)
         {
             case E_DialogueState.None:
 
@@ -115,7 +148,10 @@ public class DialogueControl : MonoBehaviour
                 //handled by the dialogue system events
                 print("dialogue trigger");
                 dialogueSystemTrigger_camNPC.enabled = true;
+                ResetPlayerPos();
                 break;
         }
     }
+
+
 }
