@@ -53,7 +53,25 @@ public class PlayerManager : MonoBehaviour
 
     public void AddPlayer(PlayerInput player)
     {
+        //if (players.Count > 2) return; //Only allow 2 players for now
         players.Add(player);
+
+        //var device = player.devices[players.Count - 1];
+
+        //if (device is Keyboard)
+        //{
+        //    PlayerInputDetection inputDetection = players[players.Count - 1].GetComponent<PlayerInputDetection>();
+        //    if (inputDetection == null) return;
+
+        //    if(device is Keyboard || device is Mouse)
+        //    {
+        //        inputDetection.inputDeviceType = E_InputDeviceType.keyboard;
+        //    }
+        //    else if(device is Gamepad)
+        //    {
+        //        inputDetection.inputDeviceType = E_InputDeviceType.gamepad;
+        //    }
+        //}
 
         //Set player's(whole player prefab) start position to the spawn point
         Transform playerParent = player.transform.parent;

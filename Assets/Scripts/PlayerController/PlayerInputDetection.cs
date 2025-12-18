@@ -10,8 +10,9 @@ using UnityEngine.UI;
 
 public enum E_InputDeviceType 
 {
+    none,
     keyboard,
-    Gamepad,
+    gamepad,
 }
 
 public static class InputActionButtonExtensions
@@ -65,7 +66,7 @@ public class PlayerInputDetection : NetworkBehaviour
 
     [Header("Device Check")]
     public bool isCheckedDevice;
-    public E_InputDeviceType inputDeviceType;
+    public E_InputDeviceType inputDeviceType = E_InputDeviceType.none;
 
     [Header("PointerControl")]
     public UIPointerControl uiPointerControl;
@@ -365,23 +366,40 @@ public class PlayerInputDetection : NetworkBehaviour
     #region Player input device check
     private void InputDeviceCheck()
     {
+        if (isCheckedDevice) return;
+        int player2Layer = LayerMask.NameToLayer("Player2");
+
+        var device = playerInput.devices[0];
         
-        if (!isCheckedDevice)
+        if (this.gameObject.layer == player2Layer)
+            device = playerInput.devices[1];
+
+        if (device is Keyboard)
         {
-            if (Keyboard.current.anyKey.wasPressedThisFrame)
-            {
-                
-                inputDeviceType = E_InputDeviceType.keyboard;         
+            inputDeviceType = E_InputDeviceType.keyboard;
+        }
+        else if (device is Gamepad)
+        {
+            inputDeviceType = E_InputDeviceType.gamepad;
+        }
+
+        switch (inputDeviceType)
+        {
+            case E_InputDeviceType.keyboard:
+                inputDeviceType = E_InputDeviceType.keyboard;
                 //Cursor.visible = false;
                 isCheckedDevice = true;
-            }
-            else if (Gamepad.current.aButton.wasPressedThisFrame)
-            {
-                inputDeviceType = E_InputDeviceType.Gamepad;
+                print("is keyboard");
+                break;
+            case E_InputDeviceType.gamepad:
+                inputDeviceType = E_InputDeviceType.gamepad;
                 //Cursor.lockState = CursorLockMode.Locked;
                 isCheckedDevice = true;
-            }
+                print("is gamepad");
+                break;
         }
+
+        isCheckedDevice = true;
     }
     #endregion
 
