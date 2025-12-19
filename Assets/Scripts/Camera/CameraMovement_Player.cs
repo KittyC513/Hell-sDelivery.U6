@@ -4,6 +4,7 @@
 #undef Network
 
 using PixelCrushers.DialogueSystem;
+using System.Collections;
 using System.Drawing;
 using System.Xml.Serialization;
 using Unity.Netcode;
@@ -89,6 +90,12 @@ public class CameraMovement_Player : NetworkBehaviour
 
     public bool hasInitialisedConeCam = false;
     public bool didSyncAfterReset = false;
+    public bool isBelndingToCone = false;
+    public bool wasConeMode = false;
+    Coroutine blendRoutine;
+
+    public float normalToConeBlendTime = 0.25f;
+
     private void Start()
     {
         distance = oriDistance;
@@ -174,7 +181,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-
+        bool condMode = playerLockOn.isWithDetonator && inputDetection.lockPressed;
         if (inputDetection.isExploded && !inputDetection.isResetCam)
         {
             SwitchToTopDownCam();
@@ -186,13 +193,23 @@ public class CameraMovement_Player : NetworkBehaviour
             moveSpeed = oriMoveSpeed;
         }
 
-        if (playerLockOn.isWithDetonator && inputDetection.lockPressed)
+        if (condMode)
         {
-            ConeSightCamMovement();
-            resetCamPos = false;
+            if (!wasConeMode)
+            {
+                wasConeMode = true;
+
+                resetCamPos = false;
+                hasInitialisedConeCam = false;
+                BeginConeTransition(true);
+            }
+
+            if(!isBelndingToCone)
+                ConeSightCamMovement();
         }
         else
         {
+            wasConeMode = false;
             CameraMovement();
             hasInitialisedConeCam = false;
         }
@@ -335,20 +352,20 @@ public class CameraMovement_Player : NetworkBehaviour
     {
         Vector3 pivot = playerTransform.localToWorldMatrix.MultiplyPoint3x4(offset);
 
-        // direction from pivot -> camera (orbit direction)
+        // direction from pivot -> camera 
         Vector3 orbitDir = (transform.position - pivot).normalized;
 
-        // 1) Update default yaw reference (THIS is the missing piece)
+        //1.Update default yaw reference
         Vector3 planar = Vector3.ProjectOnPlane(orbitDir, mYawRotateAxis);
         if (planar.sqrMagnitude < 0.0001f)
             planar = Vector3.ProjectOnPlane(transform.forward, mYawRotateAxis); // fallback
 
         mDefaultDir = planar.normalized;
 
-        // 2) Reset yaw so the current direction is treated as yaw = 0 (no snapping)
+        //2.Reset yaw so the current direction is treated as yaw = 0 (no snapping)
         mRotateValue.x = 0f;
 
-        // 3) Sync pitch from current orbit direction
+        //3.Sync pitch from current orbit direction
         float pitch = -Mathf.Asin(Vector3.Dot(orbitDir, mYawRotateAxis)) * Mathf.Rad2Deg;
         mRotateValue.y = Mathf.Clamp(pitch, pitchLimit.x, pitchLimit.y);
     }
@@ -401,75 +418,45 @@ public class CameraMovement_Player : NetworkBehaviour
     }
     #endregion
 
-    #region ConeSightDetection
+    #region ConeSightDetection & transition
     public void ConeSightCamMovement()
     {
         if (playerTransform == null) return;
+        if (isBelndingToCone) return;
 
         if (!hasInitialisedConeCam)
         {
-            //hasInitialisedConeCam = true;
+            hasInitialisedConeCam = true;
 
-            // Make camera yaw match player facing
-            //mRotateValue.x = playerTransform.eulerAngles.y;
-
-            //keep cam yam 
-            mRotateValue.x = this.transform.eulerAngles.y;
-
-            // Clamp pitch just in case
+            // keep current yaw (or use player yaw if you want)
+            mRotateValue.x = transform.eulerAngles.y;
             mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
 
-            // Build rotation from these angles
             Quaternion initRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
-
-            // Put camera behind player using camOffset
             Vector3 initPos = playerTransform.position + initRot * camOffset;
 
             transform.position = initPos;
             transform.rotation = initRot;
-
-            //rotate player to face same direction as camera
-            RotatePlayerToCamera(initRot);
-            // Don't do rest of logic this frame
-            //return;
+            return;
         }
 
-        // 1. Get input (keep your device handling)
         Vector2 rawInput = inputDetection.GetCameraMovement();
         inputDelta = new Vector2(
             inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.x : rawInput.x * keyboardMoveSpeed,
             inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.y : rawInput.y * keyboardMoveSpeed
         );
 
-        //Update rotate value
-        //x
         mRotateValue.x += inputDelta.x * rotateSpeed * Time.smoothDeltaTime;
-        //mRotateValue.x = AngleCorrection(mRotateValue.x);
-        //y
         mRotateValue.y += inputDelta.y * rotateSpeed * Time.smoothDeltaTime;
-        //mRotateValue.y = AngleCorrection(mRotateValue.y);
         mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
 
-        // 3. Build camera rotation
         Quaternion camRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
 
-        // 4. Place camera behind player using rotated offset
         Vector3 desiredPos = playerTransform.position + camRot * camOffset;
-        Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, moveSpeed_coneSight * Time.deltaTime);
-
-        transform.position = smoothedPos;
+        transform.position = Vector3.Lerp(transform.position, desiredPos, moveSpeed_coneSight * Time.deltaTime);
         transform.rotation = camRot;
 
-        if (!hasInitialisedConeCam && rawInput.magnitude != 0)
-        {
-
-            hasInitialisedConeCam = true;
-        }
-        else if (hasInitialisedConeCam)
-        {
-            RotatePlayerToCamera(camRot);
-        }
-
+        RotatePlayerToCamera(camRot);
     }
 
     void RotatePlayerToCamera(Quaternion camRot)
@@ -481,8 +468,54 @@ public class CameraMovement_Player : NetworkBehaviour
         if (forward.sqrMagnitude > 0.001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(forward);
-            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRot, moveSpeed * Time.deltaTime);
+            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRot, moveSpeed_coneSight * Time.deltaTime);
         }
+    }
+
+    public void BeginConeTransition(bool keepCurrentYam = true)
+    {
+        if(playerTransform == null) return;
+
+        if (blendRoutine != null) StopCoroutine(blendRoutine);
+        {
+            blendRoutine = StartCoroutine(BlendNormalToCone(keepCurrentYam));
+        }
+    }
+
+    IEnumerator BlendNormalToCone(bool keepCurrentYaw)
+    {
+        isBelndingToCone = true;
+
+        //start pos 
+        Vector3 startPos = transform.position;
+        Quaternion startRot = transform.rotation;
+
+        if(keepCurrentYaw)
+            mRotateValue.x = this.transform.eulerAngles.y; //keep current view direction
+        else
+            mRotateValue.x = playerTransform.eulerAngles.y; //face behind player
+
+        mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
+
+        //target cone pos & rot
+        Quaternion endRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+        Vector3 endPos = playerTransform.position + endRot * camOffset;
+
+        float t = 0f;
+        while(t < 1f)
+        {
+            t += Time.deltaTime / Mathf.Max(0.0001f, normalToConeBlendTime);
+            transform.position = Vector3.Lerp(startPos, endPos, t);
+            transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+            yield return null;
+        }
+
+        //snap exact at end
+        transform.position = endPos;
+        transform.rotation = endRot;
+
+        hasInitialisedConeCam = true;
+        isBelndingToCone = false;
     }
     #endregion
 }
