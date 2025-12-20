@@ -74,6 +74,7 @@ public class CameraMovement_Player : NetworkBehaviour
     public Vector3 movePos;
     public float moveSpeed = 5f;
     public float moveSpeed_coneSight = 7f;
+    public float rotateSpeed_coneSight = 7f;
     public float oriMoveSpeed;
     public float topdownMoveSpeed;
     public Transform defaultPos;
@@ -472,7 +473,7 @@ public class CameraMovement_Player : NetworkBehaviour
         if (forward.sqrMagnitude > 0.001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(forward);
-            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRot, moveSpeed_coneSight * Time.deltaTime);
+            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRot, rotateSpeed_coneSight * Time.deltaTime);
         }
     }
 
