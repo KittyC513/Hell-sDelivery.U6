@@ -285,7 +285,7 @@ public class CameraMovement_Player : NetworkBehaviour
         mRotateValue.y = AngleCorrection(mRotateValue.y);
         mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimit.x, pitchLimit.y);
 
-        //update yam
+        //update yaw
         horizontalQuat = Quaternion.AngleAxis(mRotateValue.x, mYawRotateAxis);
 
         //apply yaw around up axis
@@ -293,12 +293,16 @@ public class CameraMovement_Player : NetworkBehaviour
 
         //recompute pitch axis based on yawed direction
         Vector3 flatForward = Vector3.ProjectOnPlane(yawedDir, mYawRotateAxis);
-        if (flatForward.sqrMagnitude < 0.0001f)
-            mPitchRotateAxis = transform.right;
-        else
-            mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
 
-        mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
+        mPitchRotateAxis = horizontalQuat * Vector3.right;
+        //if (flatForward.sqrMagnitude < 0.0001f)
+        //    //mPitchRotateAxis = transform.right;
+        //    /******************************************/
+        //    mPitchRotateAxis = horizontalQuat * Vector3.right; // stable pitch axis - always cam right
+        //else
+        //    mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
+
+        //mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
 
         verticalQuat = Quaternion.AngleAxis(mRotateValue.y, mPitchRotateAxis);
         //finalDir = horizontalQuat * verticalQuat * mDefaultDir;

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,6 +38,8 @@ public class BombMovement : MonoBehaviour
     public float dropForce;
     public float forceScale = 1f;
     public float offsetY = 0f;
+
+    public float destroyDelay = 0.3f;
 
 
     //ground check
@@ -234,7 +237,8 @@ public class BombMovement : MonoBehaviour
 
         #endregion
         //Destroy after the certain amount of time
-        Destroy(this.gameObject, 0.5f);
+        //Destroy(this.gameObject, 0.5f);
+        StartCoroutine(StartExplosion(destroyDelay));
 
     }
     #endregion
@@ -276,5 +280,12 @@ public class BombMovement : MonoBehaviour
     }
     #endregion
 
+    IEnumerator StartExplosion(float destroyDelay)
+    {
+        GameObject explosionVF = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_explosion"), this.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(destroyDelay);
+        Destroy(explosionVF);
+        Destroy(this.gameObject);
+    }
 
 }

@@ -2463,7 +2463,7 @@ MonoBehaviour:
   rotateSpeed: 160
   offset: {x: 0, y: 1.5, z: 0}
   invertPitch: 0
-  pitchLimit: {x: -20, y: 80}
+  pitchLimit: {x: -30, y: 50}
   pitchLimitCD: {x: -10, y: 30}
   keyboardMoveSpeed: 0.3
   obstacleMask:
@@ -2486,6 +2486,9 @@ MonoBehaviour:
   offsetY: 70
   hasInitialisedConeCam: 0
   didSyncAfterReset: 0
+  isBelndingToCone: 0
+  wasConeMode: 0
+  normalToConeBlendTime: 0.25
 --- !u!1001 &2660546766662916825
 PrefabInstance:
   m_ObjectHideFlags: 0
