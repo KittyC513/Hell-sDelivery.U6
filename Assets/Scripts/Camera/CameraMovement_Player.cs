@@ -294,13 +294,13 @@ public class CameraMovement_Player : NetworkBehaviour
         //recompute pitch axis based on yawed direction
         Vector3 flatForward = Vector3.ProjectOnPlane(yawedDir, mYawRotateAxis);
 
-        mPitchRotateAxis = horizontalQuat * Vector3.right;
-        //if (flatForward.sqrMagnitude < 0.0001f)
-        //    //mPitchRotateAxis = transform.right;
-        //    /******************************************/
-        //    mPitchRotateAxis = horizontalQuat * Vector3.right; // stable pitch axis - always cam right
-        //else
-        //    mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
+        //mPitchRotateAxis = horizontalQuat * Vector3.right;
+        if (flatForward.sqrMagnitude < 0.0001f)
+            //mPitchRotateAxis = transform.right;
+            /******************************************/
+            mPitchRotateAxis = horizontalQuat * Vector3.right; // stable pitch axis - always cam right
+        else
+            mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
 
         //mPitchRotateAxis = Vector3.Cross(mYawRotateAxis, flatForward.normalized);
 

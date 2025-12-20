@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -43,6 +44,7 @@ public class PlayerLockOn : MonoBehaviour
     public bool canSeeTarget = true;   
 
     public List<Transform> visibleTargets = new List<Transform>();
+    public List<Transform> targetList = new List<Transform>();
 
     [Header("Cone Mesh Generator")]
     public int resolution = 40;
@@ -313,6 +315,7 @@ public class PlayerLockOn : MonoBehaviour
     {
         //clear the list of visible targets
         visibleTargets.Clear();
+        ClearBombVisualEffect();
 
         //1. find all colliders within view radius
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
@@ -329,19 +332,62 @@ public class PlayerLockOn : MonoBehaviour
             float dot = Vector3.Dot(transform.forward, dirNormalized);
             float angleToTarget = Mathf.Cos(viewAngle * 0.5f * Mathf.Deg2Rad);
 
-            if (dot < angleToTarget)
-            {
-                continue;
-            }
+            //if (dot < angleToTarget)
+            //{
+            //    continue;
+            //}
 
             //3. check for obstacles between the player and target
             if (Physics.Raycast(transform.position, dirNormalized, out RaycastHit hit, disToTarget, obstacleMask))
             {
                 //Something in the way
-                continue;
+                return;
             }
 
             visibleTargets.Add(target);
+            //targetList.Add(target);
+            //OnSelected_bomb();
+        }
+    }
+
+    public void OnSelected_bomb()
+    {
+        if(visibleTargets.Count == 0) return;
+
+        if (visibleTargets.Count == 1)
+        {
+            if (visibleTargets[0].Find("visualEffectObj") == null)
+            {
+                GameObject visualEffectObj = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_glowing"), visibleTargets[0].position, Quaternion.identity);
+                visualEffectObj.transform.parent = visibleTargets[0];
+            }
+        }
+
+        if (visibleTargets.Count > 1)
+        {
+            for (int i = 1; i < visibleTargets.Count; i++)
+            {
+                if(visibleTargets[i].Find("visualEffectObj") == null)
+                {
+                    GameObject visualEffectObj = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_glowing"), visibleTargets[i].position, Quaternion.identity);
+                    visualEffectObj.transform.parent = visibleTargets[i];
+                }
+
+            }
+        }
+    }
+
+    public void ClearBombVisualEffect()
+    {
+        if (targetList.Count == 0) return;
+
+        for (int i = 0; i < targetList.Count; i++)
+        {
+            if (!visibleTargets.Contains(targetList[i]))
+            {
+                Destroy(targetList[i].Find("Bomb_glowing(Clone)").gameObject);
+                targetList.RemoveAt(i);
+            }
         }
     }
 
