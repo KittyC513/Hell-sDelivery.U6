@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,23 +45,9 @@ public class DetonatorItem : ItemBase
         //}
 
         //detonate all bombs in cone sight detection
-        if(playerLockOn.visibleTargets.Count > 0 && timer >= cdSpawn)
+        if (timer >= cdSpawn && playerLockOn.visibleTargets.Count > 0)
         {
-            for (int i = 0; i <= playerLockOn.visibleTargets.Count - 1; i++)
-            {
-                BombMovement bomb = playerLockOn.visibleTargets[i].GetComponent<BombMovement>();
-                print("GainBomb");
-
-                if (bomb != null)
-                {
-                    bomb.ApplyExplosionForce();
-                    bombItem.bombsList.Remove(bomb);
-                    playerLockOn.visibleTargets.RemoveAt(i);
-                    bombItem.numOfBombs--;
-                }
-            }
-            timer = 0;
-            canStartTimer = false;
+            StartCoroutine(StartIgnite());
         }
     }
 
@@ -86,5 +73,39 @@ public class DetonatorItem : ItemBase
     public override void UseFunction()
     {
         Ignite();
+    }
+
+    IEnumerator StartIgnite()
+    {
+        var snapshpt = playerLockOn.visibleTargets.ToArray();
+
+        foreach (Transform bomb in snapshpt)
+        {
+            BombMovement bombMove = bomb.GetComponent<BombMovement>();
+            if (bombMove != null)
+            {
+                bombMove.ApplyExplosionForce();
+                bombItem.bombsList.Remove(bombMove);
+                playerLockOn.visibleTargets.Remove(bomb);
+                bombItem.numOfBombs--;
+            }
+        }
+        //for (int i = 0; i <= playerLockOn.visibleTargets.Count - 1; i++)
+        //{
+        //    BombMovement bomb = playerLockOn.visibleTargets[i].GetComponent<BombMovement>();
+        //    print("GainBomb");
+
+        //    if (bomb != null)
+        //    {
+        //        bomb.ApplyExplosionForce();
+        //        bombItem.bombsList.Remove(bomb);
+        //        playerLockOn.visibleTargets.RemoveAt(i);
+        //        bombItem.numOfBombs--;
+        //    }
+        //}
+        timer = 0;
+        canStartTimer = false;
+
+        yield return null;
     }
 }

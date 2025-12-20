@@ -44,7 +44,13 @@ public class BombMovement : MonoBehaviour
 
     //ground check
     public float groundCheckDist = 1f;
+    public GameObject bombGlowingVF;
+    public bool isOnSelected = false;
 
+    private void Awake()
+    {
+        DeactivateBombGlow();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,7 +63,11 @@ public class BombMovement : MonoBehaviour
         //    targetPos = playerLockOn.lockTarget.transform;
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        SetBombOnSelectedVisualEffect();
+    }
+
     void FixedUpdate()
     {
         //Move toward target all the time
@@ -287,5 +297,23 @@ public class BombMovement : MonoBehaviour
         Destroy(explosionVF);
         Destroy(this.gameObject);
     }
+
+    #region Bomb Visual Effect Control
+    public void SetBombOnSelectedVisualEffect()
+    {
+        if (isOnSelected)
+            ActivateBombGlow();
+        else
+            DeactivateBombGlow();
+    }
+    public void ActivateBombGlow()
+    {
+        bombGlowingVF.SetActive(true);
+    }
+    public void DeactivateBombGlow()
+    {
+        bombGlowingVF.SetActive(false);
+    }
+    #endregion
 
 }

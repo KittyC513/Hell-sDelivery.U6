@@ -369,19 +369,34 @@ public class PlayerInputDetection : NetworkBehaviour
         if (isCheckedDevice) return;
         int player2Layer = LayerMask.NameToLayer("Player2");
 
-        var device = playerInput.devices[0];
-        
-        if (this.gameObject.layer == player2Layer)
-            device = playerInput.devices[1];
+        if (playerInput == null || playerInput.devices.Count == 0) return;
 
-        if (device is Keyboard)
+        bool hasGamepad = false;
+
+        foreach (var device in playerInput.devices)
         {
-            inputDeviceType = E_InputDeviceType.keyboard;
+            if (device is Gamepad)
+            {
+                hasGamepad = true;
+                break;
+            }
         }
-        else if (device is Gamepad)
-        {
-            inputDeviceType = E_InputDeviceType.gamepad;
-        }
+
+        //var device = playerInput.devices[0];
+
+        //if (this.gameObject.layer == player2Layer)
+        //    device = playerInput.devices[1];
+
+        //if (device is Keyboard)
+        //{
+        //    inputDeviceType = E_InputDeviceType.keyboard;
+        //}
+        //else if (device is Gamepad)
+        //{
+        //    inputDeviceType = E_InputDeviceType.gamepad;
+        //}
+
+        inputDeviceType = hasGamepad ? E_InputDeviceType.gamepad : E_InputDeviceType.keyboard;
 
         switch (inputDeviceType)
         {

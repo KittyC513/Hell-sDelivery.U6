@@ -84,7 +84,8 @@ public class BombItem : ItemBase
     {
         bombHoldPoint = new Vector3(currentBag.transform.position.x, currentBag.transform.position.y + 2, currentBag.transform.position.z);
 
-        bomb.transform.position = bombHoldPoint;
+        if(bomb != null)
+            bomb.transform.position = bombHoldPoint;
     }
 
     private void ChargeBombThrow()
@@ -132,6 +133,7 @@ public class BombItem : ItemBase
             bomb.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             bomb.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.Impulse);
             bombsList.Add(bomb.GetComponent<BombMovement>());
+
             chargeHoldTime = 0;
             bomb = null;
             charging = false;
