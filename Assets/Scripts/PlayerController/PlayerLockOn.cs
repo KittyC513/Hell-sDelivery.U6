@@ -5,8 +5,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
+public enum E_LockOnState
+{
+    none,
+    bombLockOn,
+    detonatorLockOn,
+}
+
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
+
+
 
 public class PlayerLockOn : MonoBehaviour
 {
@@ -20,6 +29,7 @@ public class PlayerLockOn : MonoBehaviour
 
     [SerializeField] private PlayerInputDetection inputDetection;
     public CameraManager CameraManager;
+    public CameraMovement_Player cameraMovement_player;
 
     //debug variables
     private Vector3 lastRayStart;
@@ -40,11 +50,15 @@ public class PlayerLockOn : MonoBehaviour
     public LayerMask obstacleMask;
     public LayerMask targetMask;
 
-    public bool isWithDetonator = true;
+    public bool isWithDetonator = false;
+    public bool isWithBomb = false;
     public bool isDetonatorLockOn = false;
+    public bool isBombLockOn = false;
     public bool canSeeTarget = true;   
 
     public List<Transform> visibleTargets = new List<Transform>();
+
+    public E_LockOnState lockCamType = E_LockOnState.none;
 
     [Header("Cone Mesh Generator")]
     public int resolution = 40;
@@ -69,9 +83,32 @@ public class PlayerLockOn : MonoBehaviour
         playerCam = inputDetection.cam;
         if (DetectLockInput())
         {
+            if(!isWithDetonator)
+            {
+                if ((lockTarget != null))
+                {
+
+                    CameraManager.currentCamType = E_CamType.lockCam;
+                    print("Lock_on" + lockTarget.transform.position);
+                    if (!isLockedOn)
+                    {
+                        CameraManager.ResetCamTransition();
+                        playerController.isLookAtTriggered = false;
+                        isLockedOn = true;
+                    }
+
+                }
+                else
+                {
+                    lockTarget = GetNewTarget(playerCam, playerObj);
+
+                }
+            }
             if (isWithDetonator)
             {
-                //CameraManager.currentCamType = E_CamType.playerCam;
+                lockCamType = E_LockOnState.detonatorLockOn;
+                CameraManager.currentCamType = E_CamType.playerCam; 
+                cameraMovement_player.camMode = E_CamMode.coneSight;
                 ConeSightDetection();
                 isDetonatorLockOn = true;
                 //if (!isLockedOn)
@@ -83,7 +120,6 @@ public class PlayerLockOn : MonoBehaviour
             }
             else
             {
-                isDetonatorLockOn = false;
 
                 if ((lockTarget != null))
                 {
@@ -104,10 +140,32 @@ public class PlayerLockOn : MonoBehaviour
 
                 }
 
+            }         
+        }
+        else
+        {
+            isDetonatorLockOn = false;
+        }
+
+        if (DetectThrowInput())
+        {
+            if (isWithBomb)
+            {
+                isBombLockOn = true;
+                lockCamType = E_LockOnState.bombLockOn;
+                CameraManager.currentCamType = E_CamType.playerCam;
+                cameraMovement_player.camMode = E_CamMode.bombThrowingCam;
             }
         }
         else
         {
+            isBombLockOn = false;
+        }
+
+        if (!DetectLockInput())
+        {
+
+            lockCamType = E_LockOnState.none;
             // Turn OFF previous selected targets
             for (int i = 0; i < visibleTargets.Count; i++)
             {
@@ -190,6 +248,11 @@ public class PlayerLockOn : MonoBehaviour
     public bool DetectLockInput()
     {
         return inputDetection.lockPressed;
+    }
+
+    public bool DetectThrowInput()
+    {
+        return inputDetection.crouchPressed;
     }
 
 

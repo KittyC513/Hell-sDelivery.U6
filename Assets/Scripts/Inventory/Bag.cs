@@ -108,6 +108,15 @@ public class Bag : MonoBehaviour
             {
                 playerLockOn.isWithDetonator = false;
             }
+
+            if (activeItem.name == "Bomb Item" && activeItemBase.isOnUse)
+            {
+                playerLockOn.isWithBomb = true;
+            }
+            else
+            {
+                playerLockOn.isWithBomb = false;
+            }
         }
     }
 
