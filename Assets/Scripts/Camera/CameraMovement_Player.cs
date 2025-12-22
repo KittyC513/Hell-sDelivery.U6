@@ -14,12 +14,18 @@ using UnityEngine.Profiling;
 using UnityEngine.UIElements;
 using UnityEngine.Windows;
 
+public enum E_CamMode
+{
+    coneSight,
+    bombThrowingCam,
+}
 public class CameraMovement_Player : NetworkBehaviour
 {
     public Transform playerTransform;
     public PlayerInputDetection inputDetection;
     public PlayerLockOn playerLockOn;
-    public Vector3 camOffset;
+    public Vector3 coneSightCamOffset;
+    public Vector3 bombThrowingCamOffset;
     public Vector3 resetCamOffset;
 
     [Header("Camera Variables")]
@@ -89,13 +95,16 @@ public class CameraMovement_Player : NetworkBehaviour
 
     private PlayerSettings playerSettings;
 
-    public bool hasInitialisedConeCam = false;
+    public bool hasInitializedCam = false;
     public bool didSyncAfterReset = false;
     public bool isBelndingToCone = false;
     public bool wasConeMode = false;
     Coroutine blendRoutine;
+    public E_CamMode camMode = E_CamMode.coneSight;
+
 
     public float normalToConeBlendTime = 0.25f;
+
 
     private void Start()
     {
@@ -182,7 +191,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-        bool condMode = playerLockOn.isWithDetonator && inputDetection.lockPressed;
+        bool condMode = (playerLockOn.isWithDetonator || playerLockOn.isWithBomb) && inputDetection.lockPressed;
         if (inputDetection.isExploded && !inputDetection.isResetCam)
         {
             SwitchToTopDownCam();
@@ -201,18 +210,29 @@ public class CameraMovement_Player : NetworkBehaviour
                 wasConeMode = true;
 
                 resetCamPos = false;
-                hasInitialisedConeCam = false;
-                BeginConeTransition(true);
+                hasInitializedCam = false;
+                switch (camMode)
+                {
+                    case E_CamMode.coneSight:
+                        BeginConeTransition(coneSightCamOffset,true);
+                        break;
+                    case E_CamMode.bombThrowingCam:
+                        BeginConeTransition(bombThrowingCamOffset,true);
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
             if(!isBelndingToCone)
-                ConeSightCamMovement();
+                AimingCamMovement();
         }
         else
         {
             wasConeMode = false;
             CameraMovement();
-            hasInitialisedConeCam = false;
+            hasInitializedCam = false;
         }
 
     }
@@ -423,45 +443,87 @@ public class CameraMovement_Player : NetworkBehaviour
     }
     #endregion
 
-    #region ConeSightDetection & transition
-    public void ConeSightCamMovement()
+    #region ConeSightDetection & transitions
+    public void AimingCamMovement()
     {
         if (playerTransform == null) return;
         if (isBelndingToCone) return;
 
-        if (!hasInitialisedConeCam)
+        switch (camMode)
         {
-            hasInitialisedConeCam = true;
+            case E_CamMode.coneSight:
+                if (!hasInitializedCam)
+                {
+                    hasInitializedCam = true;
 
-            // keep current yaw (or use player yaw if you want)
-            mRotateValue.x = transform.eulerAngles.y;
-            mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
+                    // keep current yaw (or use player yaw if you want)
+                    mRotateValue.x = transform.eulerAngles.y;
+                    mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
 
-            Quaternion initRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
-            Vector3 initPos = playerTransform.position + initRot * camOffset;
+                    Quaternion initRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+                    Vector3 initPos = playerTransform.position + initRot * coneSightCamOffset;
 
-            transform.position = initPos;
-            transform.rotation = initRot;
-            return;
+                    transform.position = initPos;
+                    transform.rotation = initRot;
+                    return;
+                }
+
+                Vector2 rawInput = inputDetection.GetCameraMovement();
+                inputDelta = new Vector2(
+                    inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.x : rawInput.x * keyboardMoveSpeed,
+                    inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.y : rawInput.y * keyboardMoveSpeed
+                );
+
+                mRotateValue.x += inputDelta.x * rotateSpeed * Time.smoothDeltaTime;
+                mRotateValue.y += inputDelta.y * rotateSpeed * Time.smoothDeltaTime;
+                mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
+
+                Quaternion camRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+
+                Vector3 desiredPos = playerTransform.position + camRot * coneSightCamOffset;
+                transform.position = Vector3.Lerp(transform.position, desiredPos, moveSpeed_coneSight * Time.deltaTime);
+                transform.rotation = camRot;
+
+                RotatePlayerToCamera(camRot);
+                break;
+            case E_CamMode.bombThrowingCam:
+                if (!hasInitializedCam)
+                {
+                    hasInitializedCam = true;
+
+                    // keep current yaw (or use player yaw if you want)
+                    mRotateValue.x = transform.eulerAngles.y;
+                    mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
+
+                    Quaternion initRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+                    Vector3 initPos = playerTransform.position + initRot * bombThrowingCamOffset;
+
+                    transform.position = initPos;
+                    transform.rotation = initRot;
+                    return;
+                }
+
+                rawInput = inputDetection.GetCameraMovement();
+                inputDelta = new Vector2(
+                    inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.x : rawInput.x * keyboardMoveSpeed,
+                    inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.y : rawInput.y * keyboardMoveSpeed
+                );
+
+                mRotateValue.x += inputDelta.x * rotateSpeed * Time.smoothDeltaTime;
+                mRotateValue.y += inputDelta.y * rotateSpeed * Time.smoothDeltaTime;
+                mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
+
+                camRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
+
+                desiredPos = playerTransform.position + camRot * bombThrowingCamOffset;
+                transform.position = Vector3.Lerp(transform.position, desiredPos, moveSpeed_coneSight * Time.deltaTime);
+                transform.rotation = camRot;
+
+                RotatePlayerToCamera(camRot);
+                break;
         }
 
-        Vector2 rawInput = inputDetection.GetCameraMovement();
-        inputDelta = new Vector2(
-            inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.x : rawInput.x * keyboardMoveSpeed,
-            inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? rawInput.y : rawInput.y * keyboardMoveSpeed
-        );
-
-        mRotateValue.x += inputDelta.x * rotateSpeed * Time.smoothDeltaTime;
-        mRotateValue.y += inputDelta.y * rotateSpeed * Time.smoothDeltaTime;
-        mRotateValue.y = Mathf.Clamp(mRotateValue.y, pitchLimitCD.x, pitchLimitCD.y);
-
-        Quaternion camRot = Quaternion.Euler(mRotateValue.y, mRotateValue.x, 0f);
-
-        Vector3 desiredPos = playerTransform.position + camRot * camOffset;
-        transform.position = Vector3.Lerp(transform.position, desiredPos, moveSpeed_coneSight * Time.deltaTime);
-        transform.rotation = camRot;
-
-        RotatePlayerToCamera(camRot);
+        
     }
 
     void RotatePlayerToCamera(Quaternion camRot)
@@ -477,17 +539,17 @@ public class CameraMovement_Player : NetworkBehaviour
         }
     }
 
-    public void BeginConeTransition(bool keepCurrentYam = true)
+    public void BeginConeTransition(Vector3 camOffset, bool keepCurrentYam = true)
     {
         if(playerTransform == null) return;
 
         if (blendRoutine != null) StopCoroutine(blendRoutine);
         {
-            blendRoutine = StartCoroutine(BlendNormalToCone(keepCurrentYam));
+            blendRoutine = StartCoroutine(BlendNormalToCone(keepCurrentYam, camOffset));
         }
     }
 
-    IEnumerator BlendNormalToCone(bool keepCurrentYaw)
+    IEnumerator BlendNormalToCone(bool keepCurrentYaw,Vector3 camOffset)
     {
         isBelndingToCone = true;
 
@@ -519,8 +581,9 @@ public class CameraMovement_Player : NetworkBehaviour
         transform.position = endPos;
         transform.rotation = endRot;
 
-        hasInitialisedConeCam = true;
+        hasInitializedCam = true;
         isBelndingToCone = false;
     }
     #endregion
+
 }

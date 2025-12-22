@@ -1287,6 +1287,7 @@ MonoBehaviour:
   playerController: {fileID: 4161022655810438540}
   inputDetection: {fileID: 3167985525364349275}
   CameraManager: {fileID: 1062957148588737322}
+  cameraMovement_player: {fileID: 7700225210906002730}
   lockTarget: {fileID: 0}
   isLockedOn: 0
   viewAngle: 90
@@ -1298,9 +1299,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 67108864
   isWithDetonator: 0
+  isWithBomb: 0
   isDetonatorLockOn: 0
+  isBombLockOn: 0
   canSeeTarget: 1
   visibleTargets: []
+  lockCamType: 0
   resolution: 40
 --- !u!114 &2156524465778351454
 MonoBehaviour:
@@ -2455,7 +2459,8 @@ MonoBehaviour:
   playerTransform: {fileID: 6347196777763878027}
   inputDetection: {fileID: 3167985525364349275}
   playerLockOn: {fileID: 2126423918051728224}
-  camOffset: {x: -1.18, y: 1.08, z: -2.55}
+  coneSightCamOffset: {x: 0, y: 2.26, z: -3.23}
+  bombThrowingCamOffset: {x: 1.86, y: 3.35, z: -6.12}
   resetCamOffset: {x: 0, y: 5, z: -7}
   distance: 12
   oriDistance: 12
@@ -2485,10 +2490,11 @@ MonoBehaviour:
   resetCamMovePos: {x: 0, y: 0, z: 0}
   cameraManager: {fileID: 1062957148588737322}
   offsetY: 70
-  hasInitialisedConeCam: 0
+  hasInitializedCam: 0
   didSyncAfterReset: 0
   isBelndingToCone: 0
   wasConeMode: 0
+  camMode: 0
   normalToConeBlendTime: 0.25
 --- !u!1001 &2660546766662916825
 PrefabInstance:
