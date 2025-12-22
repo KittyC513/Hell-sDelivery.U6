@@ -191,7 +191,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-        bool condMode = playerLockOn.isWithDetonator && inputDetection.lockPressed || playerLockOn.isWithBomb && inputDetection.crouchPressed;
+        bool condMode = (playerLockOn.isWithDetonator || playerLockOn.isWithBomb) && inputDetection.lockPressed;
         if (inputDetection.isExploded && !inputDetection.isResetCam)
         {
             SwitchToTopDownCam();

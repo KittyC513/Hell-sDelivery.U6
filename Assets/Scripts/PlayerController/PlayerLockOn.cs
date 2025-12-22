@@ -83,7 +83,7 @@ public class PlayerLockOn : MonoBehaviour
         playerCam = inputDetection.cam;
         if (DetectLockInput())
         {
-            if(!isWithDetonator)
+            if(!isWithDetonator && !isWithBomb)
             {
                 if ((lockTarget != null))
                 {
@@ -104,7 +104,7 @@ public class PlayerLockOn : MonoBehaviour
 
                 }
             }
-            if (isWithDetonator)
+            else if (isWithDetonator)
             {
                 lockCamType = E_LockOnState.detonatorLockOn;
                 CameraManager.currentCamType = E_CamType.playerCam; 
@@ -118,53 +118,56 @@ public class PlayerLockOn : MonoBehaviour
                 //    isLockedOn = true;
                 //}
             }
-            else
+            else if(isWithBomb)
             {
-
-                if ((lockTarget != null))
-                {
-
-                    CameraManager.currentCamType = E_CamType.lockCam;
-                    print("Lock_on" + lockTarget.transform.position);
-                    if (!isLockedOn)
-                    {
-                        CameraManager.ResetCamTransition();
-                        playerController.isLookAtTriggered = false;
-                        isLockedOn = true;
-                    }
-
-                }
-                else
-                {
-                    lockTarget = GetNewTarget(playerCam, playerObj);
-
-                }
-
-            }         
-        }
-        else
-        {
-            isDetonatorLockOn = false;
-        }
-
-        if (DetectThrowInput())
-        {
-            if (isWithBomb)
-            {
-                isBombLockOn = true;
                 lockCamType = E_LockOnState.bombLockOn;
                 CameraManager.currentCamType = E_CamType.playerCam;
                 cameraMovement_player.camMode = E_CamMode.bombThrowingCam;
+                isBombLockOn = true;
             }
+            //else
+            //{
+
+            //    if ((lockTarget != null))
+            //    {
+
+            //        CameraManager.currentCamType = E_CamType.lockCam;
+            //        print("Lock_on" + lockTarget.transform.position);
+            //        if (!isLockedOn)
+            //        {
+            //            CameraManager.ResetCamTransition();
+            //            playerController.isLookAtTriggered = false;
+            //            isLockedOn = true;
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        lockTarget = GetNewTarget(playerCam, playerObj);
+
+            //    }
+
+            //}         
         }
         else
         {
-            isBombLockOn = false;
+            if(isDetonatorLockOn) 
+                isDetonatorLockOn = false;
+            if(isBombLockOn) 
+                isBombLockOn = false;
         }
+
+        //if (isBombLockOn)
+        //{
+        //    isBombLockOn = true;
+        //    lockCamType = E_LockOnState.bombLockOn;
+        //    CameraManager.currentCamType = E_CamType.playerCam;
+        //    cameraMovement_player.camMode = E_CamMode.bombThrowingCam;
+        //}
+
 
         if (!DetectLockInput())
         {
-
             lockCamType = E_LockOnState.none;
             // Turn OFF previous selected targets
             for (int i = 0; i < visibleTargets.Count; i++)

@@ -192,7 +192,13 @@ public class BombItem : ItemBase
         ValidatedCheck();
 
         if (bombPulled) HoldBomb();
-        if (charging && bombPulled) ChargeBombThrow();
+        if (charging && bombPulled && bomb != null) ChargeBombThrow();
+        if (bombPulled && bomb == null)
+        {
+            charging = false;
+            bombPulled = false;
+        }
+
     }
     private void ValidatedCheck()
     {
