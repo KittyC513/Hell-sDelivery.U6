@@ -36,6 +36,8 @@ public class BombItem : ItemBase
 
     private Vector3 bombHoldPoint;
     private GameObject bomb;
+    [SerializeField] private float yThrowOffset = 0;
+    [SerializeField] private float forwardThrowOffset = 0;
 
    
     public override void UseFunction()
@@ -107,7 +109,7 @@ public class BombItem : ItemBase
             Camera cam = GameManager.Instance.cam_p1;
             if (inputDetection.playerNum == 2) cam = GameManager.Instance.cam_p2;
             //get the forward direction (y value is temporary)
-            Vector3 dir = new Vector3(currentBag.transform.forward.x, cam.transform.forward.y, currentBag.transform.forward.z).normalized;
+            Vector3 dir = new Vector3(currentBag.transform.forward.x + forwardThrowOffset, cam.transform.forward.y + yThrowOffset, currentBag.transform.forward.z + forwardThrowOffset).normalized;
             
             //velocity is direction * force
             Vector3 velocity = dir * (maximumThrowForce * percent);
@@ -124,7 +126,7 @@ public class BombItem : ItemBase
             if (inputDetection.playerNum == 2) cam = GameManager.Instance.cam_p2;
 
             //get the forward direction (y value is temporary)
-            Vector3 dir = new Vector3(currentBag.transform.forward.x, cam.transform.forward.y, currentBag.transform.forward.z).normalized;
+            Vector3 dir = new Vector3(currentBag.transform.forward.x + forwardThrowOffset, cam.transform.forward.y  + yThrowOffset, currentBag.transform.forward.z + forwardThrowOffset).normalized;
             
             //velocity is direction * force
             Vector3 velocity = dir * (maximumThrowForce * percent);
