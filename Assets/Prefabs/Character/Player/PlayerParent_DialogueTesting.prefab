@@ -1325,7 +1325,7 @@ MonoBehaviour:
   attackHitbox: {fileID: 4242292160371283292}
   attackSpeedBoost: 80
   maximumVerticalSpeed: 45
-  stallVelocity: 10
+  stallVelocity: 1
 --- !u!114 &1550417069281404750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,23 +1484,23 @@ MonoBehaviour:
   raycastRadius: 0.23
   floatHeightStrength: 100
   floatHeightDamping: 3
-  maxFallSpeed: 32
-  fallAccel: 70
-  maxFallAccelStep: 70
+  maxFallSpeed: 30
+  fallAccel: 65
+  maxFallAccelStep: 65
   gravityScale: 1
   fallAccelScale: 1
   currentFallVel: 0
   airStepMult: 0.65
   airDecelMult: 0.5
   airAccelMult: 0.8
-  jumpHeight: 4.5
-  jumpDecayRate: 65
+  jumpHeight: 3
+  jumpDecayRate: 60
   jumpReleaseFactor: 2
   jumpPeakFactor: 0.3
   jumpPeakRange: 1.2
   headSquishForce: 12
-  doubleJumpHeight: 2.5
-  doubleJumpDecayRate: 45
+  doubleJumpHeight: 2
+  doubleJumpDecayRate: 55
   maxJumps: 2
   remainingJumps: 2
   spinJumpHeight: 4.25

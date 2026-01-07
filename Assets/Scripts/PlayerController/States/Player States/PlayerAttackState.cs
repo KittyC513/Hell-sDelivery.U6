@@ -169,6 +169,7 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         {
             //move y velocity towards 0
             //CalculateMovement(pControl.RB, Vector3.up, stallVelocity, maximumVerticalSpeed);
+            pControl.RB.linearVelocity = Vector3.MoveTowards(pControl.RB.linearVelocity, new Vector3(pControl.RB.linearVelocity.x, 0, pControl.RB.linearVelocity.z), stallVelocity);
         }
     }
 
