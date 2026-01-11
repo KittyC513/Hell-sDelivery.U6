@@ -38,6 +38,8 @@ public class CraneState
     public float visRadius = 10f;
     public float visAngle = 30f;
     public float rotateSpeed = 5f;
+
+    protected bool hasInitiatedAttack = false;
     
 
     public CraneState(GameObject _npc, NavMeshAgent _agent, Animator _anim)
@@ -168,10 +170,6 @@ public class MovingToPickup : CraneState
     }
     public override void Update()
     {
-        if (CanSeePlayer())
-        {
-            rotateSpeed = 60f;
-        }
 
         if (craneSurface == null || craneArm == null)
         {
@@ -247,6 +245,12 @@ public class PickingUp : CraneState
         }
         else
         {
+            //if(CanSeePlayer() && !hasInitiatedAttack)
+            //{
+            //    nextState = new EmergencyStop(npc, agent, anim, player, pickupLocation, dropoffLocation);
+            //    stage = EVENT.EXIT;
+            //    return;
+            //}
 
             nextState = new MovingToDropoff(npc, agent, anim, player, pickupLocation, dropoffLocation);
             stage = EVENT.EXIT;
@@ -305,6 +309,13 @@ public class MovingToDropoff : CraneState
             return;
         }
 
+        //if (CanSeePlayer() && !hasInitiatedAttack)
+        //{
+        //    nextState = new EmergencyStop(npc, agent, anim, player, pickupLocation, dropoffLocation);
+        //    stage = EVENT.EXIT;
+        //    return;
+        //}
+
         Vector3 dir = dropoffLocation - craneSurface.position;
         dir.y = 0; // Keep only horizontal rotation
 
@@ -357,6 +368,12 @@ public class DroppingOff : CraneState
     }
     public override void Update()
     {
+        //if (CanSeePlayer() && !hasInitiatedAttack)
+        //{
+        //    nextState = new EmergencyStop(npc, agent, anim, player, pickupLocation, dropoffLocation);
+        //    stage = EVENT.EXIT;
+        //    return;
+        //}
 
         // dropping off process
         if (timer < dropOffTime)
@@ -402,18 +419,20 @@ public class EmergencyStop : CraneState
     }
     public override void Update()
     {
-        if (CanAttackPlayer())
+        if(!CanAttackPlayer())
         {
-            nextState = new Pursue(npc, agent, anim, player, pickupLocation, dropoffLocation);
+            Debug.Log("Crane cannot attack player, switch to MovingToPickingUp state.");
+            rotateSpeed = 50f;
+            hasInitiatedAttack = true;
+            nextState = new MovingToPickup(npc, agent, anim, player, pickupLocation, dropoffLocation);
             stage = EVENT.EXIT;
         }
         else
         {
-            nextState = new MovingToPickup(npc, agent, anim, player, pickupLocation, dropoffLocation);
+            Debug.Log("Crane can attack player, switch to Pursue state.");
+            nextState = new Pursue(npc, agent, anim, player, pickupLocation, dropoffLocation);
             stage = EVENT.EXIT;
         }
-        // Stay in emergency stop until reset
-
     }
     public override void Exit()
     {
