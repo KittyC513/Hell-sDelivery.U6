@@ -35,9 +35,9 @@ public class CraneState
     protected Vector3 dropoffLocation;
     protected bool armHasLoad = false;
 
-    public float visRadius = 10f;
+    public float visRadius = 20f;
     public float visAngle = 30f;
-    public float rotateSpeed = 5f;
+    public float rotateSpeed = 3f;
 
     protected bool hasInitiatedAttack = false;
     
@@ -83,7 +83,6 @@ public class CraneState
         }
         else
         {
-            Debug.Log("Crane found players in vision radius.");
             return true;
         }
 
@@ -98,7 +97,24 @@ public class CraneState
         else 
             return false;
     }
+
+    //public bool IsCraneArmFacingPlayerDirection(Transform craneArm, Transform player, float maxAngleDeg = 10f)
+    //{
+    //    Vector3 armDir = craneArm.forward;
+    //    Vector3 playerDir = player.forward;
+
+    //    armDir.y = 0;
+    //    playerDir.y = 0;
+
+    //    armDir.Normalize();
+    //    playerDir.Normalize();
+
+    //    float angle = Vector3.Angle(armDir, playerDir);
+    //    return angle <= maxAngleDeg;
+    //}
+
     #endregion
+
 }
 
 #region Idle
@@ -156,7 +172,7 @@ public class MovingToPickup : CraneState
         Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
         craneArm = npc.transform.Find("CraneArm");
-        craneSurface = npc.transform.Find("CraneArm/handle/InteractSurface");
+        craneSurface = npc.transform.Find("CraneArm/movingPoint/InteractSurface");
         Debug.Log("Crane arm found: " + craneArm.name);
         name = STATE.MOVINGTOPICKUP;
 
@@ -177,7 +193,7 @@ public class MovingToPickup : CraneState
             return;
         }
 
-        Vector3 dir = pickupLocation - craneSurface.position;
+        Vector3 dir = pickupLocation - craneArm.position;
         dir.y = 0; // Keep only horizontal rotation
 
         if (dir.sqrMagnitude < 0.0001f)
@@ -276,10 +292,13 @@ public class PickingUp : CraneState
 #region MovingToDropoff
 public class MovingToDropoff : CraneState
 {
-    private Transform craneSurface;
+    private Transform craneMovingPoint;
     private Transform craneArm;
     private float arriveAngle = 2f;
     private float rotateDegPerSec = 60f;
+    private Transform player1;
+    private Transform player2;
+    
 
     public MovingToDropoff(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
         : base(_npc, _agent, _anim)
@@ -287,8 +306,11 @@ public class MovingToDropoff : CraneState
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
 
+        player1 = GameManager.instance.player1.transform;
+        player2 = GameManager.instance.player2.transform;
+
         Debug.Log("Dropoff Location set to: " + dropoffLocation);
-        craneSurface = npc.transform.Find("CraneArm/handle/InteractSurface");
+        craneMovingPoint = npc.transform.Find("CraneArm/movingPoint");
         craneArm = npc.transform.Find("CraneArm");
         name = STATE.MOVINGTODROPPINGOFF;
 
@@ -303,37 +325,141 @@ public class MovingToDropoff : CraneState
     public override void Update()
     {
 
-        if (craneSurface == null || craneArm == null)
+        if (craneMovingPoint == null || craneArm == null)
         {
             Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
         }
 
-        //if (CanSeePlayer() && !hasInitiatedAttack)
+        float moveSpeed = 10f;
+        float faceAngle = 5f;
+        float railEpsilon = 0.1f;
+
+        if (CanSeePlayer())
+        {
+            //1. choose closest player
+            float distToP1 = Vector3.Distance(craneArm.position, player1.position);
+            float distToP2 = Vector3.Distance(craneArm.position, player2.position);
+            Transform targetPlayer = distToP1 < distToP2 ? player1 : player2;
+
+            //2.rotate arm toward player
+            Vector3 dir = targetPlayer.position - craneArm.position;
+            dir.y = 0; // Keep only horizontal rotation
+            if (dir.sqrMagnitude < 0.0001f)
+                return; // No need to rotate if direction is too small
+
+            Quaternion targetRot = Quaternion.LookRotation(dir);
+
+            craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRot, rotateDegPerSec * Time.deltaTime);
+
+            float angle = Quaternion.Angle(craneArm.rotation, targetRot);
+
+            //3. slide trolley only when facing enough
+            if (angle <= faceAngle)
+            {
+                Vector3 playerLocal = craneArm.InverseTransformPoint(targetPlayer.position);
+
+                Vector3 movePointLocal = craneMovingPoint.localPosition;
+                movePointLocal.z = playerLocal.z;
+
+                craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.localPosition, movePointLocal, moveSpeed * Time.deltaTime);
+
+
+                //4. arrival check on rail axis
+                float zError = Mathf.Abs(craneMovingPoint.localPosition.z - playerLocal.z);
+
+                if (zError <= railEpsilon)
+                {
+                    Debug.Log("Crane has reached player position.");
+                    nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+                    stage = EVENT.EXIT;
+                    return;
+                }
+
+            }
+        }
+        else
+        {
+            Vector3 dir = dropoffLocation - craneArm.position;
+            dir.y = 0; // Keep only horizontal rotation
+            if (dir.sqrMagnitude < 0.0001f) return;
+
+            Quaternion targetRot = Quaternion.LookRotation(dir);
+            craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRot, rotateDegPerSec * Time.deltaTime);
+
+            float angle = Quaternion.Angle(craneArm.rotation, targetRot);
+            if (angle <= arriveAngle)
+            {
+                nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+                stage = EVENT.EXIT;
+                return;
+            }
+
+        }
+
+
+        //if (CanSeePlayer())
         //{
-        //    nextState = new EmergencyStop(npc, agent, anim, player, pickupLocation, dropoffLocation);
-        //    stage = EVENT.EXIT;
-        //    return;
+        //    float distToP1 = Vector3.Distance(craneArm.position, player1.position);
+        //    float distToP2 = Vector3.Distance(craneArm.position, player2.position);
+        //    Transform targetPlayer = distToP1 < distToP2 ? player1 : player2;
+
+        //    //rotateDegPerSec = 0;
+        //    Vector3 playerLocal = craneArm.InverseTransformPoint(targetPlayer.position);
+        //    Vector3 surfaceLocal = craneSurface.localPosition;
+
+        //    surfaceLocal.z = playerLocal.z;
+
+        //    float moveSpeed = 10f;
+        //    craneSurface.localPosition = Vector3.MoveTowards(craneSurface.localPosition, surfaceLocal, moveSpeed * Time.deltaTime);
+
+        //    float distToplayer = Vector3.Distance(craneSurface.position, targetPlayer.position);
+
+        //    Debug.Log("Distance to player: " + distToplayer);
+        //    if (distToplayer <= 0.1f)
+        //    {
+        //        Debug.Log("Crane has reached player position.");
+        //        nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+        //        stage = EVENT.EXIT;
+        //        return;
+        //    }         
+        //    //else
+        //    //{
+        //    //    rotateDegPerSec = 50f;
+        //    //}
+
+        //    Vector3 dir = targetPlayer.position - craneArm.position;
+        //    dir.y = 0; // Keep only horizontal rotation
+
+        //    if (dir.sqrMagnitude < 0.0001f)
+        //        return; // No need to rotate if direction is too small
+
+        //    Quaternion targetRotation = Quaternion.LookRotation(dir);
+        //    craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRotation, rotateDegPerSec * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    Vector3 dir = dropoffLocation - craneArm.position;
+        //    dir.y = 0; // Keep only horizontal rotation
+
+        //    if (dir.sqrMagnitude < 0.0001f)
+        //        return; // No need to rotate if direction is too small
+
+        //    Quaternion targetRotation = Quaternion.LookRotation(dir);
+        //    craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRotation, rotateDegPerSec * Time.deltaTime);
+
+        //    float angle = Quaternion.Angle(craneArm.rotation, targetRotation);
+        //    //Debug.Log("Angle to target: " + angle);
+
+        //    if (angle <= arriveAngle)
+        //    {
+        //        nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+        //        stage = EVENT.EXIT;
+        //        return;
+        //    }
         //}
 
-        Vector3 dir = dropoffLocation - craneSurface.position;
-        dir.y = 0; // Keep only horizontal rotation
 
-        if (dir.sqrMagnitude < 0.0001f)
-            return; // No need to rotate if direction is too small
-
-        Quaternion targetRotation = Quaternion.LookRotation(dir);
-        craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRotation, rotateDegPerSec * Time.deltaTime);
-
-        float angle = Quaternion.Angle(craneArm.rotation, targetRotation);
-        //Debug.Log("Angle to target: " + angle);
-
-        if (angle <= arriveAngle)
-        {
-            nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
-            stage = EVENT.EXIT;
-            return;
-        }
     }
     public override void Exit()
     {
@@ -368,13 +494,6 @@ public class DroppingOff : CraneState
     }
     public override void Update()
     {
-        //if (CanSeePlayer() && !hasInitiatedAttack)
-        //{
-        //    nextState = new EmergencyStop(npc, agent, anim, player, pickupLocation, dropoffLocation);
-        //    stage = EVENT.EXIT;
-        //    return;
-        //}
-
         // dropping off process
         if (timer < dropOffTime)
         { 
@@ -400,56 +519,58 @@ public class DroppingOff : CraneState
 #endregion
 
 #region EmergencyStop
-public class EmergencyStop : CraneState
-{
-    public EmergencyStop(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
-        : base(_npc, _agent, _anim)
-    {
-        pickupLocation = _pickupLocation;
-        dropoffLocation = _dropoffLocation;
-        name = STATE.EMERGENCYSTOP;
+//public class EmergencyStop : CraneState
+//{
+//    public EmergencyStop(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
+//        : base(_npc, _agent, _anim)
+//    {
+//        pickupLocation = _pickupLocation;
+//        dropoffLocation = _dropoffLocation;
+//        name = STATE.EMERGENCYSTOP;
 
-    }
-    public override void Enter()
-    {
-        base.Enter();
-        // Set emergency stop trigger
-        //anim.SetTrigger("isEmergencyStopping");
-        Debug.Log("Crane is in Emergency Stop.");
-    }
-    public override void Update()
-    {
-        if(!CanAttackPlayer())
-        {
-            Debug.Log("Crane cannot attack player, switch to MovingToPickingUp state.");
-            rotateSpeed = 50f;
-            hasInitiatedAttack = true;
-            nextState = new MovingToPickup(npc, agent, anim, player, pickupLocation, dropoffLocation);
-            stage = EVENT.EXIT;
-        }
-        else
-        {
-            Debug.Log("Crane can attack player, switch to Pursue state.");
-            nextState = new Pursue(npc, agent, anim, player, pickupLocation, dropoffLocation);
-            stage = EVENT.EXIT;
-        }
-    }
-    public override void Exit()
-    {
-        // Reset emergency stop trigger
-        //anim.ResetTrigger("isEmergencyStopping");
-        base.Exit();
-    }
-}
+//    }
+//    public override void Enter()
+//    {
+//        base.Enter();
+//        // Set emergency stop trigger
+//        //anim.SetTrigger("isEmergencyStopping");
+//        Debug.Log("Crane is in Emergency Stop.");
+//    }
+//    public override void Update()
+//    {
+
+//        nextState = new Pursue(npc, agent, anim, player, pickupLocation, dropoffLocation);
+//        stage = EVENT.EXIT;
+        
+//    }
+//    public override void Exit()
+//    {
+//        // Reset emergency stop trigger
+//        //anim.ResetTrigger("isEmergencyStopping");
+//        base.Exit();
+//    }
+//}
 #endregion
 
 #region Pursue
 public class Pursue : CraneState
 {
+    private Transform player1;
+    private Transform player2;
+    private Transform craneSurface;
+    private Transform craneArm;
+    private float arriveAngle = 2f;
+    private float rotateDegPerSec = 80f;
 
     public Pursue(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
         : base(_npc, _agent, _anim)
     {
+        craneArm = npc.transform.Find("CraneArm");
+        craneSurface = npc.transform.Find("CraneArm/movingPoint/InteractSurface");
+
+        player1 = GameManager.instance.player1.transform;
+        player2 = GameManager.instance.player2.transform;
+
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
         name = STATE.PURSUE;
@@ -465,27 +586,30 @@ public class Pursue : CraneState
     }
     public override void Update()
     {
-        //float distance = Vector3.Distance(npc.transform.position, player.position);
-        //if (distance < 0.1f)
-        //{
-        //    if (CanAttackPlayer())
-        //    {
-        //        // Transition to Attack state
-        //        nextState = new Attack(npc, agent, anim, player,pickupLocation,dropoffLocation);
-        //        stage = EVENT.EXIT;
-        //    }
-        //    else if (!CanAttackPlayer())
-        //    {
-        //        // Transition to Idle state
-        //        nextState = new Idle(npc, agent, anim, player,pickupLocation,dropoffLocation);
-        //        stage = EVENT.EXIT;
-        //    }
+        float distToP1 = Vector3.Distance(npc.transform.position, player1.position);
+        float distToP2 = Vector3.Distance(npc.transform.position, player2.position);
+        Transform targetPlayer = distToP1 < distToP2 ? player1 : player2;
 
-        //}
-        //else
-        //{
+        Vector3 dir = dropoffLocation - craneSurface.position;
+        dir.y = 0; // Keep only horizontal rotation
 
-        //}
+        if (dir.sqrMagnitude < 0.0001f)
+            return; // No need to rotate if direction is too small
+
+        Quaternion targetRotation = Quaternion.LookRotation(dir);
+        craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRotation, rotateDegPerSec * Time.deltaTime);
+
+        float angle = Quaternion.Angle(craneArm.rotation, targetRotation);
+        //Debug.Log("Angle to target: " + angle);
+
+        if (angle <= arriveAngle)
+        {
+            nextState = new Attack(npc, agent, anim, player, pickupLocation, dropoffLocation);
+            stage = EVENT.EXIT;
+            return;
+        }
+
+
     }
     public override void Exit()
     {
