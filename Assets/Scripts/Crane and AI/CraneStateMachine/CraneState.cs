@@ -160,9 +160,11 @@ public class Idle : CraneState
 #region MovingToPickup
 public class MovingToPickup : CraneState
 {
+    private Transform craneMovingPoint;
     private float arriveAngle = 2f;
-    private Transform craneSurface;
     private Transform craneArm;
+    private float faceAngle = 6f;
+    private float rotateDegPerSec = 60f;    
     public MovingToPickup(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
         : base(_npc, _agent, _anim)
     {
@@ -172,7 +174,7 @@ public class MovingToPickup : CraneState
         Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
         craneArm = npc.transform.Find("CraneArm");
-        craneSurface = npc.transform.Find("CraneArm/movingPoint/InteractSurface");
+        craneMovingPoint = npc.transform.Find("CraneArm/movingPoint");
         Debug.Log("Crane arm found: " + craneArm.name);
         name = STATE.MOVINGTOPICKUP;
 
@@ -187,7 +189,7 @@ public class MovingToPickup : CraneState
     public override void Update()
     {
 
-        if (craneSurface == null || craneArm == null)
+        if (craneMovingPoint == null || craneArm == null)
         {
             Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
@@ -200,16 +202,35 @@ public class MovingToPickup : CraneState
             return; // No need to rotate if direction is too small
 
         Quaternion targetRotation = Quaternion.LookRotation(dir);
-        craneArm.rotation = Quaternion.Slerp(craneArm.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+        craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRotation, rotateDegPerSec * Time.deltaTime);
 
         float angle = Quaternion.Angle(craneArm.rotation, targetRotation);
         //Debug.Log("Angle to target: " + angle);
 
-        if (angle <= arriveAngle)
+        if (angle <= faceAngle)
         {
-            nextState = new PickingUp(npc, agent, anim, player, pickupLocation, dropoffLocation);
-            stage = EVENT.EXIT;
-            return;
+
+            Vector3 pickupLocal = craneArm.InverseTransformPoint(pickupLocation);
+
+            Vector3 movePointLocal = craneMovingPoint.localPosition;
+            movePointLocal.z = pickupLocal.z;
+
+            float moveSpeed = 10f;  
+
+            craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.localPosition, movePointLocal, moveSpeed * Time.deltaTime);
+
+
+            //4. arrival check on rail axis
+            float zError = Mathf.Abs(craneMovingPoint.localPosition.z - pickupLocal.z);
+            float railEpsilon = 0.1f;
+
+            if (zError <= railEpsilon && angle <= arriveAngle)
+            {
+                nextState = new PickingUp(npc, agent, anim, player, pickupLocation, dropoffLocation);
+                stage = EVENT.EXIT;
+                return;
+            }
+
         }
 
         //base.Update();
@@ -225,7 +246,7 @@ public class MovingToPickup : CraneState
 #region PickingUp
 public class PickingUp : CraneState
 {
-    private float pickUpTime = 3f;
+    private float pickUpTime = 2.3f;
     private float timer = 0f;
 
     public PickingUp(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
@@ -298,7 +319,8 @@ public class MovingToDropoff : CraneState
     private float rotateDegPerSec = 60f;
     private Transform player1;
     private Transform player2;
-    
+    private float faceAngle = 6f;
+
 
     public MovingToDropoff(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
         : base(_npc, _agent, _anim)
@@ -332,7 +354,7 @@ public class MovingToDropoff : CraneState
         }
 
         float moveSpeed = 10f;
-        float faceAngle = 5f;
+        float faceAngle = 6f;
         float railEpsilon = 0.1f;
 
         if (CanSeePlayer())
@@ -354,9 +376,11 @@ public class MovingToDropoff : CraneState
 
             float angle = Quaternion.Angle(craneArm.rotation, targetRot);
 
+            Debug.Log("Angle to target player: " + angle);
             //3. slide trolley only when facing enough
             if (angle <= faceAngle)
             {
+                Debug.Log("Crane arm is facing player sufficiently.");
                 Vector3 playerLocal = craneArm.InverseTransformPoint(targetPlayer.position);
 
                 Vector3 movePointLocal = craneMovingPoint.localPosition;
@@ -364,11 +388,10 @@ public class MovingToDropoff : CraneState
 
                 craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.localPosition, movePointLocal, moveSpeed * Time.deltaTime);
 
-
                 //4. arrival check on rail axis
                 float zError = Mathf.Abs(craneMovingPoint.localPosition.z - playerLocal.z);
-
-                if (zError <= railEpsilon)
+                Debug.Log("Z Error to player: " + zError);
+                if (zError <= railEpsilon && angle <= arriveAngle)
                 {
                     Debug.Log("Crane has reached player position.");
                     nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
@@ -388,11 +411,27 @@ public class MovingToDropoff : CraneState
             craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRot, rotateDegPerSec * Time.deltaTime);
 
             float angle = Quaternion.Angle(craneArm.rotation, targetRot);
-            if (angle <= arriveAngle)
+            if (angle <= faceAngle)
             {
-                nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
-                stage = EVENT.EXIT;
-                return;
+                Vector3 dropoffLocal = craneArm.InverseTransformPoint(dropoffLocation);
+
+                Vector3 movePointLocal = craneMovingPoint.localPosition;
+                movePointLocal.z = dropoffLocal.z;
+
+                craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.localPosition, movePointLocal, moveSpeed * Time.deltaTime);
+
+
+                //4. arrival check on rail axis
+                float zError = Mathf.Abs(craneMovingPoint.localPosition.z - dropoffLocal.z);
+
+                if (zError <= railEpsilon && angle <= arriveAngle)
+                {
+                    nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+                    stage = EVENT.EXIT;
+                    return;
+                }
+
+
             }
 
         }
@@ -473,7 +512,7 @@ public class MovingToDropoff : CraneState
 
 public class DroppingOff : CraneState
 {
-    private float dropOffTime = 2f;
+    private float dropOffTime = 2.2f;
     private float timer = 0f;
 
     public DroppingOff(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation,Vector3 _dropoffLocation)
