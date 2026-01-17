@@ -25,6 +25,7 @@ public class EnterCrane : MonoBehaviour
     {
         if (EventData.craneIsActivated) return;
         //Crane Activation
+        cam_crane.gameObject.SetActive(true);
         if (other.CompareTag("Player"))
         {
             if(other.gameObject.layer == LayerMask.NameToLayer("Player1") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
@@ -64,7 +65,13 @@ public class EnterCrane : MonoBehaviour
     {
         GameManager.instance.UnFreezeBothPlayers();
         GameManager.instance.EnableBothPlayersCam();
+        p1EnterCrane = false;
+        p2EnterCrane = false;
+        EventData.craneIsActivated = false;
+        cam_crane.gameObject.SetActive(false);
     }
+
+
 
 
 }
