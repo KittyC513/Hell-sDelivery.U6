@@ -25,5 +25,7 @@ public class SoundBank : ScriptableObject
 public class SoundEffect
 {
     [SerializeField] public string clipName;
+    [HideInInspector] public int chosenSound = 0;
+    [SerializeField, Range(0, 3)] public float randomPitchBend = 0;
     [SerializeField] public List<AudioClip> audioClips;
 }

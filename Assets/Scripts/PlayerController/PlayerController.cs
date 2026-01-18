@@ -137,6 +137,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private ApplyKnockback knockback;
     [SerializeField] private PlayerStateMachine pMachine;
     [SerializeField] private GameObject playerModel;
+    [SerializeField] public PlayerSFX playerSfx;
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
 
