@@ -103,15 +103,17 @@ public class SoundBankManager : MonoBehaviour
             //check if the sound bank contains the sound
             if (loadedSoundBanks[bankName].soundIndex.ContainsKey(soundName))
             {
+                SoundEffect sfx = loadedSoundBanks[bankName].soundIndex[soundName];
+                
                 //if the sound contains more than one audio clip choose between them at random
-                if (loadedSoundBanks[bankName].soundIndex[soundName].audioClips.Count > 1)
+                if (sfx.audioClips.Count > 1)
                 {
-                    int num = Random.Range(0, loadedSoundBanks[bankName].soundIndex[soundName].audioClips.Count);
-                    return loadedSoundBanks[bankName].soundIndex[soundName].audioClips[num];
+                    int num = Random.Range(0, sfx.audioClips.Count);
+                    return sfx.audioClips[num];
                 }
                 else
                 {
-                    return loadedSoundBanks[bankName].soundIndex[soundName].audioClips[0];
+                    return sfx.audioClips[0];
                 }
                 
             }

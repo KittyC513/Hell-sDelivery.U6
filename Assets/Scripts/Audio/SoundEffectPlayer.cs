@@ -20,7 +20,7 @@ public class SoundEffectPlayer : MonoBehaviour
         //debug only
         if (Input.GetMouseButtonDown(0))
         {
-            PlaySoundEffect("Player", "Jump");
+            //PlaySoundEffect("Player", "Jump");
         }
     }
 }
