@@ -9,13 +9,13 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] private BillboardUI interactUI;
 
     //trigger event
-    [SerializeField] public UnityEvent<PlayerInputDetection> OnInteract;
+    [SerializeField] public UnityEvent<PlayerInputDetection, InteractableObject> OnInteract;
 
     [SerializeField] private bool limitInteracts = true;
     [SerializeField] private int maxNumberOfInteracts = 1;
     [SerializeField] private bool requireItem = false;
     [SerializeField] private string validItemTag;
-    private bool canInteract = true;
+    public bool canInteract = true;
 
     private int interactCount = 0;
 
@@ -27,6 +27,18 @@ public class InteractableObject : MonoBehaviour
             if (interactCount >= maxNumberOfInteracts && canInteract == true)
             {
                 canInteract = false;
+            }
+        }
+
+        if (!canInteract)
+        {
+            if (interactUI.IsShowingToPlayer(1))
+            {
+                DisableUI(1);
+            }
+            else if (interactUI.IsShowingToPlayer(2))
+            {
+                DisableUI(2);
             }
         }
     }
@@ -46,7 +58,7 @@ public class InteractableObject : MonoBehaviour
         if (canInteract)
         {
             //interact with this object 
-            OnInteract.Invoke(playerInput.GetComponent<PlayerInputDetection>());
+            OnInteract.Invoke(playerInput.GetComponent<PlayerInputDetection>(), this);
 
             if (requireItem)
             {
