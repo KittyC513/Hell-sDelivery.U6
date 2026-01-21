@@ -200,6 +200,11 @@ public class PlayerInputDetection : NetworkBehaviour
         return GetRelativeInputDirection(cam, horizontalInputValue = moveAction.ReadValue<Vector2>());
     }
 
+    public Vector3 GetHorizontalMovement_crane()
+    {
+        return GetRelativeInputDirection(playerCam, horizontalInputValue = moveAction.ReadValue<Vector2>());
+    }
+
 
     public Vector2 GetCameraMovement()
     {

@@ -83,10 +83,10 @@ public class CameraManager : MonoBehaviour
 
     public void SwitchToPlayerCam()
     {
+        if (EventData.craneIsActivated) return;
         lockCam.gameObject.SetActive(false);
         playerCam.gameObject.SetActive(true);
         inputDetection.cam = playerCam;
-        print("Switch to player cam");
     }
 
     public void SwitchToLockCam()
