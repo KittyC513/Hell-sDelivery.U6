@@ -541,11 +541,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: C'mon don't gatekeeeeep! I really gotta goooo!
+        value: C'mon don't gatekeeeeep! I <dangle><i>really<i></dangle> gotta goooo!
         type: 0
         typeString: 
       - title: Sequence
-        value: 'AnimatorPlayWait(CharacterArmature|Punch)->Message(Done);
+        value: 'AnimatorPlayWait(CharacterArmature|Punch)@1->Message(Done);
 
           AnimatorPlay(CharacterArmature|Idle)@Message(Done)'
         type: 0
@@ -653,7 +653,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: O-oh. Uhhh. Never mind!
+        value: O-oh. <waitfor=1> Uhhh. <waitfor=1> <shake>Never mind!</shake>
         type: 0
         typeString: 
       - title: Sequence
@@ -682,7 +682,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 20.044266}
+    canvasScrollPosition: {x: 0, y: 233.69125}
     canvasZoom: 0.85000014
   - id: 3
     fields:
@@ -808,11 +808,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: THE END IS NEAR!
+        value: <shake><b>THE END IS NEAR!</b></shake>
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'AnimatorPlayWait(CharacterArmature|Duck)@1->Message(Done);
+
+          AnimatorPlay(CharacterArmature|Idle)@Message(Done)'
         type: 0
         typeString: 
       conversationID: 3
@@ -918,11 +920,72 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: RUN! RUUUUN 4 UR LIVES!!!
+        value: <shake><b>RUN! RUUUUN 4 UR LIVES!!!</b></shake>
         type: 0
         typeString: 
       - title: Sequence
+        value: 'AnimatorPlayWait(CharacterArmature|Run);
+
+          Delay(2)->Message(Done);
+
+          AnimatorPlay(CharacterArmature|Idle)@Message(Done)'
+        type: 0
+        typeString: 
+      conversationID: 3
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 3
+        destinationConversationID: 3
+        destinationDialogueID: 4
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 160
+        y: 180
+        width: 160
+        height: 30
+    - id: 4
+      fields:
+      - title: Title
         value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: <shake><b>RAAAAH! ALKSJDF DFIMDYINGLKAJSD</b></shake>
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 'AnimatorPlayWait(CharacterArmature|Death)@2->Message(Typed);
+
+          AnimatorPlay(CharacterArmature|Idle)@Message(Typed)'
         type: 0
         typeString: 
       conversationID: 3
@@ -941,7 +1004,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 160
-        y: 180
+        y: 230
         width: 160
         height: 30
     entryGroups: []
