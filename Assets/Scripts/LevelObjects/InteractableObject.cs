@@ -32,14 +32,11 @@ public class InteractableObject : MonoBehaviour
 
         if (!canInteract)
         {
-            if (interactUI.IsShowingToPlayer(1))
-            {
-                DisableUI(1);
-            }
-            else if (interactUI.IsShowingToPlayer(2))
-            {
-                DisableUI(2);
-            }
+            interactUI.active = false;
+        }
+        else
+        {
+            interactUI.active = true;
         }
     }
 

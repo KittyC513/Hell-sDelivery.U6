@@ -60,7 +60,7 @@ public class SummoningCircle : MonoBehaviour
 
         //move the player towards the center of the circle
         float percent = Mathf.Clamp(timeElapsed, 0, 10) / 1;
-        currentPlayer.transform.position = Vector3.Lerp(playerStartPos, transform.position + new Vector3(0, 1f, 0), percent);
+        currentPlayer.transform.position = Vector3.Lerp(playerStartPos, transform.position + new Vector3(0, 1.1f, 0), percent);
 
         //current player lets go of the interact button
         if (!currentPlayer.interactHeld)
