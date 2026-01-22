@@ -104,7 +104,7 @@ public class SoundBankManager : MonoBehaviour
             if (loadedSoundBanks[bankName].soundIndex.ContainsKey(soundName))
             {
                 SoundEffect sfx = loadedSoundBanks[bankName].soundIndex[soundName];
-                
+
                 //if the sound contains more than one audio clip choose between them at random
                 if (sfx.audioClips.Count > 1)
                 {
@@ -116,6 +116,36 @@ public class SoundBankManager : MonoBehaviour
                     return sfx.audioClips[0];
                 }
                 
+            }
+            else
+            {
+                Debug.LogError("Audio clip is null, naming might be incorrect");
+                return null;
+            }
+        }
+        Debug.LogError("SoundBank is null, it may not be loaded");
+        return null;
+    }
+
+    public SoundEffect FetchSoundEffect(string bankName, string soundName)
+    {
+          if (loadedSoundBanks.ContainsKey(bankName))
+        {
+            //check if the sound bank contains the sound
+            if (loadedSoundBanks[bankName].soundIndex.ContainsKey(soundName))
+            {
+                //grab the sound effect
+                SoundEffect sfx = loadedSoundBanks[bankName].soundIndex[soundName];
+
+                //if the sound contains more than one audio clip choose between them at random
+                if (sfx.audioClips.Count > 1)
+                {
+                    int num = Random.Range(0, sfx.audioClips.Count);
+                    sfx.chosenSound = num;
+                }
+
+                //return the sound effect
+                return sfx;
             }
             else
             {

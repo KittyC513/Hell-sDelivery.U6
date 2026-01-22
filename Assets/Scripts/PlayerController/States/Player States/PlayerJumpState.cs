@@ -30,6 +30,7 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         jumpHeight = pControl.JumpHeight;
         jumpDecay = pControl.JumpDecayRate;
         
+        pControl.playerSfx.PlayShminkJump();
 
         gravityFactor = 1;
 

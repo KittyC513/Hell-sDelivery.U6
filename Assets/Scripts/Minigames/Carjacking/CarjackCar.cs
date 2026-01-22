@@ -28,7 +28,7 @@ public class CarjackCar : MonoBehaviour
         
     }
 
-    public void StartUnlockMinigame(PlayerInputDetection playerInput)
+    public void StartUnlockMinigame(PlayerInputDetection playerInput, InteractableObject interactable)
     {
         if (!unlocked)
         {

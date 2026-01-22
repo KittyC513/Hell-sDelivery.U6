@@ -27,6 +27,7 @@ public class BillboardUI : MonoBehaviour
     private Vector3 changeInPos;
 
     private List<GameObject> images;
+    public bool active = true;
 
 
     private void Start()
@@ -57,6 +58,8 @@ public class BillboardUI : MonoBehaviour
         }
 
     }
+
+    
 
     public void ShowIconToPlayer(bool show, int player)
     {
@@ -92,7 +95,7 @@ public class BillboardUI : MonoBehaviour
         if (p2Cam == null) p2Cam = GameManager.instance.cam_p2;
 
         //show the ui if the player is in range
-        if (player1Active && p1Cam != null)
+        if (player1Active && p1Cam != null && active)
         {
             images[0].SetActive(true);
             BillboardToCamera(p1Cam, images[0]);
@@ -102,7 +105,7 @@ public class BillboardUI : MonoBehaviour
             images[0].SetActive(false);
         }
 
-        if (player2Active && p2Cam != null)
+        if (player2Active && p2Cam != null && active)
         {
             images[1].SetActive(true);
             BillboardToCamera(p2Cam, images[1]);

@@ -7,11 +7,16 @@ public class SoundEffectPlayer : MonoBehaviour
 
     public void PlaySoundEffect(string bankName, string soundEffectName)
     {
-        AudioClip clip = SoundBankManager.soundBankManager.FetchAudioClip(bankName, soundEffectName);
+        SoundEffect soundEffect = SoundBankManager.soundBankManager.FetchSoundEffect(bankName, soundEffectName);
 
-        if (clip != null)
+        if (soundEffect != null)
         {
-            audioSource.PlayOneShot(clip);
+            float rndPitch = Random.Range(1 - soundEffect.randomPitchBend, 1 + soundEffect.randomPitchBend);
+
+            audioSource.pitch = rndPitch;
+
+            audioSource.PlayOneShot(soundEffect.audioClips[soundEffect.chosenSound]);
+            //audioSource.pitch = 1;
         }
     }
 

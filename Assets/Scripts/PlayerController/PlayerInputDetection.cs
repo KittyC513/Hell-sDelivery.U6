@@ -40,6 +40,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool swapItemPressed_left;
     [HideInInspector] public bool swapItemPressed_right;
     [HideInInspector] public bool interactPressed;
+    [HideInInspector] public bool interactHeld;
     public Vector2 horizontalInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
@@ -452,6 +453,7 @@ public class PlayerInputDetection : NetworkBehaviour
         
 
         interactPressed = InputActionButtonExtensions.GetButtonDown(interactAction);
+        interactHeld = InputActionButtonExtensions.GetButton(interactAction);
 
         if(GameManager.instance.pointerIsReady)
             uiPointerControl.DisplayPlayerPointer(cam);
