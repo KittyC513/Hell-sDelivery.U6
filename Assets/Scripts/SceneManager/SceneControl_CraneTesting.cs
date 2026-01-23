@@ -19,6 +19,7 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
     public Vector3 offset;
     public CraneStateType craneState = CraneStateType.ActivateOneObject;
     public Transform childObjs;
+    public float magneticForce;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -84,8 +85,9 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
 
         if(playerInput.attackPressed)
         {
+            print("Attack Pressed - Enable Magnetic Surface");
             //enable magnetic surface
-            EnableCraneMagneticSurface();
+            EnableCraneMagneticSurface(inputX, craneMoveSpeed);
         }
         else
         {
@@ -93,8 +95,9 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
         }
     }
 
-    public void EnableCraneMagneticSurface()
+    public void EnableCraneMagneticSurface(float inputXValue, float moveSpeed)
     {
+        print("Enable Magnetic Surface - Check for Objects");
         //check for colliders within the magnetic surface area when enabled
         surfaceSize = new Vector3(craneTrolley.localScale.x / 2, surfaceSizeY, craneTrolley.localScale.z / 2) - offset;
         surfaceCenter = craneTrolley.position + -Vector3.up * surfaceSizeY;
@@ -108,13 +111,18 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
             switch (craneState)
             {
                 case CraneStateType.ActivateOneObject:
+                    Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
+                    rigi_mo.linearVelocity = Vector3.up * magneticForce;
                     Transform magneticObj = colliders[0].transform;
-                    if(magneticObj.parent != craneTrolley)
-                    {
-                        magneticObj.transform.SetParent(craneTrolley);
-                        childObjs = magneticObj;
+                    Vector3 afterPos = magneticObj.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
+                    magneticObj.position = afterPos;
+                    //Transform magneticObj = colliders[0].transform;
+                    //if(magneticObj.parent != craneTrolley)
+                    //{
+                    //    magneticObj.transform.SetParent(craneTrolley);
+                    //    childObjs = magneticObj;
 
-                    }
+                    //}
 
                     break;
                 case CraneStateType.ActivateMultipleObjects:
@@ -134,4 +142,19 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
         }
     }
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        //Visualize the magnetic surface area in the editor
+        if (craneTrolley == null) return;
+
+        Gizmos.color = Color.cyan;  // Choose any color you like
+        Gizmos.matrix = Matrix4x4.TRS(
+            craneTrolley.transform.position,
+            craneTrolley.transform.rotation,
+            Vector3.one
+        );
+
+        Gizmos.DrawWireCube(Vector3.zero + Vector3.up * surfaceSizeY, surfaceSize * 2);
+    }
 }
