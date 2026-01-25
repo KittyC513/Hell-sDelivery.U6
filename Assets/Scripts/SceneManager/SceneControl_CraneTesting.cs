@@ -24,6 +24,12 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
     public float craneMoveSpeed = 5f;
     public float craneRotateSpeed = 20f;
 
+    public Vector3 craneArmMinHight;
+    public Vector3 craneArmMaxHight;
+
+    public Vector3 magnetMinDistance;
+    public Vector3 magnetMaxDistance;
+
     public float surfaceSizeY;
     private Vector3 surfaceSize;
     private Vector3 surfaceCenter;
@@ -103,8 +109,17 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
         
         if(Mathf.Abs(inputY) >= 0.5f && Mathf.Abs(inputY) > Mathf.Abs(inputX))
         {
+            Vector3 delta = Vector3.up * inputY * craneMoveSpeed * Time.deltaTime * 0.3f;
+
+            Vector3 localPos = craneArm.localPosition;
+
+            localPos += delta;
+
+            localPos.y = Mathf.Clamp(localPos.y, craneArmMinHight.y, craneArmMaxHight.y);
+
+            craneArm.localPosition = localPos;
             //move crane arm
-            craneArm.Translate(Vector3.up * inputY * craneMoveSpeed * Time.deltaTime);
+            //craneArm.Translate(Vector3.up * inputY * craneMoveSpeed * Time.deltaTime);
         }
 
 
@@ -118,9 +133,15 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
         //}
         if (Mathf.Abs(trolleyInputY) >= 0.5f)
         {
-            //move crane trolley
+            Vector3 localPos = craneTrolley.localPosition;
 
-            craneTrolley.Translate(Vector3.forward * trolleyInputY * craneMoveSpeed * Time.deltaTime,Space.Self);
+            localPos.z += trolleyInputY * craneMoveSpeed * Time.deltaTime;
+
+            localPos.z = Mathf.Clamp(localPos.z, magnetMinDistance.z, magnetMaxDistance.z);
+
+            craneTrolley.localPosition = localPos;
+
+            //craneTrolley.Translate(Vector3.forward * trolleyInputY * craneMoveSpeed * Time.deltaTime,Space.Self);
             //Vector3 afterPos = craneTrolley.position + Vector3.right * trolleyInputY * craneMoveSpeed * Time.deltaTime;
             //craneTrolley.position = afterPos;
         }
@@ -252,27 +273,23 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         if (rb == null) yield break;
 
+        // Disable physics while pulling
         rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
         rb.useGravity = false;
         rb.isKinematic = true;
 
         while (true)
         {
+            // Target follows craneSurface every frame
             Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f;
-            Quaternion targetRot = craneSurface.rotation;
 
             obj.position = Vector3.Lerp(obj.position,targetPos,magneticForce * Time.deltaTime);
+            obj.rotation = craneTrolley.rotation;
 
-            //obj.rotation = Quaternion.Lerp(
-            //    obj.rotation,
-            //    targetRot,
-            //    magneticForce * Time.deltaTime
-            //);
-
-            if (Vector3.Distance(obj.position, targetPos) < 0.2f)
+            // Attach when close enough
+            if (Vector3.Distance(obj.position, targetPos) < 0.5f)
             {
-                obj.SetParent(craneTrolley, true);
+                obj.SetParent(craneTrolley, true); // follows craneArm automatically
                 childObjs = obj;
                 break;
             }
