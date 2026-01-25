@@ -123,9 +123,9 @@ public class Idle : CraneState
         : base(_npc, _agent, _anim)
     {
         pickupLocation = _pickupLocation;
-        Debug.Log("Pickup Location set to: " + pickupLocation);
+        //Debug.Log("Pickup Location set to: " + pickupLocation);
         dropoffLocation = _dropoffLocation;
-        Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
         name = STATE.IDEL;
     }
     public override void Enter()
@@ -133,7 +133,7 @@ public class Idle : CraneState
         base.Enter();
         // set idle trigger
         //anim.SetTrigger("isIdle");
-        Debug.Log("Crane is now Idle.");
+        //Debug.Log("Crane is now Idle.");
     }
     public override void Update()
     {
@@ -169,12 +169,12 @@ public class MovingToPickup : CraneState
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
-        Debug.Log("Pickup Location set to: " + pickupLocation);
-        Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        //Debug.Log("Pickup Location set to: " + pickupLocation);
+        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
         craneArm = npc.transform.Find("CraneArm");
         craneMovingPoint = npc.transform.Find("CraneArm/movingPoint");
-        Debug.Log("Crane arm found: " + craneArm.name);
+        //Debug.Log("Crane arm found: " + craneArm.name);
         name = STATE.MOVINGTOPICKUP;
 
     }
@@ -183,14 +183,14 @@ public class MovingToPickup : CraneState
         base.Enter();
         //agent.SetDestination(pickupLocation);
         //anim.SetTrigger("isMoving");
-        Debug.Log("Crane is moving to Pickup Location.");
+        //Debug.Log("Crane is moving to Pickup Location.");
     }
     public override void Update()
     {
 
         if (craneMovingPoint == null || craneArm == null)
         {
-            Debug.LogError("Crane Arm is null!" + "Crane surface is null");
+            //Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
         }
 
@@ -253,15 +253,15 @@ public class PickingUp : CraneState
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
-        Debug.Log("Pickup Location set to: " + pickupLocation);
-        Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        //Debug.Log("Pickup Location set to: " + pickupLocation);
+        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
         name = STATE.PICKINGUP;
     }
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Crane is Picking Up Load.");
+        //Debug.Log("Crane is Picking Up Load.");
         // Set picking up trigger
         anim.SetTrigger("isPickingUp");
     }
@@ -271,7 +271,8 @@ public class PickingUp : CraneState
         // After picking up, transition to MovingToDropoff state
         if (armHasLoad)
         {
-            Debug.Log("Crane arm already has load.");
+            //Debug.Log("Crane arm already has load.");
+            //Debug.Log("Crane arm already has load.");
             return;
         }
 
@@ -330,7 +331,7 @@ public class MovingToDropoff : CraneState
         player1 = GameManager.instance.player1.transform;
         player2 = GameManager.instance.player2.transform;
 
-        Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
         craneMovingPoint = npc.transform.Find("CraneArm/movingPoint");
         craneArm = npc.transform.Find("CraneArm");
         name = STATE.MOVINGTODROPPINGOFF;
@@ -341,14 +342,14 @@ public class MovingToDropoff : CraneState
         //set moving to dropoff trigger
         //anim.SetTrigger("isMoving");
         base.Enter();
-        Debug.Log("Crane is moving to Dropoff Location.");
+        //Debug.Log("Crane is moving to Dropoff Location.");
     }
     public override void Update()
     {
 
         if (craneMovingPoint == null || craneArm == null)
         {
-            Debug.LogError("Crane Arm is null!" + "Crane surface is null");
+            //Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
         }
 
@@ -375,11 +376,11 @@ public class MovingToDropoff : CraneState
 
             float angle = Quaternion.Angle(craneArm.rotation, targetRot);
 
-            Debug.Log("Angle to target player: " + angle);
+            //Debug.Log("Angle to target player: " + angle);
             //3. slide trolley only when facing enough
             if (angle <= faceAngle)
             {
-                Debug.Log("Crane arm is facing player sufficiently.");
+                //Debug.Log("Crane arm is facing player sufficiently.");
                 Vector3 playerLocal = craneArm.InverseTransformPoint(targetPlayer.position);
 
                 Vector3 movePointLocal = craneMovingPoint.localPosition;
@@ -389,10 +390,10 @@ public class MovingToDropoff : CraneState
 
                 //4. arrival check on rail axis
                 float zError = Mathf.Abs(craneMovingPoint.localPosition.z - playerLocal.z);
-                Debug.Log("Z Error to player: " + zError);
+                //Debug.Log("Z Error to player: " + zError);
                 if (zError <= railEpsilon && angle <= arriveAngle)
                 {
-                    Debug.Log("Crane has reached player position.");
+                    //Debug.Log("Crane has reached player position.");
                     nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
                     stage = EVENT.EXIT;
                     return;
@@ -526,7 +527,7 @@ public class DroppingOff : CraneState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Crane is Dropping Off Load.");
+        //Debug.Log("Crane is Dropping Off Load.");
         // Set dropping off trigger
         anim.SetTrigger("isDroppingOff");
     }
@@ -669,7 +670,7 @@ public class Attack : CraneState
         name = STATE.ATTACK;
         // Play attack sound
         //attackSound = npc.GetComponent<AudioSource>();
-        Debug.Log("Crane is Attacking Player.");
+        //Debug.Log("Crane is Attacking Player.");
     }
     public override void Enter()
     {

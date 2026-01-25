@@ -42,6 +42,7 @@ public class PlayerInputDetection : NetworkBehaviour
     [HideInInspector] public bool interactPressed;
     [HideInInspector] public bool interactHeld;
     public Vector2 horizontalInputValue;
+    public Vector2 craneCamInputValue;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction pauseMoveAction;
@@ -204,6 +205,11 @@ public class PlayerInputDetection : NetworkBehaviour
     public Vector3 GetHorizontalMovement_crane()
     {
         return GetRelativeInputDirection(playerCam, horizontalInputValue = moveAction.ReadValue<Vector2>());
+    }
+
+    public Vector3 GetHorizontalMovement_trolley()
+    {
+        return GetRelativeInputDirection(playerCam, craneCamInputValue = lookAction.ReadValue<Vector2>());
     }
 
 
