@@ -109,7 +109,7 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
         
         if(Mathf.Abs(inputY) >= 0.5f && Mathf.Abs(inputY) > Mathf.Abs(inputX))
         {
-            Vector3 delta = Vector3.up * inputY * craneMoveSpeed * Time.deltaTime * 0.3f;
+            Vector3 delta = Vector3.up * inputY * craneMoveSpeed * Time.deltaTime * 0.1f;
 
             Vector3 localPos = craneArm.localPosition;
 
@@ -276,22 +276,31 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
         // Disable physics while pulling
         rb.linearVelocity = Vector3.zero;
         rb.useGravity = false;
-        rb.isKinematic = true;
 
         while (true)
         {
-            // Target follows craneSurface every frame
-            Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f;
-
-            obj.position = Vector3.Lerp(obj.position,targetPos,magneticForce * Time.deltaTime);
-            obj.rotation = craneTrolley.rotation;
-
             // Attach when close enough
-            if (Vector3.Distance(obj.position, targetPos) < 0.5f)
+            print("distance to crane surface: " + Vector3.Distance(obj.position, craneSurface.position));
+            if (Vector3.Distance(obj.position, craneSurface.position) < 1.7f)
             {
+                magneticForce = 0;
                 obj.SetParent(craneTrolley, true); // follows craneArm automatically
                 childObjs = obj;
                 break;
+            }
+            else
+            {
+                magneticForce = 5f;
+                // Target follows craneSurface every frame
+                Vector3 targetPos = craneSurface.position + craneSurface.up * 0.1f; ;
+
+                if (targetPos.y < craneArmMinHight.y - 1f)
+                {
+                    targetPos.y = craneArmMinHight.y - 1f;
+                }
+
+                obj.position = Vector3.Lerp(obj.position, targetPos, magneticForce * Time.deltaTime);
+                obj.rotation = craneTrolley.rotation;
             }
 
             yield return null;
@@ -313,7 +322,6 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
             Rigidbody rb = childObjs.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.isKinematic = false;
                 rb.useGravity = true;
             }
 
@@ -326,7 +334,6 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
             Rigidbody rb = magneticObj.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.isKinematic = false;
                 rb.useGravity = true;
             }
             magneticObj = null;
