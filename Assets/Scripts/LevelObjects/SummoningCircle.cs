@@ -18,6 +18,7 @@ public class SummoningCircle : MonoBehaviour
     //called once when the summon is ended
     [SerializeField] public UnityEvent OnSummonExit;
     private InteractableObject interactableObject;
+    [SerializeField] private SoundEffectPlayer sfxPlayer;
     public void StartSummon(PlayerInputDetection player, InteractableObject interactable)
     {
         currentPlayer = player;
@@ -32,6 +33,9 @@ public class SummoningCircle : MonoBehaviour
 
         interactableObject = interactable;
         interactable.canInteract = false;
+
+        sfxPlayer.PlaySoundEffect("Test", "SummoningActivate");
+        sfxPlayer.QueueSoundEffect("Test", "SummoningActive", 0.2f);
 
         //freeze the player interacting with this object
         if (currentPlayer.playerNum == 1) 
@@ -72,7 +76,13 @@ public class SummoningCircle : MonoBehaviour
 
     private void ExitSummon()
     {
+        sfxPlayer.StopAllSoundEffects();
         Debug.Log("Exit Summon");
+
+        sfxPlayer.PlaySoundEffect("Test", "SummoningDeactivate");
+
+        //sfxPlayer.StopAudioDelayed(2);
+
         //unfreeze the player interacting with this object
         if (currentPlayer.playerNum == 1) 
         {
