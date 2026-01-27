@@ -11,6 +11,7 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     protected Dictionary<Estate, BaseState<Estate>> states = new Dictionary<Estate, BaseState<Estate>>();
 
     protected BaseState<Estate> currentState;
+    protected Estate lastStateKey;
 
     [SerializeField] protected Animator anim;
 
@@ -18,7 +19,7 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     protected bool isTransitioningState = false;
     void Start() 
     {
-        currentState.EnterState();
+        currentState.EnterState(currentState.stateKey);
         
     }
 
@@ -59,6 +60,8 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         //exit the current state
         currentState.ExitState();
 
+        lastStateKey = currentState.stateKey;
+
         //update the animator after exit has run in case any variables were changed in exit
         if (currentState.animName != " " && anim != null)
         {
@@ -69,7 +72,7 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
         currentState = states[stateKey];
 
         //play the start function on our new state
-        currentState.EnterState();
+        currentState.EnterState(lastStateKey);
 
         isTransitioningState = false;
     }

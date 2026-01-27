@@ -18,7 +18,7 @@ public class ThiefIdle : BaseState<ThiefStateMachine.ThiefStates>
         wanderTime = tBase.WanderTime;
     }
 
-    public override void EnterState()
+    public override void EnterState(ThiefStateMachine.ThiefStates lastState)
     {
         animName = "Fly Idle";
     }

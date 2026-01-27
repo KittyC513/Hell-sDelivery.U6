@@ -21,7 +21,7 @@ public class NavmeshWander<State> : BaseState<State> where State : Enum
        
     }
 
-    public override void EnterState()
+    public override void EnterState(State lastState)
     {
         navAgent.SetDestination(GetNewPostion(maxWanderDistance, navAgent));
     }

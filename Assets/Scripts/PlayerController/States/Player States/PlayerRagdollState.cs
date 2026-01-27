@@ -10,7 +10,7 @@ public class PlayerRagdollState : BaseState<PlayerStateMachine.PlayerStates>
         pControl = controller;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         //disable player movement
         pControl.SetFreezeState(true, this.ToString());

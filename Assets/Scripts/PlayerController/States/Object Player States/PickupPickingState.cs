@@ -21,7 +21,7 @@ public class PickupPickingState : BaseState<PickupStateMachine.PickupStates>
         pickupSpeed = oControl.PickupSpeed;
     }
 
-    public override void EnterState()
+    public override void EnterState(PickupStateMachine.PickupStates lastState)
     {
         //get the rigidbody of our object
         rb = oControl.currentObject.GetComponent<Rigidbody>();

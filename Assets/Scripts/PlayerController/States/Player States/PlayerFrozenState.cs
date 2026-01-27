@@ -14,7 +14,7 @@ public class PlayerFrozenState : BaseState<PlayerStateMachine.PlayerStates>
         pControl = controller;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         pControl.SetFreezeState(true, this.ToString());
         animName = "Player_Idle";

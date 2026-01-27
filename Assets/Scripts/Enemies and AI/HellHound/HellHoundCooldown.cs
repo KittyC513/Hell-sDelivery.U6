@@ -13,7 +13,7 @@ public class HellHoundCooldown : BaseState<HellHoundStateMachine.HoundStates>
         cooldownTime = hellHoundBase.CooldownTime;
     }
 
-    public override void EnterState()
+    public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
         cooldownTemp = 0;
         hellHoundBase.NavAgent.updatePosition = false;

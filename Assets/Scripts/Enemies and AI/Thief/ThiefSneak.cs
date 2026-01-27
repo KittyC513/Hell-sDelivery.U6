@@ -18,7 +18,7 @@ public class ThiefSneak : BaseState<ThiefStateMachine.ThiefStates>
         stealRange = tBase.StealRange;
     }
 
-    public override void EnterState()
+    public override void EnterState(ThiefStateMachine.ThiefStates lastState)
     {
         //set speed to a slower value for sneaking
         navAgent.speed = sneakSpeed;

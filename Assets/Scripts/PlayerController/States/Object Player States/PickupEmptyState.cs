@@ -12,7 +12,7 @@ public class PickupEmptyState : BaseState<PickupStateMachine.PickupStates>
         
     }
 
-    public override void EnterState()
+    public override void EnterState(PickupStateMachine.PickupStates lastState)
     {
         //Debug.Log("ENTER EMPTY");
     }

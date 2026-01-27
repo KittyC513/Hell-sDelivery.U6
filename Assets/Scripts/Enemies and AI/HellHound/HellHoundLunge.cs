@@ -23,7 +23,7 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
         hellHoundBase = houndBase;
     }
 
-    public override void EnterState()
+    public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
         lockTime = hellHoundBase.lungeLockTime;
         attackWindup = hellHoundBase.lungeWindup;

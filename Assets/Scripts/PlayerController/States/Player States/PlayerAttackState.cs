@@ -27,7 +27,7 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         aControl = attackController;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         //set animation
         //animName = "Player_Attack";

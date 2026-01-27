@@ -27,7 +27,7 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
         rb = hellHoundBase.RB;
     }
 
-    public override void EnterState()
+    public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
         chaseRange = hellHoundBase.PlayerDetectionRadius;
         animName = "Jump In Place";

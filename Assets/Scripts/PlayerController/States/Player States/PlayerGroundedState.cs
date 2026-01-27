@@ -18,9 +18,14 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
         startTransform = pControl.transform.parent;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         pControl.gravityScale = 1f;
+
+        if (lastState == PlayerStateMachine.PlayerStates.airborne || lastState == PlayerStateMachine.PlayerStates.jump || lastState == PlayerStateMachine.PlayerStates.doubleJump)
+        {
+            pControl.playerSfx.PlayLand();
+        }
 
         if(pControl.RB != null)
             rb = pControl.RB;
@@ -30,6 +35,9 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
 
         //set placeholder animation
         animName = "Idle";
+
+        
+        
     }
 
     public override void ExitState()

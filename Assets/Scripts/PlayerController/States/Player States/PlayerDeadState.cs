@@ -8,9 +8,20 @@ public class PlayerDeadState : BaseState<PlayerStateMachine.PlayerStates>
         this.playerController = playerController;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         animName = "Die";
+       
+
+        if (playerController.playerNum == 1)
+        {
+             playerController.playerSfx.PlayShmonkDeath();
+        }
+        else
+        {
+             playerController.playerSfx.PlayShimnkDeath();
+        }
+
         playerController.SetFreezeState(true, this.ToString());
     }
 

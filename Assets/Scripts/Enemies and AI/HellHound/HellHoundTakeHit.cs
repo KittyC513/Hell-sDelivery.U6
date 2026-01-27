@@ -10,7 +10,7 @@ public class HellHoundTakeHit : BaseState<HellHoundStateMachine.HoundStates>
         hellHoundBase = houndBase;
     }
 
-    public override void EnterState()
+    public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
         hellHoundBase.ToggleAttackHitbox(false);
         if (!hellHoundBase.Dead)

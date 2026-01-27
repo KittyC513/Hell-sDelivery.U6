@@ -11,7 +11,7 @@ public class PlayerGrabbedState : BaseState<PlayerStateMachine.PlayerStates>
         oControl = objectControl;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         pControl.SetFreezeState(true, this.ToString());
     }

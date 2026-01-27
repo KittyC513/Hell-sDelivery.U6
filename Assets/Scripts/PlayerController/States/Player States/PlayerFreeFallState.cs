@@ -25,7 +25,7 @@ public class PlayerFreeFallState : BaseState<PlayerStateMachine.PlayerStates>
         rb = pControl.GetComponent<Rigidbody>();
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         //reset variables
         stateTime = 0;

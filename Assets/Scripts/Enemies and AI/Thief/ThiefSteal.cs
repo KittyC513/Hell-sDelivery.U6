@@ -25,7 +25,7 @@ public class ThiefSteal : BaseState<ThiefStateMachine.ThiefStates>
         rb = tBase.RB;
     }
 
-    public override void EnterState()
+    public override void EnterState(ThiefStateMachine.ThiefStates lastState)
     {
         tBase.StartCoroutine(AttackSequence());
         animName = "Bite Attack";

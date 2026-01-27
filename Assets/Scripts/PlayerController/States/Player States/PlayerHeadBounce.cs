@@ -20,7 +20,7 @@ public class PlayerHeadBounce : BaseState<PlayerStateMachine.PlayerStates>
        
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         //reset the jump timer
         jumpTime = 0;

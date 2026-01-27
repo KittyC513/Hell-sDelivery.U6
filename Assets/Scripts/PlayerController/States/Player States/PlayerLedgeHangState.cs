@@ -17,7 +17,7 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
         
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         rb = pControl.RB;
         fullySnapped = false;
