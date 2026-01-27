@@ -21,7 +21,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
         navAgent = hellHoundBase.NavAgent;
     }
 
-    public override void EnterState()
+    public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
         animName = "Idle";
         maxWanderDistance = hellHoundBase.MaxWanderDistance;

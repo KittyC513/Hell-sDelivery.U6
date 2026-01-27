@@ -9,7 +9,7 @@ public class PlayerSplatState : BaseState<PlayerStateMachine.PlayerStates>
         pControl = controller;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         pControl.SetFreezeState(true, this.ToString());
         pControl.FreezeRotation(true, this.ToString());

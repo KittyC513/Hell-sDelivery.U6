@@ -16,7 +16,7 @@ public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
         attackDuration = hellHoundBase.AttackDuration;
     }
 
-    public override void EnterState()
+    public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
         attackComplete = false;
         hellHoundBase.StartCoroutine(AttackSequence());

@@ -13,7 +13,7 @@ public class PlayerSpinFall : PlayerAirborneState
         ledgeGrabMask = pControl.LedgeGrabMask;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         ledgeDetected = false;
         rb = pControl.RB;

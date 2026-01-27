@@ -22,7 +22,7 @@ public class PlayerSpinJumpState : BaseState<PlayerStateMachine.PlayerStates>
     }
 
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         //are we still jumping
         falling = false;

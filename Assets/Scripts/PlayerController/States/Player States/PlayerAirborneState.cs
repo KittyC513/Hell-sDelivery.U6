@@ -37,7 +37,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
     }
 
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         ledgeDetected = false;
         rb = pControl.RB;

@@ -18,7 +18,7 @@ public class PickupThrowingState : BaseState<PickupStateMachine.PickupStates>
         oControl = controller;
     }
 
-    public override void EnterState()
+    public override void EnterState(PickupStateMachine.PickupStates lastState)
     {
         oControl.onItemThrow.Invoke(oControl.currentObject);
 

@@ -28,7 +28,7 @@ public class PickupHoldingState : BaseState<PickupStateMachine.PickupStates>
         oControl = controller;
     }
 
-    public override void EnterState()
+    public override void EnterState(PickupStateMachine.PickupStates lastState)
     {
         //reset values used in the spring movement of the object while held
         velocity = Vector3.zero;

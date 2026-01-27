@@ -14,7 +14,7 @@ public class PlayerSlidingState : BaseState<PlayerStateMachine.PlayerStates>
         pControl = controller;
     }
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         goalVelocityChange = Vector3.zero;
         rb = pControl.RB;

@@ -24,13 +24,21 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
     }
 
 
-    public override void EnterState()
+    public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         //set our jump height and decay variables up by grabbing from our player controller
         jumpHeight = pControl.JumpHeight;
         jumpDecay = pControl.JumpDecayRate;
         
-        pControl.playerSfx.PlayShminkJump();
+        if (pControl.playerNum == 1)
+        {
+            pControl.playerSfx.PlayShmonkJump();
+        }
+        else
+        {
+            pControl.playerSfx.PlayShminkJump();
+        }
+        
 
         gravityFactor = 1;
 

@@ -12,6 +12,7 @@ using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
+using UnityEditor.Rendering;
 //using System.Drawing.Text;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
@@ -140,6 +141,10 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] public PlayerSFX playerSfx;
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
+    [HideInInspector] public int playerNum {get; private set;}
+
+    private float stepTimer = 0;
+    
 
     [Space, Header("Debug")]
     [SerializeField] private float currentSpeed;
@@ -241,6 +246,8 @@ public class PlayerController : NetworkBehaviour
 
         //remove this objects layer from the groundlayers list
         groundLayers &= ~(1 << layerIndex);
+
+        playerNum = inputDetection.playerNum;
     }
 
     private void OnEnable()
@@ -282,11 +289,26 @@ public class PlayerController : NetworkBehaviour
             inputDetection.isExploded = false;
             inputDetection.isResetCam = false;
         }
-        /*******************************************************************************/
+        
         pickupState = pickMachine.activeState;
         CoyoteTime(); //determines if coyote time is active
         if (anim != null) anim.SetFloat("Speed", currentSpeed);
 
+        if (grounded && leftStickDir != Vector3.zero)
+        {
+            stepTimer +=  1 * Time.deltaTime;
+
+            //a step is every 10 frames at 30 samples or 20 frames at 60 samples
+            if (stepTimer >= 0.32f)
+            {
+                playerSfx.PlayStep();
+                stepTimer = 0;
+            }
+        }
+        else
+        {
+            //stepTimer = 0;
+        }
 
         //Debug.Log("RegularGravity" + Physics.gravity);
     }
@@ -388,12 +410,15 @@ public class PlayerController : NetworkBehaviour
                 running = false;
             }
 
+            
+
             CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
 
             //print("leftStickDir: " + leftStickDir);
         }
     }
 
+    
 
 
     #region Inputs
