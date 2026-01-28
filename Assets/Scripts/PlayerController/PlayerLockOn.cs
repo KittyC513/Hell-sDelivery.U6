@@ -476,14 +476,14 @@ public class PlayerLockOn : MonoBehaviour
 
         // 3. Draw line to target (if assigned)
 
-        if(visibleTargets.Count != 0)
-        {
-            foreach (Transform target in visibleTargets)
-            {
-                Gizmos.color = canSeeTarget ? Color.cyan : Color.gray;
-                Gizmos.DrawLine(transform.position, target.position);
-            }
-        }
+        //if(visibleTargets.Count != 0)
+        //{
+        //    foreach (Transform target in visibleTargets)
+        //    {
+        //        Gizmos.color = canSeeTarget ? Color.cyan : Color.gray;
+        //        Gizmos.DrawLine(transform.position, target.position);
+        //    }
+        //}
     }
 
     Vector3 DirFromAngle(float angleInDegrees)

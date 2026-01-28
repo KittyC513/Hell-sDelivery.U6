@@ -204,8 +204,16 @@ public class BombMovement : MonoBehaviour
                 {
                     colliders_o[i].GetComponent<BombSwitch>().TriggerSwitch();
                 }
+
+                if(colliders_o[i].CompareTag("Gate"))
+                {
+                    GameObject explosiveEff = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Gate_exploded"), colliders_o[i].transform.position, Quaternion.identity);
+                    Destroy(explosiveEff, 1f);
+                    Destroy(colliders_o[i].gameObject, 1);
+                }
             }
         }
+
 
         Debug.Log(colliders_e.Length + "_enemy/enemies in the explosion range");
         Debug.Log(colliders_p.Length + "player/players in the explosion range");
@@ -294,7 +302,7 @@ public class BombMovement : MonoBehaviour
     {
         GameObject explosionVF = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_explosion"), this.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(destroyDelay);
-        Destroy(explosionVF);
+        Destroy(explosionVF,0.7f);
         Destroy(this.gameObject);
     }
 
