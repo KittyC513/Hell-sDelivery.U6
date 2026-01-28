@@ -1239,6 +1239,7 @@ MonoBehaviour:
   interactPressed: 0
   interactHeld: 0
   horizontalInputValue: {x: 0, y: 0}
+  craneCamInputValue: {x: 0, y: 0}
   cam: {fileID: 1388806461392630024}
   playerCam: {fileID: 1388806461392630024}
   isExploded: 0
@@ -2375,6 +2376,8 @@ GameObject:
   - component: {fileID: 1388806461392630024}
   - component: {fileID: 7882594928171767249}
   - component: {fileID: 7700225210906002730}
+  - component: {fileID: 3899368909818439772}
+  - component: {fileID: 4072098147371399706}
   m_Layer: 0
   m_Name: Camera_player
   m_TagString: Untagged
@@ -2545,6 +2548,41 @@ MonoBehaviour:
   wasConeMode: 0
   camMode: 0
   normalToConeBlendTime: 0.25
+--- !u!95 &3899368909818439772
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748977071787981906}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d5b166eb32bc02f4b840190eb61fab0f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4072098147371399706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748977071787981906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46af78cf5a91d6149b46207d91473c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textAnimator: {fileID: 0}
 --- !u!1001 &1209821363975334396
 PrefabInstance:
   m_ObjectHideFlags: 0
