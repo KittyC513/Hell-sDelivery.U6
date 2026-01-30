@@ -32,7 +32,7 @@ public class CharacterSelectionPanel : MonoBehaviour
     {
         img_start.gameObject.SetActive(false);
 
-        leftIsSelected_p1 = true;
+        leftIsSelected_p1 = false;
         leftIsSelected_p2 = false;
     }
 
@@ -41,7 +41,7 @@ public class CharacterSelectionPanel : MonoBehaviour
     {
         PanelControlP1();
         PanelControlP2();
-        ButtonStatu();
+        ButtonStatus();
         OnReady();
     }
 
@@ -83,7 +83,7 @@ public class CharacterSelectionPanel : MonoBehaviour
         }
     }
 
-    public void ButtonStatu()
+    public void ButtonStatus()
     {
         if (leftIsSelected_p1 && !leftIsSelected_p2 || !leftIsSelected_p1 && leftIsSelected_p2)
         {
@@ -126,6 +126,8 @@ public class CharacterSelectionPanel : MonoBehaviour
                 if (leftIsSelected_p1)
                 {
                     GameManager.instance.cam_p1.rect = new Rect(0, 0, 0.5f, 1);
+                    GameManager.instance.SelectPlayer1Model("Models/Character/Shmink");
+                    GameManager.instance.SelectPlayer2Model("Models/Character/Shmonk");
                     GameManager.instance.cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
                 }
 
@@ -133,11 +135,13 @@ public class CharacterSelectionPanel : MonoBehaviour
                 {
                     EventData.isInverseScreen = true;
                     GameManager.instance.cam_p2.rect = new Rect(0, 0, 0.5f, 1);
+                    GameManager.instance.SelectPlayer2Model("Models/Character/Shmink");
+                    GameManager.instance.SelectPlayer1Model("Models/Character/Shmonk");
                     GameManager.instance.cam_p1.rect = new Rect(0.5f, 0, 0.5f, 1);
                 }
 
                 GameManager.instance.isOnCharacterSelection = false;
-                SceneManager.LoadScene("Alleyway");
+                SceneManager.LoadScene("Alleyway_tutorial_testing");
             }
         }
         else
