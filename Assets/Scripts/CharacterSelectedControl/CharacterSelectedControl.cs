@@ -25,7 +25,8 @@ public class CharacterSelectedControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        text_leftSelected.text = "";
+        text_rightSelected.text = "";
     }
 
     // Update is called once per frame
@@ -153,7 +154,7 @@ public class CharacterSelectedControl : MonoBehaviour
             }
             GameManager.instance.isOnCharacterSelection = false;
             //SceneManager.LoadScene("Alleyway_tutorial_testing");
-            SceneManager.LoadScene("Minigame Testing Scene");
+            SceneManager.LoadScene("Alleyway_tutorial_testing");
         }
     }
 
