@@ -144,6 +144,9 @@ public class CharacterSelectedControl : MonoBehaviour
             {
                 GameManager.instance.cam_p1.rect = new Rect(0, 0, 0.5f, 1);
                 GameManager.instance.cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
+                SelectPlayer1Model_p1("Models/Characters/Shmink");
+                SelectPlayer1Model_p2("Models/Characters/Shmonk");
+
             }
 
             if (leftIsSelected_p2)
@@ -151,6 +154,8 @@ public class CharacterSelectedControl : MonoBehaviour
                 EventData.isInverseScreen = true;
                 GameManager.instance.cam_p2.rect = new Rect(0, 0, 0.5f, 1);
                 GameManager.instance.cam_p1.rect = new Rect(0.5f, 0, 0.5f, 1);
+                SelectPlayer1Model_p1("Models/Characters/Shmonk");
+                SelectPlayer1Model_p2("Models/Characters/Shmink");
             }
             GameManager.instance.isOnCharacterSelection = false;
             //SceneManager.LoadScene("Alleyway_tutorial_testing");
@@ -165,4 +170,49 @@ public class CharacterSelectedControl : MonoBehaviour
         onReady = true;
     }
 
+
+    #region Character Model
+    // Shmink
+    public GameObject SelectPlayer1Model_p1(string location)
+    {
+        // 1. Load prefab from Resources
+        GameObject prefab = Resources.Load<GameObject>(location);
+
+        if (prefab == null)
+        {
+            Debug.LogError("Failed to load player model from location: " + location);
+            return null;
+        }
+
+        // 2. Instantiate prefab into scene
+        GameObject playerInstance = Instantiate(prefab);
+        playerInstance.transform.parent = GameManager.instance.playerModel_p1.transform;
+        Transform t = playerInstance.transform;
+        t.localPosition = new Vector3(0f, -1.2f, 0f);
+        t.localRotation = Quaternion.Euler(0f, 180f, 0f);
+
+        return playerInstance;
+    }
+    // Shmonk
+    public GameObject SelectPlayer1Model_p2(string location)
+    {
+        // 1. Load prefab from Resources
+        GameObject prefab = Resources.Load<GameObject>(location);
+
+        if (prefab == null)
+        {
+            Debug.LogError("Failed to load player model from location: " + location);
+            return null;
+        }
+
+        // 2. Instantiate prefab into scene
+        GameObject playerInstance = Instantiate(prefab);
+        playerInstance.transform.parent = GameManager.instance.playerModel_p2.transform;
+        Transform t = playerInstance.transform;
+        t.localPosition = new Vector3(0f, -1.2f, 0f);
+        t.localRotation = Quaternion.Euler(0f, 180f, 0f);
+
+        return playerInstance;
+    }
+    #endregion
 }

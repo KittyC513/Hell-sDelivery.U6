@@ -257,25 +257,4 @@ public class GameManager
     }
     #endregion
 
-    #region Player Model
-    public GameObject SelectPlayer1Model(string location)
-    {
-        GameObject playerModel_p1 = Resources.Load<GameObject>(location);
-        Transform playerTransform = playerModel_p1.transform;
-        playerTransform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
-        playerTransform.transform.position = new Vector3(0f, -1.2f, 0f);
-        playerTransform.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-        return playerModel_p1;
-    }
-
-    public GameObject SelectPlayer2Model(string location)
-    {
-        GameObject playerModel_p2 = Resources.Load<GameObject>(location);
-        Transform playerTransform = playerModel_p2.transform;
-        playerTransform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
-        playerTransform.transform.position = new Vector3(0f, -1.2f, 0f);
-        playerTransform.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-        return playerModel_p2;
-    }
-    #endregion
 }

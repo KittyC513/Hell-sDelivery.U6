@@ -270,6 +270,7 @@ public class PlayerInputDetection : NetworkBehaviour
     private void AttackPressed(InputAction.CallbackContext action)
     {
         attackPressed = true;
+        SetCharacterModel();
     }
 
     private void AttackCanceled(InputAction.CallbackContext action)
@@ -484,5 +485,17 @@ public class PlayerInputDetection : NetworkBehaviour
 
 
 
+    #endregion
+
+
+    #region Character Model
+    public void SetCharacterModel()
+    {
+        if (playerModel != null)
+        {
+            print("playerModel:" + playerModel);
+        }
+
+    }
     #endregion
 }

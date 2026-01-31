@@ -134,8 +134,6 @@ public class CharacterSelectionPanel : MonoBehaviour
                 if (leftIsSelected_p1)
                 {
                     GameManager.instance.cam_p1.rect = new Rect(0, 0, 0.5f, 1);
-                    GameManager.instance.SelectPlayer1Model("Models/Character/Shmink");
-                    GameManager.instance.SelectPlayer2Model("Models/Character/Shmonk");
                     GameManager.instance.cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
                 }
 
@@ -143,8 +141,6 @@ public class CharacterSelectionPanel : MonoBehaviour
                 {
                     EventData.isInverseScreen = true;
                     GameManager.instance.cam_p2.rect = new Rect(0, 0, 0.5f, 1);
-                    GameManager.instance.SelectPlayer2Model("Models/Character/Shmink");
-                    GameManager.instance.SelectPlayer1Model("Models/Character/Shmonk");
                     GameManager.instance.cam_p1.rect = new Rect(0.5f, 0, 0.5f, 1);
                 }
 
