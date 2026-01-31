@@ -9,6 +9,7 @@ public class GameManager
 
     [Header("Character Selection")]
     public bool isOnCharacterSelection = false;
+    public bool isOnJoinGamePanel = false;
 
     [Header("Player Data")]
     public GameObject player1;

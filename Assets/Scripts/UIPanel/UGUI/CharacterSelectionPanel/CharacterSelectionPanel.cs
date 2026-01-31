@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterSelectionPanel : MonoBehaviour
 {
+
     public Image img_left;
     public Image img_right;
 
@@ -15,7 +16,10 @@ public class CharacterSelectionPanel : MonoBehaviour
     private float lastInputTime_p2 = 0;
 
     public bool leftIsSelected_p1 = true;
+    public bool rightIsSelected_p1 = false;
     public bool leftIsSelected_p2 = false;
+    public bool rightIsSelected_p2 = true;
+
 
     public bool onReady = false;
     public Image img_start;
@@ -39,9 +43,13 @@ public class CharacterSelectionPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PanelControlP1();
-        PanelControlP2();
-        ButtonStatus();
+        if (GameManager.instance.isOnCharacterSelection)
+        {
+            PanelControlP1();
+            PanelControlP2();
+            ButtonStatus();
+        }
+
         OnReady();
     }
 

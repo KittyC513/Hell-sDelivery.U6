@@ -1,16 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 {
     public GameObject characterSelectPanel;
     public GameObject JoinGamePanel;
+    public PlayerInputManager playerInputManager;
 
     //Character Selected Control
     public GameObject cutscene_characterSelected;
 
     private void Start()
     {
+        playerInputManager.DisableJoining();
         JoinGamePanel.SetActive(false);
         EventData.curSceneName = "StartScene";
         StartCoroutine(ShowJoinGamePanel());
@@ -23,6 +26,7 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
     {
         yield return new WaitForSeconds(16.7f);
         JoinGamePanel.SetActive(true);
-        GameManager.instance.isOnCharacterSelection = true;
+        GameManager.instance.isOnJoinGamePanel = true;
+        playerInputManager.EnableJoining();
     }
 }

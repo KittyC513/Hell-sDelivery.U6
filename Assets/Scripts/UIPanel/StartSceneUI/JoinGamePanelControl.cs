@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class JoinGamePanelControl : MonoBehaviour
@@ -25,7 +26,8 @@ public class JoinGamePanelControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OnPlayerJoined();
+        if(GameManager.instance.isOnJoinGamePanel)
+            OnPlayerJoined();
     }
 
     public void OnPlayerJoined()
@@ -41,7 +43,9 @@ public class JoinGamePanelControl : MonoBehaviour
             text_joinP2.text = "Ready";
             image_p2.gameObject.SetActive(false);
             SceneControl_MainMenu.Instance.cutscene_characterSelected.SetActive(true);
+            GameManager.instance.isOnCharacterSelection = true;
             this.gameObject.SetActive(false);
+            GameManager.instance.isOnJoinGamePanel = false;
         }
     }
 }
