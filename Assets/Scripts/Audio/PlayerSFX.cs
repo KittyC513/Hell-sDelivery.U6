@@ -34,8 +34,23 @@ public class PlayerSFX : MonoBehaviour
         sfxPlayer.PlaySoundEffect("Player", "Land");
     }
 
+    public void PlaySpinAttack()
+    {
+        sfxPlayer.PlaySoundEffect("Player", "SpinAttack");
+    }
+
     public void PlayHurt()
     {
         
+    }
+
+    public void PlayItemPickup()
+    {
+        sfxPlayer.PlaySoundEffect("Player", "ItemPickup");
+    }
+
+    public void PlayItemThrow()
+    {
+        sfxPlayer.PlaySoundEffect("Player", "ItemThrow");
     }
 }

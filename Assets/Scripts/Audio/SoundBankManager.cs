@@ -143,6 +143,10 @@ public class SoundBankManager : MonoBehaviour
                     int num = Random.Range(0, sfx.audioClips.Count);
                     sfx.chosenSound = num;
                 }
+                else
+                {
+                    sfx.chosenSound = 0;
+                }
 
                 //return the sound effect
                 return sfx;
