@@ -32,6 +32,8 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         //set animation
         //animName = "Player_Attack";
 
+        pControl.playerSfx.PlaySpinAttack();
+
         //set placeholder animation
         animName = "Bite Attack";
 

@@ -16,6 +16,7 @@ public class ItemBase : MonoBehaviour
 
     [HideInInspector] public PlayerLockOn playerLockOn;
     [HideInInspector] public PlayerInputDetection inputDetection;
+    private PlayerSFX playerSFX;
     protected Bag currentBag;
     [SerializeField] private bool usePhysics = false;
     //[SerializeField]
@@ -212,8 +213,9 @@ public class ItemBase : MonoBehaviour
                         //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
                         isAvaliable = false;
                         GameManager.instance.bag_p1.AddItem(this);
-
+                        
                         playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
+                        
                         inputDetection = GameManager.instance.InputDetection_p1;
                         currentBag = GameManager.instance.bag_p1;
                         this.transform.SetParent(GameManager.instance.bag_p1.transform);
