@@ -10,7 +10,6 @@ public class SummoningCircle : MonoBehaviour
     private float timeElapsed;
     [SerializeField] private float playerRepositionSpeed = 1;
 
-
     //called once on summon enter
     [SerializeField] public UnityEvent OnSummonActivate;
     //called every frame while the summon is active
@@ -19,10 +18,17 @@ public class SummoningCircle : MonoBehaviour
     [SerializeField] public UnityEvent OnSummonExit;
     private InteractableObject interactableObject;
     [SerializeField] private SoundEffectPlayer sfxPlayer;
+    [SerializeField] private Animator anim;
+    
+    
+    
+
     public void StartSummon(PlayerInputDetection player, InteractableObject interactable)
     {
         currentPlayer = player;
         isActive = true;
+
+        anim.SetBool("Activate", true);
 
         //grab the player position to lerp
         playerStartPos = currentPlayer.transform.position;
@@ -78,6 +84,8 @@ public class SummoningCircle : MonoBehaviour
     {
         sfxPlayer.StopAllSoundEffects();
         Debug.Log("Exit Summon");
+
+        anim.SetBool("Activate", false);
 
         sfxPlayer.PlaySoundEffect("Test", "SummoningDeactivate");
 

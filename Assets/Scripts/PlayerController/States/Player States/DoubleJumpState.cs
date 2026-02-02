@@ -26,6 +26,15 @@ public class DoubleJumpState : BaseState<PlayerStateMachine.PlayerStates>
     {
         animName = "Jump In Place";
 
+        if (pControl.playerNum == 1)
+        {
+            pControl.playerSfx.PlayShmonkJump();
+        }
+        else
+        {
+            pControl.playerSfx.PlayShminkJump();
+        }
+
         //setup our rigidbody
         rb = pControl.RB;
         gravityFactor = 1;

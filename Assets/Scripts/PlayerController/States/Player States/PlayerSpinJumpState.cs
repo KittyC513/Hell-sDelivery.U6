@@ -27,6 +27,15 @@ public class PlayerSpinJumpState : BaseState<PlayerStateMachine.PlayerStates>
         //are we still jumping
         falling = false;
 
+        if (pControl.playerNum == 1)
+        {
+            pControl.playerSfx.PlayShmonkJump();
+        }
+        else
+        {
+            pControl.playerSfx.PlayShminkJump();
+        }
+
         //set our jump height and decay variables up by grabbing from our player controller
         jumpHeight = pControl.SpinJumpHeight;
         jumpDecay = pControl.SpinJumpDecay;

@@ -9,6 +9,7 @@ public class Bag : MonoBehaviour
 
     public PlayerInputDetection inputDetection;
     public PlayerLockOn playerLockOn;
+    [SerializeField] private PlayerSFX playerSFX;
 
     public Transform equipPoint;
     public Transform bagPoint;
@@ -60,6 +61,8 @@ public class Bag : MonoBehaviour
         bag.Add(item);
         OnEquipItem(item.gameObject);
 
+        playerSFX.PlayItemPickup();
+
         if (activeItem == null)
         {
             //if there is only one item in the bag, set it as the active item
@@ -77,6 +80,8 @@ public class Bag : MonoBehaviour
         item.isAvaliable = true;
         OnRemoveItem(item);
         bag.Remove(item);
+
+        playerSFX.PlayItemThrow();
     }
 
     private void Update()
