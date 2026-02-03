@@ -7,6 +7,7 @@ public class BouncePad : MonoBehaviour
     [SerializeField] private bool useSpring = false;
     [SerializeField] private Vector3 bounceDir = Vector3.up;
     [SerializeField] private bool useRelativeDir = false;
+    [SerializeField] private SoundEffectPlayer sfxPlayer;
     private Vector3 startingScale;
     private float bounceValue;
 
@@ -53,6 +54,8 @@ public class BouncePad : MonoBehaviour
 
         //used to scale how much the spring animation is applied
         float animScale = Mathf.Abs(downForce) / 115;
+
+        sfxPlayer.PlaySoundEffect("ObjectBank1", "Bounce");
         
         if (bounceScale - animScale < minimumScale)
         {

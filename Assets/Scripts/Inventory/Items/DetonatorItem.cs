@@ -52,10 +52,6 @@ public class DetonatorItem : ItemBase
             
         }
 
-        if (timer >= cdSpawn)
-        {
-            sfxPlayer.PlaySoundEffect("ObjectBank1", "DetonatorPing");
-        }
     }
 
     private void FixedUpdate()
@@ -81,6 +77,7 @@ public class DetonatorItem : ItemBase
     {
         
         Ignite();
+        sfxPlayer.PlaySoundEffect("ObjectBank1", "DetonatorPing");
     }
 
     IEnumerator StartIgnite()
@@ -92,7 +89,7 @@ public class DetonatorItem : ItemBase
             BombMovement bombMove = bomb.GetComponent<BombMovement>();
             if (bombMove != null)
             {
-                bombMove.ApplyExplosionForce();
+                StartCoroutine(bombMove.ApplyExplosionForce());
                 bombItem.bombsList.Remove(bombMove);
                 playerLockOn.visibleTargets.Remove(bomb);
                 bombItem.numOfBombs--;
