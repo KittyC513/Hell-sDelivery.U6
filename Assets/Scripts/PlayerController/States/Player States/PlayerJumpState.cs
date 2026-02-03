@@ -63,7 +63,7 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         //animName = "Player_Jump";
 
         //set placeholder animation to jump
-        animName = "Jump In Place";
+        animName = "Jump";
 
 
     }

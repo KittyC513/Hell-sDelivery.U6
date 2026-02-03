@@ -20,7 +20,7 @@ public class PlayerSlidingState : BaseState<PlayerStateMachine.PlayerStates>
         rb = pControl.RB;
 
         //set animation 
-        animName = "Player_Slide";
+        animName = "Slide";
 
         //Debug.Log(pControl.GroundAngle);
         //Debug.Log("SLIDING");

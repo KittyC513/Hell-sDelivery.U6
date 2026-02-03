@@ -46,7 +46,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         maxFallSpeed = pControl.MaxFallSpeed;
         fallAccel = pControl.FallAccel;
         //set animation 
-        animName = "Idle";
+        animName = "FreeFall";
 
         //Unfreeze Y position
         //pControl.UnFreezePlayerY();

@@ -35,7 +35,7 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         pControl.playerSfx.PlaySpinAttack();
 
         //set placeholder animation
-        animName = "Bite Attack";
+        animName = "Attack";
 
         //set our total attack time 
         attackTime = aControl.AttackTime;

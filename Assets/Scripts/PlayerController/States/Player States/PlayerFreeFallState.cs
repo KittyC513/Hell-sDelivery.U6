@@ -32,6 +32,7 @@ public class PlayerFreeFallState : BaseState<PlayerStateMachine.PlayerStates>
         goalVelocityChange = Vector3.zero;
         pControl.FreezeRotation(true, this.ToString());
 
+        
         //set rotation to a multiple of angle step
         pControl.PlayerModel.transform.rotation = Quaternion.Euler(0, 0, angleStep);
 

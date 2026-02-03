@@ -292,7 +292,10 @@ public class PlayerController : NetworkBehaviour
         
         pickupState = pickMachine.activeState;
         CoyoteTime(); //determines if coyote time is active
-        if (anim != null) anim.SetFloat("Speed", currentSpeed);
+        if (anim != null) 
+        {
+            anim.SetFloat("Speed", currentSpeed);
+        }
 
         if (grounded && leftStickDir != Vector3.zero)
         {
@@ -301,7 +304,7 @@ public class PlayerController : NetworkBehaviour
             //a step is every 10 frames at 30 samples or 20 frames at 60 samples
             if (stepTimer >= 0.32f)
             {
-                playerSfx.PlayStep();
+                //playerSfx.PlayStep();
                 stepTimer = 0;
             }
         }

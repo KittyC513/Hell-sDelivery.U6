@@ -29,7 +29,7 @@ public class PlayerLedgeHangState : BaseState<PlayerStateMachine.PlayerStates>
         pControl.SetFreezeState(true, this.ToString());
 
         //set animation to jump
-        animName = "Player_LedgeHang";
+        animName = "LedgeHang";
     }
 
     public override void ExitState()

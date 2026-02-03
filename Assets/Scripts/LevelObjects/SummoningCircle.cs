@@ -46,12 +46,14 @@ public class SummoningCircle : MonoBehaviour
         //freeze the player interacting with this object
         if (currentPlayer.playerNum == 1) 
         {
-            GameManager.instance.FreezePlayer1();
+            //GameManager.instance.FreezePlayer1();
         }
         else 
         {
-            GameManager.instance.FreezePlayer2();
+            //GameManager.instance.FreezePlayer2();
         }
+
+        currentPlayer.GetComponent<PlayerStateMachine>().OverrideState(PlayerStateMachine.PlayerStates.summon);
     }
 
     private void Update()
@@ -94,12 +96,14 @@ public class SummoningCircle : MonoBehaviour
         //unfreeze the player interacting with this object
         if (currentPlayer.playerNum == 1) 
         {
-            GameManager.instance.UnFreezePlayer1();
+            //GameManager.instance.UnFreezePlayer1();
         }
         else 
         {
-            GameManager.instance.UnFreezePlayer2();
+            //GameManager.instance.UnFreezePlayer2();
         }
+
+        currentPlayer.GetComponent<PlayerStateMachine>().UnFreezeStateMachine();
         interactableObject.canInteract = true;
         currentPlayer = null;
         isActive = false;

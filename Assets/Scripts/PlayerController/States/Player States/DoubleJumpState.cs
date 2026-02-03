@@ -24,7 +24,7 @@ public class DoubleJumpState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
-        animName = "Jump In Place";
+        animName = "DoubleJump";
 
         if (pControl.playerNum == 1)
         {
