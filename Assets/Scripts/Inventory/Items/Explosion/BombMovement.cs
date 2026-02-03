@@ -40,6 +40,7 @@ public class BombMovement : MonoBehaviour
     public float offsetY = 0f;
 
     public float destroyDelay = 0.3f;
+    public float explosionDelay = 0.2f;
 
 
     //ground check
@@ -188,9 +189,15 @@ public class BombMovement : MonoBehaviour
 
 
     #region Explosion Function - apply force to different objects 
-    public void ApplyExplosionForce()
+    public IEnumerator ApplyExplosionForce()
     {
+        sfxPlayer.PlaySoundEffect("ObjectBank1", "BombExplode");
+
         isTriggered = true;
+
+        yield return new WaitForSeconds(explosionDelay);
+
+        
 
         //Detect the explosion area, it's a sphere detector, set LayerMask that to be affected
         colliders_e = Physics.OverlapSphere(this.transform.position, radius, 1 << LayerMask.NameToLayer("Lockable") | 1 << LayerMask.NameToLayer("Enemy"));
@@ -258,7 +265,7 @@ public class BombMovement : MonoBehaviour
         #endregion
 
 
-        sfxPlayer.PlaySoundEffect("ObjectBank1", "BombExplode");
+        
 
         //Destroy after the certain amount of time
         //Destroy(this.gameObject, 0.5f);
@@ -307,6 +314,7 @@ public class BombMovement : MonoBehaviour
     IEnumerator StartExplosion(float destroyDelay)
     {
         GameObject explosionVF = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_explosion"), this.transform.position, Quaternion.identity);
+        sfxPlayer.transform.SetParent(explosionVF.transform);
         yield return new WaitForSeconds(destroyDelay);
         Destroy(explosionVF,0.7f);
         Destroy(this.gameObject);

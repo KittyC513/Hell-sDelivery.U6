@@ -150,7 +150,7 @@ public class EnemyBase : MonoBehaviour
         //get our desired direction ignoring y 
         direction = new Vector3(direction.x, 0, direction.z);
 
-        if (direction.magnitude > 0)
+        if (direction.sqrMagnitude > 0.01f)
         {
             //calculate our desired rotation
             Quaternion toRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);

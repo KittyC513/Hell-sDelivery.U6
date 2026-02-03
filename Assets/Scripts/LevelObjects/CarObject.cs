@@ -46,6 +46,8 @@ public class CarObject : MonoBehaviour
 
         if (grounded)
         {
+           
+
             //snap to the ground at each tire position
             DetectTireGround(frontLTire.position, targetHeight + 1f, groundMask, frontLTire.GetChild(0).gameObject);
             DetectTireGround(frontRTire.position, targetHeight + 1f, groundMask, frontRTire.GetChild(0).gameObject);
@@ -54,7 +56,7 @@ public class CarObject : MonoBehaviour
         }
         else
         {
-            rb.AddForce(Vector3.down * (65 * rb.mass));
+             rb.AddForce(Vector3.down * (65 * rb.mass));
         }
 
         //clamp the velocity to stop the car gaining any massive forces from weird physics interactions
