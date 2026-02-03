@@ -49,6 +49,11 @@ public class DetonatorItem : ItemBase
         if (timer >= cdSpawn && playerLockOn.visibleTargets.Count > 0)
         {
             StartCoroutine(StartIgnite());
+            
+        }
+
+        if (timer >= cdSpawn)
+        {
             sfxPlayer.PlaySoundEffect("ObjectBank1", "DetonatorPing");
         }
     }
@@ -74,6 +79,7 @@ public class DetonatorItem : ItemBase
 
     public override void UseFunction()
     {
+        
         Ignite();
     }
 
