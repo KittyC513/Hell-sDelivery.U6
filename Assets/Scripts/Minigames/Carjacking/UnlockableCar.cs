@@ -16,6 +16,7 @@ public class UnlockableCar : CarjackCar
     //called when the car is unlocked
     public override void UnlockCar(PlayerInputDetection player)
     {
+        unlocked = true;
         //do something here
         onCarUnlock.Invoke();
     }

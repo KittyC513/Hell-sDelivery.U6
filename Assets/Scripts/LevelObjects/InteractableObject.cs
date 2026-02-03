@@ -50,6 +50,11 @@ public class InteractableObject : MonoBehaviour
         interactUI.ShowIconToPlayer(false, playerNum);
     }
 
+    public void ToggleCanInteract(bool toggle)
+    {
+        canInteract = toggle;   
+    }
+
     public void Interact(PlayerInputDetection playerInput)
     {
         if (canInteract)

@@ -204,6 +204,93 @@ Transform:
   - {fileID: 4758947787121159184}
   m_Father: {fileID: 1972596316120185044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3695717094815832214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7594147209718944672}
+  - component: {fileID: 4317902177903175466}
+  - component: {fileID: 7245436408471590172}
+  m_Layer: 27
+  m_Name: Interactable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7594147209718944672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695717094815832214}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1972596316120185044}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4317902177903175466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695717094815832214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d3b097d663c32843b7fef462adeb3ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactUI: {fileID: 408323746932834555}
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1962374350300462121}
+        m_TargetAssemblyTypeName: CarjackCar, Assembly-CSharp
+        m_MethodName: StartUnlockMinigame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  limitInteracts: 0
+  maxNumberOfInteracts: 1
+  requireItem: 0
+  validItemTag: 
+  canInteract: 1
+--- !u!65 &7245436408471590172
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695717094815832214}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4331265489577570056
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,9 +423,7 @@ GameObject:
   - component: {fileID: 6098223755181516528}
   - component: {fileID: 7617847749737210824}
   - component: {fileID: 690607477813159667}
-  - component: {fileID: 4258318134643636032}
-  - component: {fileID: 650530630235059780}
-  m_Layer: 27
+  m_Layer: 25
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,6 +449,7 @@ Transform:
   - {fileID: 107422363322584792}
   - {fileID: 8017637570927966649}
   - {fileID: 3525496805506761343}
+  - {fileID: 7594147209718944672}
   m_Father: {fileID: 6279059540584257645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &818628870795449856
@@ -496,60 +582,6 @@ MonoBehaviour:
   maxAccelStep: 55
   driving: 0
   rbRot: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4258318134643636032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4703797290951139453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d3b097d663c32843b7fef462adeb3ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactUI: {fileID: 408323746932834555}
-  OnInteract:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1962374350300462121}
-        m_TargetAssemblyTypeName: CarjackCar, Assembly-CSharp
-        m_MethodName: StartUnlockMinigame
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  limitInteracts: 0
-  maxNumberOfInteracts: 1
-  requireItem: 0
-  validItemTag: 
---- !u!114 &650530630235059780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4703797290951139453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0089b54f47ea9241a4d37178e402801, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forceRangeX:
-    x: 1.5
-    y: 4
-  forceRangeY:
-    x: 4
-    y: 8
-  moneyCount:
-  - moneyPrefab: {fileID: 7599532976038015769, guid: d4efd45510a84324db6dbbfaf6438748, type: 3}
-    amount: 5
-  dropPoint: {fileID: 8017637570927966649}
 --- !u!1 &4738314599295862418
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,6 +832,7 @@ MonoBehaviour:
   applySine: 1
   frequency: 2.5
   amplitude: 0.15
+  active: 1
 --- !u!114 &1962374350300462121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,7 +854,19 @@ MonoBehaviour:
   unlocked: 0
   onCarUnlock:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4317902177903175466}
+        m_TargetAssemblyTypeName: InteractableObject, Assembly-CSharp
+        m_MethodName: ToggleCanInteract
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8633913656778242287
 GameObject:
   m_ObjectHideFlags: 0
