@@ -47,6 +47,8 @@ public class BombMovement : MonoBehaviour
     public GameObject bombGlowingVF;
     public bool isOnSelected = false;
 
+    [SerializeField] private SoundEffectPlayer sfxPlayer;
+
     private void Awake()
     {
         DeactivateBombGlow();
@@ -254,6 +256,10 @@ public class BombMovement : MonoBehaviour
         }
 
         #endregion
+
+
+        sfxPlayer.PlaySoundEffect("ObjectBank1", "BombExplode");
+
         //Destroy after the certain amount of time
         //Destroy(this.gameObject, 0.5f);
         StartCoroutine(StartExplosion(destroyDelay));

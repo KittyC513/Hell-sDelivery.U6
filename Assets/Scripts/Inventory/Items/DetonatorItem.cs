@@ -16,6 +16,7 @@ public class DetonatorItem : ItemBase
     private float timer = 0;
 
     private bool canStartTimer = false;
+    [SerializeField] private SoundEffectPlayer sfxPlayer;
 
 
     //protected override void Awake()
@@ -48,6 +49,7 @@ public class DetonatorItem : ItemBase
         if (timer >= cdSpawn && playerLockOn.visibleTargets.Count > 0)
         {
             StartCoroutine(StartIgnite());
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "DetonatorPing");
         }
     }
 
