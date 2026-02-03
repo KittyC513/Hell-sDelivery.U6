@@ -92,7 +92,7 @@ public class DetonatorItem : ItemBase
             BombMovement bombMove = bomb.GetComponent<BombMovement>();
             if (bombMove != null)
             {
-                bombMove.ApplyExplosionForce();
+                StartCoroutine(bombMove.ApplyExplosionForce());
                 bombItem.bombsList.Remove(bombMove);
                 playerLockOn.visibleTargets.Remove(bomb);
                 bombItem.numOfBombs--;
