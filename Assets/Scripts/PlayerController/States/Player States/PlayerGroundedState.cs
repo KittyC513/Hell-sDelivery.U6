@@ -25,6 +25,11 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
         if (lastState == PlayerStateMachine.PlayerStates.airborne || lastState == PlayerStateMachine.PlayerStates.jump || lastState == PlayerStateMachine.PlayerStates.doubleJump)
         {
             pControl.playerSfx.PlayLand();
+            animName = "Squish";
+        }
+        else
+        {
+            animName = "Idle";
         }
 
         if(pControl.RB != null)
@@ -33,8 +38,7 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
         //reset our maximum jumps
         pControl.remainingJumps = pControl.MaxJumps;
 
-        //set placeholder animation
-        animName = "Idle";
+        
 
         
         

@@ -38,6 +38,9 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         {
             pControl.playerSfx.PlayShminkJump();
         }
+
+        pControl.playerSfx.PlayJumpTone();
+
         
 
         gravityFactor = 1;

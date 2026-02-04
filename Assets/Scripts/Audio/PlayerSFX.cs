@@ -21,6 +21,17 @@ public class PlayerSFX : MonoBehaviour
     public void PlayShmonkJump()
     {
         sfxPlayer.PlaySoundEffect("Player", "ShmonkJump");
+       
+    }
+
+    public void PlayJumpTone()
+    {
+         sfxPlayer.PlaySoundEffect("Player", "JumpTone");
+    }
+
+    public void PlayDoubleJumpTone()
+    {
+        sfxPlayer.PlaySoundEffect("Player", "DoubleJumpTone");
     }
 
     public void PlayStep()
@@ -52,5 +63,10 @@ public class PlayerSFX : MonoBehaviour
     public void PlayItemThrow()
     {
         sfxPlayer.PlaySoundEffect("Player", "ItemThrow");
+    }
+
+    public void PlayLedgeGrab()
+    {
+        sfxPlayer.PlaySoundEffect("Player", "LedgeGrab");
     }
 }

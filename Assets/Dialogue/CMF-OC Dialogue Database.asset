@@ -1213,7 +1213,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Look, if you don't halp me, one of these bombs will end up where you
+        value: Look, if you don't help me, one of these bombs will end up where you
           sleep one night.
         type: 0
         typeString: 
@@ -1285,7 +1285,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: SetQuestState("Can You C4?", "active")
+      userScript: 'SetQuestState("Can You C4?", "active");
+
+        ShowAlert("New
+        Quest: Find the bomb and detonator")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1616,8 +1619,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.58000046
+    canvasScrollPosition: {x: 0, y: 570.8654}
+    canvasZoom: 0.97000027
   - id: 4
     fields:
     - title: Title
