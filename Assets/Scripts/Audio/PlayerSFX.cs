@@ -53,4 +53,9 @@ public class PlayerSFX : MonoBehaviour
     {
         sfxPlayer.PlaySoundEffect("Player", "ItemThrow");
     }
+
+    public void PlayLedgeGrab()
+    {
+        sfxPlayer.PlaySoundEffect("Player", "LedgeGrab");
+    }
 }
