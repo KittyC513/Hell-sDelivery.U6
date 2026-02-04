@@ -75,7 +75,6 @@ public class PlayerFreeFallState : BaseState<PlayerStateMachine.PlayerStates>
             rotateTemp = 0;
             pControl.PlayerModel.transform.rotation = currentRot * Quaternion.Euler(0, 0, angleStep);
         }
-        
     }
 
     public override void PhysicsUpdate()

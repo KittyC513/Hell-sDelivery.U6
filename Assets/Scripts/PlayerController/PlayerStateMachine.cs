@@ -13,7 +13,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
     public PlayerAttackControl attackControl;
     public PlayerObjectController objectController;
 
-    private PlayerStates defaultState;
+    public PlayerStates defaultState;
     [SerializeField] public PlayerStates showCurrentState;
 
     private void Awake()
