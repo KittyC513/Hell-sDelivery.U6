@@ -92964,6 +92964,59 @@ Transform:
   - {fileID: 555248699}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &747617331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747617333}
+  - component: {fileID: 747617332}
+  m_Layer: 0
+  m_Name: DialogueControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &747617332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747617331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7aadc8c1f0129149ad809b364353727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints: []
+  dialogueCam: {fileID: 0}
+  dialogueSystemTrigger_camNPC: {fileID: 1847270053}
+  dialogueUsable_camNPC: {fileID: 1847270051}
+  isTriggered_p1: 0
+  isTriggered_p2: 0
+  isInRange_p1: 0
+  isInRange_p2: 0
+  currentDialogueState: 0
+--- !u!4 &747617333
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747617331}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.8583274, y: -3.8332827, z: 45.20406}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &748990782
 GameObject:
   m_ObjectHideFlags: 0
@@ -157732,6 +157785,10 @@ PrefabInstance:
     - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
       propertyPath: trigger
       value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: conversation
+      value: Old Coot/JunkyardEntrance
       objectReference: {fileID: 0}
     - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
       propertyPath: selectedDatabase
@@ -233166,13 +233223,145 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 2785563651000145282, guid: bd835450df769734cbed171ba42c3a47, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8582183046413773645, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1847270054}
   m_SourcePrefab: {fileID: 100100000, guid: bd835450df769734cbed171ba42c3a47, type: 3}
 --- !u!4 &1847270050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
   m_PrefabInstance: {fileID: 1847270049}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1847270051 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2884525805627471777, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+  m_PrefabInstance: {fileID: 1847270049}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847270052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274b80ab5b659c646ba9338870d14625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1847270052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8582183046413773645, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+  m_PrefabInstance: {fileID: 1847270049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1847270053 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+  m_PrefabInstance: {fileID: 1847270049}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847270052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1847270054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847270052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5473918a168c44fa0294bd4d1399f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conversationEvents:
+    onConversationStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 747617332}
+          m_TargetAssemblyTypeName: DialogueControl, Assembly-CSharp
+          m_MethodName: OnConversation
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onConversationEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 747617332}
+          m_TargetAssemblyTypeName: DialogueControl, Assembly-CSharp
+          m_MethodName: EndConversation
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    runOnConversationEndEventsAtEndOfFrame: 0
+    onConversationCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+    onConversationLine:
+      m_PersistentCalls:
+        m_Calls: []
+    onConversationLineEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    onConversationLineCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+    onConversationResponseMenu:
+      m_PersistentCalls:
+        m_Calls: []
+    onConversationResponseMenuTimeout:
+      m_PersistentCalls:
+        m_Calls: []
+    onLinkedConversationStart:
+      m_PersistentCalls:
+        m_Calls: []
+  barkEvents:
+    onBarkStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onBarkEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    onBarkLine:
+      m_PersistentCalls:
+        m_Calls: []
+  sequenceEvents:
+    onSequenceStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onSequenceEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  questEvents:
+    onQuestStateChange:
+      m_PersistentCalls:
+        m_Calls: []
+    onQuestTrackingEnabled:
+      m_PersistentCalls:
+        m_Calls: []
+    onQuestTrackingDisabled:
+      m_PersistentCalls:
+        m_Calls: []
+    onUpdateQuestTracker:
+      m_PersistentCalls:
+        m_Calls: []
+  pauseEvents:
+    onDialogueSystemPause:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueSystemUnpause:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1848663936
 GameObject:
   m_ObjectHideFlags: 0
@@ -267640,3 +267829,4 @@ SceneRoots:
   - {fileID: 616011995}
   - {fileID: 490187853}
   - {fileID: 1266449832}
+  - {fileID: 747617333}
