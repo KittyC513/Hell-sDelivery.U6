@@ -35,6 +35,8 @@ public class DoubleJumpState : BaseState<PlayerStateMachine.PlayerStates>
             pControl.playerSfx.PlayShminkJump();
         }
 
+        pControl.playerSfx.PlayDoubleJumpTone();
+
         //setup our rigidbody
         rb = pControl.RB;
         gravityFactor = 1;
