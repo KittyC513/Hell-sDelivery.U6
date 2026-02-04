@@ -84,15 +84,15 @@ public class CameraManager : MonoBehaviour
     public void SwitchToPlayerCam()
     {
         if (EventData.craneIsActivated) return;
-        lockCam.gameObject.SetActive(false);
-        playerCam.gameObject.SetActive(true);
+        lockCam.enabled = false;
+        playerCam.enabled = true;
         inputDetection.cam = playerCam;
     }
 
     public void SwitchToLockCam()
     {
-        playerCam.gameObject.SetActive(false);
-        lockCam.gameObject.SetActive(true);
+        playerCam.enabled = false;
+        lockCam.enabled = true;
         inputDetection.cam = lockCam;
     }
     public void SwitchToMainCam()
@@ -103,17 +103,17 @@ public class CameraManager : MonoBehaviour
             EventData.isSceneChanged = false;
         }
 
-        playerCam.gameObject.SetActive(false);
-        lockCam.gameObject.SetActive(false);
+        playerCam.enabled = false;
+        lockCam.enabled = false;
         inputDetection.cam = mainCam;
     }
 
     #region Alleyway Scene Cam
     public void SwitchToAlleywayCam()
     {
-        playerCam.gameObject.SetActive(false);
-        lockCam.gameObject.SetActive(false);
-        alleywayCam.gameObject.SetActive(true);
+        playerCam.enabled = false;
+        lockCam.enabled = false;
+        alleywayCam.enabled = true;
         inputDetection.cam = alleywayCam;
 
     }

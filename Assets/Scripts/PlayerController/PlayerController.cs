@@ -169,6 +169,9 @@ public class PlayerController : NetworkBehaviour
     [Space, Header("Splat Variables")]
     [SerializeField] private float minSplatForce = 30;
 
+    [Header("Camera References")]
+    public CameraManager cameraManager;
+
     //these variables are all accessable to the various states
 
     //General Variables

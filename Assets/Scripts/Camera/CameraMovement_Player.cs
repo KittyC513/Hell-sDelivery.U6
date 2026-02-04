@@ -24,6 +24,7 @@ public class CameraMovement_Player : NetworkBehaviour
     public Transform playerTransform;
     public PlayerInputDetection inputDetection;
     public PlayerLockOn playerLockOn;
+    public PlayerStateMachine playerStateMachine;
     public Vector3 coneSightCamOffset;
     public Vector3 bombThrowingCamOffset;
     public Vector3 resetCamOffset;
@@ -108,6 +109,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     private void Start()
     {
+        
         distance = oriDistance;
         moveSpeed = oriMoveSpeed;
         // get y axis
@@ -191,7 +193,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     void LateUpdate()
     {
-        bool condMode = (playerLockOn.isWithDetonator || playerLockOn.isWithBomb) && inputDetection.lockPressed;
+        bool condMode = (playerLockOn.isWithDetonator || playerLockOn.isWithBomb) && inputDetection.lockPressed && playerStateMachine.showCurrentState != PlayerStateMachine.PlayerStates.freeFall;
         if (inputDetection.isExploded && !inputDetection.isResetCam)
         {
             SwitchToTopDownCam();
@@ -237,7 +239,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
     }
     #region Topdown Cam while gaining exploded force
-    void SwitchToTopDownCam()
+    public void SwitchToTopDownCam()
     {
         Debug.Log("Topdown view");
         distance = topdownDistance;
