@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BombItem : ItemBase
 {
@@ -39,7 +40,12 @@ public class BombItem : ItemBase
     [SerializeField] private float yThrowOffset = 0;
     [SerializeField] private float forwardThrowOffset = 0;
 
-   
+    public override void Initialize()
+    {
+        base.Initialize();
+        onItemDropped += OnRemoved;
+    }
+
     public override void UseFunction()
     {
         if (validatedUse)
@@ -69,12 +75,25 @@ public class BombItem : ItemBase
         }
     }
 
+    private void OnRemoved()
+    {
+        if (bomb != null)
+        {
+            Destroy(bomb);
+            
+        }
+
+        bombPulled = false;
+        charging = false;
+        chargeHoldTime = 0;
+    }
+
     
     private void PullBomb()
     {
         
         bombHoldPoint = new Vector3(currentBag.transform.position.x, currentBag.transform.position.y + 2, currentBag.transform.position.z);
-        bomb = Instantiate(bombPrefab, bombHoldPoint, Quaternion.identity);
+        bomb = Instantiate(bombPrefab, bombHoldPoint, Quaternion.identity, SceneManager.GetActiveScene().GetRootGameObjects()[0].transform);
 
         bomb.transform.position = bombHoldPoint;
         bombPulled = true;

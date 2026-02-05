@@ -2,6 +2,7 @@ using Mono.Cecil.Cil;
 using System.Collections.Generic;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bag : MonoBehaviour
 {
@@ -74,9 +75,23 @@ public class Bag : MonoBehaviour
 
     }
 
+    public void DropAllItems()
+    {
+        for (int i = 0; i < bag.Count; i++)
+        {
+            RemoveItem(bag[i]);
+        }
+    }
+
     public void RemoveItem(ItemBase item)
     {
-        item.transform.parent = null;
+        item.onItemDropped?.Invoke();
+
+        //the goal is to remove dont destroy on load and return it to the correct scene
+        Scene active = SceneManager.GetActiveScene();
+        item.transform.parent = active.GetRootGameObjects()[0].transform;
+        //item.transform.parent = null;
+
         item.isAvaliable = true;
         OnRemoveItem(item);
         bag.Remove(item);

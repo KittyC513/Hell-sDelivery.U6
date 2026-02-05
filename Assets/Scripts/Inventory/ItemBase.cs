@@ -58,6 +58,9 @@ public class ItemBase : MonoBehaviour
     public E_PickupType pickupType = E_PickupType.two;
     public bool autoSwitch = false;
     
+    public delegate void OnItemDropped();
+    public OnItemDropped onItemDropped;
+    
 
     protected virtual void Awake()
     {
@@ -81,9 +84,10 @@ public class ItemBase : MonoBehaviour
         }
 
     }
-    protected void Start()
+    protected virtual void Start()
     {
         Initialize();
+
     }
 
     public virtual void Initialize()

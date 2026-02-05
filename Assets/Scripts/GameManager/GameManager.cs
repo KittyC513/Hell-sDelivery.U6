@@ -21,6 +21,7 @@ public class GameManager
     public PlayerItemControl itemControl_p1;
     public PlayerItemControl itemControl_p2;
 
+
     public PlayerStateMachine stateMachine_p1;
     public PlayerStateMachine stateMachine_p2;
 
@@ -102,6 +103,13 @@ public class GameManager
         }
 
         Debug.Log("UnFreeze both players");
+    }
+
+    //empty the player's bags for changing scenes
+    public void DropPlayerItems()
+    {
+        bag_p1.DropAllItems();
+        bag_p2.DropAllItems();
     }
 
     #endregion

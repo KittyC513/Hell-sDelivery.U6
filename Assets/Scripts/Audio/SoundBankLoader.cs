@@ -8,12 +8,17 @@ public class SoundBankLoader : MonoBehaviour
 
     public void Start()
     {
+     
+        
+    }
+
+    public void OnEnable()
+    {
         //load all the sound banks
         for (int i = 0; i < banksToLoad.Length; i++)
         {
             SoundBankManager.soundBankManager.LoadSoundBank(banksToLoad[i].bankName);
         }
-        
     }
 
     public void OnDisable()

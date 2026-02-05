@@ -27,6 +27,8 @@ public class CarjackMinigameManager : MonoBehaviour
     [SerializeField] private Image p1Indicator;
     [SerializeField] private Image p2Indicator;
     [SerializeField] private Camera mainCam;
+
+    [SerializeField] private TransitionScenes transitionScenes;
     
 
     public enum HeatCheck { cold, cool, warm, hot, target }
@@ -40,7 +42,7 @@ public class CarjackMinigameManager : MonoBehaviour
         {
             float percent = (screenSize.x / (carCount.x - 1));
             Vector3 position = new Vector3(startPos.position.x + (i * percent), startPos.position.y, startPos.position.z);
-            cars.Add(Instantiate(carPrefab, position, Quaternion.identity));
+            cars.Add(Instantiate(carPrefab, position, Quaternion.identity, this.transform));
 
 
             //for each x space spawn cars up and down
@@ -49,7 +51,7 @@ public class CarjackMinigameManager : MonoBehaviour
                 float percentY = (screenSize.y / (carCount.y - 1));
                 Vector3 positionY = new Vector3(startPos.position.x + (i * percent), startPos.position.y, (startPos.position.z + y * percentY));
 
-                cars.Add(Instantiate(carPrefab, positionY, Quaternion.identity));
+                cars.Add(Instantiate(carPrefab, positionY, Quaternion.identity, this.transform));
             }
         }
 
@@ -123,11 +125,11 @@ public class CarjackMinigameManager : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         text.alpha = 255;
         text.text = "Player " + p + " Wins!";
-          text.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
         text.GetComponent<Animator>().Play("Default");
         yield return new WaitForSeconds(1);
         GameManager.instance.UnFreezeBothPlayers();
-        SceneManager.LoadScene("Playtest-11-2025");
+        transitionScenes.StartTransition();
 
         //do something to end the minigame
     }
