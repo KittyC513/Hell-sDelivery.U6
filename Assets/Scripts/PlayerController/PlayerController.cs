@@ -536,7 +536,7 @@ public class PlayerController : NetworkBehaviour
             targetVelocity = targetDir * maxSpeed;
         }
 
-        if (currentSpeed > maxSpeed)
+        if (currentSpeed > maxSpeed + 5)
         {
             
             //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
@@ -544,7 +544,7 @@ public class PlayerController : NetworkBehaviour
             {
                 //how much we will change our velocity next step with smoothing by vector3.movetowards
                 //0.02 is unity's default fixedupdate timestep, i use this value right now because i dont know how to reference that variable
-                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, (decel / 3) * 0.02f);
+                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, (decel) * 0.02f);
                 
                 //the amount of velocity change needed to reach our maximum velocity
                 Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
@@ -561,7 +561,7 @@ public class PlayerController : NetworkBehaviour
             else
             {
                 //how much we will change our velocity next step with smoothing by vector3.movetowards
-                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, (accel / 4) * 0.02f);
+                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, (accel) * 0.02f);
 
                 //the amount of velocity change needed to reach our maximum velocity
                 Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;

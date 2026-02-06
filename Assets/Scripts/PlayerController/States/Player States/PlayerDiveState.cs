@@ -76,7 +76,7 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
                 }
             }
 
-            rb.AddForce((diveForwardForce / 2 * forward), ForceMode.Impulse);
+            rb.AddForce((diveForwardForce / 2 * pControl.transform.forward), ForceMode.Impulse);
             return PlayerStateMachine.PlayerStates.jump;
         }
         else if (pControl.DetectJumpInput() && pControl.remainingJumps > 0)
