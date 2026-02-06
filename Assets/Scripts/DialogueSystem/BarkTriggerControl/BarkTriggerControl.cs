@@ -1,8 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 public class BarkTriggerControl : MonoBehaviour
 {
-    
+    public float delayTime = 3f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,8 +20,18 @@ public class BarkTriggerControl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SceneControl_Level_greyBox.Instance.SwapBarkConversation("Devil/DevilIntro");
+            print("Player entered bark trigger area");
+            SceneControl_Level_greyBox.Instance.SwapBarkConversation("Devil Barks/Tresspass");
             SceneControl_Level_greyBox.Instance.EnableDevilDialogue();
+            StartCoroutine(DisableDialogueTrigger(delayTime));
         }
+    }
+
+
+    IEnumerator DisableDialogueTrigger(float timer)
+    {
+        print("Coroutine Starts");
+        yield return new WaitForSeconds(timer);
+        SceneControl_Level_greyBox.Instance.DisableDevilDialogue();
     }
 }
