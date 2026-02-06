@@ -218,7 +218,7 @@ public class BombMovement : MonoBehaviour
                 {
                     GameObject explosiveEff = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Gate_exploded"), colliders_o[i].transform.position, Quaternion.identity);
                     Destroy(explosiveEff, 1f);
-                    Destroy(colliders_o[i].gameObject, 1);
+                    Destroy(colliders_o[i].gameObject, 0.3f);
                 }
             }
         }
