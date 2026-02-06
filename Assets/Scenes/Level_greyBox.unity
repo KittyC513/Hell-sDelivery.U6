@@ -101580,6 +101580,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 618230336}
     m_Modifications:
+    - target: {fileID: 2080365988915229901, guid: 168887754b124e84789502bb792a86fc, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5677172876179926538, guid: 168887754b124e84789502bb792a86fc, type: 3}
       propertyPath: m_Name
       value: Detonator Item
@@ -101629,8 +101633,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2007946738}
     - target: {fileID: 7418573011447937672, guid: 168887754b124e84789502bb792a86fc, type: 3}
+      propertyPath: luaCode
+      value: Variable["C4.DetonatorCollected"] = true
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418573011447937672, guid: 168887754b124e84789502bb792a86fc, type: 3}
+      propertyPath: trigger
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418573011447937672, guid: 168887754b124e84789502bb792a86fc, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418573011447937672, guid: 168887754b124e84789502bb792a86fc, type: 3}
+      propertyPath: questName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418573011447937672, guid: 168887754b124e84789502bb792a86fc, type: 3}
+      propertyPath: condition.acceptedTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418573011447937672, guid: 168887754b124e84789502bb792a86fc, type: 3}
+      propertyPath: 'condition.acceptedTags.Array.data[0]'
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -188352,6 +188376,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 886810398}
     m_Modifications:
     - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+      propertyPath: trigger
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
       propertyPath: conversation
       value: NPC Dialogue/BombLoserQuest
       objectReference: {fileID: 0}
@@ -188407,36 +188435,13 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 2785563651000145282, guid: bd835450df769734cbed171ba42c3a47, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8582183046413773645, guid: bd835450df769734cbed171ba42c3a47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1553963667}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd835450df769734cbed171ba42c3a47, type: 3}
 --- !u!4 &1553963665 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
   m_PrefabInstance: {fileID: 1553963664}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1553963666 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8582183046413773645, guid: bd835450df769734cbed171ba42c3a47, type: 3}
-  m_PrefabInstance: {fileID: 1553963664}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1553963667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553963666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cfbb51b8c310194fa81bf4e6dc1f989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPoint1: {fileID: 0}
-  patrolPoint2: {fileID: 0}
-  patrolPoint3: {fileID: 0}
 --- !u!1 &1554204516
 GameObject:
   m_ObjectHideFlags: 0
@@ -251917,24 +251922,147 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8877193240737726625, guid: 09601f011d1d7e146b12e6974ac89855, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2007946743}
+    - targetCorrespondingSourceObject: {fileID: 8877193240737726625, guid: 09601f011d1d7e146b12e6974ac89855, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2007946742}
   m_SourcePrefab: {fileID: 100100000, guid: 09601f011d1d7e146b12e6974ac89855, type: 3}
 --- !u!114 &2007946738 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7175358789177868804, guid: 09601f011d1d7e146b12e6974ac89855, type: 3}
   m_PrefabInstance: {fileID: 2007946737}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2007946739}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 235ba8288a9dd46458e2a0c1abd82da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2007946739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8877193240737726625, guid: 09601f011d1d7e146b12e6974ac89855, type: 3}
+  m_PrefabInstance: {fileID: 2007946737}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2007946741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8087672114146570963, guid: 09601f011d1d7e146b12e6974ac89855, type: 3}
   m_PrefabInstance: {fileID: 2007946737}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2007946742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007946739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 8
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  setAnotherQuestEntryState: 0
+  anotherQuestEntryNumber: 1
+  anotherQuestEntryState: 0
+  luaCode: Variable["C4.DetonatorCollected"] = true
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkEntryID: -1
+  barkEntryTitle: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 0}
+  exclusive: 0
+  replace: 0
+  queue: 0
+  skipIfNoValidEntries: 0
+  preventRestartOnSameFrameEnded: 0
+  stopConversationOnTriggerExit: 0
+  marginToAllowTriggerExit: 0.2
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions:
+  - condition:
+      luaConditions: []
+      questConditions: []
+      acceptedTags: []
+      acceptedGameObjects: []
+      luaWizardIndex: 0
+      lastEvaluationValue: 0
+    target: {fileID: 2007946743}
+    state: 1
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: bcf6778f5af11a1498edbe7f6fc7ab6e, type: 2}
+--- !u!114 &2007946743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007946739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274b80ab5b659c646ba9338870d14625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_overrideName: 
+  m_overrideUseMessage: 
+  maxUseDistance: 5
+  events:
+    onSelect:
+      m_PersistentCalls:
+        m_Calls: []
+    onDeselect:
+      m_PersistentCalls:
+        m_Calls: []
+    onUse:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &2008789559
 GameObject:
   m_ObjectHideFlags: 0
