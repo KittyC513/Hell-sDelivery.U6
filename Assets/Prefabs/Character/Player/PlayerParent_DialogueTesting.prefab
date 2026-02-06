@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfaf6118044851468d604195633e6e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalAttackTime: 0.2
+  totalAttackTime: 0.15
   attackHitboxTime: 0.4
   attackCooldown: 0.8
   canAttack: 1
@@ -1516,11 +1516,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxWalkSpeed: 11
+  maxWalkSpeed: 12
   acceleration: 40
   decceleration: 35
   maxAccelStep: 110
   rotationSpeed: 9
+  startRotationSpeed: 0
   leftStickDir: {x: 0, y: 0, z: 0}
   weight: 2
   weightMultiplier: 0.3
@@ -1571,6 +1572,11 @@ MonoBehaviour:
   ledgeGrabMask:
     serializedVersion: 2
     m_Bits: 256
+  diveRotationSpeed: 200
+  diveForwardForce: 20
+  diveUpwardForce: 6
+  diveGrounded: 0
+  canDive: 1
   coyoteTime: 0.1
   freezeRotation: 0
   quickTurnMultiplier:
@@ -1679,6 +1685,7 @@ MonoBehaviour:
   horizontalDistance: 60
   minSplatForce: 30
   cameraManager: {fileID: 1062957148588737322}
+  canPressAttack: 1
 --- !u!114 &4923085166841590764
 MonoBehaviour:
   m_ObjectHideFlags: 0

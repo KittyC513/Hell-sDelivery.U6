@@ -13,6 +13,7 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
 using UnityEditor.Rendering;
+using UnityEditor.ShaderGraph.Internal;
 //using System.Drawing.Text;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
@@ -25,7 +26,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float acceleration = 2; //how fast speed is added to the player when moving
     [SerializeField] private float decceleration = 2; //how fast the player slows down when no longer inputting
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
-    [SerializeField] private float rotationSpeed = 500; //how fast the player rotates
+    [SerializeField] public float rotationSpeed = 500; //how fast the player rotates
+    [HideInInspector] public float startRotationSpeed;
     Vector3 goalVelocityChange; //used to determine how much velocity we need to change to reach our desired velocity
     [SerializeField] private Vector3 leftStickDir;
     [SerializeField] private float weight = 10;
@@ -115,7 +117,12 @@ public class PlayerController : NetworkBehaviour
     private Vector3 lastLedgeXZ; //the location of the last ledge detection on the X and Z plane
     private float lastLedgeY; //the location of the last ledge detecting on the Y plane
 
-   
+    [Space, Header("Dive Variables")]
+    [SerializeField] public float diveRotationSpeed = 200;
+    [SerializeField] public float diveForwardForce = 35;
+    [SerializeField] public float diveUpwardForce = 6;
+    public bool diveGrounded = false;
+    public bool canDive = true;
 
     [Space, Header("Quality Of Life Variables")]
     [SerializeField] private float coyoteTime = 0.1f; //how long after running off a ledge can the player still input jump
@@ -171,6 +178,8 @@ public class PlayerController : NetworkBehaviour
 
     [Header("Camera References")]
     public CameraManager cameraManager;
+
+    [HideInInspector] public bool canPressAttack = true;
 
     //these variables are all accessable to the various states
 
@@ -251,6 +260,8 @@ public class PlayerController : NetworkBehaviour
         groundLayers &= ~(1 << layerIndex);
 
         playerNum = inputDetection.playerNum;
+
+        startRotationSpeed = rotationSpeed;
     }
 
     private void OnEnable()
@@ -317,6 +328,11 @@ public class PlayerController : NetworkBehaviour
         }
 
         //Debug.Log("RegularGravity" + Physics.gravity);
+
+        if (!canPressAttack && inputDetection.attackPressed == false)
+        {
+            canPressAttack = true;
+        }
     }
 
     private void FixedUpdate()
@@ -377,12 +393,12 @@ public class PlayerController : NetworkBehaviour
             {
                 if (DetectRunInput())
                 {
-                    maxSpeed = maxRunSpeed;
+                    //maxSpeed = maxRunSpeed;
 
                     if (currentSpeed >= maxWalkSpeed && !running)
                     {
 
-                        running = true;
+                        //running = true;
                     }
                 }
 
@@ -415,8 +431,6 @@ public class PlayerController : NetworkBehaviour
                 maxSpeed = maxWalkSpeed * weightMultiplier;
                 running = false;
             }
-
-            
 
             CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
 
@@ -454,7 +468,13 @@ public class PlayerController : NetworkBehaviour
 
     public bool DetectAttackInput()
     {
-        return inputDetection.attackPressed;
+        if (canPressAttack && inputDetection.attackPressed)
+        {
+            canPressAttack = false;
+            return true;
+        }
+
+        return false;
     }
 
     public bool DetectRunInput()
@@ -516,7 +536,14 @@ public class PlayerController : NetworkBehaviour
             targetVelocity = targetDir * maxSpeed;
         }
 
-
+        if (diveGrounded)
+        {
+            targetVelocity = Vector3.zero;
+            accel = (quickTurnCurve.Evaluate(velDot) * accelValue)*airAccelMult;
+            decel = decelValue*airDecelMult;
+        }
+      
+            
         //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
         if (targetVelocity.magnitude <= 0.05f)
         {
@@ -534,7 +561,7 @@ public class PlayerController : NetworkBehaviour
 
             //apply our force to our velocity
             rb.AddForce(velocityChange * rb.mass);
-           
+        
         }
         else
         {
@@ -546,15 +573,13 @@ public class PlayerController : NetworkBehaviour
 
             //maxAccelStep limits how much our velocity can change per step
             velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
-           
+        
             //apply our force to our velocity
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             
             //apply our velocity to the rigidbody
             rb.AddForce(velocityChange * rb.mass);
         }
-
-
         
         if (!freezeRotation && !playerLockOn.isDetonatorLockOn) RotateTowards(targetDir, rotationSpeed);
 
@@ -662,6 +687,8 @@ public class PlayerController : NetworkBehaviour
                 {
                     Instantiate(stopMarker, transform.position, Quaternion.identity);
                 }
+
+                canDive = true;
             }
 
             grounded = true;

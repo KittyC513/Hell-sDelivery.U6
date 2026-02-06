@@ -7,7 +7,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
 {
     //create states and add them to the dictionary 
     public enum PlayerStates { grounded, jump, doubleJump, airborne, sliding, ledgeHang, frozen, ragdoll, attack, headBounce, dead, grabbed,
-    freeFall, splat, spinJump, spinFall, summon }
+    freeFall, splat, spinJump, spinFall, summon, dive }
 
     public PlayerController controller;
     public PlayerAttackControl attackControl;
@@ -41,6 +41,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerStates>
         states.Add(PlayerStates.spinJump, new PlayerSpinJumpState(PlayerStates.spinJump, controller));
         states.Add(PlayerStates.spinFall, new PlayerSpinFall(PlayerStates.spinFall, controller));
         states.Add(PlayerStates.summon, new PlayerSummon(PlayerStates.summon, controller));
+        states.Add(PlayerStates.dive, new PlayerDiveState(PlayerStates.dive, controller));
 
         //set our current state to airborne as a default starting state
         currentState = states[PlayerStates.airborne];
