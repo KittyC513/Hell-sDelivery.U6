@@ -299,24 +299,24 @@ MonoBehaviour:
       value: 2
       type: 1
       typeString: CustomFieldType_Number
-    - title: Entry 2
-      value: '[var=C4.DetonatorCollected]/''Found'
-      type: 0
-      typeString: CustomFieldType_Number
     - title: 
       value: 
       type: 0
       typeString: CustomFieldType_Text
+    - title: Entry 1
+      value: '[var=C4.DetonatorCollected]/Found'
+      type: 0
+      typeString: CustomFieldType_Number
     - title: Entry 1 State
       value: active
       type: 0
       typeString: 
-    - title: Entry 1
-      value: '[var=C4.BombCollected]/Found'
-      type: 0
-      typeString: 
     - title: Entry 2 State
       value: active
+      type: 0
+      typeString: 
+    - title: Entry 2
+      value: '[var=C4.BombCollected]/Found'
       type: 0
       typeString: 
   locations: []
@@ -1628,8 +1628,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: CurrentQuestState("Can You C4?") == "active" and (Variable["Bomb"]
-        == false) and (Variable["Detonator"] == false)
+      conditionsString: CurrentQuestState("Can You C4?") == "active"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1641,8 +1640,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.4600007
+    canvasScrollPosition: {x: 0, y: 29.999878}
+    canvasZoom: 0.4000007
   - id: 4
     fields:
     - title: Title
