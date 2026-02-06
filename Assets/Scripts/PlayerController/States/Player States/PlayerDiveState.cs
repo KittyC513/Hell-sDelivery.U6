@@ -48,6 +48,10 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
         {
             pControl.diveGrounded = true;
         }
+        else
+        {
+            pControl.diveGrounded = false;
+        }
     }
 
     public override void PhysicsUpdate()
@@ -85,7 +89,7 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
                 }
             }
 
-            rb.AddForce((diveForwardForce / 2 * pControl.transform.forward), ForceMode.Impulse);
+            rb.AddForce((diveForwardForce * pControl.transform.forward), ForceMode.Impulse);
             return PlayerStateMachine.PlayerStates.jump;
         }
         else if (pControl.DetectJumpInput() && pControl.remainingJumps > 0)
@@ -96,6 +100,29 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
         if (DetectLedge())
         {
             return PlayerStateMachine.PlayerStates.ledgeHang;
+        }
+
+         if (pControl.Grounded)
+        {
+            if (pControl.GroundObject.CompareTag("BouncePad"))
+            {
+                pControl.GroundObject.GetComponent<BouncePad>().BounceObject(rb, rb.linearVelocity.y);
+
+                if (pControl.GroundObject.GetComponent<Rigidbody>() != null && pControl.GroundObject.layer == LayerMask.NameToLayer("DynamicGround"))
+                {
+                    pControl.GroundObject.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, rb.linearVelocity.y * pControl.GroundObject.GetComponent<Rigidbody>().mass, 0), pControl.CurrentHit.point, ForceMode.Impulse);
+                }
+
+                pControl.remainingJumps = pControl.MaxJumps;
+                return PlayerStateMachine.PlayerStates.jump;
+            }
+            //a player is detected as ground below this player
+            if (pControl.GroundObject.CompareTag("Player"))
+            {
+                pControl.GroundObject.GetComponent<Rigidbody>().AddForce(pControl.HeadSquishForce * Vector3.down, ForceMode.Impulse);
+                return PlayerStateMachine.PlayerStates.headBounce;
+            }
+            //return PlayerStateMachine.PlayerStates.grounded;
         }
 
         return stateKey;
