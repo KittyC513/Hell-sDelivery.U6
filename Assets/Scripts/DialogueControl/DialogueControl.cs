@@ -35,7 +35,7 @@ public class DialogueControl : MonoBehaviour
 
     private void Start()
     {
-        SwapBarkConversation("Old Coot/JunkyardEntrance");
+
     }
 
     private void Update()
@@ -159,10 +159,6 @@ public class DialogueControl : MonoBehaviour
         }
     }
     
-    public void SwapBarkConversation(string conversation)
-    {
-        dialogueSystemTrigger_camNPC.barkConversation = conversation;
-    }
 
 
 }

@@ -33,16 +33,19 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public void EnableDevilDialogue()
     {
         dialogueSystem_devil.enabled = true;
+        print("Devil Dialogue Enabled");
     }
 
     public void DisableDevilDialogue()
     {
         dialogueSystem_devil.enabled = false;
+        print("Devil Dialogue Disabled");
     }
 
     public void SwapBarkConversation(string conversation)
     {
         dialogueSystem_devil.barkConversation = conversation;
-       
+        print("Conversation swapped to: " + conversation);  
+
     }
 }
