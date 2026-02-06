@@ -150,7 +150,7 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
             {
                 return PlayerStateMachine.PlayerStates.attack;
             }
-            else
+            else if (pControl.canDive)
             {
                 return PlayerStateMachine.PlayerStates.dive;
             }

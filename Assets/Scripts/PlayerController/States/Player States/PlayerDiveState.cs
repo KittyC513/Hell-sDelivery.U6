@@ -22,9 +22,14 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
+        pControl.canDive = false;
         rb = pControl.RB;
         pControl.rotationSpeed = pControl.diveRotationSpeed;
         forward = pControl.transform.forward;
+
+        diveForwardForce = pControl.diveForwardForce;
+        diveUpwardForce = pControl.diveUpwardForce;
+
         currentDiveForce = diveForwardForce;
         rb.AddForce((diveForwardForce * forward) + (diveUpwardForce * Vector3.up), ForceMode.Impulse);
         animName = "Dive";
@@ -34,11 +39,15 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
     public override void ExitState()
     {
         pControl.rotationSpeed = pControl.startRotationSpeed;
+        pControl.diveGrounded = false;
     }
 
     public override void UpdateState()
     {
-
+        if (pControl.Grounded)
+        {
+            pControl.diveGrounded = true;
+        }
     }
 
     public override void PhysicsUpdate()
@@ -82,6 +91,11 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
         else if (pControl.DetectJumpInput() && pControl.remainingJumps > 0)
         {
             return PlayerStateMachine.PlayerStates.doubleJump;
+        }
+
+        if (DetectLedge())
+        {
+            return PlayerStateMachine.PlayerStates.ledgeHang;
         }
 
         return stateKey;
@@ -138,5 +152,45 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
         //Debug.Log(velocityChange);
         //downForce = currentVel.y;
         
+    }
+
+     private bool DetectLedge()
+    {
+        Vector3 direction = pControl.transform.TransformDirection(Vector3.forward);
+
+        //where our downward pointing ray starts from (above the player and in front of the player)
+        Vector3 downRayPos = pControl.transform.position + (new Vector3(pControl.LedgeGrabHorizontalRange * direction.x, pControl.LedgeGrabUpwardsRange, pControl.LedgeGrabHorizontalRange * direction.z));
+
+        //where our double check ray shoots from, the same y position as our downward ray and starting inside the player
+        Vector3 topForwardPos = pControl.transform.position + (new Vector3(0, pControl.LedgeGrabUpwardsRange, 0));
+
+        //this spherecast shoots our forwards to check if any wall is there, this should help get rid of any jank with small gaps between colliders
+        //if there is no collider detected we can look for the rest of the ledge hang
+        if (!Physics.SphereCast(topForwardPos, 0.05f, direction, out RaycastHit notNeeded, pControl.LedgeGrabHorizontalRange - 0.05f, pControl.LedgeGrabMask))
+        {
+            //shoots a ray downwards to detect ground, if ground is detected that means a ledge is in front of the player
+            if (Physics.Raycast(downRayPos, Vector3.down, out RaycastHit hit, pControl.LedgeGrabDownwardsRange, pControl.LedgeGrabMask))
+            {
+                Vector3 forwardRayPos = new Vector3(pControl.transform.position.x, hit.point.y - 0.01f, pControl.transform.position.z);
+                //how high on our player controller we want to hang off the ledge
+                float targetPlayerDist = (pControl.PlayerHitboxHeight / 2) - pControl.YHangOffset;
+
+                //this ray shoots forward to find the wall that connects to the ledge we are hanging from
+                if (Physics.Raycast(forwardRayPos, direction, out RaycastHit forwardHit, pControl.LedgeGrabHorizontalRange + 0.5f, pControl.LedgeGrabMask))
+                {
+                    //the target hanging position which is where we hit the ledge offset by where we want to be hanging
+                    float targetYPos = hit.point.y - targetPlayerDist;
+
+                    //this is how far away from the wall we want to be while hanging
+                    Vector3 targetXZPos = forwardHit.point - direction * pControl.XZHangOffset;
+                   
+                    //set our position variables to be used by the ledge hang script
+                    pControl.SetLedgeSnapVariables(targetXZPos, targetYPos, hit.transform.gameObject);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

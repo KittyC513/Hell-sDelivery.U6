@@ -119,8 +119,10 @@ public class PlayerController : NetworkBehaviour
 
     [Space, Header("Dive Variables")]
     [SerializeField] public float diveRotationSpeed = 200;
-    [SerializeField] private float diveForwardForce = 35;
-    [SerializeField] private float diveUpwardForce = 8;
+    [SerializeField] public float diveForwardForce = 35;
+    [SerializeField] public float diveUpwardForce = 6;
+    public bool diveGrounded = false;
+    public bool canDive = true;
 
     [Space, Header("Quality Of Life Variables")]
     [SerializeField] private float coyoteTime = 0.1f; //how long after running off a ledge can the player still input jump
@@ -391,12 +393,12 @@ public class PlayerController : NetworkBehaviour
             {
                 if (DetectRunInput())
                 {
-                    maxSpeed = maxRunSpeed;
+                    //maxSpeed = maxRunSpeed;
 
                     if (currentSpeed >= maxWalkSpeed && !running)
                     {
 
-                        running = true;
+                        //running = true;
                     }
                 }
 
@@ -429,8 +431,6 @@ public class PlayerController : NetworkBehaviour
                 maxSpeed = maxWalkSpeed * weightMultiplier;
                 running = false;
             }
-
-            
 
             CalculateMovement(rb, leftStickDir, accel, decel, maxSpeed);
 
@@ -536,89 +536,50 @@ public class PlayerController : NetworkBehaviour
             targetVelocity = targetDir * maxSpeed;
         }
 
-        if (currentSpeed > maxSpeed + 5)
+        if (diveGrounded)
         {
+            targetVelocity = Vector3.zero;
+            accel = (quickTurnCurve.Evaluate(velDot) * accelValue)*airAccelMult;
+            decel = decelValue*airDecelMult;
+        }
+      
             
-            //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
-            if (targetVelocity.magnitude <= 0.05f)
-            {
-                //how much we will change our velocity next step with smoothing by vector3.movetowards
-                //0.02 is unity's default fixedupdate timestep, i use this value right now because i dont know how to reference that variable
-                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, (decel) * 0.02f);
-                
-                //the amount of velocity change needed to reach our maximum velocity
-                Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
-
-                //maxAccelStep limits how much our velocity can change per step
-                velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
-                velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
-                //Debug.Log(velocityChange * rb.mass);
-
-                //apply our force to our velocity
-                rb.AddForce(velocityChange * rb.mass);
+        //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
+        if (targetVelocity.magnitude <= 0.05f)
+        {
+            //how much we will change our velocity next step with smoothing by vector3.movetowards
+            //0.02 is unity's default fixedupdate timestep, i use this value right now because i dont know how to reference that variable
+            goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, decel * 0.02f);
             
-            }
-            else
-            {
-                //how much we will change our velocity next step with smoothing by vector3.movetowards
-                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, (accel) * 0.02f);
+            //the amount of velocity change needed to reach our maximum velocity
+            Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
 
-                //the amount of velocity change needed to reach our maximum velocity
-                Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
+            //maxAccelStep limits how much our velocity can change per step
+            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
+            velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
+            //Debug.Log(velocityChange * rb.mass);
 
-                //maxAccelStep limits how much our velocity can change per step
-                velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
-            
-                //apply our force to our velocity
-                velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
-                
-                //apply our velocity to the rigidbody
-                rb.AddForce(velocityChange * rb.mass);
-            }
+            //apply our force to our velocity
+            rb.AddForce(velocityChange * rb.mass);
+        
         }
         else
         {
+            //how much we will change our velocity next step with smoothing by vector3.movetowards
+            goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, accel * 0.02f);
+
+            //the amount of velocity change needed to reach our maximum velocity
+            Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
+
+            //maxAccelStep limits how much our velocity can change per step
+            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
+        
+            //apply our force to our velocity
+            velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             
-            //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
-            if (targetVelocity.magnitude <= 0.05f)
-            {
-                //how much we will change our velocity next step with smoothing by vector3.movetowards
-                //0.02 is unity's default fixedupdate timestep, i use this value right now because i dont know how to reference that variable
-                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, decel * 0.02f);
-                
-                //the amount of velocity change needed to reach our maximum velocity
-                Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
-
-                //maxAccelStep limits how much our velocity can change per step
-                velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
-                velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
-                //Debug.Log(velocityChange * rb.mass);
-
-                //apply our force to our velocity
-                rb.AddForce(velocityChange * rb.mass);
-            
-            }
-            else
-            {
-                //how much we will change our velocity next step with smoothing by vector3.movetowards
-                goalVelocityChange = Vector3.MoveTowards(goalVelocityChange, targetVelocity, accel * 0.02f);
-
-                //the amount of velocity change needed to reach our maximum velocity
-                Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
-
-                //maxAccelStep limits how much our velocity can change per step
-                velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
-            
-                //apply our force to our velocity
-                velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
-                
-                //apply our velocity to the rigidbody
-                rb.AddForce(velocityChange * rb.mass);
-            }
+            //apply our velocity to the rigidbody
+            rb.AddForce(velocityChange * rb.mass);
         }
-
-
-
         
         if (!freezeRotation && !playerLockOn.isDetonatorLockOn) RotateTowards(targetDir, rotationSpeed);
 
@@ -726,6 +687,8 @@ public class PlayerController : NetworkBehaviour
                 {
                     Instantiate(stopMarker, transform.position, Quaternion.identity);
                 }
+
+                canDive = true;
             }
 
             grounded = true;

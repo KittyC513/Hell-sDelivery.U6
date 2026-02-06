@@ -92,7 +92,7 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
             return PlayerStateMachine.PlayerStates.airborne;
         }
 
-        if (attackTemp < attackTime && pControl.DetectAttackInput())
+        if (pControl.DetectAttackInput() && !pControl.Grounded && pControl.canDive)
         {
             return PlayerStateMachine.PlayerStates.dive;
         }
