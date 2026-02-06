@@ -1370,14 +1370,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfaf6118044851468d604195633e6e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalAttackTime: 0.15
+  totalAttackTime: 0.2
   attackHitboxTime: 0.4
-  attackCooldown: 0.8
+  attackCooldown: 0.45
   canAttack: 1
+  pControl: {fileID: 4161022655810438540}
   attackHitbox: {fileID: 4242292160371283292}
-  attackSpeedBoost: 80
+  attackSpeedBoost: 40
   maximumVerticalSpeed: 45
-  stallVelocity: 1
+  stallVelocity: 100
+  shouldRefresh: 0
 --- !u!114 &1550417069281404750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1517,6 +1519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxWalkSpeed: 12
+  velocityCap: 20
   acceleration: 40
   decceleration: 35
   maxAccelStep: 110
@@ -1525,6 +1528,8 @@ MonoBehaviour:
   leftStickDir: {x: 0, y: 0, z: 0}
   weight: 2
   weightMultiplier: 0.3
+  pastMaxAccelMultiplier: 0.3
+  pastMaxDecelMultiplier: 0.8
   maxRunSpeed: 16
   runAcceleration: 35
   runDeceleration: 30
@@ -1573,8 +1578,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   diveRotationSpeed: 200
-  diveForwardForce: 20
-  diveUpwardForce: 6
+  diveForwardForce: 9
+  diveUpwardForce: 4
   diveGrounded: 0
   canDive: 1
   coyoteTime: 0.1

@@ -23,6 +23,7 @@ public class PlayerController : NetworkBehaviour
 {
     [Header ("Basic Movement Variables")]
     [SerializeField] private float maxWalkSpeed = 10; //the max speed the player can run
+    [SerializeField] private float velocityCap = 20;
     [SerializeField] private float acceleration = 2; //how fast speed is added to the player when moving
     [SerializeField] private float decceleration = 2; //how fast the player slows down when no longer inputting
     [SerializeField] private float maxAccelStep = 150; //the maximum value that the player's velocity can be moved by in a single frame
@@ -38,6 +39,10 @@ public class PlayerController : NetworkBehaviour
 
     private bool frozen = false;
     private Transform originalTransform;
+
+    //applied to acceleration and max accel step when moving past the maximum walking speed
+    [SerializeField] private float pastMaxAccelMultiplier = 0.35f;
+    [SerializeField] private float pastMaxDecelMultiplier = 0.8f;
 
     [Header("Run Movement Variables")]
     [SerializeField] private float maxRunSpeed = 16;
@@ -180,6 +185,9 @@ public class PlayerController : NetworkBehaviour
     public CameraManager cameraManager;
 
     [HideInInspector] public bool canPressAttack = true;
+
+    public delegate void LeftTheGround();
+    public LeftTheGround leftTheGround;
 
     //these variables are all accessable to the various states
 
@@ -542,6 +550,35 @@ public class PlayerController : NetworkBehaviour
             accel = (quickTurnCurve.Evaluate(velDot) * accelValue)*airAccelMult;
             decel = decelValue*airDecelMult;
         }
+
+        float maxAStep = maxAccelStep;
+
+        //we are not using quickturn
+        if (velDot > -0.05f)
+        {
+            //the player is moving past maximum walking speed
+            //let them maintain that speed for a little bit
+            if (currentSpeed > maxSpeed + 0.05f)
+            {
+
+                Debug.Log("Moving Fast");
+                if (!grounded)
+                {
+                    accel = (quickTurnCurve.Evaluate(velDot) * accelValue)*pastMaxAccelMultiplier;
+                    maxAStep = maxAccelStep * pastMaxAccelMultiplier;
+                }
+                else
+                {
+                    accel = (quickTurnCurve.Evaluate(velDot) * accelValue)*0.3f;
+                    maxAStep = maxAccelStep * 0.3f;
+                }
+                
+                decel = decelValue*pastMaxDecelMultiplier;
+                
+            }
+
+        }
+      
       
             
         //if the target velocity is going towards 0 or the player is no longer inputting we use a decceleration value to have control over accel and deccel seperately
@@ -555,13 +592,14 @@ public class PlayerController : NetworkBehaviour
             Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
 
             //maxAccelStep limits how much our velocity can change per step
-            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
+            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAStep);
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
             //Debug.Log(velocityChange * rb.mass);
 
+            
             //apply our force to our velocity
             rb.AddForce(velocityChange * rb.mass);
-        
+            
         }
         else
         {
@@ -572,7 +610,7 @@ public class PlayerController : NetworkBehaviour
             Vector3 velocityChange = (goalVelocityChange - currentVel) / 0.02f;
 
             //maxAccelStep limits how much our velocity can change per step
-            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAccelStep);
+            velocityChange = Vector3.ClampMagnitude(velocityChange, maxAStep);
         
             //apply our force to our velocity
             velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
@@ -580,9 +618,10 @@ public class PlayerController : NetworkBehaviour
             //apply our velocity to the rigidbody
             rb.AddForce(velocityChange * rb.mass);
         }
+
         
         if (!freezeRotation && !playerLockOn.isDetonatorLockOn) RotateTowards(targetDir, rotationSpeed);
-
+        
     }
 
     private void SetMovingPlatformParent()
@@ -710,6 +749,7 @@ public class PlayerController : NetworkBehaviour
 
             if (grounded)
             {
+                leftTheGround.Invoke();
                 if (debugActive && useJumpMarkers)
                 {
                     Instantiate(runMarker, transform.position, Quaternion.identity);

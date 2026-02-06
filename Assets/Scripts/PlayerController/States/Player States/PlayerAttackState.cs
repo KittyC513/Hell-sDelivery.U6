@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 
@@ -134,7 +135,8 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
             //rotate our player 360 degrees over the attack duration
             pControl.PlayerModel.transform.rotation = startRotation * Quaternion.AngleAxis((attackTemp / attackTime) * 360f, Vector3.up);
         }
-     
+
+
     }
 
     private void CalculateObjectVelocity()
@@ -177,7 +179,27 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
         {
             //move y velocity towards 0
             //CalculateMovement(pControl.RB, Vector3.up, stallVelocity, maximumVerticalSpeed);
-            pControl.RB.linearVelocity = Vector3.MoveTowards(pControl.RB.linearVelocity, new Vector3(pControl.RB.linearVelocity.x, 0, pControl.RB.linearVelocity.z), stallVelocity);
+            if (rb.linearVelocity.y > 2)
+            {
+                pControl.RB.linearVelocity = Vector3.MoveTowards(pControl.RB.linearVelocity, new Vector3(pControl.RB.linearVelocity.x, 0, pControl.RB.linearVelocity.z), stallVelocity * Time.fixedDeltaTime);
+            }
+            else
+            {
+                if (pControl.RB.linearVelocity.y > -pControl.MaxFallSpeed)
+                {
+                    Debug.Log("Falling");
+                    pControl.RB.AddForce(((pControl.FallAccel * 0.3f) / 0.02f * Time.fixedDeltaTime) * Vector3.down) ;
+
+                }
+
+                pControl.RB.linearVelocity = new Vector3(pControl.RB.linearVelocity.x, Mathf.Clamp(pControl.RB.linearVelocity.y, -12, 100), pControl.RB.linearVelocity.z);
+
+                //pControl.RB.linearVelocity = Vector3.MoveTowards(pControl.RB.linearVelocity, new Vector3(pControl.RB.linearVelocity.x, -10, pControl.RB.linearVelocity.z), (stallVelocity) * Time.fixedDeltaTime);
+            }
+
+            
+            
+            
         }
     }
 

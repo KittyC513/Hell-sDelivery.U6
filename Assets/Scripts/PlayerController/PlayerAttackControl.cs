@@ -12,6 +12,7 @@ public class PlayerAttackControl : MonoBehaviour
     private float attackCooldownTimer = 0; //a timer for the attack cooldown, gets reset at the END of an attack
     
     [SerializeField] public bool canAttack = true; //is the attack off cooldown
+    [SerializeField] private PlayerController pControl;
 
     [SerializeField] private GameObject attackHitbox; //the game object the attack hitbox is attached to
     [SerializeField] private float attackSpeedBoost = 130f; //how much speed is added to the player when attacking while grounded
@@ -19,6 +20,9 @@ public class PlayerAttackControl : MonoBehaviour
     [Space, Header("Air Stall Variables")]
     [SerializeField] private float maximumVerticalSpeed = 5;
     [SerializeField] private float stallVelocity = 50;
+
+    [HideInInspector] public bool shouldRefresh = false;
+    private bool _grounded;
 
     //Attack Variables
     public float AttackTime { get { return totalAttackTime; } }
@@ -28,7 +32,10 @@ public class PlayerAttackControl : MonoBehaviour
     public float MaximumVerticalSpeed {  get { return maximumVerticalSpeed; } }
     public float StallVelocity { get { return stallVelocity; } }
 
-
+    private void Start()
+    {
+        pControl.leftTheGround += RefreshAttack;
+    }
     private void Update()
     {
         AttackCooldown();
@@ -37,6 +44,23 @@ public class PlayerAttackControl : MonoBehaviour
 
     private void AttackCooldown()
     {
+        //if im not grounded
+        //and i cannot attack any longer
+        //once i become grounded refresh my attack 
+        if (!pControl.Grounded && !canAttack)
+        {
+            shouldRefresh = true;
+        }
+
+        if (shouldRefresh && pControl.Grounded)
+        {
+            canAttack = true;
+            attackCooldownTimer = attackCooldown;
+            shouldRefresh = false;
+        }
+
+
+
         //checks if the cooldown between attacks is over and the player can attack again
         if (attackCooldownTimer < attackCooldown)
         {
@@ -45,14 +69,24 @@ public class PlayerAttackControl : MonoBehaviour
 
         if (attackCooldownTimer >= attackCooldown)
         {
-
-            canAttack = true;
+            if (pControl.Grounded)
+            {
+                canAttack = true;
+                _grounded = true;
+            }
         }
         else
         {
-
             canAttack = false;
         }
+
+    }
+
+    public void RefreshAttack()
+    {
+        canAttack = true;
+        attackCooldownTimer = attackCooldown;
+        shouldRefresh = false;
     }
 
     public void ResetAttackCooldown()
