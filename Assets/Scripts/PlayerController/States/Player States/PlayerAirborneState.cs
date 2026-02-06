@@ -144,9 +144,17 @@ public class PlayerAirborneState : BaseState<PlayerStateMachine.PlayerStates>
         }
 
         //TEMPORARY
-        if (pControl.DetectAttackInput() && pControl.CheckCanAttack())
+        if (pControl.DetectAttackInput())
         {
-            return PlayerStateMachine.PlayerStates.attack;
+            if (pControl.CheckCanAttack())
+            {
+                return PlayerStateMachine.PlayerStates.attack;
+            }
+            else
+            {
+                return PlayerStateMachine.PlayerStates.dive;
+            }
+            
         }
 
         

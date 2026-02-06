@@ -92,6 +92,12 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
             return PlayerStateMachine.PlayerStates.airborne;
         }
 
+        if (attackTemp < attackTime && pControl.DetectAttackInput())
+        {
+            return PlayerStateMachine.PlayerStates.dive;
+        }
+        
+
         if (pControl.DetectJumpInput() && pControl.Grounded)
         {
             //if the player jumps off a moving platform apply their movement + the platforms movement to the player to add inertia 
