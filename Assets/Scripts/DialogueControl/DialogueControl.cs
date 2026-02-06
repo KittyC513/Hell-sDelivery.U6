@@ -1,3 +1,4 @@
+using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
@@ -30,6 +31,11 @@ public class DialogueControl : MonoBehaviour
     private void Awake()
     {
         dialogueSystemTrigger_camNPC.enabled = false;
+    }
+
+    private void Start()
+    {
+        SwapBarkConversation("Old Coot/JunkyardEntrance");
     }
 
     private void Update()
@@ -151,6 +157,11 @@ public class DialogueControl : MonoBehaviour
                 ResetPlayerPos();
                 break;
         }
+    }
+    
+    public void SwapBarkConversation(string conversation)
+    {
+        dialogueSystemTrigger_camNPC.barkConversation = conversation;
     }
 
 
