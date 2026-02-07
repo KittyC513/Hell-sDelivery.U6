@@ -14,6 +14,7 @@ public class Bag : MonoBehaviour
 
     public Transform equipPoint;
     public GameObject bombObj;
+    public GameObject detonatorObj;
     public Transform bagPoint;
 
     public float swapCooldown = 0.3f;
@@ -60,6 +61,7 @@ public class Bag : MonoBehaviour
     private void Start()
     {
         bombObj.SetActive(false);
+        detonatorObj.SetActive(false);
     }
 
     public void AddItem(ItemBase item)
@@ -324,9 +326,13 @@ public class Bag : MonoBehaviour
 
     private void OnEquipItem(GameObject obj)
     {
-        //ignore collision between the player holding the object and the object they hold
-        Physics.IgnoreCollision(this.GetComponent<Collider>(), obj.GetComponent<Collider>(), true);
-        obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        ////ignore collision between the player holding the object and the object they hold
+        //Physics.IgnoreCollision(this.GetComponent<Collider>(), obj.GetComponent<Collider>(), true);
+        //obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        if (obj.tag == "Bomb")
+            bombObj.SetActive(true);
+        if (obj.tag == "Detonator")
+            detonatorObj.SetActive(true);
     }
 
     private void ResetSprings()
