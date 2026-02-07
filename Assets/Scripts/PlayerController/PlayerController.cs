@@ -834,13 +834,15 @@ public class PlayerController : NetworkBehaviour
         {
             //freeze the player's position on the y axis and set velocity to 0
             rb.constraints = RigidbodyConstraints.FreezePositionY;
+            rb.constraints |= RigidbodyConstraints.FreezeRotation;
+            rb.constraints |= RigidbodyConstraints.FreezePosition;
             rb.linearVelocity = Vector3.zero;
             goalVelocityChange = Vector3.zero;
         }
         else
         {
-            rb.constraints |= RigidbodyConstraints.FreezePositionY;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
+            //rb.constraints |= RigidbodyConstraints.FreezePositionY;
         }
         Debug.Log("Player controller freeze state set to " + state + " by " + scriptName);
     }
