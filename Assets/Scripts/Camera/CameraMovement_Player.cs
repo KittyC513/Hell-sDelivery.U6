@@ -99,6 +99,7 @@ public class CameraMovement_Player : NetworkBehaviour
     public bool hasInitializedCam = false;
     public bool didSyncAfterReset = false;
     public bool isBelndingToCone = false;
+    //public bool isInTopDown = false;
     public bool wasConeMode = false;
     Coroutine blendRoutine;
     public E_CamMode camMode = E_CamMode.coneSight;
@@ -234,13 +235,16 @@ public class CameraMovement_Player : NetworkBehaviour
         {
             wasConeMode = false;
             CameraMovement();
+            //hasInitializedCam = isInTopDown ? true : false;
             hasInitializedCam = false;
+
         }
 
     }
     #region Topdown Cam while gaining exploded force
     public void SwitchToTopDownCam()
     {
+        resetCamPos = true;
         Debug.Log("Topdown view");
         distance = topdownDistance;
         moveSpeed = topdownMoveSpeed;

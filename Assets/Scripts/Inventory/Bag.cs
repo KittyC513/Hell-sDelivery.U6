@@ -13,6 +13,7 @@ public class Bag : MonoBehaviour
     [SerializeField] private PlayerSFX playerSFX;
 
     public Transform equipPoint;
+    public GameObject bombObj;
     public Transform bagPoint;
 
     public float swapCooldown = 0.3f;
@@ -55,6 +56,10 @@ public class Bag : MonoBehaviour
     {
         bag = new List<ItemBase>();
         ResetSprings();
+    }
+    private void Start()
+    {
+        bombObj.SetActive(false);
     }
 
     public void AddItem(ItemBase item)
@@ -147,6 +152,7 @@ public class Bag : MonoBehaviour
 
     public void EquipItem()
     {
+
         switch(bag.Count)
         {
             case 0:
@@ -159,6 +165,7 @@ public class Bag : MonoBehaviour
 
                 if (!bag[0].isOnUse)
                 {
+                    //On Back
                     bag[0].transform.position = bagPoint.position;
                 }
 
@@ -197,112 +204,112 @@ public class Bag : MonoBehaviour
                     
                 }
                 break;
-            case 2:
-                if(activeItemBase == bag[0])
-                {
-                    if ((inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right) && swapTimer >= swapCooldown)
-                    {
-                        activeItemBase.OnItemSwap();
+            //case 2:
+            //    if(activeItemBase == bag[0])
+            //    {
+            //        if ((inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right) && swapTimer >= swapCooldown)
+            //        {
+            //            activeItemBase.OnItemSwap();
 
-                        swapTimer = 0;
-                        bag[0].isOnUse = false;
-                        bag[0].GetComponent<Collider>().isTrigger = true;
+            //            swapTimer = 0;
+            //            bag[0].isOnUse = false;
+            //            bag[0].GetComponent<Collider>().isTrigger = true;
 
-                        //switch to the second item in the bag
-                        bag[1].isOnUse = true;
-                        bag[1].GetComponent<Collider>().isTrigger = false;
-                        activeItemBase = bag[1];
-                        activeItem = bag[1].gameObject;
-                        activeRB = activeItem.GetComponent<Rigidbody>();
-                        //reset the spring params
-                        ResetSprings();
-                    }
+            //            //switch to the second item in the bag
+            //            bag[1].isOnUse = true;
+            //            bag[1].GetComponent<Collider>().isTrigger = false;
+            //            activeItemBase = bag[1];
+            //            activeItem = bag[1].gameObject;
+            //            activeRB = activeItem.GetComponent<Rigidbody>();
+            //            //reset the spring params
+            //            ResetSprings();
+            //        }
 
-                    #region Auto-switch
-                    if (bag[1].autoSwitch)
-                    {
-                        activeItemBase.OnItemSwap();
+            //        #region Auto-switch
+            //        if (bag[1].autoSwitch)
+            //        {
+            //            activeItemBase.OnItemSwap();
 
-                        bag[0].isOnUse = false;
-                        bag[0].GetComponent<Collider>().isTrigger = true;
+            //            bag[0].isOnUse = false;
+            //            bag[0].GetComponent<Collider>().isTrigger = true;
 
-                        //switch to the second item in the bag
-                        bag[1].isOnUse = true;
-                        bag[1].GetComponent<Collider>().isTrigger = false;
-                        activeItemBase = bag[1];
-                        activeItem = bag[1].gameObject;
-                        activeRB = activeItem.GetComponent<Rigidbody>();
-                        //reset the spring params
-                        ResetSprings();
-                        bag[1].autoSwitch = false;
-                        Debug.Log(bag[1].autoSwitch);
-                    }
-                    #endregion
+            //            //switch to the second item in the bag
+            //            bag[1].isOnUse = true;
+            //            bag[1].GetComponent<Collider>().isTrigger = false;
+            //            activeItemBase = bag[1];
+            //            activeItem = bag[1].gameObject;
+            //            activeRB = activeItem.GetComponent<Rigidbody>();
+            //            //reset the spring params
+            //            ResetSprings();
+            //            bag[1].autoSwitch = false;
+            //            Debug.Log(bag[1].autoSwitch);
+            //        }
+            //        #endregion
 
 
-                    bag[1].transform.position = bagPoint.position;
-                }
+            //        bag[1].transform.position = bagPoint.position;
+            //    }
 
-                if (activeItemBase == bag[1])
-                {
-                    if ((inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right) && swapTimer >= swapCooldown)
-                    {
-                        activeItemBase.OnItemSwap();
+                //if (activeItemBase == bag[1])
+                //{
+                //    if ((inputDetection.swapItemPressed_left || inputDetection.swapItemPressed_right) && swapTimer >= swapCooldown)
+                //    {
+                //        activeItemBase.OnItemSwap();
 
-                        swapTimer = 0;
-                        bag[1].isOnUse = false;
-                        bag[1].GetComponent<Collider>().isTrigger = true;
-                        //bag[1].transform.position = bagPoint.position;
+                //        swapTimer = 0;
+                //        bag[1].isOnUse = false;
+                //        bag[1].GetComponent<Collider>().isTrigger = true;
+                //        //bag[1].transform.position = bagPoint.position;
 
-                        //switch to the second item in the bag
-                        bag[0].isOnUse = true;
-                        bag[0].GetComponent<Collider>().isTrigger = false;
-                        activeItemBase = bag[0];
-                        activeItem = bag[0].gameObject;
-                        activeRB = activeItem.GetComponent<Rigidbody>();
+                //        //switch to the second item in the bag
+                //        bag[0].isOnUse = true;
+                //        bag[0].GetComponent<Collider>().isTrigger = false;
+                //        activeItemBase = bag[0];
+                //        activeItem = bag[0].gameObject;
+                //        activeRB = activeItem.GetComponent<Rigidbody>();
 
-                        //reset the spring params
-                        ResetSprings();
-                    }
+                //        //reset the spring params
+                //        ResetSprings();
+                //    }
 
-                    #region Auto-switch
-                    if (bag[0].autoSwitch)
-                    {
-                        activeItemBase.OnItemSwap();
+                //    #region Auto-switch
+                //    if (bag[0].autoSwitch)
+                //    {
+                //        activeItemBase.OnItemSwap();
 
-                        bag[0].isOnUse = false;
-                        bag[0].GetComponent<Collider>().isTrigger = true;
+                //        bag[0].isOnUse = false;
+                //        bag[0].GetComponent<Collider>().isTrigger = true;
 
-                        //switch to the second item in the bag
-                        bag[1].isOnUse = true;
-                        bag[1].GetComponent<Collider>().isTrigger = false;
-                        activeItemBase = bag[1];
-                        activeItem = bag[1].gameObject;
-                        activeRB = activeItem.GetComponent<Rigidbody>();
-                        //reset the spring params
-                        ResetSprings();
-                        bag[0].autoSwitch = false;
-                        Debug.Log(bag[0].autoSwitch);
-                    }
-                    #endregion
-                    bag[0].transform.position = bagPoint.position;
-                }
+                //        //switch to the second item in the bag
+                //        bag[1].isOnUse = true;
+                //        bag[1].GetComponent<Collider>().isTrigger = false;
+                //        activeItemBase = bag[1];
+                //        activeItem = bag[1].gameObject;
+                //        activeRB = activeItem.GetComponent<Rigidbody>();
+                //        //reset the spring params
+                //        ResetSprings();
+                //        bag[0].autoSwitch = false;
+                //        Debug.Log(bag[0].autoSwitch);
+                //    }
+                //    #endregion
+                //    bag[0].transform.position = bagPoint.position;
+                //}
 
-                break;
+                //break;
         }
-        // If the swap button is not pressed, start the timer
-        if (!inputDetection.swapItemPressed_left && !inputDetection.swapItemPressed_right)
-        {
-            if (swapTimer < swapCooldown)
-            {
-                swapTimer += Time.deltaTime;
-            }
-            else
-            {
-                swapTimer = swapCooldown;
-            }
+        //// If the swap button is not pressed, start the timer
+        //if (!inputDetection.swapItemPressed_left && !inputDetection.swapItemPressed_right)
+        //{
+        //    if (swapTimer < swapCooldown)
+        //    {
+        //        swapTimer += Time.deltaTime;
+        //    }
+        //    else
+        //    {
+        //        swapTimer = swapCooldown;
+        //    }
 
-        }                              
+        //}                              
     }
 
     private void OnRemoveItem(ItemBase item)
