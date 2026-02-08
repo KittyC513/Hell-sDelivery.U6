@@ -110,7 +110,7 @@ public class PlayerLockOn : MonoBehaviour
                 lockCamType = E_LockOnState.detonatorLockOn;
                 CameraManager.currentCamType = E_CamType.playerCam; 
                 cameraMovement_player.camMode = E_CamMode.coneSight;
-                ConeSightDetection();
+                //ConeSightDetection();
                 isDetonatorLockOn = true;
                 //if (!isLockedOn)
                 //{
