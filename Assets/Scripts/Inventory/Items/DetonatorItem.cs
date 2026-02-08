@@ -8,6 +8,7 @@ public class DetonatorItem : ItemBase
     //public ItemHandler iHandler;
     public BombItem bombItem;
     public Vector3 offset;
+    public GameObject detonatorModel;
 
     public List<BombMovement> list;
    

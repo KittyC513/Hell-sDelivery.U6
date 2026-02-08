@@ -339,7 +339,7 @@ public class ItemBase : MonoBehaviour
                     Vector3 endArc = new Vector3(currentBag.transform.forward.x, yEndForce, currentBag.transform.forward.z).normalized;
                     Vector3 direction = Vector3.Lerp(startArc, endArc, (buttonHoldTime / maxButtonHoldTime));
                     Vector3 velocity = throwForce * direction;
-                    Debug.Log(velocity);
+                    //Debug.Log(velocity);
                     throwArc.ShowThrowArc(velocity, transform.position, (buttonHoldTime / maxButtonHoldTime), gravity);
                 }
                 else

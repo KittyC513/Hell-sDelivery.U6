@@ -80,6 +80,7 @@ public class PlayerLockOn : MonoBehaviour
 
     void Update()
     {
+
         playerCam = inputDetection.cam;
         if (DetectLockInput())
         {
