@@ -86,6 +86,11 @@ public class PlayerAttackState : BaseState<PlayerStateMachine.PlayerStates>
     {
         if (attackTemp >= attackTime && pControl.Grounded)
         {
+            if (pControl.GroundObject.CompareTag("BouncePad"))
+            {
+                pControl.BouncePad();
+                return PlayerStateMachine.PlayerStates.jump;
+            }
             return PlayerStateMachine.PlayerStates.grounded;
         }
         else if (attackTemp >= attackTime && !pControl.Grounded)
