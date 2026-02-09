@@ -168,7 +168,11 @@ public class BombItem : ItemBase
 
                 Destroy(visualEffectObj, 1f);
                 Destroy(bombPos.gameObject, 1f);
+                /********************************************************************************************/
+                //audio source
 
+
+                /********************************************************************************************/
                 foreach (BombMovement item in bombsList) 
                 { 
                     bombsList2.Add(item);            
