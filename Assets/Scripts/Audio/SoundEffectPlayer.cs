@@ -78,7 +78,7 @@ public class SoundEffectPlayer : MonoBehaviour
 
         audioSource.volume = soundEffect.volumeAdjust;
 
-        Debug.Log(audioSource);
+        //Debug.Log(audioSource);
 
         if (audioSource.loop)
         {

@@ -9,6 +9,17 @@ public class PlayerSFX : MonoBehaviour
         sfxPlayer.PlaySoundEffect("Player", "ShminkDeath");
     }
 
+    public void PlayBounce(bool high)
+    {
+        if (high)
+        {
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "BounceHigh");
+            return;
+        }
+
+        sfxPlayer.PlaySoundEffect("ObjectBank1", "BounceLow");
+    }
+
     public void PlayShmonkDeath()
     {
         sfxPlayer.PlaySoundEffect("Player", "ShmonkDeath");
