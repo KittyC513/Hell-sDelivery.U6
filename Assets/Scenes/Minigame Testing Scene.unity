@@ -386,6 +386,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1002965884}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1 &177759739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 177759740}
+  - component: {fileID: 177759741}
+  m_Layer: 0
+  m_Name: soundeffectplayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &177759740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177759739}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1352148312}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &177759741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177759739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbb128dc27851ce4e971d6b9ac870a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSourcePrefab: {fileID: 2119263232913137835, guid: b43050ad32abeb742bd1f5482406a2c6, type: 3}
+  sourceStartSize: 1
 --- !u!1001 &190888436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2176,6 +2222,7 @@ Transform:
   - {fileID: 1139496241}
   - {fileID: 8122946943206409462}
   - {fileID: 1666442588}
+  - {fileID: 1687441805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1139496240
@@ -2707,7 +2754,8 @@ Transform:
   m_LocalPosition: {x: -43.82232, y: 117.19621, z: -150.68022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 177759740}
   m_Father: {fileID: 1002965884}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1352148313
@@ -2736,6 +2784,7 @@ MonoBehaviour:
   p2Indicator: {fileID: 331335488}
   mainCam: {fileID: 1468470635}
   transitionScenes: {fileID: 1666442589}
+  sfxPlayer: {fileID: 177759741}
 --- !u!1 &1359837976
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,6 +3207,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnlockMinigameUI (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4759140856501218137, guid: 78d2de68169657843880bdd289bed4fb, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5023821660715575727, guid: 78d2de68169657843880bdd289bed4fb, type: 3}
       propertyPath: m_Color.b
       value: 0.81568635
@@ -3426,6 +3479,53 @@ MonoBehaviour:
   sceneRoot: {fileID: 1002965883}
   unloadStartScene: 1
   shouldSavePosition: 0
+--- !u!1 &1687441804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1687441805}
+  - component: {fileID: 1687441806}
+  m_Layer: 0
+  m_Name: soundbankLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1687441805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687441804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1002965884}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1687441806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687441804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8581376460956ee4689ba2a23cdc005e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  banksToLoad:
+  - {fileID: 11400000, guid: 002c342d7045f0747b43eddb146590b7, type: 2}
+  - {fileID: 11400000, guid: 7d0f1b6e076e95446abfb8260f43aab6, type: 2}
 --- !u!1001 &1832736623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4733,6 +4833,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnlockMinigameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4759140856501218137, guid: 78d2de68169657843880bdd289bed4fb, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5023821660715575727, guid: 78d2de68169657843880bdd289bed4fb, type: 3}
       propertyPath: m_Color.b
       value: 0.9811321
@@ -4765,6 +4869,10 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1468470635}
+    - target: {fileID: 5459924175108206937, guid: 78d2de68169657843880bdd289bed4fb, type: 3}
+      propertyPath: sfxPlayer
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5459924175108206937, guid: 78d2de68169657843880bdd289bed4fb, type: 3}
       propertyPath: isMinigameCar
       value: 1

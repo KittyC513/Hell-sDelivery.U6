@@ -25,7 +25,7 @@ public class CarUnlockSlider : MonoBehaviour
     [SerializeField] private float speedIncrease = 3;
     [SerializeField] private Camera mainCam;
     [SerializeField] private Image lockImg;
-    private bool canInput = true;
+    private bool canInput = false;
     private PlayerInputDetection currentPlayer;
     private PlayerInteractor playerInteractor;
     private Health playerHealth;
@@ -38,6 +38,8 @@ public class CarUnlockSlider : MonoBehaviour
     [SerializeField] private Transform startTransform;
     [SerializeField] private Transform endTransform;
     [SerializeField] private Vector2 targetBarRange = new Vector2(0.55f, 1.5f);
+
+    [SerializeField] private SoundEffectPlayer sfxPlayer;
 
 
     private void Start()
@@ -242,10 +244,12 @@ public class CarUnlockSlider : MonoBehaviour
         {
             if (cyclesFinished + 1 >= cyclesToComplete)
             {
+                sfxPlayer.PlaySoundEffect("ObjectBank1", "CarUnlock");
                 EndMinigame(true);
             }
             else
             {
+                sfxPlayer.PlaySoundEffect("ObjectBank1", "LockPick");
                 cyclesFinished += 1;
                 sliderSpeed += speedIncrease;
                 PickNewSection(Random.Range(targetBarRange.x, targetBarRange.y));
@@ -254,6 +258,8 @@ public class CarUnlockSlider : MonoBehaviour
         }
         else //the player missed
         {
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "LockFail");
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "FailJingle_1");
             EndMinigame(false);
         }
     }

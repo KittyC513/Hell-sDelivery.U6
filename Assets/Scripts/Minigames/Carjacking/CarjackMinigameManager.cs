@@ -29,6 +29,7 @@ public class CarjackMinigameManager : MonoBehaviour
     [SerializeField] private Camera mainCam;
 
     [SerializeField] private TransitionScenes transitionScenes;
+    [SerializeField] private SoundEffectPlayer sfxPlayer;
     
 
     public enum HeatCheck { cold, cool, warm, hot, target }
@@ -97,7 +98,7 @@ public class CarjackMinigameManager : MonoBehaviour
             //target car has been opened
             int winningPlayer = player.playerNum;
             StartCoroutine(MinigameEndSequence(winningPlayer));
-
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "PulseJingle");
             return HeatCheck.target;
         }
         if (distance < hotDist)
