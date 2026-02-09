@@ -1,6 +1,8 @@
 using JetBrains.Annotations;
+using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,8 +17,9 @@ public class BombItem : ItemBase
 
     [Header("Bomb")]
     public Vector3 offset; //to replace bombs
-    public int maxBombs = 1;
+    public int maxBombs = 2;
     public int numOfBombs = 0;
+    public GameObject bombModel;
 
     //cooldown setting
     public float cdSpawn = 0.3f;
@@ -39,6 +42,7 @@ public class BombItem : ItemBase
     private GameObject bomb;
     [SerializeField] private float yThrowOffset = 0;
     [SerializeField] private float forwardThrowOffset = 0;
+
 
     public override void Initialize()
     {
@@ -97,8 +101,7 @@ public class BombItem : ItemBase
 
         bomb.transform.position = bombHoldPoint;
         bombPulled = true;
-        
-        
+             
     }
 
     private void HoldBomb()
@@ -153,7 +156,36 @@ public class BombItem : ItemBase
             throwArc.StopThrowArc();
             bomb.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             bomb.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.Impulse);
-            bombsList.Add(bomb.GetComponent<BombMovement>());
+
+            if(bombsList.Count > maxBombs - 1)
+            {
+                //defuse old bomb
+                Transform bombPos = bombsList[0].transform;
+                bombsList.RemoveAt(0);
+
+                GameObject visualEffectObj = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_defusing"), bombPos.position, Quaternion.identity);
+                List<BombMovement> bombsList2 = new List<BombMovement>();
+
+                Destroy(visualEffectObj, 1f);
+                Destroy(bombPos.gameObject, 1f);
+                /********************************************************************************************/
+                //audio source
+
+
+                /********************************************************************************************/
+                foreach (BombMovement item in bombsList) 
+                { 
+                    bombsList2.Add(item);            
+                }
+                bombsList = bombsList2;
+                //add new bomb into the list
+                bombsList.Add(bomb.GetComponent<BombMovement>());
+            }
+            else
+            {
+                bombsList.Add(bomb.GetComponent<BombMovement>());
+            }
+
 
             chargeHoldTime = 0;
             bomb = null;
@@ -241,4 +273,5 @@ public class BombItem : ItemBase
             pStateMachine = null;
         }
     }
+
 }

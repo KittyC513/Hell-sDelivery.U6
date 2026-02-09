@@ -178,7 +178,7 @@ public class ItemBase : MonoBehaviour
         {
             if (GameManager.instance.player1 != null)
             {
-                if (withPickupRange_p1 && GameManager.instance.bag_p1.bag.Count < 2)
+                if (withPickupRange_p1 && GameManager.instance.bag_p1.bag.Count == 0)
                 {
                     pickupIcon.ShowIconToPlayer(true, 1);
                 }
@@ -190,7 +190,7 @@ public class ItemBase : MonoBehaviour
 
             if (GameManager.instance.player2 != null)
             {
-                if (withPickupRange_p2 && GameManager.instance.bag_p2.bag.Count < 2)
+                if (withPickupRange_p2 && GameManager.instance.bag_p2.bag.Count == 0)
                 {
                     pickupIcon.ShowIconToPlayer(true, 2);
                 }
@@ -208,68 +208,85 @@ public class ItemBase : MonoBehaviour
         //3. press button to pick up
         if(withPickupRange_p1 && GameManager.instance.InputDetection_p1.grabPressed)
         {
-            switch (pickupType)
+
+            if (GameManager.instance.bag_p1.bag.Count == 0 && GameManager.instance.bag_p1.activeItemBase == null)
             {
-                case E_PickupType.one:
+                //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
+                isAvaliable = false;
+                GameManager.instance.bag_p1.AddItem(this);
 
-                    if (GameManager.instance.bag_p1.bag.Count < 2 && GameManager.instance.bag_p1.activeItemBase == null)
-                    {
-                        //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
-                        isAvaliable = false;
-                        GameManager.instance.bag_p1.AddItem(this);
-                        
-                        playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
-                        
-                        inputDetection = GameManager.instance.InputDetection_p1;
-                        currentBag = GameManager.instance.bag_p1;
-                        this.transform.SetParent(GameManager.instance.bag_p1.transform);
+                playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
 
-                        pickupTime = Time.time;
-                        print("Added to p1's bag");
-                    }
-                    else
-                    {
-                        print("p1 bag is full");
-                    }
-                    break;
+                inputDetection = GameManager.instance.InputDetection_p1;
+                currentBag = GameManager.instance.bag_p1;
+                this.transform.SetParent(GameManager.instance.bag_p1.transform);
 
-                case E_PickupType.two:
-                    
-                    if (GameManager.instance.bag_p1.bag.Count < 2)
-                    {
-                        isAvaliable = false;
-                        GameManager.instance.bag_p1.AddItem(this);
-
-                        playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
-                        inputDetection = GameManager.instance.InputDetection_p1;
-                        currentBag = GameManager.instance.bag_p1;
-                        this.transform.SetParent(GameManager.instance.bag_p1.transform);
-
-                        pickupTime = Time.time;
-                        print("Added to p1's bag");
-
-                        if(GameManager.instance.bag_p1.activeItemBase != null)
-                        {
-                            autoSwitch = true;
-                        }
-                    }
-                    else
-                    {
-                        print("p1 bag is full");
-                    }
-                    break;
-                case E_PickupType.three:
-                    break;
-                default:
-                    break;
+                pickupTime = Time.time;
+                print("Added to p1's bag");
             }
+            else
+            {
+                print("p1 bag is full");
+            }
+            //switch (pickupType)
+            //{
+            //    case E_PickupType.one:
 
-            
+            //        if (GameManager.instance.bag_p1.bag.Count < 2 && GameManager.instance.bag_p1.activeItemBase == null)
+            //        {
+            //            //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p1);
+            //            isAvaliable = false;
+            //            GameManager.instance.bag_p1.AddItem(this);
+                        
+            //            playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
+                        
+            //            inputDetection = GameManager.instance.InputDetection_p1;
+            //            currentBag = GameManager.instance.bag_p1;
+            //            this.transform.SetParent(GameManager.instance.bag_p1.transform);
 
+            //            pickupTime = Time.time;
+            //            print("Added to p1's bag");
+            //        }
+            //        else
+            //        {
+            //            print("p1 bag is full");
+            //        }
+            //        break;
+
+            //    case E_PickupType.two:
+                    
+            //        if (GameManager.instance.bag_p1.bag.Count < 2)
+            //        {
+            //            isAvaliable = false;
+            //            GameManager.instance.bag_p1.AddItem(this);
+
+            //            playerLockOn = GameManager.instance.player1.GetComponent<PlayerLockOn>();
+            //            inputDetection = GameManager.instance.InputDetection_p1;
+            //            currentBag = GameManager.instance.bag_p1;
+            //            this.transform.SetParent(GameManager.instance.bag_p1.transform);
+
+            //            pickupTime = Time.time;
+            //            print("Added to p1's bag");
+
+            //            if(GameManager.instance.bag_p1.activeItemBase != null)
+            //            {
+            //                autoSwitch = true;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            print("p1 bag is full");
+            //        }
+            //        break;
+            //    case E_PickupType.three:
+            //        break;
+            //    default:
+            //        break;
+            //}        
         }
         else if(withPickupRange_p2 && GameManager.instance.InputDetection_p2.grabPressed)
         {
-            if(GameManager.instance.bag_p2.bag.Count < 2 && GameManager.instance.bag_p2.activeItemBase == null)
+            if(GameManager.instance.bag_p2.bag.Count == 0 && GameManager.instance.bag_p2.activeItemBase == null)
             {
                 //if (itemHandler != null) itemHandler.EquipItem(GameManager.instance.itemControl_p2);
                 isAvaliable = false;
@@ -322,7 +339,7 @@ public class ItemBase : MonoBehaviour
                     Vector3 endArc = new Vector3(currentBag.transform.forward.x, yEndForce, currentBag.transform.forward.z).normalized;
                     Vector3 direction = Vector3.Lerp(startArc, endArc, (buttonHoldTime / maxButtonHoldTime));
                     Vector3 velocity = throwForce * direction;
-                    Debug.Log(velocity);
+                    //Debug.Log(velocity);
                     throwArc.ShowThrowArc(velocity, transform.position, (buttonHoldTime / maxButtonHoldTime), gravity);
                 }
                 else
