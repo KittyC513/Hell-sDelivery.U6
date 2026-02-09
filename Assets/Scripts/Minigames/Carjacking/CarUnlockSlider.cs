@@ -41,6 +41,9 @@ public class CarUnlockSlider : MonoBehaviour
 
     [SerializeField] private SoundEffectPlayer sfxPlayer;
 
+    [SerializeField] private ShakeObject shakeObject;
+
+    private Vector3 activatePos;
 
     private void Start()
     {
@@ -91,7 +94,7 @@ public class CarUnlockSlider : MonoBehaviour
         transform.position = new Vector3(position.x, position.y + 1, position.z);
         slider.gameObject.SetActive(true);
 
-
+        activatePos = transform.position;
         //get a reference to the inputting player
         currentPlayer = playerInput;
 
@@ -167,7 +170,8 @@ public class CarUnlockSlider : MonoBehaviour
     {
         if (slider.gameObject.activeSelf)
         {
-
+            Vector2 shakePos = shakeObject.Shake();
+            transform.position = new Vector3(activatePos.x + shakePos.x, activatePos.y, activatePos.z + shakePos.y);
             //startPos = slider.position.x - (slider.rect.width / 2);
             //endValue = slider.position.x + (slider.rect.width / 2);
             
@@ -244,11 +248,14 @@ public class CarUnlockSlider : MonoBehaviour
         {
             if (cyclesFinished + 1 >= cyclesToComplete)
             {
+                
                 sfxPlayer.PlaySoundEffect("ObjectBank1", "CarUnlock");
+                
                 EndMinigame(true);
             }
             else
             {
+                shakeObject.AddTension(1.5f);
                 sfxPlayer.PlaySoundEffect("ObjectBank1", "LockPick");
                 cyclesFinished += 1;
                 sliderSpeed += speedIncrease;

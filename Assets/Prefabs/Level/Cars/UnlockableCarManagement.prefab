@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 3083558596517957270}
   - component: {fileID: 1287589511776841402}
   - component: {fileID: 2523512552594855062}
+  - component: {fileID: 5384942415274408829}
   m_Layer: 0
   m_Name: UnlockMinigameUI (1)
   m_TagString: Untagged
@@ -732,6 +733,22 @@ MonoBehaviour:
   endTransform: {fileID: 3148347680154213946}
   targetBarRange: {x: 0.55, y: 1.5}
   sfxPlayer: {fileID: 4959804184360791799}
+  shakeObject: {fileID: 5384942415274408829}
+--- !u!114 &5384942415274408829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7132681941990110014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895a94375a53d0f4d8852467e0e35fc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOffset: 0.3
+  maxTension: 3
+  depletionRate: 8
 --- !u!1 &7653578980821711497
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,6 +762,7 @@ GameObject:
   - component: {fileID: 2450408804083418913}
   - component: {fileID: 1807340041292605197}
   - component: {fileID: 3156962505805798689}
+  - component: {fileID: 1841440213847030770}
   m_Layer: 0
   m_Name: UnlockMinigameUI
   m_TagString: Untagged
@@ -863,6 +881,22 @@ MonoBehaviour:
   endTransform: {fileID: 2556835602388195213}
   targetBarRange: {x: 0.55, y: 1.5}
   sfxPlayer: {fileID: 4959804184360791799}
+  shakeObject: {fileID: 1841440213847030770}
+--- !u!114 &1841440213847030770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7653578980821711497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895a94375a53d0f4d8852467e0e35fc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOffset: 0.3
+  maxTension: 3
+  depletionRate: 8
 --- !u!1 &8103987540142588083
 GameObject:
   m_ObjectHideFlags: 0

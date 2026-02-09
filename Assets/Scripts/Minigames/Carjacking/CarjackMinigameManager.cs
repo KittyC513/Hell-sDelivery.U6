@@ -99,6 +99,7 @@ public class CarjackMinigameManager : MonoBehaviour
             int winningPlayer = player.playerNum;
             StartCoroutine(MinigameEndSequence(winningPlayer));
             sfxPlayer.PlaySoundEffect("ObjectBank1", "PulseJingle");
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "Cheer");
             return HeatCheck.target;
         }
         if (distance < hotDist)
