@@ -24,7 +24,7 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
     {
         pControl.canDive = false;
         rb = pControl.RB;
-        pControl.rotationSpeed = pControl.diveRotationSpeed;
+        //pControl.rotationSpeed = pControl.diveRotationSpeed;
         forward = pControl.transform.forward;
 
         diveForwardForce = pControl.diveForwardForce;
@@ -38,7 +38,7 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void ExitState()
     {
-        pControl.rotationSpeed = pControl.startRotationSpeed;
+        //pControl.rotationSpeed = pControl.startRotationSpeed;
         pControl.diveGrounded = false;
     }
 
