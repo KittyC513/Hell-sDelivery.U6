@@ -159,7 +159,8 @@ public class CharacterSelectedControl : MonoBehaviour
             }
             GameManager.instance.isOnCharacterSelection = false;
             //SceneManager.LoadScene("Alleyway_tutorial_testing");
-            SceneManager.LoadScene("Alleyway_tutorial_testing");
+            //SceneManager.LoadScene("Alleyway_tutorial_testing");
+            SceneControl_MainMenu.Instance.cutscene_sockThief.SetActive(true);
         }
     }
 
