@@ -42,20 +42,20 @@ public class BouncePad : MonoBehaviour
         }
 
         //get a y force value based on how fast the player is moving in the y direction
-        float yForce = Mathf.Abs((downwardForce) / 25);
+        //float yForce = Mathf.Abs((downwardForce) / 25);
 
         //clamp that force for a maximum of 3x the bounce value
-        Mathf.Clamp(yForce, 0.1f, 3);
+        //Mathf.Clamp(yForce, 0.1f, 2);
         
         //set a bounce velocity direction
-        Vector3 bounceVel = new Vector3(bounceDir.x, bounceDir.y * yForce, bounceDir.z);
+        Vector3 bounceVel = new Vector3(bounceDir.x, bounceDir.y, bounceDir.z);
 
         rb.AddForce(bounceVel * (bounceForce), ForceMode.Impulse);
 
         //used to scale how much the spring animation is applied
         float animScale = Mathf.Abs(downForce) / 115;
 
-        sfxPlayer.PlaySoundEffect("ObjectBank1", "Bounce");
+        
         
         if (bounceScale - animScale < minimumScale)
         {
@@ -85,9 +85,12 @@ public class BouncePad : MonoBehaviour
         {
             GameObject player = collision.collider.gameObject;
             PlayerStateMachine stateMachine = player.GetComponent<PlayerStateMachine>();
+            PlayerController pControl = player.GetComponent<PlayerController>();
 
-            if (stateMachine.showCurrentState != PlayerStateMachine.PlayerStates.jump)
+            if (pControl.Grounded && pControl.GroundObject != this.gameObject)
             {
+                Debug.Log(pControl.GroundObject);
+                sfxPlayer.PlaySoundEffect("ObjectBank1", "BounceLow");
                 Rigidbody rb = player.GetComponent<Rigidbody>();
                 BounceObject(rb, rb.linearVelocity.y);
             }

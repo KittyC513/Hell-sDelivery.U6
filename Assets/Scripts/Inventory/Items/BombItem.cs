@@ -157,7 +157,7 @@ public class BombItem : ItemBase
             bomb.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             bomb.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.Impulse);
 
-            if(bombsList.Count > maxBombs)
+            if(bombsList.Count > maxBombs - 1)
             {
                 //defuse old bomb
                 Transform bombPos = bombsList[0].transform;
@@ -168,7 +168,11 @@ public class BombItem : ItemBase
 
                 Destroy(visualEffectObj, 1f);
                 Destroy(bombPos.gameObject, 1f);
+                /********************************************************************************************/
+                //audio source
 
+
+                /********************************************************************************************/
                 foreach (BombMovement item in bombsList) 
                 { 
                     bombsList2.Add(item);            

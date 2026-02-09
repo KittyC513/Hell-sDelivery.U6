@@ -106,6 +106,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
 
     public float normalToConeBlendTime = 0.25f;
+    private float time = 0;
 
 
     private void Start()
@@ -195,8 +196,11 @@ public class CameraMovement_Player : NetworkBehaviour
     void LateUpdate()
     {
         bool condMode = (playerLockOn.isWithDetonator || playerLockOn.isWithBomb) && inputDetection.lockPressed && playerStateMachine.showCurrentState != PlayerStateMachine.PlayerStates.freeFall;
+        
         if (inputDetection.isExploded && !inputDetection.isResetCam)
         {
+            resetCamPos = false;
+            didSyncAfterReset = false;
             SwitchToTopDownCam();
             inputDetection.isResetCam = true;
         }
@@ -237,7 +241,6 @@ public class CameraMovement_Player : NetworkBehaviour
             CameraMovement();
             //hasInitializedCam = isInTopDown ? true : false;
             hasInitializedCam = false;
-
         }
 
     }
@@ -259,10 +262,12 @@ public class CameraMovement_Player : NetworkBehaviour
     #region Player Camera movement(Base)
     void CameraMovement()
     {
+       
         if (playerTransform == null) return;
 
         if (!resetCamPos)
         {
+            print("resetCamPos = false");
             mRotateValue.x = playerTransform.eulerAngles.y; // face behind player
             mRotateValue.y = Mathf.Clamp(defaultPitch, pitchLimit.x, pitchLimit.y); // default pitch
 
@@ -282,19 +287,30 @@ public class CameraMovement_Player : NetworkBehaviour
                 inputDetection.inputDeviceType == E_InputDeviceType.gamepad ? inputDetection.GetCameraMovement().y : inputDetection.GetCameraMovement().y * keyboardMoveSpeed
             );
 
-            if (inputDelta.sqrMagnitude > 0.0001f || inputDetection.GetHorizontalMovement().sqrMagnitude > 0.0001f)
+            // character movement / cam movement 
+            if (inputDelta.sqrMagnitude > 0.0001f || inputDetection.GetHorizontalMovement().sqrMagnitude > 0.0001f || time >= normalToConeBlendTime)
             {
                 resetCamPos = true;
                 didSyncAfterReset = false;
+                print("Transition ends");
+            }
+            else
+            {
+                time += Time.deltaTime;
+                print("Time :" +  time);
             }
 
             return; 
         }
 
+
+
         if (!didSyncAfterReset)
         {
+            print("didSyncAfterReset = false");
             SyncRotateValueFromCamera();
             didSyncAfterReset = true;
+            time = 0;
         }
 
 
@@ -373,7 +389,7 @@ public class CameraMovement_Player : NetworkBehaviour
         //    transform.position = Vector3.Lerp(this.transform.position, movePos, Time.deltaTime * moveSpeed);
         //    this.transform.LookAt(from);
         //}
-
+        print("endCam");
     }
     #endregion
 
