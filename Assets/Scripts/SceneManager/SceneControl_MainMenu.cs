@@ -10,6 +10,7 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 
     //Character Selected Control
     public GameObject cutscene_characterSelected;
+    public GameObject cutscene_sockThief;
 
     private void Start()
     {
@@ -18,7 +19,8 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         EventData.curSceneName = "StartScene";
         StartCoroutine(ShowJoinGamePanel());
 
-        cutscene_characterSelected.SetActive(false);
+        cutscene_characterSelected.SetActive(false); 
+        cutscene_sockThief.SetActive(false);
         //cam_cutscene_characterSelected.gameObject.SetActive(false);
     }
 
