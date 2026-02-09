@@ -911,4 +911,26 @@ public class PlayerController : NetworkBehaviour
             pMachine.OverrideState(PlayerStateMachine.PlayerStates.freeFall);
         }
     }
+
+    public void BouncePad()
+    {
+        GroundObject.GetComponent<BouncePad>().BounceObject(rb, rb.linearVelocity.y);
+
+        if (GroundObject.GetComponent<Rigidbody>() != null && GroundObject.layer == LayerMask.NameToLayer("DynamicGround"))
+        {
+            GroundObject.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, rb.linearVelocity.y * GroundObject.GetComponent<Rigidbody>().mass, 0), CurrentHit.point, ForceMode.Impulse);
+        }
+
+        //if the player is holding jump play the higher bounce sound
+        if (DetectJumpHold())
+        {
+            playerSfx.PlayBounce(true);
+        }
+        else
+        {
+            playerSfx.PlayBounce(false);
+        }
+        
+        remainingJumps = MaxJumps;
+    }
 }
