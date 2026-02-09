@@ -63,13 +63,10 @@ public class TransitionScenes : MonoBehaviour
             //enable the root gameobject(s)
             GameObject[] _root = _temp.GetRootGameObjects();
 
-            for (int i = 0; i < _root.Length; i++)
-            {
-                _root[i].SetActive(true);
-            }
-
             if(unloadStartScene)
             {
+                //set this scenes root as disabled
+                sceneRoot.SetActive(false);
                 //unload this scene
                 SceneManager.UnloadSceneAsync(startingScene);
             }
@@ -78,6 +75,13 @@ public class TransitionScenes : MonoBehaviour
                 //set this scenes root as disabled
                 sceneRoot.SetActive(false);
             }
+
+            
+            for (int i = 0; i < _root.Length; i++)
+            {
+                _root[i].SetActive(true);
+            }
+
 
             EventData.curSceneName = sceneToLoad;
             transitionStarted = false;

@@ -84,11 +84,12 @@ public class Bag : MonoBehaviour
 
     public void DropAllItems()
     {
-        RemoveItem(bag[0]);
-        //for (int i = 0; i < bag.Count; i++)
-        //{
-        //    RemoveItem(bag[i]);
-        //}
+        //if (bag[0] != null) RemoveItem(bag[0]);
+        
+        for (int i = 0; i < bag.Count; i++)
+        {
+            RemoveItem(bag[i]);
+        }
     }
 
     public void RemoveItem(ItemBase item)
