@@ -304169,18 +304169,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 886810398}
     m_Modifications:
-    - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
-      propertyPath: trigger
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
-      propertyPath: conversation
-      value: NPC Dialogue/BombLoserQuest
-      objectReference: {fileID: 0}
-    - target: {fileID: 1548273395859470131, guid: bd835450df769734cbed171ba42c3a47, type: 3}
-      propertyPath: selectedDatabase
-      value: 
-      objectReference: {fileID: 11400000, guid: bcf6778f5af11a1498edbe7f6fc7ab6e, type: 2}
     - target: {fileID: 5315708609654076682, guid: bd835450df769734cbed171ba42c3a47, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.36
@@ -304226,8 +304214,7 @@ PrefabInstance:
       value: Bomb Loser
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2785563651000145282, guid: bd835450df769734cbed171ba42c3a47, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd835450df769734cbed171ba42c3a47, type: 3}
@@ -309100,6 +309087,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1594620357}
   - component: {fileID: 1594620358}
+  - component: {fileID: 1594620360}
   - component: {fileID: 1594620359}
   m_Layer: 0
   m_Name: Devil
@@ -309141,7 +309129,7 @@ MonoBehaviour:
   spritePortrait: {fileID: 0}
   audioSource: {fileID: 0}
   barkUISettings:
-    barkUI: {fileID: 1913953624}
+    barkUI: {fileID: 1913953626}
     barkUIOffset: {x: 0, y: 0, z: 0}
   standardDialogueUISettings:
     subtitlePanelNumber: 0
@@ -309235,6 +309223,40 @@ MonoBehaviour:
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
   selectedDatabase: {fileID: 11400000, guid: bcf6778f5af11a1498edbe7f6fc7ab6e, type: 2}
+--- !u!114 &1594620360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594620356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64578247383140469c45370654a984a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: Devil
+  persistentDataName: 
+  portrait: {fileID: 0}
+  spritePortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  barkUISettings:
+    barkUI: {fileID: 1913953624}
+    barkUIOffset: {x: 0, y: 2, z: 0}
+  standardDialogueUISettings:
+    subtitlePanelNumber: 0
+    customSubtitlePanel: {fileID: 0}
+    customSubtitlePanelOffset: {x: 0, y: 0, z: 0}
+    menuPanelNumber: 0
+    customMenuPanel: {fileID: 0}
+    customMenuPanelOffset: {x: 0, y: 0, z: 0}
+    useMenuPanelFor: 0
+    portraitAnimatorController: {fileID: 0}
+    setSubtitleColor: 0
+    applyColorToPrependedName: 0
+    prependActorNameSeparator: ': '
+    prependActorNameFormat: '{0}{1}'
+    subtitleColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &1594852984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -373529,7 +373551,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
 --- !u!114 &1913953624 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4771774133458994304, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7744743979586016756, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
   m_PrefabInstance: {fileID: 1913953623}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -373543,6 +373565,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3340284412237768335, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
   m_PrefabInstance: {fileID: 1913953623}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1913953626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7595603131561900037, guid: 8ccec755f32e78c4fbbb5a7c880fd29b, type: 3}
+  m_PrefabInstance: {fileID: 1913953623}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b689d0205d778479b0dac3b159c3b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1915930636
 Mesh:
   m_ObjectHideFlags: 0
