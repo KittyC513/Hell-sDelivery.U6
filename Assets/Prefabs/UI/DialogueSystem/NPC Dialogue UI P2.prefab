@@ -666,7 +666,7 @@ MonoBehaviour:
   waitForNormalChars: 0.03
   waitLong: 0.6
   waitMiddle: 0.2
-  avoidMultiplePunctuationWait: 0
+  avoidMultiplePunctuationWait: 1
   waitForNewLines: 1
   waitForLastCharacter: 1
   useTypewriterWaitForDisappearances: 1
@@ -1866,7 +1866,7 @@ MonoBehaviour:
   conversationUIElements:
     mainPanel: {fileID: 1090620670526264550}
     dontDeactivateMainPanel: 0
-    waitForMainPanelOpen: 1
+    waitForMainPanelOpen: 0
     subtitlePanels:
     - {fileID: 5573864680995973733}
     defaultNPCSubtitlePanel: {fileID: 5573864680995973733}
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   showAnimationTrigger: Show
   hideAnimationTrigger: Hide
   startState: 0
-  waitForShowAnimationToSetOpen: 1
+  waitForShowAnimationToSetOpen: 0
   m_deactivateOnHidden: 1
   onOpen:
     m_PersistentCalls:
