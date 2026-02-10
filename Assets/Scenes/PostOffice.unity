@@ -4948,6 +4948,8 @@ PlayableDirector:
     value: {fileID: 3755024051394141656}
   - key: {fileID: 1379257452097587777, guid: 968c3f09b247800448a38e194d2d89aa, type: 2}
     value: {fileID: 691043137}
+  - key: {fileID: 6094126497968322351, guid: 968c3f09b247800448a38e194d2d89aa, type: 2}
+    value: {fileID: 1129206914}
   m_ExposedReferences:
     m_References: []
 --- !u!1001 &377347836
@@ -8291,7 +8293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &693490956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12609,6 +12611,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1129206914 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7480027956443196875, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
+  m_PrefabInstance: {fileID: 9118636882620464274}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1138586808
 GameObject:
   m_ObjectHideFlags: 0
@@ -24952,9 +24959,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7337007578951288699, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7480027956443196875, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6213f6a9538a8d043a9b38d3dfff7c39, type: 2}
+    - target: {fileID: 8087457358963225836, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833162874851576909, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.727
+      objectReference: {fileID: 0}
     - target: {fileID: 8833162874851576909, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9974638
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8833162874851576909, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -24966,7 +24989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8833162874851576909, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.07117531
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
