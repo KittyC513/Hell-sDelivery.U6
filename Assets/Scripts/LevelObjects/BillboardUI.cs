@@ -26,8 +26,11 @@ public class BillboardUI : MonoBehaviour
     private Vector3 startPos;
     private Vector3 changeInPos;
 
-    private List<GameObject> images;
+    [HideInInspector] public List<GameObject> images;
     public bool active = true;
+
+    public delegate void OnInitialize();
+    public OnInitialize onInitialize;
 
 
     private void Start()
@@ -56,7 +59,7 @@ public class BillboardUI : MonoBehaviour
             images[0].GetComponentInChildren<Image>().color = Color.red;
             images[1].GetComponentInChildren<Image>().color = Color.blue;
         }
-
+        onInitialize?.Invoke();
     }
 
     
