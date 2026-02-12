@@ -209,6 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 6825669411742295912}
+  inputDetection: {fileID: 0}
   houndBase: {fileID: 951151148206241996}
   showCurrentState: 0
 --- !u!114 &951151148206241996
@@ -236,6 +237,7 @@ MonoBehaviour:
   rb: {fileID: 9009788746683265614}
   navAgent: {fileID: 553395823478606192}
   eHealth: {fileID: 215855439663745196}
+  houndStateMachine: {fileID: 0}
   animator: {fileID: 6825669411742295912}
   maxWanderDistance: 8
   wanderTime: 5
@@ -248,7 +250,15 @@ MonoBehaviour:
   attackCooldownTime: 0.6
   attackHitboxObj: {fileID: 3195145265521847291}
   shouldRotate: 1
+  lungeRange: 9
+  lungeTimer: 3
+  lungeLockTime: 1
+  lungeWindup: 1.5
   showRadius: 1
+  hellHoundStateMachine: {fileID: 0}
+  flashTime: 0
+  flashSpeed: 6
+  meshRenderer: {fileID: 6825669411746601384}
 --- !u!54 &9009788746683265614
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -319,6 +329,7 @@ MonoBehaviour:
   moneyCount:
   - moneyPrefab: {fileID: 7599532976038015769, guid: d4efd45510a84324db6dbbfaf6438748, type: 3}
     amount: 3
+  dropPoint: {fileID: 0}
 --- !u!1 &8251785007394896610
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +468,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wolf
       objectReference: {fileID: 0}
+    - target: {fileID: 6260966173757069008, guid: e13b7d7d61d4e364bb3a69b258ae54b6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a71243a04cf711f4e868b14d5c38bab4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -465,6 +480,11 @@ PrefabInstance:
 --- !u!95 &6825669411742295912 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6260966173761284112, guid: e13b7d7d61d4e364bb3a69b258ae54b6, type: 3}
+  m_PrefabInstance: {fileID: 602019701654097784}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6825669411746601384 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6260966173757069008, guid: e13b7d7d61d4e364bb3a69b258ae54b6, type: 3}
   m_PrefabInstance: {fileID: 602019701654097784}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6825669411751381128 stripped

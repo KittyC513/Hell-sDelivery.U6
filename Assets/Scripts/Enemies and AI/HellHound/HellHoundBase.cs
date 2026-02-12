@@ -28,6 +28,11 @@ public class HellHoundBase : EnemyBase
 
     public HellHoundStateMachine hellHoundStateMachine;
 
+    private float flashTime = 1;
+    private bool shouldFlash= false;
+    [SerializeField] private float flashSpeed = 1;
+    [SerializeField] private SkinnedMeshRenderer meshRenderer;
+
     //accessible variables
     public float MaxWanderDistance { get { return maxWanderDistance; } }
     public float WanderTime { get { return wanderTime; } }
@@ -60,6 +65,7 @@ public class HellHoundBase : EnemyBase
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
         eHealth.onTakeDamage += OnHit;
+        eHealth.onTakeDamage += StartFlash;
         //eHealth.onEnemyDeath += OnEnemyDeath;
         eHealth.onDeath += () =>
         {
@@ -76,6 +82,33 @@ public class HellHoundBase : EnemyBase
         eHealth.onTakeDamage -= StartKnockback;
         eHealth.onDeath -= OnEnemyDeath;
         eHealth.onTakeDamage -= OnHit;
+        eHealth.onTakeDamage -= StartFlash;
+    }
+
+    private void StartFlash(Vector3 hitDir)
+    {
+        flashTime = 1;
+        shouldFlash = true;
+    }
+
+    private void Flash(Material mat)
+    {
+        mat.SetFloat("_FlashTime", flashTime);
+
+        if (shouldFlash)
+        {
+            flashTime -= flashSpeed * Time.deltaTime;
+        }
+        
+
+        flashTime = Mathf.Clamp(flashTime, 0, 1);
+
+        if (flashTime <= 0)
+        {
+            shouldFlash = false;
+            flashTime = 1;
+            mat.SetFloat("_FlashTime", flashTime);
+        }
     }
 
     private void Update()
@@ -86,6 +119,10 @@ public class HellHoundBase : EnemyBase
             shouldRotate = false;
             attackHitboxObj.SetActive(false);
         }
+        
+        
+        Flash(meshRenderer.material);
+        
     }
     private void FixedUpdate()
     {
