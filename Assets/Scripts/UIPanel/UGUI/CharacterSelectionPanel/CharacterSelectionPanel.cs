@@ -43,14 +43,14 @@ public class CharacterSelectionPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.isOnCharacterSelection)
-        {
-            PanelControlP1();
-            PanelControlP2();
-            ButtonStatus();
-        }
+        //if (GameManager.instance.isOnCharacterSelection)
+        //{
+        //    PanelControlP1();
+        //    PanelControlP2();
+        //    ButtonStatus();
+        //}
 
-        OnReady();
+        //OnReady();
     }
 
     public void PanelControlP1()
@@ -145,7 +145,7 @@ public class CharacterSelectionPanel : MonoBehaviour
                 }
 
                 GameManager.instance.isOnCharacterSelection = false;
-                SceneManager.LoadScene("Alleyway_tutorial_testing");
+                //SceneManager.LoadScene("Alleyway_tutorial_testing");
             }
         }
         else
