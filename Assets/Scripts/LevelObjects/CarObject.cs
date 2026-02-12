@@ -94,10 +94,11 @@ public class CarObject : MonoBehaviour
     private void DetectTireGround(Vector3 startPos, float checkDist, LayerMask groundMask, GameObject tireObj)
     {
         //set the y position a little bit inside the car incase the car recives so much force that the base is on the ground
-        Vector3 sPos = new Vector3(startPos.x, startPos.y + 0.25f, startPos.z);
+        Vector3 sPos = new Vector3(startPos.x, startPos.y + 0.1f, startPos.z);
+        
 
         //raycast to check for ground
-        if (Physics.Raycast(sPos, Vector3.down, out RaycastHit hit, checkDist + 0.25f, groundMask))
+        if (Physics.Raycast(sPos, Vector3.down, out RaycastHit hit, checkDist + 0.1f, groundMask))
         {
             SnapGrounded(hit, rb, startPos, targetHeight, frequency, damping);
             tireObj.transform.position = new Vector3(startPos.x, (hit.point.y + tireRadius), startPos.z);
