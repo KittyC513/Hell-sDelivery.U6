@@ -8,6 +8,8 @@ public class CharacterSelectedControl : MonoBehaviour
 {
     public Text text_leftSelected;
     public Text text_rightSelected;
+    public GameObject canvas_p1;
+    public GameObject canvas_p2;
 
     private float inputCd_p1 = 0.2f;
     private float lastInputTime_p1 = 0;
@@ -25,8 +27,11 @@ public class CharacterSelectedControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         text_leftSelected.text = "";
         text_rightSelected.text = "";
+        canvas_p1.SetActive(false);
+        canvas_p2.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,6 +47,8 @@ public class CharacterSelectedControl : MonoBehaviour
 
     public void OnCharacterSelected()
     {
+        canvas_p1.SetActive(true);
+        canvas_p2.SetActive(true);
         //p1
         if (Time.time - lastInputTime_p1 < inputCd_p1) return;
         if(GameManager.instance.player1 != null)
@@ -160,6 +167,8 @@ public class CharacterSelectedControl : MonoBehaviour
             GameManager.instance.isOnCharacterSelection = false;
             //SceneManager.LoadScene("Alleyway_tutorial_testing");
             //SceneManager.LoadScene("Alleyway_tutorial_testing");
+            canvas_p1.SetActive(false);
+            canvas_p2.SetActive(false);
             SceneControl_MainMenu.Instance.cutscene_sockThief.SetActive(true);
         }
     }
