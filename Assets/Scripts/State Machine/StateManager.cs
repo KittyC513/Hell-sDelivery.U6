@@ -14,12 +14,20 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     protected Estate lastStateKey;
 
     [SerializeField] protected Animator anim;
+    [SerializeField] protected PlayerInputDetection inputDetection;
 
 
     protected bool isTransitioningState = false;
     void Start() 
     {
         currentState.EnterState(currentState.stateKey);
+
+        if(anim == null)
+        {
+            if (inputDetection.playerModel == null) return;
+
+            anim = inputDetection.playerModel.GetComponent<Animator>();
+        }
         
     }
 
