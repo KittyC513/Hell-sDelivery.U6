@@ -19,7 +19,7 @@ public class HellHoundCooldown : BaseState<HellHoundStateMachine.HoundStates>
         hellHoundBase.NavAgent.updatePosition = false;
 
         //set placeholder animation
-        animName = "Sniff";
+        animName = "Hellhound_Idle";
         hellHoundBase.animator.SetFloat("Speed", 0);
     }
 
