@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class HellHoundBase : EnemyBase
 {
@@ -27,6 +29,14 @@ public class HellHoundBase : EnemyBase
     [SerializeField] private bool showRadius = true; //use this to see player detection radius and ground ray with gizmos
 
     public HellHoundStateMachine hellHoundStateMachine;
+
+    private float flashTime = 1;
+    private bool shouldFlash= false;
+    [SerializeField] private float flashSpeed = 1;
+    [SerializeField] private SkinnedMeshRenderer meshRenderer;
+    private bool shouldDissolve = false;
+    private float dissolveTime = 0;
+    [SerializeField] public ParticleSystem pSystem;
 
     //accessible variables
     public float MaxWanderDistance { get { return maxWanderDistance; } }
@@ -60,14 +70,14 @@ public class HellHoundBase : EnemyBase
         //add the knockback function to the take damage event
         eHealth.onTakeDamage += StartKnockback;
         eHealth.onTakeDamage += OnHit;
+        eHealth.onTakeDamage += StartFlash;
         //eHealth.onEnemyDeath += OnEnemyDeath;
         eHealth.onDeath += () =>
         {
             navAgent.updatePosition = false;    
             isDead = true;
             animator.SetTrigger("Dead");
-            Destroy(this.gameObject, deathTime);
-           
+            StartCoroutine(DissolveWait(deathTime));
         };
     }
 
@@ -76,6 +86,55 @@ public class HellHoundBase : EnemyBase
         eHealth.onTakeDamage -= StartKnockback;
         eHealth.onDeath -= OnEnemyDeath;
         eHealth.onTakeDamage -= OnHit;
+        eHealth.onTakeDamage -= StartFlash;
+    }
+
+    private IEnumerator DissolveWait(float t)
+    {
+        yield return new WaitForSeconds(t);
+        shouldDissolve = true;
+        pSystem.Play();
+        pSystem.transform.parent = SceneManager.GetActiveScene().GetRootGameObjects()[0].transform;
+    }
+
+    private void Dissolve(Material mat, float maxTime, ref float time)
+    {
+        mat.SetFloat("_AlphaClip", time / maxTime);
+
+        time += Time.deltaTime;
+
+        time = Mathf.Clamp(time, 0, maxTime);
+
+        if (time >= maxTime)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void StartFlash(Vector3 hitDir)
+    {
+        flashTime = 1;
+        shouldFlash = true;
+    }
+
+    private void Flash(Material mat)
+    {
+        mat.SetFloat("_FlashTime", flashTime);
+
+        if (shouldFlash)
+        {
+            flashTime -= flashSpeed * Time.deltaTime;
+        }
+        
+
+        flashTime = Mathf.Clamp(flashTime, 0, 1);
+
+        if (flashTime <= 0)
+        {
+            shouldFlash = false;
+            flashTime = 1;
+            mat.SetFloat("_FlashTime", flashTime);
+        }
     }
 
     private void Update()
@@ -86,6 +145,10 @@ public class HellHoundBase : EnemyBase
             shouldRotate = false;
             attackHitboxObj.SetActive(false);
         }
+        
+        if (shouldDissolve) Dissolve(meshRenderer.material, deathTime, ref dissolveTime);
+        Flash(meshRenderer.material);
+        
     }
     private void FixedUpdate()
     {

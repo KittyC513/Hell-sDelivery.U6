@@ -172,7 +172,7 @@ public class EnemyBase : MonoBehaviour
         //update animations
 
         //poof / destroy object after timer / animation finishes
-        Destroy(this.gameObject, deathTime);
+        //Destroy(this.gameObject, deathTime);
     }
   
 }
