@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using Unity.VisualScripting;
+using System.Drawing.Printing;
 
 public class CraneState
 {
@@ -29,7 +30,6 @@ public class CraneState
     protected Animator anim;
     protected Transform player;
     protected CraneState nextState;
-    protected NavMeshAgent agent;
     protected Vector3 pickupLocation;
     protected Vector3 dropoffLocation;
     protected bool armHasLoad = false;
@@ -41,10 +41,9 @@ public class CraneState
     protected bool hasInitiatedAttack = false;
     
 
-    public CraneState(GameObject _npc, NavMeshAgent _agent, Animator _anim)
+    public CraneState(GameObject _npc, Animator _anim)
     {
         npc = _npc;
-        agent = _agent;
         anim = _anim;
         //player = _player;
         //pickupLocation = _pickupLocation;
@@ -119,13 +118,11 @@ public class CraneState
 #region Idle
 public class Idle : CraneState
 {
-    public Idle(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
-        : base(_npc, _agent, _anim)
+    public Idle(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
+        : base(_npc, _anim)
     {
         pickupLocation = _pickupLocation;
-        //Debug.Log("Pickup Location set to: " + pickupLocation);
-        dropoffLocation = _dropoffLocation;
-        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        dropoffLocation = _dropoffLocation;       
         name = STATE.IDEL;
     }
     public override void Enter()
@@ -133,14 +130,14 @@ public class Idle : CraneState
         base.Enter();
         // set idle trigger
         //anim.SetTrigger("isIdle");
-        //Debug.Log("Crane is now Idle.");
+        Debug.Log("Crane is now Idle.");
     }
     public override void Update()
     {
 
         if (Random.Range(0, 100) < 10)
         {
-            nextState = new MovingToPickup(npc, agent, anim, player, pickupLocation,dropoffLocation);
+            nextState = new MovingToPickup(npc, anim, player, pickupLocation,dropoffLocation);
             stage = EVENT.EXIT;
         }
         //base.Update();
@@ -164,17 +161,17 @@ public class MovingToPickup : CraneState
     private Transform craneArm;
     private float faceAngle = 6f;
     private float rotateDegPerSec = 60f;    
-    public MovingToPickup(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
-        : base(_npc, _agent, _anim)
+    public MovingToPickup(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
+        : base(_npc, _anim)
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
-        Debug.Log("Pickup Location set to: " + pickupLocation);
-        Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        //Debug.Log("Pickup Location set to: " + pickupLocation);
+        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
         craneArm = npc.transform.Find("Base_Rotatable");
-        craneMovingPoint = npc.transform.Find("Extender_Front_Magnet/Magnet");
-        Debug.Log("Crane arm found: " + craneArm.name);
+        craneMovingPoint = craneArm.Find("Extender_Front_Magnet/Magnet");
+
         name = STATE.MOVINGTOPICKUP;
 
     }
@@ -183,7 +180,10 @@ public class MovingToPickup : CraneState
         base.Enter();
         //agent.SetDestination(pickupLocation);
         //anim.SetTrigger("isMoving");
-        //Debug.Log("Crane is moving to Pickup Location.");
+        Debug.Log("Crane is moving to Pickup Location.");
+
+        Debug.Log("Crane arm found: " + craneArm.name);
+        Debug.Log("Crane moving point found: " + craneMovingPoint.name);
     }
     public override void Update()
     {
@@ -225,7 +225,7 @@ public class MovingToPickup : CraneState
 
             if (zError <= railEpsilon && angle <= arriveAngle)
             {
-                nextState = new PickingUp(npc, agent, anim, player, pickupLocation, dropoffLocation);
+                nextState = new PickingUp(npc, anim, player, pickupLocation, dropoffLocation);
                 stage = EVENT.EXIT;
                 return;
             }
@@ -248,20 +248,18 @@ public class PickingUp : CraneState
     private float pickUpTime = 2.3f;
     private float timer = 0f;
 
-    public PickingUp(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
-        : base(_npc, _agent, _anim)
+    public PickingUp(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
+        : base(_npc, _anim)
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
-        Debug.Log("Pickup Location set to: " + pickupLocation);
-        Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
         name = STATE.PICKINGUP;
     }
     public override void Enter()
     {
         base.Enter();
-        //Debug.Log("Crane is Picking Up Load.");
+        Debug.Log("Crane is Picking Up Load.");
         // Set picking up trigger
         //anim.SetTrigger("isPickingUp");
     }
@@ -289,7 +287,7 @@ public class PickingUp : CraneState
             //    return;
             //}
 
-            nextState = new MovingToDropoff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+            nextState = new MovingToDropoff(npc, anim, player, pickupLocation, dropoffLocation);
             stage = EVENT.EXIT;
             
         }
@@ -322,8 +320,8 @@ public class MovingToDropoff : CraneState
     private float faceAngle = 6f;
 
 
-    public MovingToDropoff(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
-        : base(_npc, _agent, _anim)
+    public MovingToDropoff(GameObject _npc,Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
+        : base(_npc, _anim)
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
@@ -333,7 +331,7 @@ public class MovingToDropoff : CraneState
 
         //Debug.Log("Dropoff Location set to: " + dropoffLocation);
         craneArm = npc.transform.Find("Base_Rotatable");
-        craneMovingPoint = npc.transform.Find("Extender_Front_Magnet/Magnet");
+        craneMovingPoint = craneArm.Find("Extender_Front_Magnet/Magnet");
 
         name = STATE.MOVINGTODROPPINGOFF;
 
@@ -395,7 +393,7 @@ public class MovingToDropoff : CraneState
                 if (zError <= railEpsilon && angle <= arriveAngle)
                 {
                     //Debug.Log("Crane has reached player position.");
-                    nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+                    nextState = new DroppingOff(npc, anim, player, pickupLocation, dropoffLocation);
                     stage = EVENT.EXIT;
                     return;
                 }
@@ -427,7 +425,7 @@ public class MovingToDropoff : CraneState
 
                 if (zError <= railEpsilon && angle <= arriveAngle)
                 {
-                    nextState = new DroppingOff(npc, agent, anim, player, pickupLocation, dropoffLocation);
+                    nextState = new DroppingOff(npc, anim, player, pickupLocation, dropoffLocation);
                     stage = EVENT.EXIT;
                     return;
                 }
@@ -516,8 +514,8 @@ public class DroppingOff : CraneState
     private float dropOffTime = 2.2f;
     private float timer = 0f;
 
-    public DroppingOff(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation,Vector3 _dropoffLocation)
-        : base(_npc, _agent, _anim)
+    public DroppingOff(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation,Vector3 _dropoffLocation)
+        : base(_npc, _anim)
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
@@ -528,7 +526,7 @@ public class DroppingOff : CraneState
     public override void Enter()
     {
         base.Enter();
-        //Debug.Log("Crane is Dropping Off Load.");
+        Debug.Log("Crane is Dropping Off Load.");
         // Set dropping off trigger
 
         //anim.SetTrigger("isDroppingOff");
@@ -543,7 +541,7 @@ public class DroppingOff : CraneState
         else
         {
             // After dropping off, transition to Idle state
-            nextState = new Idle(npc, agent, anim, player, pickupLocation, dropoffLocation);
+            nextState = new Idle(npc, anim, player, pickupLocation, dropoffLocation);
             stage = EVENT.EXIT;
         }
 
@@ -603,8 +601,8 @@ public class Pursue : CraneState
     private float arriveAngle = 2f;
     private float rotateDegPerSec = 80f;
 
-    public Pursue(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
-        : base(_npc, _agent, _anim)
+    public Pursue(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
+        : base(_npc, _anim)
     {
         craneArm = npc.transform.Find("CraneArm");
         craneSurface = npc.transform.Find("CraneArm/movingPoint/InteractSurface");
@@ -645,7 +643,7 @@ public class Pursue : CraneState
 
         if (angle <= arriveAngle)
         {
-            nextState = new Attack(npc, agent, anim, player, pickupLocation, dropoffLocation);
+            nextState = new Attack(npc, anim, player, pickupLocation, dropoffLocation);
             stage = EVENT.EXIT;
             return;
         }
@@ -666,8 +664,8 @@ public class Attack : CraneState
 {
     float rotationSpeed = 2f;
     AudioSource attackSound;
-    public Attack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropOffLocation)
-        : base(_npc, _agent, _anim)
+    public Attack(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropOffLocation)
+        : base(_npc, _anim)
     {
         name = STATE.ATTACK;
         // Play attack sound
