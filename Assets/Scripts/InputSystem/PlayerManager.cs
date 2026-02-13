@@ -120,6 +120,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.uiPointerControl_p1 = players[0].GetComponent<UIPointerControl>();
                 GameManager.instance.playerModel_p1 = players[0].GetComponent<PlayerInputDetection>().playerModel;
                 GameManager.instance.playerStateMachine_p1 = players[0].GetComponent<PlayerStateMachine>();
+                GameManager.instance.PlayerController_p1 = players[0].GetComponent<PlayerController>();
                 //print(GameManager.instance.playerModel_p1);
             }
           
@@ -145,6 +146,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.uiPointerControl_p2 = players[1].GetComponent<UIPointerControl>();
                 GameManager.instance.playerModel_p2 = players[1].GetComponent<PlayerInputDetection>().playerModel;
                 GameManager.instance.playerStateMachine_p2 = players[1].GetComponent<PlayerStateMachine>();
+                GameManager.instance.PlayerController_p2 = players[0].GetComponent<PlayerController>();
                 //print(GameManager.instance.playerModel_p2);
             }         
             //players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;

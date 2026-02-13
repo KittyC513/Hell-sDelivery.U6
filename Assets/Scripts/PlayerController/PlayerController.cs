@@ -143,7 +143,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerInputDetection inputDetection;
     private Rigidbody rb;
     [SerializeField] private PlayerAttackControl aControl;
-    [SerializeField] private Animator anim;
+    [SerializeField] public Animator anim;
     [SerializeField] private PickupStateMachine pickMachine;
     private PickupStateMachine.PickupStates pickupState;
     [SerializeField] private Health pHealth;

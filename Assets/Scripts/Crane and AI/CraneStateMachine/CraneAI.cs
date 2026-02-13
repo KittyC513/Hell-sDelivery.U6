@@ -21,6 +21,9 @@ public class CraneAI : MonoBehaviour
         Vector3 pickupLocation = pos_pickupLocation.position;
         Vector3 dropoffLocation = pos_dropoffLocation.position;
 
+        print("Pickup Location: " + pickupLocation);
+        print("Dropoff Location: " + dropoffLocation);
+
         agent = this.GetComponent<NavMeshAgent>();
         anim = this.GetComponent<Animator>();
         currentState = new Idle(this.gameObject, agent, anim, player,pickupLocation,dropoffLocation);
