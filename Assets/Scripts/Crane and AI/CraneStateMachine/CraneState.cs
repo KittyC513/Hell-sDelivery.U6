@@ -169,12 +169,12 @@ public class MovingToPickup : CraneState
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
-        //Debug.Log("Pickup Location set to: " + pickupLocation);
-        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        Debug.Log("Pickup Location set to: " + pickupLocation);
+        Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
-        craneArm = npc.transform.Find("CraneArm");
-        craneMovingPoint = npc.transform.Find("CraneArm/movingPoint");
-        //Debug.Log("Crane arm found: " + craneArm.name);
+        craneArm = npc.transform.Find("Base_Rotatable");
+        craneMovingPoint = npc.transform.Find("Extender_Front_Magnet/Magnet");
+        Debug.Log("Crane arm found: " + craneArm.name);
         name = STATE.MOVINGTOPICKUP;
 
     }
@@ -190,7 +190,7 @@ public class MovingToPickup : CraneState
 
         if (craneMovingPoint == null || craneArm == null)
         {
-            //Debug.LogError("Crane Arm is null!" + "Crane surface is null");
+            Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
         }
 
@@ -253,8 +253,8 @@ public class PickingUp : CraneState
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
-        //Debug.Log("Pickup Location set to: " + pickupLocation);
-        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        Debug.Log("Pickup Location set to: " + pickupLocation);
+        Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
         name = STATE.PICKINGUP;
     }
@@ -263,7 +263,7 @@ public class PickingUp : CraneState
         base.Enter();
         //Debug.Log("Crane is Picking Up Load.");
         // Set picking up trigger
-        anim.SetTrigger("isPickingUp");
+        //anim.SetTrigger("isPickingUp");
     }
     public override void Update()
     {
@@ -302,7 +302,7 @@ public class PickingUp : CraneState
 
         armHasLoad = true;
         // Reset picking up trigger
-        anim.ResetTrigger("isPickingUp");
+        //anim.ResetTrigger("isPickingUp");
         timer = 0f;
 
         base.Exit();
@@ -332,8 +332,9 @@ public class MovingToDropoff : CraneState
         player2 = GameManager.instance.player2.transform;
 
         //Debug.Log("Dropoff Location set to: " + dropoffLocation);
-        craneMovingPoint = npc.transform.Find("CraneArm/movingPoint");
-        craneArm = npc.transform.Find("CraneArm");
+        craneArm = npc.transform.Find("Base_Rotatable");
+        craneMovingPoint = npc.transform.Find("Extender_Front_Magnet/Magnet");
+
         name = STATE.MOVINGTODROPPINGOFF;
 
     }
@@ -342,7 +343,7 @@ public class MovingToDropoff : CraneState
         //set moving to dropoff trigger
         //anim.SetTrigger("isMoving");
         base.Enter();
-        //Debug.Log("Crane is moving to Dropoff Location.");
+        Debug.Log("Crane is moving to Dropoff Location.");
     }
     public override void Update()
     {
@@ -529,7 +530,8 @@ public class DroppingOff : CraneState
         base.Enter();
         //Debug.Log("Crane is Dropping Off Load.");
         // Set dropping off trigger
-        anim.SetTrigger("isDroppingOff");
+
+        //anim.SetTrigger("isDroppingOff");
     }
     public override void Update()
     {
@@ -550,7 +552,7 @@ public class DroppingOff : CraneState
     {
         armHasLoad = false;
         // Reset dropping off trigger
-        anim.ResetTrigger("isDroppingOff");
+        //anim.ResetTrigger("isDroppingOff");
         base.Exit();
     }
 }
@@ -670,7 +672,7 @@ public class Attack : CraneState
         name = STATE.ATTACK;
         // Play attack sound
         //attackSound = npc.GetComponent<AudioSource>();
-        //Debug.Log("Crane is Attacking Player.");
+        Debug.Log("Crane is Attacking Player.");
     }
     public override void Enter()
     {
