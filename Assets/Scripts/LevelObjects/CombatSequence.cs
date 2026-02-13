@@ -12,7 +12,7 @@ public class CombatSequence : MonoBehaviour
     private int playersActive;
     [SerializeField] private LayerMask playerLayers;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private float areaRadius;
+    [SerializeField] private Vector3 areaSize;
     private Collider[] players;
 
     private Collider[] enemies;
@@ -30,7 +30,7 @@ public class CombatSequence : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(transform.position, areaRadius);
+        Gizmos.DrawWireCube(transform.position, areaSize);
     }
 
     private void EndSequence()
@@ -39,7 +39,7 @@ public class CombatSequence : MonoBehaviour
         {
             sequenceActive = false;
         }
-
+        print("Combat Sequence Ended");
         onSequenceEnd.Invoke();
     }
 
@@ -48,7 +48,7 @@ public class CombatSequence : MonoBehaviour
         if (!sequenceActive)
         {
             sequenceActive = true;
-            print("Combat Sequence Started");
+            
         }
     
         onSequenceStart.Invoke();
@@ -56,7 +56,7 @@ public class CombatSequence : MonoBehaviour
 
     private void DetectPlayers()
     {
-        players = Physics.OverlapSphere(transform.position, areaRadius, playerLayers);
+        players = Physics.OverlapBox(transform.position, areaSize, Quaternion.identity, playerLayers);
         
         if (players.Length > 1 && !sequenceActive)
         {
@@ -66,7 +66,7 @@ public class CombatSequence : MonoBehaviour
 
     private void DetectEnemies()
     {
-        enemies = Physics.OverlapSphere(transform.position, areaRadius, enemyLayer);
+        enemies = Physics.OverlapBox(transform.position, areaSize, Quaternion.identity, enemyLayer);
 
         if (enemies.Length < 1 && sequenceActive)
         {
