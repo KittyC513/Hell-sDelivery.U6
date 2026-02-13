@@ -29,6 +29,7 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
         attackWindup = hellHoundBase.lungeWindup;
         lunged = false;
         timer = 0;
+        animName = "Hellhound_Charge";
     }
 
     public override void ExitState()
@@ -85,11 +86,11 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
     public void Lunge()
     {
         hellHoundBase.shouldRotate = false;
-        animName = "Pounce Attack In Place";
+        animName = "Hellhound_Attack";
         Vector3 force;
         Vector3 directionToPlayer = hellHoundBase.TargetPlayer.transform.position - hellHoundBase.transform.position;
         directionToPlayer = directionToPlayer.normalized;
-        force = new Vector3(directionToPlayer.x * 18, 7, directionToPlayer.z * 18);
+        force = new Vector3(directionToPlayer.x * 22, 7, directionToPlayer.z * 22);
         hellHoundBase.StartKnockback(force);
         lunged = true;
         hellHoundBase.ToggleAttackHitbox(true);

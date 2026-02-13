@@ -30,7 +30,7 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
     public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
         chaseRange = hellHoundBase.PlayerDetectionRadius;
-        animName = "Jump In Place";
+        animName = "Hellhound_Alert";
         if (!hellHoundBase.AddKnockback) hellHoundBase.StartKnockback(Vector3.up * 5);
         navAgent.speed = hellHoundBase.RunSpeed;
         lungeTemp = 0;
