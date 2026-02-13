@@ -169,12 +169,13 @@ public class MovingToPickup : CraneState
     {
         pickupLocation = _pickupLocation;
         dropoffLocation = _dropoffLocation;
-        Debug.Log("Pickup Location set to: " + pickupLocation);
-        Debug.Log("Dropoff Location set to: " + dropoffLocation);
+        //Debug.Log("Pickup Location set to: " + pickupLocation);
+        //Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
-        craneArm = npc.transform.Find("Base_Rotatable");
+        craneArm = npc.transform.Find("Crane/Base_Rotatable");
         craneMovingPoint = npc.transform.Find("Extender_Front_Magnet/Magnet");
         Debug.Log("Crane arm found: " + craneArm.name);
+        Debug.Log("Crane moving point found: " + craneMovingPoint.name);
         name = STATE.MOVINGTOPICKUP;
 
     }
