@@ -3,7 +3,6 @@ using UnityEngine.AI;
 
 public class CraneAI : MonoBehaviour
 {
-    NavMeshAgent agent;
     Animator anim;
     public Transform player;
     CraneState currentState;
@@ -17,6 +16,7 @@ public class CraneAI : MonoBehaviour
         if(player == null)
         {
             print("Player is not assigned in Insepctor");
+            //player = GameManager.instance.player1.transform;
         }
         Vector3 pickupLocation = pos_pickupLocation.position;
         Vector3 dropoffLocation = pos_dropoffLocation.position;
@@ -24,9 +24,8 @@ public class CraneAI : MonoBehaviour
         print("Pickup Location: " + pickupLocation);
         print("Dropoff Location: " + dropoffLocation);
 
-        agent = this.GetComponent<NavMeshAgent>();
         anim = this.GetComponent<Animator>();
-        currentState = new Idle(this.gameObject, agent, anim, player,pickupLocation,dropoffLocation);
+        currentState = new Idle(this.gameObject, anim, player, pickupLocation, dropoffLocation);
     }
 
     // Update is called once per frame
