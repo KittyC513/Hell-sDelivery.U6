@@ -207,6 +207,7 @@ public class CharacterSelectedControl : MonoBehaviour
 
         //GameManager.instance.InputDetection_p1.characterModelObj = playerInstance;
         GameManager.instance.playerStateMachine_p1.anim = playerInstance.GetComponent<Animator>();
+        GameManager.instance.PlayerController_p1.anim = playerInstance.GetComponent<Animator>();
 
         return playerInstance;
     }
@@ -231,6 +232,7 @@ public class CharacterSelectedControl : MonoBehaviour
 
         //GameManager.instance.InputDetection_p2.characterModelObj = playerInstance;
         GameManager.instance.playerStateMachine_p2.anim = playerInstance.GetComponent<Animator>();
+        GameManager.instance.PlayerController_p2.anim = playerInstance.GetComponent<Animator>();
         return playerInstance;
     }
 

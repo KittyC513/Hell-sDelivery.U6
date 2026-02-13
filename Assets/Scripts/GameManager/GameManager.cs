@@ -51,6 +51,9 @@ public class GameManager
     public PlayerStateMachine playerStateMachine_p1;
     public PlayerStateMachine playerStateMachine_p2;
 
+    public PlayerController PlayerController_p1;
+    public PlayerController PlayerController_p2;
+
 
 
     #region Player State Machine Control
