@@ -26,6 +26,7 @@ public static class InputActionButtonExtensions
 public class PlayerInputDetection : NetworkBehaviour
 {
     public GameObject playerModel;
+    //public GameObject characterModelObj;
     private PlayerInput playerInput;
     private InputActionAsset inputActionAsset;
 

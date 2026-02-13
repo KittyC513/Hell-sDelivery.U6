@@ -13,7 +13,7 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     protected BaseState<Estate> currentState;
     protected Estate lastStateKey;
 
-    [SerializeField] protected Animator anim;
+    [SerializeField] public Animator anim;
     [SerializeField] protected PlayerInputDetection inputDetection;
 
 
@@ -22,12 +22,11 @@ public abstract class StateManager<Estate> : MonoBehaviour where Estate : Enum
     {
         currentState.EnterState(currentState.stateKey);
 
-        if(anim == null)
-        {
-            if (inputDetection.playerModel == null) return;
-
-            anim = inputDetection.playerModel.GetComponent<Animator>();
-        }
+        //if(anim == null)
+        //{
+        //    if (inputDetection.characterModelObj == null) return;     
+        //    anim = inputDetection.characterModelObj.GetComponent<Animator>();
+        //}
         
     }
 

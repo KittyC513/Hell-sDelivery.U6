@@ -7,6 +7,8 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
     public GameObject JoinGamePanel;
     public PlayerInputManager playerInputManager;
 
+    public Transform[] spawnpoints;
+
     //Character Selected Control
     public GameObject cutscene_sockThief;
 
@@ -28,5 +30,12 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         JoinGamePanel.SetActive(true);
         GameManager.instance.isOnJoinGamePanel = true;
         playerInputManager.EnableJoining();
+    }
+
+    public void OnGameStart()
+    {
+        GameManager.instance.ResetPlayer1Position(spawnpoints[0]);
+        GameManager.instance.ResetPlayer2Position(spawnpoints[1]);
+        GameManager.instance.UnFreezeBothPlayers();
     }
 }

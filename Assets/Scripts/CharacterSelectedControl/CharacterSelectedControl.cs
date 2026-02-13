@@ -39,9 +39,13 @@ public class CharacterSelectedControl : MonoBehaviour
     {
         if (GameManager.instance.isOnCharacterSelection)
         {
-            OnCharacterSelected();
-            TextDemonstrate();
-            OnReady();
+            //OnCharacterSelected();
+            //TextDemonstrate();
+            //OnReady();
+
+            //testing 
+            TestingScene();
+
         }
     }
 
@@ -201,6 +205,9 @@ public class CharacterSelectedControl : MonoBehaviour
         t.localPosition = new Vector3(0f, -1.2f, 0f);
         t.localRotation = Quaternion.Euler(0f, 180f, 0f);
 
+        //GameManager.instance.InputDetection_p1.characterModelObj = playerInstance;
+        GameManager.instance.playerStateMachine_p1.anim = playerInstance.GetComponent<Animator>();
+
         return playerInstance;
     }
     // Shmonk
@@ -222,7 +229,19 @@ public class CharacterSelectedControl : MonoBehaviour
         t.localPosition = new Vector3(0f, -1.2f, 0f);
         t.localRotation = Quaternion.Euler(0f, 180f, 0f);
 
+        //GameManager.instance.InputDetection_p2.characterModelObj = playerInstance;
+        GameManager.instance.playerStateMachine_p2.anim = playerInstance.GetComponent<Animator>();
         return playerInstance;
+    }
+
+    public void TestingScene()
+    {
+        GameManager.instance.cam_p1.rect = new Rect(0, 0, 0.5f, 1);
+        GameManager.instance.cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
+        SelectPlayer1Model_p1("Models/Characters/Shmink");
+        SelectPlayer1Model_p2("Models/Characters/Shmonk");
+        SceneControl_MainMenu.Instance.cutscene_sockThief.SetActive(true);
+        GameManager.instance.isOnCharacterSelection = false;
     }
     #endregion
 }

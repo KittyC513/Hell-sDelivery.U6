@@ -48,6 +48,9 @@ public class GameManager
     [Header("Player Model Selection")]
     public GameObject playerModel_p1;
     public GameObject playerModel_p2;
+    public PlayerStateMachine playerStateMachine_p1;
+    public PlayerStateMachine playerStateMachine_p2;
+
 
 
     #region Player State Machine Control
@@ -197,10 +200,12 @@ public class GameManager
         if (player1 != null)
         {
             player1.transform.position = pos_p1.position;
+            player1.transform.rotation = pos_p1.rotation;
         }
         if (player2 != null)
         {
             player2.transform.position = pos_p2.position;
+            player2.transform.rotation = pos_p2.rotation;
         }
     }
 
@@ -221,6 +226,7 @@ public class GameManager
         if (player1 != null)
         {
             player1.transform.position = pos_p1.position;
+            player1.transform.rotation = pos_p1.rotation;
         }
     }
 
@@ -229,6 +235,7 @@ public class GameManager
         if (player2 != null)
         {
             player2.transform.position = pos_p2.position;
+            player2.transform.rotation = pos_p2.rotation;
         }
     }
 
@@ -263,6 +270,13 @@ public class GameManager
     {
         cam_p2.enabled = true;
     }
+    #endregion
+
+    #region CharacterModel
+    //public void RestoreCharacterModel()
+    //{
+    //   
+    //}
     #endregion
 
 }

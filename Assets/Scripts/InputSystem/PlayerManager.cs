@@ -119,6 +119,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.bag_p1 = players[0].GetComponent<Bag>();
                 GameManager.instance.uiPointerControl_p1 = players[0].GetComponent<UIPointerControl>();
                 GameManager.instance.playerModel_p1 = players[0].GetComponent<PlayerInputDetection>().playerModel;
+                GameManager.instance.playerStateMachine_p1 = players[0].GetComponent<PlayerStateMachine>();
                 //print(GameManager.instance.playerModel_p1);
             }
           
@@ -143,6 +144,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.bag_p2 = players[1].GetComponent<Bag>();
                 GameManager.instance.uiPointerControl_p2 = players[1].GetComponent<UIPointerControl>();
                 GameManager.instance.playerModel_p2 = players[1].GetComponent<PlayerInputDetection>().playerModel;
+                GameManager.instance.playerStateMachine_p2 = players[1].GetComponent<PlayerStateMachine>();
                 //print(GameManager.instance.playerModel_p2);
             }         
             //players[1].GetComponent<PlayerMoneyManager>().playerStats = player2Stats;

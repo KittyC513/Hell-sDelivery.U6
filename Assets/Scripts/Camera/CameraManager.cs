@@ -145,7 +145,6 @@ public class CameraManager : MonoBehaviour
     {
 
         if (EventData.curSceneName == "PostOffice" || 
-            EventData.curSceneName == "StartScene" || 
             EventData.curSceneName == "minigame" ||
             EventData.curSceneName == "StartTesting")
         {
