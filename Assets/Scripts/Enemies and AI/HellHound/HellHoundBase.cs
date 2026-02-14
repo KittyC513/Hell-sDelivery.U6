@@ -1,4 +1,6 @@
 using System.Collections;
+using Unity.Mathematics;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -33,10 +35,11 @@ public class HellHoundBase : EnemyBase
     private float flashTime = 1;
     private bool shouldFlash= false;
     [SerializeField] private float flashSpeed = 1;
-    [SerializeField] private SkinnedMeshRenderer meshRenderer;
+    [SerializeField] private MeshRenderer[] meshRenderers;
     private bool shouldDissolve = false;
     private float dissolveTime = 0;
     [SerializeField] public ParticleSystem pSystem;
+    [SerializeField] public SoundEffectPlayer sfxPlayer;
 
     //accessible variables
     public float MaxWanderDistance { get { return maxWanderDistance; } }
@@ -78,6 +81,7 @@ public class HellHoundBase : EnemyBase
             isDead = true;
             animator.SetTrigger("Dead");
             StartCoroutine(DissolveWait(deathTime));
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundDie");
         };
     }
 
@@ -91,15 +95,22 @@ public class HellHoundBase : EnemyBase
 
     private IEnumerator DissolveWait(float t)
     {
+
         yield return new WaitForSeconds(t);
         shouldDissolve = true;
         pSystem.Play();
         pSystem.transform.parent = SceneManager.GetActiveScene().GetRootGameObjects()[0].transform;
     }
 
-    private void Dissolve(Material mat, float maxTime, ref float time)
+    private void Dissolve(float maxTime, ref float time)
     {
-        mat.SetFloat("_AlphaClip", time / maxTime);
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            Material mat = meshRenderers[i].material;
+            mat.SetFloat("_AlphaClip", time / maxTime);
+
+        
+        }
 
         time += Time.deltaTime;
 
@@ -109,17 +120,25 @@ public class HellHoundBase : EnemyBase
         {
             Destroy(this.gameObject);
         }
+       
     }
 
     private void StartFlash(Vector3 hitDir)
     {
+        sfxPlayer.PlaySoundEffect("ObjectBank1", "HitImpact");
+        
         flashTime = 1;
         shouldFlash = true;
     }
 
-    private void Flash(Material mat)
+    private void Flash()
     {
-        mat.SetFloat("_FlashTime", flashTime);
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            Material mat = meshRenderers[i].material;
+            mat.SetFloat("_FlashTime", flashTime);
+        }
+        
 
         if (shouldFlash)
         {
@@ -133,7 +152,12 @@ public class HellHoundBase : EnemyBase
         {
             shouldFlash = false;
             flashTime = 1;
-            mat.SetFloat("_FlashTime", flashTime);
+
+            for (int i = 0; i < meshRenderers.Length; i++)
+            {
+                Material mat = meshRenderers[i].material;
+                mat.SetFloat("_FlashTime", flashTime);
+            }
         }
     }
 
@@ -146,8 +170,15 @@ public class HellHoundBase : EnemyBase
             attackHitboxObj.SetActive(false);
         }
         
-        if (shouldDissolve) Dissolve(meshRenderer.material, deathTime, ref dissolveTime);
-        Flash(meshRenderer.material);
+        if (shouldDissolve) 
+        {
+            Dissolve(deathTime, ref dissolveTime);
+        }
+
+        if (shouldFlash)
+        {
+            Flash();
+        }
         
     }
     private void FixedUpdate()

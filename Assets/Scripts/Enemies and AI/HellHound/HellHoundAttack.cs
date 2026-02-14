@@ -22,7 +22,7 @@ public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
         hellHoundBase.StartCoroutine(AttackSequence());
 
         //set placeholder animation
-        animName = "Bite Attack";
+        animName = "Hellhound_Bite";
     }
 
     public override void ExitState()
@@ -64,6 +64,7 @@ public class HellHoundAttack : BaseState<HellHoundStateMachine.HoundStates>
         hellHoundBase.shouldRotate = false;
         yield return new WaitForSeconds(attackDelayTime / 4);
         //activate hitbox
+        hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundBark");
         if (!hellHoundBase.Dead) hellHoundBase.ToggleAttackHitbox(true);
         yield return new WaitForSeconds(attackDuration);
         //disable hitbox

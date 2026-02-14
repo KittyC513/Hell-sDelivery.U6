@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 public class CarObject : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class CarObject : MonoBehaviour
 
     private Vector3 goalVelocityChange;
     private Vector3 startRot;
+    private Ray tireRay;
+    private Ray groundRay;
+    private RaycastHit[] raycastHits;
+    private RaycastHit[] groundHit;
 
     //how do i apply force in 4 spots for each tire???
 
@@ -35,7 +40,11 @@ public class CarObject : MonoBehaviour
 
     private void Start()
     {
+        tireRay = new Ray();
+        groundRay = new Ray();
         rb = GetComponent<Rigidbody>();
+        raycastHits = new RaycastHit[1];
+        groundHit = new RaycastHit[1];
         startRot = transform.rotation.eulerAngles;
     }
 
@@ -80,7 +89,12 @@ public class CarObject : MonoBehaviour
 
     private void DetectGrounded(Vector3 startPos, float checkDist, LayerMask groundMask)
     {
-        if (Physics.Raycast(startPos, Vector3.down, out RaycastHit hit, checkDist + 0.25f, groundMask))
+        groundRay.origin = startPos;
+        groundRay.direction = Vector3.down;
+
+        int hits = Physics.RaycastNonAlloc(groundRay, groundHit, checkDist + 0.25f, groundMask);
+
+        if (hits > 0)
         {
             grounded = true;
         }
@@ -96,18 +110,29 @@ public class CarObject : MonoBehaviour
         //set the y position a little bit inside the car incase the car recives so much force that the base is on the ground
         Vector3 sPos = new Vector3(startPos.x, startPos.y + 0.1f, startPos.z);
         
+        tireRay.origin = sPos;
+        tireRay.direction = Vector3.down;
+        int hits = Physics.RaycastNonAlloc(tireRay, raycastHits, checkDist + 0.1f, groundMask);
 
-        //raycast to check for ground
-        if (Physics.Raycast(sPos, Vector3.down, out RaycastHit hit, checkDist + 0.1f, groundMask))
+        if (hits > 0)
         {
-            SnapGrounded(hit, rb, startPos, targetHeight, frequency, damping);
-            tireObj.transform.position = new Vector3(startPos.x, (hit.point.y + tireRadius), startPos.z);
+            RaycastHit h = raycastHits[0];
+            SnapGrounded(h, rb, startPos, targetHeight, frequency, damping);
+            tireObj.transform.position = new Vector3(startPos.x, (h.point.y + tireRadius), startPos.z);
         }
         else
         {
             tireObj.transform.position = new Vector3(startPos.x, startPos.y - checkDist, startPos.z);
 
         }
+
+        //raycast to check for ground
+        //if (Physics.Raycast(sPos, Vector3.down, out RaycastHit hit, checkDist + 0.1f, groundMask))
+        //{
+        //    SnapGrounded(hit, rb, startPos, targetHeight, frequency, damping);
+        //    tireObj.transform.position = new Vector3(startPos.x, (hit.point.y + tireRadius), startPos.z);
+        //}
+        
     }
 
     private void SnapGrounded(RaycastHit hit, Rigidbody rb, Vector3 forcePos, float floatHeight, float springStrength, float springDamping)

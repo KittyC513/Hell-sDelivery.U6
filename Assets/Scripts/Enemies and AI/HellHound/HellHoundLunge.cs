@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
 {
@@ -10,6 +11,8 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
     private float attackWindup = 1.5f;
 
     private bool lunged = false;
+
+    private NavMeshAgent navAgent;
     
 
     private Vector3 targetPos;
@@ -21,6 +24,7 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
     public HellHoundLunge(HellHoundStateMachine.HoundStates key, HellHoundBase houndBase) : base(key)
     {
         hellHoundBase = houndBase;
+        navAgent = hellHoundBase.NavAgent;
     }
 
     public override void EnterState(HellHoundStateMachine.HoundStates lastState)
@@ -29,6 +33,11 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
         attackWindup = hellHoundBase.lungeWindup;
         lunged = false;
         timer = 0;
+        animName = "Hellhound_Charge";
+        hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundBarkTriple");
+
+        //stop in place
+        navAgent.destination = hellHoundBase.transform.position;
     }
 
     public override void ExitState()
@@ -85,11 +94,12 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
     public void Lunge()
     {
         hellHoundBase.shouldRotate = false;
-        animName = "Pounce Attack In Place";
+        animName = "Hellhound_Attack";
+        hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "WobbleNoise");
         Vector3 force;
         Vector3 directionToPlayer = hellHoundBase.TargetPlayer.transform.position - hellHoundBase.transform.position;
         directionToPlayer = directionToPlayer.normalized;
-        force = new Vector3(directionToPlayer.x * 18, 7, directionToPlayer.z * 18);
+        force = new Vector3(directionToPlayer.x * 50, 7, directionToPlayer.z * 50);
         hellHoundBase.StartKnockback(force);
         lunged = true;
         hellHoundBase.ToggleAttackHitbox(true);

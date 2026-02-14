@@ -23,7 +23,7 @@ public class HellHoundWander : BaseState<HellHoundStateMachine.HoundStates>
 
     public override void EnterState(HellHoundStateMachine.HoundStates lastState)
     {
-        animName = "Idle";
+        animName = "Hellhound_Idle";
         maxWanderDistance = hellHoundBase.MaxWanderDistance;
         wanderTime = hellHoundBase.WanderTime;
         startingWander = wanderTime;

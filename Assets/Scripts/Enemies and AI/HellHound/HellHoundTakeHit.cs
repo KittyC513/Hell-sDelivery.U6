@@ -15,11 +15,13 @@ public class HellHoundTakeHit : BaseState<HellHoundStateMachine.HoundStates>
         hellHoundBase.ToggleAttackHitbox(false);
         if (!hellHoundBase.Dead)
         {
-            animName = "Take Damage";
+            animName = "Hellhound_Hurt";
+            hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundHurt");
         }
         else
         {
-            animName = "Die";
+            animName = "Hellhound_Death";
+            hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundDie");
         }
         
     }
