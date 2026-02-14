@@ -31,6 +31,7 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
     {
         chaseRange = hellHoundBase.PlayerDetectionRadius;
         animName = "Hellhound_Alert";
+        hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundBark");
         if (!hellHoundBase.AddKnockback) hellHoundBase.StartKnockback(Vector3.up * 5);
         navAgent.speed = hellHoundBase.RunSpeed;
         lungeTemp = 0;
