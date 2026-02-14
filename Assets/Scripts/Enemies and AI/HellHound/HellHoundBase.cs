@@ -39,6 +39,7 @@ public class HellHoundBase : EnemyBase
     private bool shouldDissolve = false;
     private float dissolveTime = 0;
     [SerializeField] public ParticleSystem pSystem;
+    [SerializeField] public SoundEffectPlayer sfxPlayer;
 
     //accessible variables
     public float MaxWanderDistance { get { return maxWanderDistance; } }
@@ -80,6 +81,7 @@ public class HellHoundBase : EnemyBase
             isDead = true;
             animator.SetTrigger("Dead");
             StartCoroutine(DissolveWait(deathTime));
+            sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundDie");
         };
     }
 
@@ -93,6 +95,7 @@ public class HellHoundBase : EnemyBase
 
     private IEnumerator DissolveWait(float t)
     {
+
         yield return new WaitForSeconds(t);
         shouldDissolve = true;
         pSystem.Play();
@@ -122,6 +125,8 @@ public class HellHoundBase : EnemyBase
 
     private void StartFlash(Vector3 hitDir)
     {
+        sfxPlayer.PlaySoundEffect("ObjectBank1", "HitImpact");
+        
         flashTime = 1;
         shouldFlash = true;
     }

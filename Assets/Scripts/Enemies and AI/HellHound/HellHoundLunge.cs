@@ -34,6 +34,7 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
         lunged = false;
         timer = 0;
         animName = "Hellhound_Charge";
+        hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundBarkTriple");
 
         //stop in place
         navAgent.destination = hellHoundBase.transform.position;
@@ -94,6 +95,7 @@ public class HellHoundLunge : BaseState<HellHoundStateMachine.HoundStates>
     {
         hellHoundBase.shouldRotate = false;
         animName = "Hellhound_Attack";
+        hellHoundBase.sfxPlayer.PlaySoundEffect("ObjectBank1", "WobbleNoise");
         Vector3 force;
         Vector3 directionToPlayer = hellHoundBase.TargetPlayer.transform.position - hellHoundBase.transform.position;
         directionToPlayer = directionToPlayer.normalized;
