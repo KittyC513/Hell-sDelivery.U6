@@ -374,7 +374,7 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1962374350300462121}
+      - m_Target: {fileID: 1999725772468549719}
         m_TargetAssemblyTypeName: CarjackCar, Assembly-CSharp
         m_MethodName: StartUnlockMinigame
         m_Mode: 0
@@ -791,7 +791,6 @@ GameObject:
   - component: {fileID: 3311986947229739072}
   - component: {fileID: 8488886147403498673}
   - component: {fileID: 4619361429036891856}
-  - component: {fileID: 8642365711592428868}
   - component: {fileID: 8235916532492570380}
   - component: {fileID: 4343820700867521322}
   - component: {fileID: 6896714089488935482}
@@ -857,7 +856,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d3516791502cac74f8cc326e1971c1be, type: 2}
+  - {fileID: 2100000, guid: bf6ba9407adf6e64096bb8045886b9a7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -879,26 +878,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8642365711592428868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6889036876928033761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8e52f56f08d274582ee7e367fe80e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshRenderer: {fileID: 4619361429036891856}
-  materials:
-  - {fileID: 2100000, guid: d3516791502cac74f8cc326e1971c1be, type: 2}
-  - {fileID: 2100000, guid: 22466a1524082b44799abbb0a53a6fc3, type: 2}
-  - {fileID: 2100000, guid: c32a938c418424c48bafab24d30f5f4f, type: 2}
-  - {fileID: 2100000, guid: bf9cdfe721cd8d14dbe2db828160594a, type: 2}
-  - {fileID: 2100000, guid: 38c73f8c19433ac49a504e3e66446fc5, type: 2}
-  - {fileID: 2100000, guid: d2fbd84b5f73df941bcb0179109725d5, type: 2}
 --- !u!114 &8235916532492570380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,9 +1190,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6279059540584257645}
   - component: {fileID: 408323746932834555}
-  - component: {fileID: 1962374350300462121}
+  - component: {fileID: 1999725772468549719}
   m_Layer: 0
-  m_Name: Unlockable Car
+  m_Name: Minigame Car_Updated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1250,14 +1229,14 @@ MonoBehaviour:
   billboardPrefab: {fileID: 4668376425706960398, guid: f5fa995a5832a8b469a975e36a333dc3, type: 3}
   player1Active: 0
   player2Active: 0
-  globalIcons: 0
+  globalIcons: 1
   yOffset: 2
   applySine: 1
   frequency: 2.5
   amplitude: 0.15
   images: []
   active: 1
---- !u!114 &1962374350300462121
+--- !u!114 &1999725772468549719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1266,31 +1245,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8264930064711128921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 156f19061726d024985de83d34d01006, type: 3}
+  m_Script: {fileID: 11500000, guid: f6372d9dd8e1e7c419205c2e20806d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   p1Slider: {fileID: 0}
   p2Slider: {fileID: 0}
-  hotMaterial: {fileID: 0}
-  warmMaterial: {fileID: 0}
-  coolMaterial: {fileID: 0}
-  coldMaterial: {fileID: 0}
+  mesh: {fileID: 4619361429036891856}
+  hotColour: {r: 1, g: 0, b: 0, a: 1}
+  warmColour: {r: 1, g: 0.84232986, b: 0, a: 1}
+  coolColour: {r: 0, g: 1, b: 0.8401146, a: 1}
+  coldColour: {r: 0.018686771, g: 0, b: 1, a: 1}
   unlocked: 0
-  onCarUnlock:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4317902177903175466}
-        m_TargetAssemblyTypeName: InteractableObject, Assembly-CSharp
-        m_MethodName: ToggleCanInteract
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8633913656778242287
 GameObject:
   m_ObjectHideFlags: 0
