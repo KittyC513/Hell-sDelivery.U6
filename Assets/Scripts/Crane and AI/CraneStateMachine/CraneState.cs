@@ -169,7 +169,7 @@ public class MovingToPickup : CraneState
         //Debug.Log("Pickup Location set to: " + pickupLocation);
         //Debug.Log("Dropoff Location set to: " + dropoffLocation);
 
-        craneArm = npc.transform.Find("Base_Rotatable");
+        craneArm = npc.transform.Find("Crane/Base_Rotatable");
         craneMovingPoint = craneArm.Find("Extender_Front_Magnet/Magnet");
 
         name = STATE.MOVINGTOPICKUP;
@@ -180,10 +180,10 @@ public class MovingToPickup : CraneState
         base.Enter();
         //agent.SetDestination(pickupLocation);
         //anim.SetTrigger("isMoving");
-        Debug.Log("Crane is moving to Pickup Location.");
+        //Debug.Log("Crane is moving to Pickup Location.");
 
-        Debug.Log("Crane arm found: " + craneArm.name);
-        Debug.Log("Crane moving point found: " + craneMovingPoint.name);
+        //Debug.Log("Crane arm found: " + craneArm.name);
+        //Debug.Log("Crane moving point found: " + craneMovingPoint.name);
     }
     public override void Update()
     {
@@ -194,35 +194,45 @@ public class MovingToPickup : CraneState
             return;
         }
 
+        
         Vector3 dir = pickupLocation - craneArm.position;
+
+        //Vector3 dir = pickupLocation - craneArm.localPosition;
         dir.y = 0; // Keep only horizontal rotation
 
         if (dir.sqrMagnitude < 0.0001f)
             return; // No need to rotate if direction is too small
 
-        Quaternion targetRotation = Quaternion.LookRotation(dir);
+        Quaternion targetRotation = Quaternion.LookRotation(-dir);
+        //Debug.Log("Target rotation to pickup: " + targetRotation.eulerAngles);
+
+
         craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRotation, rotateDegPerSec * Time.deltaTime);
 
         float angle = Quaternion.Angle(craneArm.rotation, targetRotation);
-        //Debug.Log("Angle to target: " + angle);
+        //Debug.Log("Angle to pickup: " + angle);
 
         if (angle <= faceAngle)
         {
 
-            Vector3 pickupLocal = craneArm.InverseTransformPoint(pickupLocation);
+            Vector3 pickupLocal = craneMovingPoint.InverseTransformPoint(pickupLocation);
+            Debug.Log("Pickup location in crane arm local space: " + pickupLocal);
 
             Vector3 movePointLocal = craneMovingPoint.localPosition;
+            Debug.Log("Crane moving point local position before moving: " + movePointLocal);
+            //Vector3 movePointLocal = craneMovingPoint.position;
+
             movePointLocal.z = pickupLocal.z;
 
             float moveSpeed = 10f;  
 
             craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.localPosition, movePointLocal, moveSpeed * Time.deltaTime);
-
+            Debug.Log("Crane moving point local position after moving: " + craneMovingPoint.localPosition);
 
             //4. arrival check on rail axis
             float zError = Mathf.Abs(craneMovingPoint.localPosition.z - pickupLocal.z);
             float railEpsilon = 0.1f;
-
+            //Debug.Log("Z Error to pickup: " + zError);
             if (zError <= railEpsilon && angle <= arriveAngle)
             {
                 nextState = new PickingUp(npc, anim, player, pickupLocation, dropoffLocation);
@@ -245,7 +255,7 @@ public class MovingToPickup : CraneState
 #region PickingUp
 public class PickingUp : CraneState
 {
-    private float pickUpTime = 2.3f;
+    private float pickUpTime = 3f;
     private float timer = 0f;
 
     public PickingUp(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
@@ -259,9 +269,9 @@ public class PickingUp : CraneState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Crane is Picking Up Load.");
+        //Debug.Log("Crane is Picking Up Load.");
         // Set picking up trigger
-        //anim.SetTrigger("isPickingUp");
+        anim.SetTrigger("isPickingUp");
     }
     public override void Update()
     {
@@ -330,7 +340,7 @@ public class MovingToDropoff : CraneState
         player2 = GameManager.instance.player2.transform;
 
         //Debug.Log("Dropoff Location set to: " + dropoffLocation);
-        craneArm = npc.transform.Find("Base_Rotatable");
+        craneArm = npc.transform.Find("Crane/Base_Rotatable");
         craneMovingPoint = craneArm.Find("Extender_Front_Magnet/Magnet");
 
         name = STATE.MOVINGTODROPPINGOFF;
@@ -341,14 +351,14 @@ public class MovingToDropoff : CraneState
         //set moving to dropoff trigger
         //anim.SetTrigger("isMoving");
         base.Enter();
-        Debug.Log("Crane is moving to Dropoff Location.");
+        //Debug.Log("Crane is moving to Dropoff Location.");
     }
     public override void Update()
     {
 
         if (craneMovingPoint == null || craneArm == null)
         {
-            //Debug.LogError("Crane Arm is null!" + "Crane surface is null");
+            Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
         }
 
@@ -358,6 +368,7 @@ public class MovingToDropoff : CraneState
 
         if (CanSeePlayer())
         {
+            //Debug.Log("Crane can see player while moving to dropoff.");
             //1. choose closest player
             float distToP1 = Vector3.Distance(craneArm.position, player1.position);
             float distToP2 = Vector3.Distance(craneArm.position, player2.position);
@@ -365,22 +376,25 @@ public class MovingToDropoff : CraneState
 
             //2.rotate arm toward player
             Vector3 dir = targetPlayer.position - craneArm.position;
+            //Debug.Log("Direction to player: " + dir);
+
             dir.y = 0; // Keep only horizontal rotation
             if (dir.sqrMagnitude < 0.0001f)
                 return; // No need to rotate if direction is too small
 
-            Quaternion targetRot = Quaternion.LookRotation(dir);
+            Quaternion targetRot = Quaternion.LookRotation(-dir);
 
             craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRot, rotateDegPerSec * Time.deltaTime);
+            //Debug.Log("Crane arm is rotating towards player. Current angle: " + Quaternion.Angle(craneArm.rotation, targetRot) + " degrees.");
 
             float angle = Quaternion.Angle(craneArm.rotation, targetRot);
-
             //Debug.Log("Angle to target player: " + angle);
+
             //3. slide trolley only when facing enough
             if (angle <= faceAngle)
             {
                 //Debug.Log("Crane arm is facing player sufficiently.");
-                Vector3 playerLocal = craneArm.InverseTransformPoint(targetPlayer.position);
+                Vector3 playerLocal = craneMovingPoint.InverseTransformPoint(targetPlayer.position);
 
                 Vector3 movePointLocal = craneMovingPoint.localPosition;
                 movePointLocal.z = playerLocal.z;
@@ -390,6 +404,7 @@ public class MovingToDropoff : CraneState
                 //4. arrival check on rail axis
                 float zError = Mathf.Abs(craneMovingPoint.localPosition.z - playerLocal.z);
                 //Debug.Log("Z Error to player: " + zError);
+
                 if (zError <= railEpsilon && angle <= arriveAngle)
                 {
                     //Debug.Log("Crane has reached player position.");
@@ -403,25 +418,34 @@ public class MovingToDropoff : CraneState
         else
         {
             Vector3 dir = dropoffLocation - craneArm.position;
+            //Debug.Log("Direction to dropoff: " + dir);
+
             dir.y = 0; // Keep only horizontal rotation
             if (dir.sqrMagnitude < 0.0001f) return;
 
-            Quaternion targetRot = Quaternion.LookRotation(dir);
+            Quaternion targetRot = Quaternion.LookRotation(-dir);
             craneArm.rotation = Quaternion.RotateTowards(craneArm.rotation, targetRot, rotateDegPerSec * Time.deltaTime);
 
             float angle = Quaternion.Angle(craneArm.rotation, targetRot);
+            //Debug.Log("Angle to dropoff: " + angle);
+
             if (angle <= faceAngle)
             {
-                Vector3 dropoffLocal = craneArm.InverseTransformPoint(dropoffLocation);
+                Vector3 dropoffLocal = craneMovingPoint.InverseTransformPoint(dropoffLocation);
 
                 Vector3 movePointLocal = craneMovingPoint.localPosition;
+                //Vector3 movePoint = craneMovingPoint.position;
                 movePointLocal.z = dropoffLocal.z;
+                //movePoint.z = dropoffLocal.z;
 
                 craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.localPosition, movePointLocal, moveSpeed * Time.deltaTime);
+                //craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.position, movePoint, moveSpeed * Time.deltaTime);
 
 
                 //4. arrival check on rail axis
                 float zError = Mathf.Abs(craneMovingPoint.localPosition.z - dropoffLocal.z);
+                //float zError = Mathf.Abs(craneMovingPoint.position.z - dropoffLocal.z);
+                //Debug.Log("Z Error to dropoff: " + zError);
 
                 if (zError <= railEpsilon && angle <= arriveAngle)
                 {
@@ -511,7 +535,7 @@ public class MovingToDropoff : CraneState
 
 public class DroppingOff : CraneState
 {
-    private float dropOffTime = 2.2f;
+    private float dropOffTime = 4f;
     private float timer = 0f;
 
     public DroppingOff(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation,Vector3 _dropoffLocation)
@@ -529,7 +553,7 @@ public class DroppingOff : CraneState
         Debug.Log("Crane is Dropping Off Load.");
         // Set dropping off trigger
 
-        //anim.SetTrigger("isDroppingOff");
+        anim.SetTrigger("isDroppingOff");
     }
     public override void Update()
     {
@@ -670,10 +694,11 @@ public class Attack : CraneState
         name = STATE.ATTACK;
         // Play attack sound
         //attackSound = npc.GetComponent<AudioSource>();
-        Debug.Log("Crane is Attacking Player.");
+
     }
     public override void Enter()
     {
+        Debug.Log("Crane is Attacking Player.");
         // Set attack trigger
         //anim.SetTrigger("isAttacking");
         //sound attackSound.Play();

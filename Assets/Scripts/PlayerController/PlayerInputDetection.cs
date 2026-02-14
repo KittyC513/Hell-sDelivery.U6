@@ -494,7 +494,7 @@ public class PlayerInputDetection : NetworkBehaviour
     {
         if (playerModel != null)
         {
-            print("playerModel:" + playerModel);
+            //print("playerModel:" + playerModel);
         }
 
     }

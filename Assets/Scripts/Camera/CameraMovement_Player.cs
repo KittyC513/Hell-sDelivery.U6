@@ -267,7 +267,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
         if (!resetCamPos)
         {
-            print("resetCamPos = false");
+            //print("resetCamPos = false");
             mRotateValue.x = playerTransform.eulerAngles.y; // face behind player
             mRotateValue.y = Mathf.Clamp(defaultPitch, pitchLimit.x, pitchLimit.y); // default pitch
 
@@ -292,12 +292,12 @@ public class CameraMovement_Player : NetworkBehaviour
             {
                 resetCamPos = true;
                 didSyncAfterReset = false;
-                print("Transition ends");
+                //print("Transition ends");
             }
             else
             {
                 time += Time.deltaTime;
-                print("Time :" +  time);
+                //print("Time :" +  time);
             }
 
             return; 
@@ -307,7 +307,7 @@ public class CameraMovement_Player : NetworkBehaviour
 
         if (!didSyncAfterReset)
         {
-            print("didSyncAfterReset = false");
+            //print("didSyncAfterReset = false");
             SyncRotateValueFromCamera();
             didSyncAfterReset = true;
             time = 0;
@@ -389,7 +389,7 @@ public class CameraMovement_Player : NetworkBehaviour
         //    transform.position = Vector3.Lerp(this.transform.position, movePos, Time.deltaTime * moveSpeed);
         //    this.transform.LookAt(from);
         //}
-        print("endCam");
+        //print("endCam");
     }
     #endregion
 
