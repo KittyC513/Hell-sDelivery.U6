@@ -12,12 +12,13 @@ public class CarjackCar : MonoBehaviour
 
     private bool canInput = true;
     private CarjackMinigameManager.HeatCheck heat;
+    [SerializeField] private MeshRenderer mesh;
 
-    [SerializeField] private Material hotMaterial;
-    [SerializeField] private Material warmMaterial;
-    [SerializeField] private Material coolMaterial;
-    [SerializeField] private Material coldMaterial;
-
+    [SerializeField] private Color hotColour;
+    [SerializeField] private Color warmColour;
+    [SerializeField] private Color coolColour;
+    [SerializeField] private Color coldColour;
+   
     public bool unlocked = false;
 
     public virtual void Start()
@@ -71,16 +72,16 @@ public class CarjackCar : MonoBehaviour
                 GetComponentInChildren<MeshRenderer>().material = null;
                 break;
             case CarjackMinigameManager.HeatCheck.hot:
-                GetComponentInChildren<MeshRenderer>().material = hotMaterial;
+                mesh.material.SetColor("_NewColour", hotColour);
                 break;
             case CarjackMinigameManager.HeatCheck.warm:
-                GetComponentInChildren<MeshRenderer>().material = warmMaterial;
+                mesh.material.SetColor("_NewColour", warmColour);
                 break;
             case CarjackMinigameManager.HeatCheck.cool:
-                GetComponentInChildren<MeshRenderer>().material = coolMaterial;
+                mesh.material.SetColor("_NewColour", coolColour);
                 break;
             case CarjackMinigameManager.HeatCheck.cold:
-                GetComponentInChildren<MeshRenderer>().material = coldMaterial;
+                mesh.material.SetColor("_NewColour", coldColour);
                 break;
         }
     }
