@@ -255,7 +255,7 @@ public class MovingToPickup : CraneState
 #region PickingUp
 public class PickingUp : CraneState
 {
-    private float pickUpTime = 2.3f;
+    private float pickUpTime = 3f;
     private float timer = 0f;
 
     public PickingUp(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
@@ -271,7 +271,7 @@ public class PickingUp : CraneState
         base.Enter();
         //Debug.Log("Crane is Picking Up Load.");
         // Set picking up trigger
-        //anim.SetTrigger("isPickingUp");
+        anim.SetTrigger("isPickingUp");
     }
     public override void Update()
     {
@@ -535,7 +535,7 @@ public class MovingToDropoff : CraneState
 
 public class DroppingOff : CraneState
 {
-    private float dropOffTime = 2.2f;
+    private float dropOffTime = 4f;
     private float timer = 0f;
 
     public DroppingOff(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation,Vector3 _dropoffLocation)
@@ -553,7 +553,7 @@ public class DroppingOff : CraneState
         Debug.Log("Crane is Dropping Off Load.");
         // Set dropping off trigger
 
-        //anim.SetTrigger("isDroppingOff");
+        anim.SetTrigger("isDroppingOff");
     }
     public override void Update()
     {
