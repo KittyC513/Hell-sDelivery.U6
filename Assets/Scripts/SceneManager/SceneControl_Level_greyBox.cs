@@ -1,6 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_greyBox>
 {
@@ -150,8 +151,8 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
 
             localPos.z += trolleyInputY * craneMoveSpeed * Time.deltaTime;
 
-            localPos.z = Mathf.Clamp(localPos.z, craneMinMaxHight.x, craneMinMaxHight.y);
-
+            localPos.z = Mathf.Clamp(localPos.z, magnetMinMaxDistance.x, magnetMinMaxDistance.y);       
+            
             craneTrolley.localPosition = localPos;
 
             //craneTrolley.Translate(Vector3.forward * trolleyInputY * craneMoveSpeed * Time.deltaTime,Space.Self);
@@ -280,46 +281,46 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         Gizmos.DrawWireCube(surfaceCenter, surfaceSize * 2);
     }
     /***************************/
-    //IEnumerator MagnetPullCoroutine(Transform obj)
-    //{
-    //    Rigidbody rb = obj.GetComponent<Rigidbody>();
-    //    if (rb == null) yield break;
+    IEnumerator MagnetPullCoroutine(Transform obj)
+    {
+        Rigidbody rb = obj.GetComponent<Rigidbody>();
+        if (rb == null) yield break;
 
-    //    // Disable physics while pulling
-    //    rb.linearVelocity = Vector3.zero;
-    //    rb.useGravity = false;
+        // Disable physics while pulling
+        rb.linearVelocity = Vector3.zero;
+        rb.useGravity = false;
 
-    //    while (true)
-    //    {
-    //        // Attach when close enough
-    //        print("distance to crane surface: " + Vector3.Distance(obj.position, craneSurface.position));
-    //        if (Vector3.Distance(obj.position, craneSurface.position) < 1.7f)
-    //        {
-    //            magneticForce = 0;
-    //            obj.SetParent(craneTrolley, true); // follows craneArm automatically
-    //            childObjs = obj;
-    //            break;
-    //        }
-    //        else
-    //        {
-    //            magneticForce = 5f;
-    //            // Target follows craneSurface every frame
-    //            Vector3 targetPos = craneSurface.position + craneSurface.up * 0.1f; ;
+        while (true)
+        {
+            // Attach when close enough
+            print("distance to crane surface: " + Vector3.Distance(obj.position, craneSurface.position));
+            if (Vector3.Distance(obj.position, craneSurface.position) < 1.7f)
+            {
+                magneticForce = 0;
+                obj.SetParent(craneTrolley, true); // follows craneArm automatically
+                childObjs = obj;
+                break;
+            }
+            else
+            {
+                magneticForce = 5f;
+                // Target follows craneSurface every frame
+                Vector3 targetPos = craneSurface.position + craneSurface.up * 0.1f; ;
 
-    //            if (targetPos.y < craneMinMaxHight.y - 0.5f)
-    //            {
-    //                targetPos.y = craneMinMaxHight.y - 0.5f;
-    //            }
+                if (targetPos.y < craneMinMaxHight.y - 0.5f)
+                {
+                    targetPos.y = craneMinMaxHight.y - 0.5f;
+                }
 
-    //            obj.position = Vector3.Lerp(obj.position, targetPos, magneticForce * Time.deltaTime);
-    //            obj.rotation = craneTrolley.rotation;
-    //        }
+                obj.position = Vector3.Lerp(obj.position, targetPos, magneticForce * Time.deltaTime);
+                obj.rotation = craneTrolley.rotation;
+            }
 
-    //        yield return null;
-    //    }
+            yield return null;
+        }
 
-    //    magnetCoroutine = null;
-    //}
+        magnetCoroutine = null;
+    }
     /****************************/
     public void ReleaseMagnet()
     {

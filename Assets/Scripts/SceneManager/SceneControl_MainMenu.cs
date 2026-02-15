@@ -1,6 +1,8 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 {
@@ -24,6 +26,11 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         //cam_cutscene_characterSelected.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        EnterPostOffice();
+    }
+
     IEnumerator ShowJoinGamePanel()
     {
         yield return new WaitForSeconds(25f);
@@ -37,5 +44,13 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         GameManager.instance.ResetPlayer1Position(spawnpoints[0]);
         GameManager.instance.ResetPlayer2Position(spawnpoints[1]);
         GameManager.instance.UnFreezeBothPlayers();
+    }
+
+    public void EnterPostOffice()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            SceneManager.LoadScene("PostOffice");   
+        }
     }
 }
