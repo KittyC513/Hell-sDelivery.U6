@@ -8,7 +8,7 @@ public class PopupTrigger : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // UI image appears when player 1 or 2 enters collision box
-        if (other.CompareTag("P1") || other.CompareTag("P2"))
+        if (other.CompareTag("Player"))
         {
             popupImage.enabled = true;
         }
@@ -17,7 +17,7 @@ public class PopupTrigger : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         // UI image disappears when player 1 or 2 exits collision box
-        if (other.CompareTag("P1") || other.CompareTag("P2"))
+        if (other.CompareTag("Player"))
         {
             popupImage.enabled = false;
         }
