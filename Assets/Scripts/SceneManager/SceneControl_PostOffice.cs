@@ -1,10 +1,16 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using System.Collections;
 
 public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
 {
     public Transform[] spawnpoints;
     public DialogueSystemEvents dialogueSystemEvents_lalah;
+    public float cutsceneDuration = 18f;
+    public Camera playCam;
+
+    public GameObject cutscene_enterOffice;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -13,6 +19,10 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
     }
     void Start()
     {
+        playCam.enabled = false;
+
+        GameManager.instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
+        GameManager.instance.FreezeBothPlayers();
         EventData.curSceneName = "PostOffice";
         //reset players position
 
@@ -21,7 +31,10 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
     // Update is called once per frame
     void Update()
     {
-        ResetPlayerPos();
+        //if (!isResetPos)
+        //{
+        //    StartCoroutine(OnCutSceneEnd());
+        //}
     }
 
     public void ResetPlayerPos()
@@ -49,6 +62,21 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
         //});
     }
     #endregion
+
+    IEnumerator OnCutSceneEnd()
+    {
+        yield return new WaitForSeconds(cutsceneDuration);
+
+        isResetPos = true;
+    }
+
+    public void SwitchCamera()
+    {
+        cutscene_enterOffice.SetActive(false);
+        playCam.enabled = true;
+        GameManager.instance.ResetPlayersPosition(spawnpoints[2], spawnpoints[3]);
+        GameManager.instance.UnFreezeBothPlayers();
+    }
 
 
 

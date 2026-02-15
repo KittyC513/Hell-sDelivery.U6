@@ -146,7 +146,8 @@ public class CameraManager : MonoBehaviour
 
         if (EventData.curSceneName == "PostOffice" || 
             EventData.curSceneName == "minigame" ||
-            EventData.curSceneName == "StartTesting")
+            EventData.curSceneName == "StartTesting" ||
+            EventData.curSceneName == "StartScene")
         {
             currentCamType = E_CamType.mainCam;
         }
