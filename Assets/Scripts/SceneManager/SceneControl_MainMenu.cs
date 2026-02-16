@@ -14,9 +14,12 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
     //Character Selected Control
     public GameObject cutscene_sockThief;
     public GameObject cinematicCanvas;
+    public GameObject cutscene_tutorialEnd;
 
     private void Start()
     {
+        cutscene_tutorialEnd.SetActive(false);
+
         playerInputManager.DisableJoining();
         JoinGamePanel.SetActive(false);
         EventData.curSceneName = "StartScene";

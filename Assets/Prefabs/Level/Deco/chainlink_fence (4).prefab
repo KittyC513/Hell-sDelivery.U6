@@ -163,6 +163,10 @@ PrefabInstance:
       value: chainlink_fence (4)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 849a2ac353e898d499c439ce3cc0c884, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 849a2ac353e898d499c439ce3cc0c884, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -176,8 +180,37 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 849a2ac353e898d499c439ce3cc0c884, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6770032096060160408}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 849a2ac353e898d499c439ce3cc0c884, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 465893638763144513}
   m_SourcePrefab: {fileID: 100100000, guid: 849a2ac353e898d499c439ce3cc0c884, type: 3}
+--- !u!1 &222594127294308432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 849a2ac353e898d499c439ce3cc0c884, type: 3}
+  m_PrefabInstance: {fileID: 1141585522720382209}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &465893638763144513
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222594127294308432}
+  m_Material: {fileID: 13400000, guid: 316641e89f2e8c14192009ed5513e34a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3527851, y: 0.36532995, z: 0.028523223}
+  m_Center: {x: -0.16429316, y: 0.24339299, z: 0.004190632}
 --- !u!4 &602638481147525866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 849a2ac353e898d499c439ce3cc0c884, type: 3}
