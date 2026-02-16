@@ -53,15 +53,18 @@ public class CarObject : MonoBehaviour
         //check for ground first then snap each tire to position
         DetectGrounded(transform.position, targetHeight + 1.05f, groundMask);
 
+
+       
+        
         if (grounded)
         {
-           
-
             //snap to the ground at each tire position
             DetectTireGround(frontLTire.position, targetHeight + 1f, groundMask, frontLTire.GetChild(0).gameObject);
+            //if its not then set all the rest of the tires
             DetectTireGround(frontRTire.position, targetHeight + 1f, groundMask, frontRTire.GetChild(0).gameObject);
             DetectTireGround(backLTire.position, targetHeight + 1f, groundMask, backLTire.GetChild(0).gameObject);
             DetectTireGround(backRTire.position, targetHeight + 1f, groundMask, backRTire.GetChild(0).gameObject);
+            
         }
         else
         {
@@ -92,7 +95,7 @@ public class CarObject : MonoBehaviour
         groundRay.origin = startPos;
         groundRay.direction = Vector3.down;
 
-        int hits = Physics.RaycastNonAlloc(groundRay, groundHit, checkDist + 0.25f, groundMask);
+        int hits = Physics.RaycastNonAlloc(groundRay, groundHit, checkDist, groundMask);
 
         if (hits > 0)
         {
@@ -105,19 +108,21 @@ public class CarObject : MonoBehaviour
     }
 
 
-    private void DetectTireGround(Vector3 startPos, float checkDist, LayerMask groundMask, GameObject tireObj)
+    private float DetectTireGround(Vector3 startPos, float checkDist, LayerMask groundMask, GameObject tireObj)
     {
         //set the y position a little bit inside the car incase the car recives so much force that the base is on the ground
         Vector3 sPos = new Vector3(startPos.x, startPos.y + 0.1f, startPos.z);
-        
+        float diff = 1;
+
         tireRay.origin = sPos;
         tireRay.direction = Vector3.down;
+        
         int hits = Physics.RaycastNonAlloc(tireRay, raycastHits, checkDist + 0.1f, groundMask);
 
         if (hits > 0)
         {
             RaycastHit h = raycastHits[0];
-            SnapGrounded(h, rb, startPos, targetHeight, frequency, damping);
+            diff = SnapGrounded(h, rb, startPos, targetHeight, frequency, damping);
             tireObj.transform.position = new Vector3(startPos.x, (h.point.y + tireRadius), startPos.z);
         }
         else
@@ -126,6 +131,7 @@ public class CarObject : MonoBehaviour
 
         }
 
+        return diff;
         //raycast to check for ground
         //if (Physics.Raycast(sPos, Vector3.down, out RaycastHit hit, checkDist + 0.1f, groundMask))
         //{
@@ -135,7 +141,7 @@ public class CarObject : MonoBehaviour
         
     }
 
-    private void SnapGrounded(RaycastHit hit, Rigidbody rb, Vector3 forcePos, float floatHeight, float springStrength, float springDamping)
+    private float SnapGrounded(RaycastHit hit, Rigidbody rb, Vector3 forcePos, float floatHeight, float springStrength, float springDamping)
     {
         Vector3 vel = rb.linearVelocity;
         Vector3 rayDir = transform.TransformDirection(-transform.up);
@@ -146,12 +152,15 @@ public class CarObject : MonoBehaviour
         //for example raycast is 2m long but we want to be floating 0.5m above the ground so our difference is 1.5
         float targetY = hit.distance - floatHeight;
 
+        
+
         //apply our spring force, makes the player adjust their position by applying force in the direction that leads us towards the desired float height
         //the damping value slows down the bobbing until it stops
         float springForce = (targetY * springStrength) - (rayVel * springDamping);
 
         //add this force multiplied by our desired direction to our rigidbody
         rb.AddForceAtPosition((rayDir * springForce) * rb.mass, forcePos);
+        return targetY;
     }
 
     private void CalculateMovement(Rigidbody rb, Vector3 dir, float accelValue, float maxSpeed, float maxAccelStep)
