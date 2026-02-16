@@ -84,8 +84,11 @@ public class CameraManager : MonoBehaviour
     public void SwitchToPlayerCam()
     {
         if (EventData.craneIsActivated) return;
+
+        if (EventData.isOnCutScene) playerCam.enabled = false;
+        else playerCam.enabled = true;
+
         lockCam.enabled = false;
-        playerCam.enabled = true;
         inputDetection.cam = playerCam;
     }
 

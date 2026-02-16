@@ -16,6 +16,8 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
     public GameObject cinematicCanvas;
     public GameObject cutscene_tutorialEnd;
 
+    public Camera cam_cutscene_sockThief;
+
     private void Start()
     {
         cutscene_tutorialEnd.SetActive(false);
@@ -58,4 +60,6 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
             SceneManager.LoadScene("PostOffice");   
         }
     }
+
+    
 }
