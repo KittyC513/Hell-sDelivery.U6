@@ -25,7 +25,7 @@ public class EventData
     public bool cutscene_PO_01 = false;
 
     [Header("StartScene")]
-    public bool cutscene_SC_01 = false;
     public static bool gameStart = false;
+    public static bool isOnCutScene = false;
 
 }

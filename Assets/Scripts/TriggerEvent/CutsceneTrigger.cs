@@ -19,7 +19,9 @@ public class CutsceneTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Trigger the cutscene here
+            SceneControl_MainMenu.Instance.cam_cutscene_sockThief.enabled = false;
             SceneControl_MainMenu.Instance.cutscene_tutorialEnd.SetActive(true);
+            EventData.isOnCutScene = true;
             print("Cutscene triggered!");
         }
     }

@@ -7986,11 +7986,11 @@ GameObject:
   - component: {fileID: 691043137}
   m_Layer: 0
   m_Name: CameraPos
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &691043132
 Transform:
   m_ObjectHideFlags: 0
@@ -8154,7 +8154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &693490956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8904,7 +8904,6 @@ GameObject:
   - component: {fileID: 730074149}
   - component: {fileID: 730074148}
   - component: {fileID: 730074152}
-  - component: {fileID: 730074153}
   m_Layer: 25
   m_Name: NPCLalah
   m_TagString: NPC3
@@ -9003,27 +9002,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &730074153
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730074143}
-  m_Material: {fileID: 13400000, guid: 316641e89f2e8c14192009ed5513e34a, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9234869, y: 1.4476163, z: 0.98064685}
-  m_Center: {x: -0.038256396, y: -0.27619252, z: -0.009676592}
 --- !u!1001 &731056253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9877,13 +9855,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798214039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 2.03, y: -2.64, z: -1.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1974805997}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &822394360
 GameObject:
   m_ObjectHideFlags: 0
@@ -16206,8 +16184,8 @@ MonoBehaviour:
   - {fileID: 1955262001}
   - {fileID: 798214040}
   dialogueSystemEvents_lalah: {fileID: 0}
-  cutsceneDuration: 14.8
-  playCam: {fileID: 1720508119}
+  cutsceneDuration: 12.7
+  playCam: {fileID: 693490958}
   cutscene_enterOffice: {fileID: 374571691}
 --- !u!4 &1559867246
 Transform:
@@ -18094,7 +18072,7 @@ GameObject:
   - component: {fileID: 1720508118}
   m_Layer: 0
   m_Name: Play Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20991,13 +20969,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1955262000}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: -2.67, z: -0.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1974805997}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1974805996
 GameObject:
   m_ObjectHideFlags: 0
@@ -23545,6 +23523,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 268140693540776869, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9118636882620464276}
+    - targetCorrespondingSourceObject: {fileID: 268140693540776869, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9118636882620464278}
   m_SourcePrefab: {fileID: 100100000, guid: 0ea602c8511e70642884991eace0d25e, type: 3}
 --- !u!1 &9118636882620464275 stripped
 GameObject:
@@ -23565,7 +23546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_overrideName: 
   m_overrideUseMessage: 
-  maxUseDistance: 5
+  maxUseDistance: 7
   events:
     onSelect:
       m_PersistentCalls:
@@ -23654,6 +23635,29 @@ MonoBehaviour:
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
   selectedDatabase: {fileID: 11400000, guid: bcf6778f5af11a1498edbe7f6fc7ab6e, type: 2}
+--- !u!136 &9118636882620464278
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118636882620464275}
+  m_Material: {fileID: 13400000, guid: 316641e89f2e8c14192009ed5513e34a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.6064848
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7054059, z: 0}
 --- !u!1001 &9167439519326556462
 PrefabInstance:
   m_ObjectHideFlags: 0

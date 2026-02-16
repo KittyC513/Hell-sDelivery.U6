@@ -25,16 +25,16 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
         GameManager.instance.FreezeBothPlayers();
         EventData.curSceneName = "PostOffice";
         //reset players position
+        if(!isResetPos)
+            StartCoroutine(OnCutSceneEnd());
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (!isResetPos)
-        //{
-        //    StartCoroutine(OnCutSceneEnd());
-        //}
+
     }
 
     public void ResetPlayerPos()
@@ -66,16 +66,17 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
     IEnumerator OnCutSceneEnd()
     {
         yield return new WaitForSeconds(cutsceneDuration);
-
+        cutscene_enterOffice.SetActive(false);
         isResetPos = true;
     }
 
     public void SwitchCamera()
     {
-        cutscene_enterOffice.SetActive(false);
         playCam.enabled = true;
         GameManager.instance.ResetPlayersPosition(spawnpoints[2], spawnpoints[3]);
+        GameManager.instance.RotatePlayersTo(spawnpoints[2]);
         GameManager.instance.UnFreezeBothPlayers();
+
     }
 
 
