@@ -81,7 +81,7 @@ public class HellHoundBase : EnemyBase
             isDead = true;
             animator.SetTrigger("Dead");
             StartCoroutine(DissolveWait(deathTime));
-            sfxPlayer.PlaySoundEffect("ObjectBank1", "HellHoundDie");
+            
         };
     }
 
@@ -210,5 +210,6 @@ public class HellHoundBase : EnemyBase
             Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckDist, transform.position.z));
         }
     }
+
 
 }

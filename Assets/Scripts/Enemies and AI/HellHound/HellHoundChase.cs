@@ -46,10 +46,10 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
 
     public override HellHoundStateMachine.HoundStates GetNextState()
     {
-        //if the distance between the player and agent is bigger than a certain range, count time until the connection between them times out
-        if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) > chaseRange)
+        //if the hound can't see the player count time until connection timeout
+        if (hellHoundBase.DetectPlayer(hellHoundBase.PlayerDetectionRadius, hellHoundBase.VisionConeAngle) == null)
         {
-            chaseTemp += Time.deltaTime;
+              chaseTemp += Time.deltaTime;
 
             if (chaseTemp >= chaseTimeout)
             {
@@ -61,29 +61,27 @@ public class HellHoundChase : BaseState<HellHoundStateMachine.HoundStates>
         else
         {
             chaseTemp = 0;
-        }
 
-        //player is within lunge range
-        if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) < lungeRange)
-        {
-            lungeTemp += Time.deltaTime;
-
-            if (lungeTemp >= lungeTime)
+            //player is within lunge range
+            if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) < lungeRange)
             {
-                return HellHoundStateMachine.HoundStates.lunge;
+                lungeTemp += Time.deltaTime;
+
+                if (lungeTemp >= lungeTime)
+                {
+                    return HellHoundStateMachine.HoundStates.lunge;
+                }
             }
-        }
-        else
-        {
-           
+
+            if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) < hellHoundBase.AttackDetectionRange)
+            {
+                if (!hellHoundBase.TargetPlayer.GetComponent<Bag>().isInvisible)
+                    return HellHoundStateMachine.HoundStates.attack;
+            }
+
         }
 
-        if (Vector3.Distance(navAgent.transform.position, hellHoundBase.TargetPlayer.transform.position) < hellHoundBase.AttackDetectionRange)
-        {
-            if (!hellHoundBase.TargetPlayer.GetComponent<Bag>().isInvisible)
-                return HellHoundStateMachine.HoundStates.attack;
-        }
-
+       
         if (hellHoundBase.TakeHit)
         {
             return HellHoundStateMachine.HoundStates.takeHit;

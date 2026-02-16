@@ -23,11 +23,12 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected NavMeshAgent navAgent; //the nav agent
     [SerializeField] protected Health eHealth; //the enemy health script
     [SerializeField] protected HellHoundStateMachine houndStateMachine;
-
+    [SerializeField] protected LayerMask playerAndWallMask;
 
     private bool droppedMoney = false;
     protected bool isDead = false;
     protected bool takeHit = false;
+    private Vector3 tempDir;
 
     public NavMeshAgent NavAgent { get {  return navAgent; } }
     public GameObject TargetPlayer { get { return targetPlayer; } }
@@ -40,7 +41,13 @@ public class EnemyBase : MonoBehaviour
         Collider[] players = Physics.OverlapSphere(transform.position, range, playerMask);
         if (players.Length > 0)
         {
+            //check if a raycast sent to the player collides with the player (check if they have LOS)
             Collider player = players[0];
+
+            //the direction towards the player from the enemy
+            Vector3 targetDir = player.transform.position - transform.position;
+
+            
 
             //Detect if target player layer has been changed
             if (LayerMask.LayerToName(players[0].gameObject.layer) == "Invisible_Player1" ||
@@ -50,20 +57,35 @@ public class EnemyBase : MonoBehaviour
                 return null;
             }
 
-            //the direction towards the player from the enemy
-            Vector3 targetDir = player.transform.position - transform.position;
+            tempDir = targetDir;
 
             //if the angle between the forward direction of the enemy and the player is less than the vision cone angle
-            if (Vector3.Angle(transform.forward, targetDir) < angle)
+            if (Vector3.Angle(transform.forward, targetDir) < angle && Physics.Raycast(transform.position, targetDir, out RaycastHit hit, range, playerAndWallMask))
             {
-                //target player and start chasing
-
-                targetPlayer = players[0].gameObject;
-                return targetPlayer;
+                
+                Debug.Log(hit.collider);
+                //check if we hit a player
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //we can now attack
+                    targetPlayer = player.gameObject;
+                    return targetPlayer;
+                }
             }
         }
 
         return null;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+
+        Ray ray = new Ray();
+        ray.origin = transform.position;
+        ray.direction = tempDir;
+        Gizmos.DrawRay(ray);
+        //Gizmos.DrawLine(ray.origin, ray.direction * 10);
     }
 
     protected bool DetectGround()
