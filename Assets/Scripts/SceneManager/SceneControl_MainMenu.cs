@@ -13,6 +13,7 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 
     //Character Selected Control
     public GameObject cutscene_sockThief;
+    public GameObject cinematicCanvas;
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         GameManager.instance.ResetPlayer1Position(spawnpoints[0]);
         GameManager.instance.ResetPlayer2Position(spawnpoints[1]);
         GameManager.instance.UnFreezeBothPlayers();
+        EventData.gameStart = true;
     }
 
     public void EnterPostOffice()

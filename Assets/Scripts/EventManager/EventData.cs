@@ -26,5 +26,6 @@ public class EventData
 
     [Header("StartScene")]
     public bool cutscene_SC_01 = false;
+    public static bool gameStart = false;
 
 }

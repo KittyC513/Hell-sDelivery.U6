@@ -39,13 +39,15 @@ public class CharacterSelectedControl : MonoBehaviour
     {
         if (GameManager.instance.isOnCharacterSelection)
         {
-            //OnCharacterSelected();
-            //TextDemonstrate();
-            //OnReady();
+            OnCharacterSelected();
+            TextDemonstrate();
+            OnReady();
 
+
+            /*****************************************************************/
             //testing 
-            TestingScene();
-
+            //TestingScene();
+            /*****************************************************************/
         }
     }
 
@@ -140,7 +142,18 @@ public class CharacterSelectedControl : MonoBehaviour
         //When players select their respective characters, a 3-second countdown will begin before the game starts
         if (leftIsSelected_p1 && rightIsSelected_p2 ||
             rightIsSelected_p1 && leftIsSelected_p2)
+        {
+            //1.Confirm button on character selection
+
+            //2.Cutscene starts 
+
+
+
+
+
             StartCoroutine(StartGameCountDown());
+        }
+
         else
         {
             onReady = false;
@@ -202,6 +215,16 @@ public class CharacterSelectedControl : MonoBehaviour
         GameObject playerInstance = Instantiate(prefab);
         playerInstance.transform.parent = GameManager.instance.playerModel_p1.transform;
         Transform t = playerInstance.transform;
+
+        //if(location == "Models/Characters/Shmink")
+        //{
+        //    t.localRotation = Quaternion.Euler(0f, 180f, 0f);
+        //}
+        //else
+        //{
+        //    t.localRotation = Quaternion.Euler(0f, 180f, 0f);
+        //}
+
         t.localPosition = new Vector3(0f, -1.2f, 0f);
         t.localRotation = Quaternion.Euler(0f, 180f, 0f);
 
@@ -236,12 +259,18 @@ public class CharacterSelectedControl : MonoBehaviour
         return playerInstance;
     }
 
+    #endregion
+
+
+
+    #region Testing
     public void TestingScene()
     {
         GameManager.instance.cam_p1.rect = new Rect(0, 0, 0.5f, 1);
         GameManager.instance.cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
         SelectPlayer1Model_p1("Models/Characters/Shmink");
         SelectPlayer1Model_p2("Models/Characters/Shmonk");
+        SceneControl_MainMenu.Instance.cinematicCanvas.SetActive(false);
         SceneControl_MainMenu.Instance.cutscene_sockThief.SetActive(true);
         GameManager.instance.isOnCharacterSelection = false;
     }
