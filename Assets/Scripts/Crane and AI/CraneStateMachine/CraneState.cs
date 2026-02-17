@@ -75,7 +75,7 @@ public class CraneState
 
         if (players.Length == 0)
         {
-            Debug.Log("Crane cannot see player: No players in vision radius.");
+            //Debug.Log("Crane cannot see player: No players in vision radius.");
             return false;
         }
         else
@@ -129,7 +129,7 @@ public class Idle : CraneState
         base.Enter();
         // set idle trigger
         //anim.SetTrigger("isIdle");
-        Debug.Log("Crane is now Idle.");
+        //Debug.Log("Crane is now Idle.");
     }
     public override void Update()
     {
@@ -189,7 +189,7 @@ public class MovingToPickup : CraneState
 
         if (craneMovingPoint == null || craneArm == null)
         {
-            Debug.LogError("Crane Arm is null!" + "Crane surface is null");
+            //Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
         }
 
@@ -215,10 +215,10 @@ public class MovingToPickup : CraneState
         {
 
             Vector3 pickupLocal = craneMovingPoint.InverseTransformPoint(pickupLocation);
-            Debug.Log("Pickup location in crane arm local space: " + pickupLocal);
+            //Debug.Log("Pickup location in crane arm local space: " + pickupLocal);
 
             Vector3 movePointLocal = craneMovingPoint.localPosition;
-            Debug.Log("Crane moving point local position before moving: " + movePointLocal);
+            //Debug.Log("Crane moving point local position before moving: " + movePointLocal);
             //Vector3 movePointLocal = craneMovingPoint.position;
 
             movePointLocal.z = pickupLocal.z;
@@ -226,7 +226,7 @@ public class MovingToPickup : CraneState
             float moveSpeed = 10f;  
 
             craneMovingPoint.localPosition = Vector3.MoveTowards(craneMovingPoint.localPosition, movePointLocal, moveSpeed * Time.deltaTime);
-            Debug.Log("Crane moving point local position after moving: " + craneMovingPoint.localPosition);
+            //Debug.Log("Crane moving point local position after moving: " + craneMovingPoint.localPosition);
 
             //4. arrival check on rail axis
             float zError = Mathf.Abs(craneMovingPoint.localPosition.z - pickupLocal.z);
@@ -357,7 +357,7 @@ public class MovingToDropoff : CraneState
 
         if (craneMovingPoint == null || craneArm == null)
         {
-            Debug.LogError("Crane Arm is null!" + "Crane surface is null");
+            //Debug.LogError("Crane Arm is null!" + "Crane surface is null");
             return;
         }
 
@@ -549,7 +549,7 @@ public class DroppingOff : CraneState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Crane is Dropping Off Load.");
+        //Debug.Log("Crane is Dropping Off Load.");
         // Set dropping off trigger
 
         anim.SetTrigger("isDroppingOff");
@@ -644,7 +644,7 @@ public class Pursue : CraneState
         base.Enter();
         // Set pursue trigger
         //anim.SetTrigger("isPursuing");
-        Debug.Log("Crane is Pursuing Player.");
+        //Debug.Log("Crane is Pursuing Player.");
     }
     public override void Update()
     {
@@ -697,7 +697,7 @@ public class Attack : CraneState
     }
     public override void Enter()
     {
-        Debug.Log("Crane is Attacking Player.");
+        //Debug.Log("Crane is Attacking Player.");
         // Set attack trigger
         //anim.SetTrigger("isAttacking");
         //sound attackSound.Play();

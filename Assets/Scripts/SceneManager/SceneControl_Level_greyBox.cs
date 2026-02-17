@@ -15,7 +15,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public Transform craneTrolley;
     public Transform craneSurface;
     public EnterCrane enterCrane;
-    PlayerInputDetection playerInput;
+    public PlayerInputDetection playerInput;
     public float craneMoveSpeed = 5f;
     public float craneRotateSpeed = 20f;
 
@@ -35,7 +35,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public float camSwitchDelay = 0.5f;
     public float camSwitchTimer = 0f;
 
-    public Collider magneticSurceCollider;
+    public Collider magneticSurfaceCollider;
     Coroutine magnetCoroutine;
     Transform magneticObj;
 
@@ -56,6 +56,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     void Update()
     {
         ResetPlayerPos();
+        CraneControl();
     }
 
     void ResetPlayerPos()
@@ -96,8 +97,11 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         if (enterCrane.p1EnterCrane)
             playerInput = GameManager.instance.InputDetection_p1;
 
+
         else if (enterCrane.p2EnterCrane)
             playerInput = GameManager.instance.InputDetection_p2;
+
+        print("Player Input Detected: " + playerInput.name);
 
         // reset player cam to crane cam 
         if (playerInput != null)
@@ -182,87 +186,92 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         Collider[] colliders = Physics.OverlapBox(craneSurface.position, surfaceSize, craneSurface.rotation,
                                         1 << LayerMask.NameToLayer("Magnetic"), QueryTriggerInteraction.UseGlobal);
         print("Colliders Length: " + colliders.Length);
-        //if (colliders.Length > 0 && magnetCoroutine == null)
-        //{
-        //    magneticSurfaceCollider = colliders[0];
-        //    magneticObj = magneticSurfaceCollider.transform;
+        if (colliders.Length > 0 && magnetCoroutine == null)
+        {
+            magneticSurfaceCollider = colliders[0];
+            magneticObj = magneticSurfaceCollider.transform;
 
 
-        //    magnetCoroutine = StartCoroutine(MagnetPullCoroutine(magneticObj));
-        //}
-        //if(colliders.Length > 0)
-        //{
-        //    magneticSurfaceCollider = colliders[0];
-        //    Transform magneticObj = colliders[0].transform;
+            magnetCoroutine = StartCoroutine(MagnetPullCoroutine(magneticObj));
+        }
+        if (colliders.Length > 0)
+        {
+            magneticSurfaceCollider = colliders[0];
+            Transform magneticObj = colliders[0].transform;
 
-        //    Rigidbody rb = magneticSurfaceCollider.attachedRigidbody;
-        //    if (rb == null) return;
+            Rigidbody rb = magneticSurfaceCollider.attachedRigidbody;
+            if (rb == null) return;
 
-        //    rb.linearVelocity = Vector3.zero;
-        //    rb.angularVelocity = Vector3.zero;
-        //    rb.useGravity = false;
-        //    rb.isKinematic = true;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.useGravity = false;
+            rb.isKinematic = true;
 
-        //    Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f;
-        //    Quaternion targetRot = craneSurface.rotation;
+            Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f;
+            Quaternion targetRot = craneSurface.rotation;
 
-        //    magneticObj.position = Vector3.Lerp(magneticObj.position, targetPos, moveSpeed * Time.deltaTime);
+            magneticObj.position = Vector3.Lerp(magneticObj.position, targetPos, moveSpeed * Time.deltaTime);
 
-        //    if(Vector3.Distance(magneticObj.position, targetPos) < 0.2f)
-        //    {
-        //        magneticObj.SetParent(craneTrolley, true);
-        //        childObjs = magneticObj;
-        //    }
+            if (Vector3.Distance(magneticObj.position, targetPos) < 0.2f)
+            {
+                magneticObj.SetParent(craneTrolley, true);
+                childObjs = magneticObj;
+            }
 
-        //}
-        //else
-        //{
-        //    if(magneticSurfaceCollider == null) return;
-        //    Rigidbody rb = magneticSurfaceCollider.attachedRigidbody;
-        //    rb.isKinematic = false;
-        //    rb.useGravity = true;
-        //    if(childObjs != null)
-        //    {
-        //        childObjs.SetParent(null, true);
-        //        childObjs = null;
-        //    }
-        //    magneticSurfaceCollider = null;
-        //}
+        }
+        else
+        {
+            if (magneticSurfaceCollider == null) return;
+            Rigidbody rb = magneticSurfaceCollider.attachedRigidbody;
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            if (childObjs != null)
+            {
+                childObjs.SetParent(null, true);
+                childObjs = null;
+            }
+            magneticSurfaceCollider = null;
+        }
         //apply the force to the first object detected within the magnetic surface area
-        //if (colliders.Length > 0)
-        //{
-        //    switch (craneState)
-        //    {
-        //        case CraneStateType.ActivateOneObject:
-        //            Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
-        //            rigi_mo.linearVelocity = Vector3.up * magneticForce;
-        //            Transform magneticObj = colliders[0].transform;
-        //            Vector3 afterPos = magneticObj.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
-        //            magneticObj.position = afterPos;
-        //            //Transform magneticObj = colliders[0].transform;
-        //            //if(magneticObj.parent != craneTrolley)
-        //            //{
-        //            //    magneticObj.transform.SetParent(craneTrolley);
-        //            //    childObjs = magneticObj;
+        if (colliders.Length > 0)
+        {
+            Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
+            rigi_mo.linearVelocity = Vector3.up * magneticForce;
+            Transform magneticObj = colliders[0].transform;
+            Vector3 afterPos = magneticObj.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
+            magneticObj.position = afterPos;
+            //switch (craneState)
+            //{
+            //    case CraneStateType.ActivateOneObject:
+            //        Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
+            //        rigi_mo.linearVelocity = Vector3.up * magneticForce;
+            //        Transform magneticObj = colliders[0].transform;
+            //        Vector3 afterPos = magneticObj.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
+            //        magneticObj.position = afterPos;
+            //        //Transform magneticObj = colliders[0].transform;
+            //        //if(magneticObj.parent != craneTrolley)
+            //        //{
+            //        //    magneticObj.transform.SetParent(craneTrolley);
+            //        //    childObjs = magneticObj;
 
-        //            //}
+            //        //}
 
-        //            break;
-        //        case CraneStateType.ActivateMultipleObjects:
-        //            //for (int i = 0; i < colliders.Length; i++)
-        //            //{
-        //            //    magneticObj = colliders[i].transform;
-        //            //    if(magneticObj.parent != craneTrolley)
-        //            //    {
-        //            //        magneticObj.transform.SetParent(craneTrolley);
-        //            //        childObjs = magneticObj;
-        //            //    }
+            //        break;
+            //    case CraneStateType.ActivateMultipleObjects:
+            //        //for (int i = 0; i < colliders.Length; i++)
+            //        //{
+            //        //    magneticObj = colliders[i].transform;
+            //        //    if(magneticObj.parent != craneTrolley)
+            //        //    {
+            //        //        magneticObj.transform.SetParent(craneTrolley);
+            //        //        childObjs = magneticObj;
+            //        //    }
 
 
-        //            //}
-        //            break;
-        //    }
-        //}
+            //        //}
+            //        break;
+            //}
+        }
     }
     #endregion
 

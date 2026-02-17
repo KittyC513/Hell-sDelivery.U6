@@ -34,7 +34,7 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 
     private void Update()
     {
-        EnterPostOffice();
+        OnDevTesting();
     }
 
     IEnumerator ShowJoinGamePanel()
@@ -53,11 +53,31 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         EventData.gameStart = true;
     }
 
+    public void OnDevTesting()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            JoinGamePanel.SetActive(true);
+            playerInputManager.EnableJoining();
+            GameManager.instance.isOnJoinGamePanel = true;
+        }
+
+        EnterPostOffice();
+        EnterGreyBox();
+    }
     public void EnterPostOffice()
     {
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            SceneManager.LoadScene("PostOffice");   
+            SceneManager.LoadScene("PostOffice");
+        }
+    }
+
+    public void EnterGreyBox()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            SceneManager.LoadScene("Level_greyBox");
         }
     }
 

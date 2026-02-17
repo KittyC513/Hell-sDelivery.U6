@@ -20,7 +20,7 @@ public class SceneControl_CraneTestinhg : SceneControlBase<SceneControl_CraneTes
     public Transform craneTrolley;
     public Transform craneSurface;
     public EnterCrane enterCrane;
-    PlayerInputDetection playerInput;
+    public PlayerInputDetection playerInput;
     public float craneMoveSpeed = 5f;
     public float craneRotateSpeed = 20f;
 

@@ -38,14 +38,14 @@ public class CharacterSelectedControl : MonoBehaviour
     {
         if (GameManager.instance.isOnCharacterSelection)
         {
-            OnCharacterSelected();
-            TextDemonstrate();
-            OnReady();
+            //OnCharacterSelected();
+            //TextDemonstrate();
+            //OnReady();
 
 
             /*****************************************************************/
             //testing 
-            //TestingScene();
+            TestingScene();
             /*****************************************************************/
         }
     }
@@ -269,8 +269,8 @@ public class CharacterSelectedControl : MonoBehaviour
     {
         GameManager.instance.cam_p1.rect = new Rect(0, 0, 0.5f, 1);
         GameManager.instance.cam_p2.rect = new Rect(0.5f, 0, 0.5f, 1);
-        SelectPlayer1Model_p1("Models/Characters/Shmink");
-        SelectPlayer1Model_p2("Models/Characters/Shmonk");
+        SelectPlayer1Model_p1("Models/Characters/Shmink1");
+        SelectPlayer1Model_p2("Models/Characters/Shmonk1");
         SceneControl_MainMenu.Instance.cinematicCanvas.SetActive(false);
         SceneControl_MainMenu.Instance.cutscene_sockThief.SetActive(true);
         GameManager.instance.isOnCharacterSelection = false;
