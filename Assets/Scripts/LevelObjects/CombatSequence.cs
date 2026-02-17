@@ -58,7 +58,7 @@ public class CombatSequence : MonoBehaviour
     {
         players = Physics.OverlapBox(transform.position, areaSize, Quaternion.identity, playerLayers);
         
-        if (players.Length > 1 && !sequenceActive)
+        if (players.Length > 3 && !sequenceActive)
         {
             StartSquence();
         }

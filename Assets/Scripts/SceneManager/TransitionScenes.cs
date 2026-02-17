@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class TransitionScenes : MonoBehaviour
@@ -17,6 +19,9 @@ public class TransitionScenes : MonoBehaviour
     private bool transitionStarted = false;
 
     private bool savedPos = false;
+    private bool waitingOnReturn = false;
+
+    [SerializeField] public UnityEvent OnReturnToScene; //calls when the object is re-enabled after calling a transition to start
 
     private void Start()
     {
@@ -39,19 +44,27 @@ public class TransitionScenes : MonoBehaviour
             GameManager.instance.player1.transform.position = player1Pos;
             GameManager.instance.player2.transform.position = players2Pos;
         }
+
+        if (waitingOnReturn)
+        {
+            Debug.Log("On Return");
+            OnReturnToScene.Invoke();
+            waitingOnReturn = false;
+        }
     }
 
 
     public void StartTransition()
     {
         transitionStarted = true;
-
+        
         //reference the player positions to use later
         player1Pos = GameManager.instance.player1.transform.position;
         players2Pos = GameManager.instance.player2.transform.position;
 
         GameManager.instance.DropPlayerItems();
-
+        waitingOnReturn = true;
+        
         savedPos = true;
 
         //check the scene root to see if we should enable it
