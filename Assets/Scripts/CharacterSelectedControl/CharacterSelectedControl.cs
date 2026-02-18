@@ -38,14 +38,14 @@ public class CharacterSelectedControl : MonoBehaviour
     {
         if (GameManager.instance.isOnCharacterSelection)
         {
-            OnCharacterSelected();
-            TextDemonstrate();
-            OnReady();
+            //OnCharacterSelected();
+            //TextDemonstrate();
+            //OnReady();
 
 
             /*****************************************************************/
             //testing 
-            //TestingScene();
+            TestingScene();
             /*****************************************************************/
         }
     }

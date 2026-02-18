@@ -155,7 +155,7 @@ public class CameraManager : MonoBehaviour
             currentCamType = E_CamType.mainCam;
         }
 
-        if(EventData.curSceneName == "StartScene")
+        if(EventData.curSceneName == "StartScene" || EventData.curSceneName == "Level_greyBox")
         {
             if (!EventData.gameStart)
             {
