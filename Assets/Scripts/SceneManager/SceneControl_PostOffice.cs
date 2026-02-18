@@ -1,6 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
 {
@@ -79,6 +80,28 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
 
     }
 
+    #region Scene Loading
+    public void LoadNextScene()
+    {
+        StartCoroutine(StartLoadingScene());
+    }
+
+    IEnumerator StartLoadingScene()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("Level_greyBox");
+    }
+
+    public void FreezePlayers()
+    {
+        GameManager.instance.FreezeBothPlayers();
+    }
+
+    public void UnFreezePlayers()
+    {
+        GameManager.instance.UnFreezeBothPlayers();
+    }
+    #endregion
 
 
 }

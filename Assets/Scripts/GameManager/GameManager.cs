@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,6 +54,7 @@ public class GameManager
 
     public PlayerController PlayerController_p1;
     public PlayerController PlayerController_p2;
+
 
 
 
