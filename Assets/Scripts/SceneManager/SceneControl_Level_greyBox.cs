@@ -39,17 +39,45 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     Coroutine magnetCoroutine;
     Transform magneticObj;
 
+    [Header("Cutscene Cotrol")]
+    public GameObject cutscene_overview;
+    public GameObject cutscene_intro;
+    public GameObject cutscene_bombLoserIntro;
+    public GameObject cutscene_gateExplosion;
+    public GameObject cutscene_hellHoundFight;
+    public GameObject cutscene_RVSquatterIntro;
+    public GameObject cutscene_RVSquatterOutro;
+    public GameObject canvas_fadeIn;
 
-    
 
+
+    private void Awake()
+    {
+        EventData.gameStart = false;
+        cutscene_overview.SetActive(false);
+        cutscene_intro.SetActive(true);
+        cutscene_bombLoserIntro.SetActive(false);
+        cutscene_gateExplosion.SetActive(false);
+        cutscene_hellHoundFight.SetActive(false);
+        cutscene_RVSquatterIntro.SetActive(false);
+        cutscene_RVSquatterOutro.SetActive(false);
+
+    }
     void Start()
     {
+        //StartCoroutine(OnCutsceneWait(12f));
+
+        print("GameStart" + EventData.gameStart);
+        GameManager.instance.FreezeBothPlayers();
         EventData.curSceneName = "Level_greyBox";
 
+        EventData.isOnCutScene = true;
         EventData.craneIsActivated = false;
         cam_controlRoom.enabled = false;
         //dialogueSystemController.SetContinueMode(false);
         //dialogueSystemController.SetOriginalContinueMode();
+
+
     }
 
     // Update is called once per frame
@@ -360,5 +388,33 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             }
             magneticObj = null;
         }
+    }
+
+    #region Cutscene Control
+    IEnumerator OnCutsceneWait(float duration)
+    {
+        print("Cutscene Wait Started");
+        yield return new WaitForSeconds(duration);
+        print("Cutscene Wait Ended");
+        EventData.isOnCutScene = false;
+        OnGameStart();
+    }
+    #endregion
+
+    public void OnGameStart()
+    {
+        StartCoroutine(StartTimer(1f));
+        EventData.isOnCutScene = false;
+        GameManager.instance.ResetPlayer1Position(spawnPoints[2]);
+        GameManager.instance.ResetPlayer2Position(spawnPoints[3]);
+        GameManager.instance.UnFreezeBothPlayers();
+        EventData.gameStart = true;
+        print("GameStart" + EventData.gameStart);
+    }
+
+    IEnumerator StartTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        canvas_fadeIn.SetActive(false);
     }
 }
