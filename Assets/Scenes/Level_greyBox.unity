@@ -167574,7 +167574,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 069b2b74b952dee4ca2a1956ac921883, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -167627,6 +167627,8 @@ PlayableDirector:
     value: {fileID: 1221749816}
   - key: {fileID: 4066122741859420607, guid: 069b2b74b952dee4ca2a1956ac921883, type: 2}
     value: {fileID: 1221749816}
+  - key: {fileID: 2116524431048199764, guid: 069b2b74b952dee4ca2a1956ac921883, type: 2}
+    value: {fileID: 1611486462}
   m_ExposedReferences:
     m_References:
     - e73484eb3cd9b8b479c34d0602c77cf9: {fileID: 1221749815}
@@ -380586,6 +380588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1611486461}
   - component: {fileID: 1611486460}
+  - component: {fileID: 1611486462}
   m_Layer: 0
   m_Name: SceneControl
   m_TagString: Untagged
@@ -380631,6 +380634,14 @@ MonoBehaviour:
   camSwitchDelay: 0.5
   camSwitchTimer: 0
   magneticSurfaceCollider: {fileID: 0}
+  cutscene_overview: {fileID: 0}
+  cutscene_intro: {fileID: 0}
+  cutscene_bombLoserIntro: {fileID: 0}
+  cutscene_gateExplosion: {fileID: 0}
+  cutscene_hellHoundFight: {fileID: 0}
+  cutscene_RVSquatterIntro: {fileID: 0}
+  cutscene_RVSquatterOutro: {fileID: 0}
+  canvas_fadeIn: {fileID: 622426632}
 --- !u!4 &1611486461
 Transform:
   m_ObjectHideFlags: 0
@@ -380646,6 +380657,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 939477742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1611486462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611486459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 9c54e851b81257242a28e1206b674fe4, type: 2}
+    - {fileID: 11400000, guid: 7292c80661a64dd4bbe983fa98099e60, type: 2}
+    - {fileID: 11400000, guid: aa43ee33c6693294994dff5200c5b5ff, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1611486460}
+          m_TargetAssemblyTypeName: SceneControl_Level_greyBox, Assembly-CSharp
+          m_MethodName: OnGameStart
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 747617332}
+          m_TargetAssemblyTypeName: DialogueControl, Assembly-CSharp
+          m_MethodName: OnConversation
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1611486460}
+          m_TargetAssemblyTypeName: SceneControl_Level_greyBox, Assembly-CSharp
+          m_MethodName: OnGameStart
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1611938228
 GameObject:
   m_ObjectHideFlags: 0
@@ -384774,7 +384845,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: df21811608294964380a8640a6816013, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -384817,6 +384888,8 @@ PlayableDirector:
     value: {fileID: 1215781478}
   - key: {fileID: -690660342894478099, guid: df21811608294964380a8640a6816013, type: 2}
     value: {fileID: 1422424472}
+  - key: {fileID: -6022040780059817993, guid: df21811608294964380a8640a6816013, type: 2}
+    value: {fileID: 1611486462}
   m_ExposedReferences:
     m_References: []
 --- !u!1001 &1635778998
@@ -454118,7 +454191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1926407015
 Transform:
   m_ObjectHideFlags: 0
