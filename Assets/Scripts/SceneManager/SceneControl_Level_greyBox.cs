@@ -65,7 +65,6 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     }
     void Start()
     {
-        //StartCoroutine(OnCutsceneWait(12f));
 
         print("GameStart" + EventData.gameStart);
         GameManager.instance.FreezeBothPlayers();
