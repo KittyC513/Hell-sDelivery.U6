@@ -151,6 +151,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerStateMachine pMachine;
     [SerializeField] private GameObject playerModel;
     [SerializeField] public PlayerSFX playerSfx;
+    [SerializeField] public ParticleSystem jumpRings;
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
     [HideInInspector] public int playerNum {get; private set;}

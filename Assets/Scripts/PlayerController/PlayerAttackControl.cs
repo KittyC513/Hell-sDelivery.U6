@@ -22,6 +22,8 @@ public class PlayerAttackControl : MonoBehaviour
     [SerializeField] private float stallVelocity = 50;
 
     [HideInInspector] public bool shouldRefresh = false;
+
+    [SerializeField] public ParticleSystem attackParticles;
     private bool _grounded;
 
     //Attack Variables

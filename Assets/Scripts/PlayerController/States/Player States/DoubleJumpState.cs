@@ -26,6 +26,8 @@ public class DoubleJumpState : BaseState<PlayerStateMachine.PlayerStates>
     {
         animName = "DoubleJump";
 
+        pControl.jumpRings.Play();
+
         if (pControl.playerNum == 1)
         {
             pControl.playerSfx.PlayShmonkJump();
