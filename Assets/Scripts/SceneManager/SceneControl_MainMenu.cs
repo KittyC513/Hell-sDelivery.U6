@@ -1,7 +1,9 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
@@ -18,8 +20,11 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
 
     public Camera cam_cutscene_sockThief;
 
+    public GameObject canvas_dialogue;
+
     private void Start()
     {
+        canvas_dialogue.SetActive(false);
         cutscene_tutorialEnd.SetActive(false);
 
         playerInputManager.DisableJoining();
@@ -81,5 +86,16 @@ public class SceneControl_MainMenu : SceneControlBase<SceneControl_MainMenu>
         }
     }
 
-    
+    IEnumerator StartLoadingPostOffice()
+    {
+        yield return new WaitForSeconds(35.7f);
+        SceneManager.LoadScene("PostOffice");
+    }
+
+    public void LoadNextScene()
+    {
+        StartCoroutine(StartLoadingPostOffice());
+    }
+
+
 }
