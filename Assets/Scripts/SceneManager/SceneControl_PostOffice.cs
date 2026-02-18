@@ -92,6 +92,15 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
         SceneManager.LoadScene("Level_greyBox");
     }
 
+    public void FreezePlayers()
+    {
+        GameManager.instance.FreezeBothPlayers();
+    }
+
+    public void UnFreezePlayers()
+    {
+        GameManager.instance.UnFreezeBothPlayers();
+    }
     #endregion
 
 
