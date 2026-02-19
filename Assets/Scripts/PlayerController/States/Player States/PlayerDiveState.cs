@@ -44,11 +44,12 @@ public class PlayerDiveState : BaseState<PlayerStateMachine.PlayerStates>
 
     public override void UpdateState()
     {
-        if (pControl.Grounded)
+        if (pControl.Grounded && !pControl.diveGrounded)
         {
+            pControl.SpawnDust();
             pControl.diveGrounded = true;
         }
-        else
+        else if (!pControl.Grounded)
         {
             pControl.diveGrounded = false;
         }
