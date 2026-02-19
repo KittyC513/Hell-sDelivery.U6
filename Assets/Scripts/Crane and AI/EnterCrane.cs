@@ -11,6 +11,7 @@ public class EnterCrane : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cam_crane.enabled = false;
         p1EnterCrane = false; 
         p2EnterCrane = false;
     }
@@ -25,7 +26,7 @@ public class EnterCrane : MonoBehaviour
     {
         if (EventData.craneIsActivated) return;
         //Crane Activation
-        cam_crane.gameObject.SetActive(true);
+        cam_crane.enabled = true;
         if (other.CompareTag("Player"))
         {
             if(other.gameObject.layer == LayerMask.NameToLayer("Player1") || other.gameObject.layer == LayerMask.NameToLayer("Invisible_Player1"))
@@ -68,7 +69,7 @@ public class EnterCrane : MonoBehaviour
         p1EnterCrane = false;
         p2EnterCrane = false;
         EventData.craneIsActivated = false;
-        cam_crane.gameObject.SetActive(false);
+        cam_crane.enabled = false;
     }
 
 

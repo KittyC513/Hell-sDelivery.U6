@@ -55,7 +55,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     {
         EventData.gameStart = false;
         cutscene_overview.SetActive(false);
-        cutscene_intro.SetActive(true);
+        cutscene_intro.SetActive(false);
         cutscene_bombLoserIntro.SetActive(false);
         cutscene_gateExplosion.SetActive(false);
         cutscene_hellHoundFight.SetActive(false);
@@ -66,13 +66,22 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     void Start()
     {
 
-        print("GameStart" + EventData.gameStart);
-        GameManager.instance.FreezeBothPlayers();
-        EventData.curSceneName = "Level_greyBox";
+        //print("GameStart" + EventData.gameStart);
+        //GameManager.instance.FreezeBothPlayers();
+        //EventData.curSceneName = "Level_greyBox";
 
-        EventData.isOnCutScene = true;
-        EventData.craneIsActivated = false;
+        //EventData.isOnCutScene = true;
+        //EventData.craneIsActivated = false;
+        //cam_controlRoom.enabled = false;
+
+
+        /**************************************/
+        //testing
+        EventData.gameStart = true;
+        EventData.curSceneName = "Level_greyBox";
         cam_controlRoom.enabled = false;
+
+
         //dialogueSystemController.SetContinueMode(false);
         //dialogueSystemController.SetOriginalContinueMode();
 
