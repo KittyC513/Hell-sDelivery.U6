@@ -11,6 +11,7 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
     public Camera playCam;
 
     public GameObject cutscene_enterOffice;
+    public GameObject canvas_fadeOut;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -42,6 +43,7 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
     {
         if (!isResetPos)
         {
+      
             GameManager.instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
             isResetPos = true;
         }
@@ -77,6 +79,7 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
         GameManager.instance.ResetPlayersPosition(spawnpoints[2], spawnpoints[3]);
         GameManager.instance.RotatePlayersTo(spawnpoints[2]);
         GameManager.instance.UnFreezeBothPlayers();
+        canvas_fadeOut.SetActive(false);
 
     }
 
@@ -101,6 +104,13 @@ public class SceneControl_PostOffice : SceneControlBase<SceneControl_PostOffice>
     {
         GameManager.instance.UnFreezeBothPlayers();
     }
+
+    IEnumerator StartTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        canvas_fadeOut.SetActive(false);
+    }
+
     #endregion
 
 
