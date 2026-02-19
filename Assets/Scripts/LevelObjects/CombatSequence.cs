@@ -39,6 +39,11 @@ public class CombatSequence : MonoBehaviour
         
     }
 
+    public void ActivateSequence()
+    {
+        shouldSequenceActivate = true;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(transform.position, areaSize);
@@ -69,7 +74,7 @@ public class CombatSequence : MonoBehaviour
     {
         players = Physics.OverlapBox(transform.position, areaSize, Quaternion.identity, playerLayers);
         
-        if (players.Length > 3 && !sequenceActive)
+        if (players.Length > 1 && !sequenceActive)
         {
             StartSquence();
         }
