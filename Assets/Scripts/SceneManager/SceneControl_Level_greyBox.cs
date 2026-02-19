@@ -403,6 +403,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public void OnGameStart()
     {
         StartCoroutine(StartTimer(1f));
+        cutscene_intro.SetActive(false);
         EventData.isOnCutScene = false;
         GameManager.instance.ResetPlayer1Position(spawnPoints[2]);
         GameManager.instance.ResetPlayer2Position(spawnPoints[3]);
