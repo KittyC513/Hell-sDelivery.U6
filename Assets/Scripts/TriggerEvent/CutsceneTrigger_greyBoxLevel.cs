@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
 {
+    public bool isCutSceneTriggered = false;
     public GameObject cutSceneObj;
     public float duration;
     public GameObject canvas_fadeIn;
@@ -24,14 +25,29 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (cutSceneObj == null) return;
 
-        if(other.CompareTag("Player"))
+        if (cutSceneObj == null)
         {
+            print("Cutscene object is not assigned");
+            return;
+        }
+
+        if (isCutSceneTriggered)
+        {
+            print("Cutscene triggered!");
+            return;
+        }
+         
+
+        if (other.CompareTag("Player"))
+        {
+            print("Cutscene starts!");
+
             cutSceneObj.SetActive(true);
             EventData.isOnCutScene = true;
             StartCoroutine(OnCutSceneEnd(duration));
             print("Cutscene triggered!");
+            isCutSceneTriggered = true;
         }
     }
 
@@ -43,7 +59,6 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
         yield return new WaitForSeconds(1f);
         canvas_fadeIn.SetActive(false);
         GameManager.Instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
-        this.enabled = false;
     }
 
 
