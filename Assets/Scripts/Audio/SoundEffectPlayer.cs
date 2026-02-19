@@ -69,16 +69,6 @@ public class SoundEffectPlayer : MonoBehaviour
         }
     }
 
-    public void StopSoundEffect()
-    {
-        //audioSource.Stop();
-    }
-
-    public void StopAudioDelayed(float delay)
-    {
-        StartCoroutine(DelayedSoundStop(delay));
-    }
-
     public void ApplySoundEffectParameters(SoundEffect soundEffect, AudioSource audioSource)
     {
         float rndPitch = Random.Range(1 - soundEffect.randomPitchBend, 1 + soundEffect.randomPitchBend);
@@ -128,8 +118,4 @@ public class SoundEffectPlayer : MonoBehaviour
         ApplySoundEffectParameters(soundEffect, audioSource);
     }
 
-    private IEnumerator DelayedSoundStop(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-    }
 }
