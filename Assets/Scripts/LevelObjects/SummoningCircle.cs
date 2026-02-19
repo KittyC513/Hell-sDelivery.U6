@@ -19,6 +19,8 @@ public class SummoningCircle : MonoBehaviour
     private InteractableObject interactableObject;
     [SerializeField] private SoundEffectPlayer sfxPlayer;
     [SerializeField] private Animator anim;
+
+    private AudioSource activeSource;
     
     
     
@@ -41,7 +43,7 @@ public class SummoningCircle : MonoBehaviour
         interactable.canInteract = false;
 
         sfxPlayer.PlaySoundEffect("ObjectBank1", "SummoningActivate");
-        sfxPlayer.QueueSoundEffect("ObjectBank1", "SummoningActive", 0.2f);
+        activeSource = sfxPlayer.QueueSoundEffect("ObjectBank1", "SummoningActive", 0.2f);
 
         //freeze the player interacting with this object
         if (currentPlayer.playerNum == 1) 
@@ -84,7 +86,8 @@ public class SummoningCircle : MonoBehaviour
 
     private void ExitSummon()
     {
-        sfxPlayer.StopAllSoundEffects();
+        //sfxPlayer.StopAllSoundEffects();
+        sfxPlayer.StopSoundEffect(activeSource);
         Debug.Log("Exit Summon");
 
         anim.SetBool("Activate", false);

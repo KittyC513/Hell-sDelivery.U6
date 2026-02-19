@@ -39,14 +39,25 @@ public class SoundEffectPlayer : MonoBehaviour
         return temp.GetComponent<AudioSource>();
     }
 
-    public void PlaySoundEffect(string bankName, string soundEffectName)
+    public AudioSource PlaySoundEffect(string bankName, string soundEffectName)
     {
         SoundEffect soundEffect = SoundBankManager.soundBankManager.FetchSoundEffect(bankName, soundEffectName);
 
         if (soundEffect != null)
         {
-            ApplySoundEffectParameters(soundEffect, GetOrAddAudioSource());
+            AudioSource targetSource = GetOrAddAudioSource();
+            ApplySoundEffectParameters(soundEffect, targetSource);
+            return targetSource;
         }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void StopSoundEffect(AudioSource targetSource)
+    {
+        targetSource.Stop();
     }
 
     public void StopAllSoundEffects()
@@ -94,22 +105,27 @@ public class SoundEffectPlayer : MonoBehaviour
         //audioSource.pitch = 1;
     }
 
-    public void QueueSoundEffect(string bankName, string soundEffectName, float delay)
+    public AudioSource QueueSoundEffect(string bankName, string soundEffectName, float delay)
     {
         SoundEffect soundEffect = SoundBankManager.soundBankManager.FetchSoundEffect(bankName, soundEffectName);
 
         if (soundEffect != null)
         {
-            StartCoroutine(DelayedSoundEffect(delay, soundEffect));
+            AudioSource targetSource = GetOrAddAudioSource();
+            StartCoroutine(DelayedSoundEffect(delay, soundEffect, targetSource));
+            return targetSource;
         }
+        
+        return null;
+        
     }
-    private IEnumerator DelayedSoundEffect(float delayTime, SoundEffect soundEffect)
+    private IEnumerator DelayedSoundEffect(float delayTime, SoundEffect soundEffect, AudioSource audioSource)
     {
         yield return new WaitForSeconds(delayTime);
 
         //yield return new WaitUntil(() => audioSource.isPlaying == false);
 
-        ApplySoundEffectParameters(soundEffect, GetOrAddAudioSource());
+        ApplySoundEffectParameters(soundEffect, audioSource);
     }
 
     private IEnumerator DelayedSoundStop(float delay)
