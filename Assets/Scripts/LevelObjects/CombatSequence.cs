@@ -29,14 +29,9 @@ public class CombatSequence : MonoBehaviour
         if (shouldSequenceActivate)
         {
             DetectPlayers();
-        }
-        
-
-        if (sequenceActive)
-        {
             DetectEnemies();
         }
-        
+
     }
 
     public void ActivateSequence()
@@ -64,7 +59,6 @@ public class CombatSequence : MonoBehaviour
         if (!sequenceActive)
         {
             sequenceActive = true;
-            
         }
     
         onSequenceStart.Invoke();

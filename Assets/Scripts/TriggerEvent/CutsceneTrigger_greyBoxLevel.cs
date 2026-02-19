@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
 
     public Transform[] spawnpoints;
     public bool useCollider = true;
+    private PlayableDirector cutsceneDirector;
+    
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,7 +40,7 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (useCollider)
+        if (useCollider && !isCutSceneTriggered)
         {
             if (cutSceneObj == null)
             {
@@ -68,7 +71,7 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
         yield return new WaitForSeconds(1f);
         canvas_fadeIn.SetActive(false);
         GameManager.Instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
+        Debug.Log("Cutscene Ended");
     }
-
 
 }

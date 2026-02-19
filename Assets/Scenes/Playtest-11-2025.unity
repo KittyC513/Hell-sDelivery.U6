@@ -2278,6 +2278,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  shouldSequenceActivate: 1
   playerLayers:
     serializedVersion: 2
     m_Bits: 192
@@ -8440,6 +8441,64 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &344590220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 344590221}
+  - component: {fileID: 344590222}
+  m_Layer: 0
+  m_Name: TestHoundZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &344590221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344590220}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5, z: -2.29}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 359377000}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &344590222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344590220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c476ad7c2fc06154280ad462a6cbe4bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSequenceEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onSequenceStart:
+    m_PersistentCalls:
+      m_Calls: []
+  shouldSequenceActivate: 0
+  playerLayers:
+    serializedVersion: 2
+    m_Bits: 192
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 16384
+  areaSize: {x: 10, y: 10, z: 10}
 --- !u!43 &357970465
 Mesh:
   m_ObjectHideFlags: 0
@@ -8673,6 +8732,7 @@ Transform:
   - {fileID: 820458407}
   - {fileID: 2139162351}
   - {fileID: 1128586640}
+  - {fileID: 344590221}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &359414868
