@@ -29,6 +29,7 @@ public class PlayerJumpState : BaseState<PlayerStateMachine.PlayerStates>
         //set our jump height and decay variables up by grabbing from our player controller
         jumpHeight = pControl.JumpHeight;
         jumpDecay = pControl.JumpDecayRate;
+        //pControl.jumpRings.Play();
         
         if (pControl.playerNum == 1)
         {
