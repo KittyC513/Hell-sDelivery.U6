@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 247670364040036337}
   - component: {fileID: 6606088407713052227}
   - component: {fileID: 8983370942647738581}
+  - component: {fileID: -1915228483931023446}
   - component: {fileID: 8456788359725863219}
   - component: {fileID: 3193423076078210825}
   - component: {fileID: 5945136874789935831}
@@ -392,6 +393,31 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &-1915228483931023446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7578846355811343889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3354979223
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &8456788359725863219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,11 +430,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc799f992f232fa43982581f5b5e2678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRunSpeed: 8
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxWalkSpeed: 10
+  velocityCap: 20
   acceleration: 22
   decceleration: 23
   maxAccelStep: 150
   rotationSpeed: 15
+  startRotationSpeed: 0
+  leftStickDir: {x: 0, y: 0, z: 0}
+  weight: 10
+  weightMultiplier: 1
+  pastMaxAccelMultiplier: 0.35
+  pastMaxDecelMultiplier: 0.8
+  maxRunSpeed: 8
+  runAcceleration: 25
+  runDeceleration: 20
   groundLayers:
     serializedVersion: 2
     m_Bits: 256
@@ -421,21 +458,30 @@ MonoBehaviour:
   maxFallSpeed: 10
   fallAccel: 25
   maxFallAccelStep: 150
+  gravityScale: 1
+  fallAccelScale: 1
+  currentFallVel: 0
+  airStepMult: 0.65
+  airDecelMult: 0.45
+  airAccelMult: 0.75
   jumpHeight: 2.5
   jumpDecayRate: 40
   jumpReleaseFactor: 2
   jumpPeakFactor: 0.3
   jumpPeakRange: 1.2
+  headSquishForce: 12
   doubleJumpHeight: 1
   doubleJumpDecayRate: 35
   maxJumps: 2
   remainingJumps: 0
+  spinJumpHeight: 4.25
+  spinJumpDecay: 25
+  maxSpinFallSpeed: 25
+  spinFallAccel: 25
   maxSlideSpeed: 14
   slideAccel: 50
   maxSlopeAngle: 45
   maxSlideAccelStep: 200
-  airMaxedAccelerationFactor: 0.2
-  groundedMaxedAccelerationFactor: 0.4
   ledgeGrabHorizontalRange: 0.6
   ledgeGrabUpwardsRange: 0.44
   ledgeGrabDownwardsRange: 0.37
@@ -444,7 +490,13 @@ MonoBehaviour:
   ledgeGrabMask:
     serializedVersion: 2
     m_Bits: 256
+  diveRotationSpeed: 200
+  diveForwardForce: 35
+  diveUpwardForce: 6
+  diveGrounded: 0
+  canDive: 1
   coyoteTime: 0.1
+  freezeRotation: 0
   quickTurnMultiplier:
     serializedVersion: 2
     m_Curve:
@@ -478,7 +530,37 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  runningQuickTurnMultiplier:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   inputDetection: {fileID: -881147824295454870}
+  aControl: {fileID: 0}
+  anim: {fileID: 0}
+  pickMachine: {fileID: 0}
+  pHealth: {fileID: 0}
+  knockback: {fileID: 0}
+  pMachine: {fileID: 0}
+  playerModel: {fileID: 0}
+  playerSfx: {fileID: 0}
+  jumpRings: {fileID: 0}
+  dustParticles: []
+  currentSpeed: 0
+  runMarker: {fileID: 0}
+  stopMarker: {fileID: 0}
+  debugActive: 0
+  useRunMarkers: 0
+  useJumpMarkers: 0
+  playerLockOn: {fileID: 0}
+  isLookAtTriggered: 0
+  maxHeight: 3
+  totalAirTime: 1.2
+  horizontalDistance: 8
+  minSplatForce: 30
+  cameraManager: {fileID: 0}
+  canPressAttack: 1
 --- !u!114 &3193423076078210825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,7 +573,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9661b2029c93f6b49b68a1dba66313e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  inputDetection: {fileID: 0}
   controller: {fileID: 8456788359725863219}
+  attackControl: {fileID: 0}
+  objectController: {fileID: 0}
+  defaultState: 0
+  showCurrentState: 0
 --- !u!114 &5945136874789935831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +599,8 @@ MonoBehaviour:
   grabbableMask:
     serializedVersion: 2
     m_Bits: 64
+  inputDetection: {fileID: 0}
+  canPickup: 1
   forwardThrowForce: 6
   upwardsThrowForce: 4
   currentObject: {fileID: 0}
@@ -526,6 +616,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894c469af2fe36d439e92d90ea022369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  inputDetection: {fileID: 0}
+  activeState: 0
   objectController: {fileID: 5945136874789935831}
   playerController: {fileID: 8456788359725863219}
 --- !u!114 &8465927288898804148
@@ -570,6 +663,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc010b02f20b5e40a734cc202560000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  playerModel: {fileID: 0}
   jumpPressed: 0
+  crouchPressed: 0
+  lockPressed: 0
+  attackPressed: 0
+  grabPressed: 0
+  pausePressed: 0
+  runPressed: 0
+  swapItemPressed_left: 0
+  swapItemPressed_right: 0
+  interactPressed: 0
+  interactHeld: 0
+  horizontalInputValue: {x: 0, y: 0}
+  craneCamInputValue: {x: 0, y: 0}
   cam: {fileID: 5617135046137132273}
+  playerCam: {fileID: 0}
+  isExploded: 0
+  isResetCam: 0
   jumpBufferTime: 0.2
+  dropActiveItemTime: 0.3
+  currentTime: 0
+  grabCurrentTime: 0
+  playerNum: 1
+  health: {fileID: 0}
+  isCheckedDevice: 0
+  inputDeviceType: 0
+  uiPointerControl: {fileID: 0}
+  proximitySelector: {fileID: 0}
