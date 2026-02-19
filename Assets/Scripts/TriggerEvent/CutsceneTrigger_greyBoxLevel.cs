@@ -9,6 +9,7 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
     public GameObject canvas_fadeIn;
 
     public Transform[] spawnpoints;
+    public bool useCollider = true;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,32 +24,40 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
         
     }
 
+    public void TriggerCutscene()
+    {
+        print("Cutscene starts!");
+
+        cutSceneObj.SetActive(true);
+        EventData.isOnCutScene = true;
+        StartCoroutine(OnCutSceneEnd(duration));
+        print("Cutscene triggered!");
+        isCutSceneTriggered = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-
-        if (cutSceneObj == null)
+        if (useCollider)
         {
-            print("Cutscene object is not assigned");
-            return;
-        }
+            if (cutSceneObj == null)
+            {
+                print("Cutscene object is not assigned");
+                return;
+            }
 
-        if (isCutSceneTriggered)
-        {
-            print("Cutscene triggered!");
-            return;
-        }
-         
+            if (isCutSceneTriggered)
+            {
+                print("Cutscene triggered!");
+                return;
+            }
+                
 
-        if (other.CompareTag("Player"))
-        {
-            print("Cutscene starts!");
-
-            cutSceneObj.SetActive(true);
-            EventData.isOnCutScene = true;
-            StartCoroutine(OnCutSceneEnd(duration));
-            print("Cutscene triggered!");
-            isCutSceneTriggered = true;
+            if (other.CompareTag("Player"))
+            {
+                TriggerCutscene();
+            }
         }
+       
     }
 
     IEnumerator OnCutSceneEnd(float duration)

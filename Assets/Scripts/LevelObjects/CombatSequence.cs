@@ -8,6 +8,7 @@ public class CombatSequence : MonoBehaviour
 {
     [SerializeField] public UnityEvent onSequenceEnd;
     [SerializeField] public UnityEvent onSequenceStart;
+    [SerializeField] public bool shouldSequenceActivate = true; //this value can be changed externally to activate the combat zone, to avoid it being active before enemies spawn
     private bool sequenceActive = false;
     private int playersActive;
     [SerializeField] private LayerMask playerLayers;
@@ -24,8 +25,23 @@ public class CombatSequence : MonoBehaviour
     }
     private void Update()
     {
-        DetectPlayers();
-        DetectEnemies();
+    
+        if (shouldSequenceActivate)
+        {
+            DetectPlayers();
+        }
+        
+
+        if (sequenceActive)
+        {
+            DetectEnemies();
+        }
+        
+    }
+
+    public void ActivateSequence()
+    {
+        shouldSequenceActivate = true;
     }
 
     private void OnDrawGizmosSelected()
@@ -58,7 +74,7 @@ public class CombatSequence : MonoBehaviour
     {
         players = Physics.OverlapBox(transform.position, areaSize, Quaternion.identity, playerLayers);
         
-        if (players.Length > 3 && !sequenceActive)
+        if (players.Length > 1 && !sequenceActive)
         {
             StartSquence();
         }
