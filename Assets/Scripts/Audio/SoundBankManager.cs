@@ -47,20 +47,29 @@ public class SoundBankManager : MonoBehaviour
         //check if the bank exists
         if (soundBankIndex.ContainsKey(bankName))
         {
-            //get the bank from the dictionary using the name
-            SoundBank bank = soundBankIndex[bankName];
-
-            //add the bank to the list of loaded sound banks
-            loadedSoundBanks.Add(bankName, bank);
-
-            //for each sound in the bank load it into memory so it can be played instantly
-            for (int i = 0; i < bank.sounds.Count; i++)
+            //check if the sound bank is already loaded
+            if (!loadedSoundBanks.ContainsKey(bankName))
             {
-                for (int j = 0; j < bank.sounds[i].audioClips.Count; j++)
+                //get the bank from the dictionary using the name
+                SoundBank bank = soundBankIndex[bankName];
+
+                //add the bank to the list of loaded sound banks
+                loadedSoundBanks.Add(bankName, bank);
+
+                //for each sound in the bank load it into memory so it can be played instantly
+                for (int i = 0; i < bank.sounds.Count; i++)
                 {
-                    bank.sounds[i].audioClips[j].LoadAudioData();
+                    for (int j = 0; j < bank.sounds[i].audioClips.Count; j++)
+                    {
+                        bank.sounds[i].audioClips[j].LoadAudioData();
+                    }
                 }
             }
+            else
+            {
+                Debug.Log("(Soundbank already loaded) A Sound Bank named: " + bankName + " is already loaded");
+            }
+          
         }
         else
         {
