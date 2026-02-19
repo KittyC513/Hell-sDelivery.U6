@@ -8,6 +8,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Transform[] spawnPoints;
     public DialogueSystemTrigger dialogueSystem_devil;
+    public DialogueSystemTrigger dialogueSystem_oldCoot;
     public DialogueSystemController dialogueSystemController;
 
     [Header("Crane Control")]
@@ -54,8 +55,11 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     private void Awake()
     {
         EventData.gameStart = false;
-        cutscene_overview.SetActive(false);
+        cutscene_overview.SetActive(true);
+
+        /*****************************************/
         cutscene_intro.SetActive(false);
+        /******************************************/
         cutscene_bombLoserIntro.SetActive(false);
         cutscene_gateExplosion.SetActive(false);
         cutscene_hellHoundFight.SetActive(false);
@@ -66,20 +70,20 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     void Start()
     {
 
-        //print("GameStart" + EventData.gameStart);
-        //GameManager.instance.FreezeBothPlayers();
-        //EventData.curSceneName = "Level_greyBox";
+        print("GameStart" + EventData.gameStart);
+        GameManager.instance.FreezeBothPlayers();
+        EventData.curSceneName = "Level_greyBox";
 
-        //EventData.isOnCutScene = true;
-        //EventData.craneIsActivated = false;
-        //cam_controlRoom.enabled = false;
+        EventData.isOnCutScene = true;
+        EventData.craneIsActivated = false;
+        cam_controlRoom.enabled = false;
 
 
         /**************************************/
         //testing
-        EventData.gameStart = true;
-        EventData.curSceneName = "Level_greyBox";
-        cam_controlRoom.enabled = false;
+        //EventData.gameStart = true;
+        //EventData.curSceneName = "Level_greyBox";
+        //cam_controlRoom.enabled = false;
 
 
         //dialogueSystemController.SetContinueMode(false);
@@ -215,12 +219,14 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     {
         print("Enable Magnetic Surface - Check for Objects");
         //check for colliders within the magnetic surface area when enabled
-        surfaceSize = new Vector3(surfaceSizeY, craneSurface.localScale.y / 2, craneSurface.localScale.z / 2) - offset;
+        //surfaceSize = new Vector3(surfaceSizeY, craneSurface.localScale.y / 2, craneSurface.localScale.z / 2) - offset;
+        surfaceSize = new Vector3(surfaceSizeY, 2, 2) - offset;
         print("Surface Size: " + surfaceSize);
         surfaceCenter = craneSurface.localPosition;
         print("Surface Center: " + surfaceCenter);
         Collider[] colliders = Physics.OverlapBox(craneSurface.position, surfaceSize, craneSurface.rotation,
                                         1 << LayerMask.NameToLayer("Magnetic"), QueryTriggerInteraction.UseGlobal);
+        //GameObject obj = Resources.Load<GameObject>("Prefabs/DebugCube");
         print("Colliders Length: " + colliders.Length);
         if (colliders.Length > 0 && magnetCoroutine == null)
         {
@@ -412,12 +418,13 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public void OnGameStart()
     {
         StartCoroutine(StartTimer(1f));
-        cutscene_intro.SetActive(false);
+        cutscene_overview.SetActive(false);
         EventData.isOnCutScene = false;
         GameManager.instance.ResetPlayer1Position(spawnPoints[2]);
         GameManager.instance.ResetPlayer2Position(spawnPoints[3]);
         GameManager.instance.UnFreezeBothPlayers();
         EventData.gameStart = true;
+        
         print("GameStart" + EventData.gameStart);
     }
 
