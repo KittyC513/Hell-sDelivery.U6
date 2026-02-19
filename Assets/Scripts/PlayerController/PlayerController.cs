@@ -152,6 +152,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private GameObject playerModel;
     [SerializeField] public PlayerSFX playerSfx;
     [SerializeField] public ParticleSystem jumpRings;
+    [SerializeField] public ParticleSystem[] dustParticles;
     private GameObject currentGround;
     private PlayerController lastBouncedPlayer;
     [HideInInspector] public int playerNum {get; private set;}
@@ -386,6 +387,14 @@ public class PlayerController : NetworkBehaviour
         }
 
        
+    }
+
+    public void SpawnDust()
+    {
+        for (int i = 0; i < dustParticles.Length; i++)
+        {
+            dustParticles[i].Play();
+        }
     }
 
     private void UpdateRunnning()

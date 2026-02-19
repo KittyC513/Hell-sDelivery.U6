@@ -21,6 +21,7 @@ public class PlayerGroundedState : BaseState<PlayerStateMachine.PlayerStates>
     public override void EnterState(PlayerStateMachine.PlayerStates lastState)
     {
         pControl.gravityScale = 1f;
+        pControl.SpawnDust();
 
         if (lastState == PlayerStateMachine.PlayerStates.airborne || lastState == PlayerStateMachine.PlayerStates.jump || lastState == PlayerStateMachine.PlayerStates.doubleJump)
         {
