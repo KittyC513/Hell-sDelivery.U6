@@ -65,7 +65,7 @@ public class EnemyBase : MonoBehaviour
                 
                 Debug.Log(hit.collider);
                 //check if we hit a player
-                if (hit.collider.CompareTag("Player"))
+                if (hit.collider.CompareTag("PlayerCollider"))
                 {
                     //we can now attack
                     targetPlayer = player.gameObject;
