@@ -6,6 +6,7 @@ public class RespawnAndDeath : MonoBehaviour
     public Health health;
 
     public Transform player;
+    [SerializeField] private Rigidbody playerRB;
     public PlayerStateMachine playerStateMachine;
     public float spawnTime = 1.5f;
 
@@ -62,9 +63,11 @@ public class RespawnAndDeath : MonoBehaviour
 
     public void Respawn()
     {
+        playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.dead);
         health.dead = false;
         health.currentHealth = 3;
         player.position = respawnPosition + offset;
+        playerRB.position = respawnPosition + offset;
         playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.airborne);
         print("Player respawned at: " + respawnPosition);
     }
