@@ -395,6 +395,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             // Disable physics while pulling
             rb.linearVelocity = Vector3.zero;
             rb.useGravity = false;
+            
 
             while (true)
             {
