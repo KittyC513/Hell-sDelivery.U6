@@ -9,6 +9,7 @@ public class EnterCrane : MonoBehaviour
     public Transform pos_controlRoom;
     public Camera cam_crane;
     public Camera cam_pos;
+    private InteractableObject interactable;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,7 +30,8 @@ public class EnterCrane : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (EventData.craneIsActivated) return;
+        //if (EventData.craneIsActivated) return;
+        return;
         //Crane Activation
         cam_crane.enabled = true;
         if (other.CompareTag("Player"))
@@ -67,6 +69,64 @@ public class EnterCrane : MonoBehaviour
             print("Crane is Activated");
         }
     }
+
+    public void PlayerEnterCrane(PlayerInputDetection player, InteractableObject _interactable)
+    {
+        if (EventData.craneIsActivated) return;
+
+        int playerNum = player.playerNum;
+
+        interactable = _interactable;
+        interactable.canInteract = false;
+
+
+        switch (playerNum)
+        {
+            case 1:
+
+                //reset player position to control room
+                GameManager.instance.ResetPlayer1Position(pos_controlRoom);
+                //freeze player movement
+                GameManager.instance.FreezePlayer1();
+                //disable player cam
+                GameManager.instance.DisablePlayer1Cam();
+
+                //set cam rect
+                cam_crane.rect = new Rect(0, 0, 0.5f, 1);
+                p1EnterCrane = true;
+                print("Player 1 Enter Crane");
+
+
+            break;
+            case 2:
+
+                //reset player position to control room
+                GameManager.instance.ResetPlayer2Position(pos_controlRoom);
+                //freeze player movement
+                GameManager.instance.FreezePlayer2();
+                //disable player cam
+                GameManager.instance.DisablePlayer2Cam();
+
+
+                //set cam rect
+                cam_crane.rect = new Rect(0.5f, 0, 0.5f, 1);
+                p2EnterCrane = true;
+
+            break;
+        }
+
+        StartCoroutine(EnterDelay());
+    }
+
+    private IEnumerator EnterDelay()
+    {
+        yield return new WaitForSeconds(0.025f);
+
+        cam_crane.enabled = true;
+        EventData.craneIsActivated = true;
+    }
+
+    //called when the crane is exited
     public void ResetEntrance()
     {
         GameManager.instance.UnFreezeBothPlayers();
@@ -75,6 +135,16 @@ public class EnterCrane : MonoBehaviour
         p2EnterCrane = false;
         EventData.craneIsActivated = false;
         cam_crane.enabled = false;
+
+        StartCoroutine(ExitDelay());
+    }
+
+    //called because theres a bug when exiting the crane and entering right after that freezes the camera
+    private IEnumerator ExitDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        interactable.canInteract = true;
     }
 
 

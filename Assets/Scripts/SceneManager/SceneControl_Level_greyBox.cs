@@ -159,7 +159,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             
         }
         //2. check for crouch input to exit crane
-        if (playerInput.crouchPressed)
+        if (playerInput.interactPressed)
         {
             enterCrane.ResetEntrance();
             playerInput.transform.position = exitPoint.position;
