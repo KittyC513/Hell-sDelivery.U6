@@ -63,7 +63,7 @@ public class RespawnAndDeath : MonoBehaviour
 
     public void Respawn()
     {
-        playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.dead);
+        //playerStateMachine.OverrideState(PlayerStateMachine.PlayerStates.dead);
         health.dead = false;
         health.currentHealth = 3;
         player.position = respawnPosition + offset;

@@ -159,27 +159,45 @@ public class BombItem : ItemBase
 
             if(bombsList.Count > maxBombs - 1)
             {
-                //defuse old bomb
-                Transform bombPos = bombsList[0].transform;
-                bombsList.RemoveAt(0);
-
-                GameObject visualEffectObj = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_defusing"), bombPos.position, Quaternion.identity);
-                List<BombMovement> bombsList2 = new List<BombMovement>();
-
-                Destroy(visualEffectObj, 1f);
-                Destroy(bombPos.gameObject, 1f);
-                /********************************************************************************************/
-                //audio source
-
-
-                /********************************************************************************************/
-                foreach (BombMovement item in bombsList) 
-                { 
-                    bombsList2.Add(item);            
+                for (int i = 0; i < bombsList.Count; i++)
+                {
+                    //remove any null objects from the bomb list
+                    if (bombsList[i] == null)
+                    {
+                        bombsList.RemoveAt(i);
+                    }
                 }
-                bombsList = bombsList2;
-                //add new bomb into the list
-                bombsList.Add(bomb.GetComponent<BombMovement>());
+
+                //check again if the bombs are above the max after removing any null bombs
+                if(bombsList.Count > maxBombs - 1)
+                {
+                     //defuse old bomb
+                    Transform bombPos = bombsList[0].transform;
+                    bombsList.RemoveAt(0);
+
+                    GameObject visualEffectObj = Instantiate(Resources.Load<GameObject>("Prefabs/VisualEffects/Bomb_defusing"), bombPos.position, Quaternion.identity);
+                    List<BombMovement> bombsList2 = new List<BombMovement>();
+
+                    Destroy(visualEffectObj, 1f);
+                    Destroy(bombPos.gameObject, 1f);
+                    /********************************************************************************************/
+                    //audio source
+
+
+                    /********************************************************************************************/
+                    foreach (BombMovement item in bombsList) 
+                    { 
+                        bombsList2.Add(item);            
+                    }
+                    bombsList = bombsList2;
+                    //add new bomb into the list
+                    bombsList.Add(bomb.GetComponent<BombMovement>());
+                }
+                else
+                {
+                    bombsList.Add(bomb.GetComponent<BombMovement>());
+                }
+               
             }
             else
             {
