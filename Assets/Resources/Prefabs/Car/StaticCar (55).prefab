@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1835186660725233782}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810410326779816719}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -204,7 +204,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &2335468957899772191
 GameObject:
@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 1577570875677786424}
   - component: {fileID: 1027033353357910042}
   - component: {fileID: 537802835445376515}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: wheels_back_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 5290043162391973480}
   - component: {fileID: 3148070073829696705}
   - component: {fileID: 1678326420503984307}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: mirror_right02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 8474911681239317591}
   - component: {fileID: 445467135474219084}
   - component: {fileID: 8320688311868898963}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: mirror_left01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,7 +473,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6500323948983109857}
-  m_Layer: 0
+  - component: {fileID: 9214483184087768347}
+  m_Layer: 31
   m_Name: side_mirrors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,6 +500,27 @@ Transform:
   - {fileID: 5290043162391973480}
   m_Father: {fileID: 6680401731049860020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9214483184087768347
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856054201734780905}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8613574, y: 0.35426268, z: 2.110942}
+  m_Center: {x: 0.4748368, y: 0.026235426, z: 0.41639882}
 --- !u!1 &4108148724247855947
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +532,7 @@ GameObject:
   - component: {fileID: 768355157030460689}
   - component: {fileID: 7321364261539753762}
   - component: {fileID: 3983515165237301570}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: mirror_left02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +618,7 @@ GameObject:
   - component: {fileID: 6592769404170897093}
   - component: {fileID: 5632203601720224265}
   - component: {fileID: 7901436595812934759}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: wheels_back_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +704,7 @@ GameObject:
   - component: {fileID: 5899828415574343184}
   - component: {fileID: 3843287833474594537}
   - component: {fileID: 5859954021577763302}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: mirror_right01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -768,7 +790,7 @@ GameObject:
   - component: {fileID: 6732418338674658713}
   - component: {fileID: 5869491441289889415}
   - component: {fileID: 2112216960768272276}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: wheels_front_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -854,7 +876,7 @@ GameObject:
   - component: {fileID: 7331667915341169531}
   - component: {fileID: 5720957483338965527}
   - component: {fileID: 3900321306228844020}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: wheels_front_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}

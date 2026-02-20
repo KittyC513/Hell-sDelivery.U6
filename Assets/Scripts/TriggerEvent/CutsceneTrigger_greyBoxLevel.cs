@@ -12,8 +12,11 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
     public Transform[] spawnpoints;
     public bool useCollider = true;
     private PlayableDirector cutsceneDirector;
-    
-    
+
+    public GameObject animationPlayer_01;
+    public GameObject animationPlayer_02;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,6 +32,10 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
 
     public void TriggerCutscene()
     {
+        animationPlayer_01.gameObject.SetActive(true);
+        animationPlayer_02.gameObject.SetActive(true);
+        GameManager.Instance.ResetPlayersPosition(spawnpoints[2], spawnpoints[3]);
+        GameManager.Instance.FreezeBothPlayers();
         print("Cutscene starts!");
 
         cutSceneObj.SetActive(true);
@@ -40,6 +47,9 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+
+
         if (useCollider && !isCutSceneTriggered)
         {
             if (cutSceneObj == null)
@@ -66,12 +76,16 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
     IEnumerator OnCutSceneEnd(float duration)
     {
         yield return new WaitForSeconds(duration);
+        animationPlayer_01.SetActive(false);
+        animationPlayer_02.SetActive(false);
         EventData.isOnCutScene = false;
         cutSceneObj.SetActive(false);
         yield return new WaitForSeconds(1f);
         canvas_fadeIn.SetActive(false);
         GameManager.Instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
+        GameManager.Instance.UnFreezeBothPlayers();
         Debug.Log("Cutscene Ended");
+
     }
 
 }
