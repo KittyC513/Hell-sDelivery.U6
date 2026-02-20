@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 
+
+
 [CustomEditor(typeof(CheckpointManager))]
 public class CheckpointManagetCustomGUI : Editor
 {

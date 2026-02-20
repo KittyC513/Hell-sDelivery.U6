@@ -4,16 +4,8 @@
 #undef Network
 
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.InputSystem;
 using Unity.Netcode;
-using PixelCrushers.DialogueSystem.Articy.Articy_4_0;
-using UnityEditor.Rendering;
-using UnityEditor.ShaderGraph.Internal;
 //using System.Drawing.Text;
 
 //this script acts as our player controller blackboard, all our variables that states will need to access are in here
