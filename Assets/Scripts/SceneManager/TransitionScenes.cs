@@ -22,6 +22,7 @@ public class TransitionScenes : MonoBehaviour
     private bool waitingOnReturn = false;
 
     [SerializeField] public UnityEvent OnReturnToScene; //calls when the object is re-enabled after calling a transition to start
+    [SerializeField] public UnityEvent OnNextSceneLoad; //calls when the scene change is called
 
     private void Start()
     {
@@ -56,6 +57,7 @@ public class TransitionScenes : MonoBehaviour
 
     public void StartTransition()
     {
+        OnNextSceneLoad.Invoke();
         transitionStarted = true;
         
         //reference the player positions to use later

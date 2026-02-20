@@ -30,15 +30,19 @@ Shader "Outlines/BackfaceOutlines"
 
             float _Thickness;
             float4 _Color;
+            float4 _FlashColor;
+            float _Blend;
 
             struct Attributes
             {
                 float4 positionOS : POSITION;
                 float4 normalOS : NORMAL;
+                float4 vertCol : COLOR;
             };
 
             struct VertexOutput
             {
+                float4 vertCol : TEXCOORD1;
                 float4 positionCS : SV_POSITION;
             };
 
@@ -54,12 +58,14 @@ Shader "Outlines/BackfaceOutlines"
                 //grab the position in clip space
                 output.positionCS = GetVertexPositionInputs(posOS).positionCS;
 
+                output.vertCol = input.vertCol;
+
                 return output;
             }
 
             float4 Fragment(VertexOutput input) : SV_TARGET
             {
-                return _Color;
+                return input.vertCol;
             }
 
 

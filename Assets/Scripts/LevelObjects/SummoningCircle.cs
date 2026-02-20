@@ -88,6 +88,8 @@ public class SummoningCircle : MonoBehaviour
     {
         //sfxPlayer.StopAllSoundEffects();
         sfxPlayer.StopSoundEffect(activeSource);
+
+        sfxPlayer.StopAllSoundEffects();
         Debug.Log("Exit Summon");
 
         anim.SetBool("Activate", false);

@@ -73,6 +73,16 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
        
     }
 
+    public void ForceStopCutscene()
+    {
+        StopAllCoroutines();
+        canvas_fadeIn.SetActive(false);
+        GameManager.Instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
+        Debug.Log("Cutscene Ended");
+    }
+
+
+
     IEnumerator OnCutSceneEnd(float duration)
     {
         yield return new WaitForSeconds(duration);
