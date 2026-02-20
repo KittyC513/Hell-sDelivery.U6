@@ -2,6 +2,7 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_greyBox>
 {
@@ -19,6 +20,9 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public PlayerInputDetection playerInput;
     public float craneMoveSpeed = 5f;
     public float craneRotateSpeed = 20f;
+    public Transform megneticPos;
+    public int objCount = 0;
+    public GameObject magneticObjPrefab;
 
     //constraints for crane movement
     public Vector3 craneMinMaxHight;
@@ -224,22 +228,50 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         print("Surface Size: " + surfaceSize);
         surfaceCenter = craneSurface.localPosition;
         print("Surface Center: " + surfaceCenter);
+
+
         Collider[] colliders = Physics.OverlapBox(craneSurface.position, surfaceSize, craneSurface.rotation,
                                         1 << LayerMask.NameToLayer("Magnetic"), QueryTriggerInteraction.UseGlobal);
-        //GameObject obj = Resources.Load<GameObject>("Prefabs/DebugCube");
+
+        //instantiate an object
+
+        if (magneticObjPrefab == null)
+        {
+            GameObject obj = Resources.Load<GameObject>("Prefabs/Car/StaticCar (55)");
+            megneticPos.position = new Vector3(megneticPos.position.x, colliders[0].transform.position.y, megneticPos.position.z);
+            magneticObjPrefab = Instantiate(obj, megneticPos.position, Quaternion.identity);
+            //magneticObjPrefab = magneticPrefab;
+            objCount++;
+        }
+
+        if (magneticObjPrefab == null) return;
+
         print("Colliders Length: " + colliders.Length);
         if (colliders.Length > 0 && magnetCoroutine == null)
         {
-            magneticSurfaceCollider = colliders[0];
+            //magneticSurfaceCollider = colliders[0];
+            Transform magneticObjChild = magneticObjPrefab.transform.Find("car_body");
+            //magneticSurfaceCollider = magneticPrefab.GetComponent<Collider>();  
+            magneticSurfaceCollider = magneticObjChild.GetComponent<Collider>();  
+
+            //megneticPos = magneticSurfaceCollider.transform;
             magneticObj = magneticSurfaceCollider.transform;
 
 
+            //magnetCoroutine = StartCoroutine(MagnetPullCoroutine(megneticPos));
             magnetCoroutine = StartCoroutine(MagnetPullCoroutine(magneticObj));
+            
         }
         if (colliders.Length > 0)
         {
-            magneticSurfaceCollider = colliders[0];
-            Transform magneticObj = colliders[0].transform;
+            //magneticSurfaceCollider = colliders[0];
+            //Transform magneticObj = colliders[0].transform;
+            Transform magneticObjChild = magneticObjPrefab.transform.Find("car_body");
+
+            magneticSurfaceCollider = magneticObjChild.GetComponent<Collider>();
+            //magneticSurfaceCollider = magneticPrefab.GetComponent<Collider>();
+
+            Transform _magneticPos = magneticSurfaceCollider.transform;
 
             Rigidbody rb = magneticSurfaceCollider.attachedRigidbody;
             if (rb == null) return;
@@ -252,12 +284,19 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f;
             Quaternion targetRot = craneSurface.rotation;
 
-            magneticObj.position = Vector3.Lerp(magneticObj.position, targetPos, moveSpeed * Time.deltaTime);
+            //magneticObj.position = Vector3.Lerp(magneticObj.position, targetPos, moveSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(magneticObj.position, targetPos) < 0.2f)
+            //if (Vector3.Distance(magneticObj.position, targetPos) < 0.2f)
+            //{
+            //    magneticObj.SetParent(craneTrolley, true);
+            //    childObjs = magneticObj;
+            //}
+            _magneticPos.position = Vector3.Lerp(_magneticPos.position, targetPos, moveSpeed * Time.deltaTime);
+
+            if (Vector3.Distance(_magneticPos.position, targetPos) < 0.2f)
             {
-                magneticObj.SetParent(craneTrolley, true);
-                childObjs = magneticObj;
+                magneticObjPrefab.transform.SetParent(craneTrolley, true);
+                childObjs = magneticObjPrefab.transform;
             }
 
         }
@@ -277,11 +316,21 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         //apply the force to the first object detected within the magnetic surface area
         if (colliders.Length > 0)
         {
-            Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
+            //Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
+            //rigi_mo.linearVelocity = Vector3.up * magneticForce;
+            //Transform magneticObj = colliders[0].transform;
+            //Vector3 afterPos = magneticObj.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
+            //magneticObj.position = afterPos;
+            Transform magneticObjChild = magneticObjPrefab.transform.Find("car_body");
+
+            //Rigidbody rigi_mo = magneticPrefab.GetComponent<Rigidbody>();
+            Rigidbody rigi_mo = magneticObjChild.GetComponent<Rigidbody>();
             rigi_mo.linearVelocity = Vector3.up * magneticForce;
-            Transform magneticObj = colliders[0].transform;
+            Transform magneticObj = magneticObjPrefab.transform;
             Vector3 afterPos = magneticObj.position + Vector3.right * inputXValue * moveSpeed * Time.deltaTime;
             magneticObj.position = afterPos;
+
+
             //switch (craneState)
             //{
             //    case CraneStateType.ActivateOneObject:
@@ -334,42 +383,50 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     /***************************/
     IEnumerator MagnetPullCoroutine(Transform obj)
     {
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-        if (rb == null) yield break;
+        print("Magnet Pull Coroutine Started for Object: " + obj.name);
+        Transform magneticObjChild = obj.transform.Find("car_body");
 
-        // Disable physics while pulling
-        rb.linearVelocity = Vector3.zero;
-        rb.useGravity = false;
-
-        while (true)
+        if (magneticObjChild != null)
         {
-            // Attach when close enough
-            print("distance to crane surface: " + Vector3.Distance(obj.position, craneSurface.position));
-            if (Vector3.Distance(obj.position, craneSurface.position) < 1.7f)
-            {
-                magneticForce = 0;
-                obj.SetParent(craneTrolley, true); // follows craneArm automatically
-                childObjs = obj;
-                break;
-            }
-            else
-            {
-                magneticForce = 5f;
-                // Target follows craneSurface every frame
-                Vector3 targetPos = craneSurface.position + craneSurface.up * 0.1f; ;
+            Rigidbody rb = magneticObjChild.GetComponent<Rigidbody>();
+            //Rigidbody rb = obj.GetComponent<Rigidbody>();
+            if (rb == null) yield break;
 
-                if (targetPos.y < craneMinMaxHight.y - 0.5f)
+            // Disable physics while pulling
+            rb.linearVelocity = Vector3.zero;
+            rb.useGravity = false;
+            
+
+            while (true)
+            {
+                // Attach when close enough
+                print("distance to crane surface: " + Vector3.Distance(obj.position, craneSurface.position));
+                if (Vector3.Distance(obj.position, craneSurface.position) < 5f)
                 {
-                    targetPos.y = craneMinMaxHight.y - 0.5f;
+                    magneticForce = 0;
+                    obj.SetParent(craneTrolley, true); // follows craneArm automatically
+                    childObjs = obj;
+                    break;
+                }
+                else
+                {
+                    magneticForce = 5f;
+                    // Target follows craneSurface every frame
+                    Vector3 targetPos = craneSurface.position + craneSurface.up * 0.1f; ;
+
+                    if (targetPos.y < craneMinMaxHight.y - 0.5f)
+                    {
+                        targetPos.y = craneMinMaxHight.y - 0.5f;
+                    }
+
+                    obj.position = Vector3.Lerp(obj.position, targetPos, magneticForce * Time.deltaTime);
+                    obj.rotation = craneTrolley.rotation;
                 }
 
-                obj.position = Vector3.Lerp(obj.position, targetPos, magneticForce * Time.deltaTime);
-                obj.rotation = craneTrolley.rotation;
+                yield return null;
             }
-
-            yield return null;
         }
-
+       
         magnetCoroutine = null;
     }
     /****************************/
@@ -383,10 +440,11 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
 
         if (childObjs != null)
         {
-            Rigidbody rb = childObjs.GetComponent<Rigidbody>();
+            Rigidbody rb = childObjs.transform.Find("car_body").GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.useGravity = true;
+                rb.isKinematic = false;
             }
 
             childObjs.SetParent(null, true);
@@ -399,8 +457,11 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             if (rb != null)
             {
                 rb.useGravity = true;
+                rb.isKinematic = false;
             }
             magneticObj = null;
+            magneticObjPrefab = null;
+            objCount--;
         }
     }
 
