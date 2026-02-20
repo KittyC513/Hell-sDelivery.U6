@@ -62,6 +62,12 @@ public class BillboardUI : MonoBehaviour
         onInitialize?.Invoke();
     }
 
+    public void EnableAllIcons()
+    {
+        player1Active = true;
+        player2Active = true; 
+    }
+
     
 
     public void ShowIconToPlayer(bool show, int player)
@@ -97,26 +103,30 @@ public class BillboardUI : MonoBehaviour
         if (p1Cam == null) p1Cam = GameManager.instance.cam_p1;
         if (p2Cam == null) p2Cam = GameManager.instance.cam_p2;
 
-        //show the ui if the player is in range
-        if (player1Active && p1Cam != null && active)
+        if(images[0] != null && images[1] != null)
         {
-            images[0].SetActive(true);
-            BillboardToCamera(p1Cam, images[0]);
-        }
-        else
-        {
-            images[0].SetActive(false);
-        }
+            //show the ui if the player is in range
+            if (player1Active && p1Cam != null && active)
+            {
+                images[0].SetActive(true);
+                BillboardToCamera(p1Cam, images[0]);
+            }
+            else
+            {
+                images[0].SetActive(false);
+            }
 
-        if (player2Active && p2Cam != null && active)
-        {
-            images[1].SetActive(true);
-            BillboardToCamera(p2Cam, images[1]);
+            if (player2Active && p2Cam != null && active)
+            {
+                images[1].SetActive(true);
+                BillboardToCamera(p2Cam, images[1]);
+            }
+            else
+            {
+                images[1].SetActive(false);
+            }
         }
-        else
-        {
-            images[1].SetActive(false);
-        }
+      
         
      
     }
