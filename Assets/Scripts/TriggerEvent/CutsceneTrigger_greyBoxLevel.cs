@@ -91,6 +91,7 @@ public class CutsceneTrigger_greyBoxLevel : MonoBehaviour
         cutSceneObj.SetActive(false);
         yield return new WaitForSeconds(1f);
         canvas_fadeIn.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
         EventData.isOnCutScene = false;
         GameManager.Instance.ResetPlayersPosition(spawnpoints[0], spawnpoints[1]);
         GameManager.Instance.UnFreezeBothPlayers();

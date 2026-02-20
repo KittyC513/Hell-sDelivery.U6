@@ -38,6 +38,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public float magneticForce = 10f;
 
     public Camera cam_controlRoom;
+
     public float camSwitchDelay = 0.5f;
     public float camSwitchTimer = 0f;
 
@@ -152,7 +153,10 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         // reset player cam to crane cam 
         if (playerInput != null)
         {
-            playerInput.playerCam = enterCrane.cam_crane;
+            //playerInput.playerCam = enterCrane.cam_crane;
+            playerInput.playerCam = enterCrane.cam_pos;
+                
+            
         }
         //2. check for crouch input to exit crane
         if (playerInput.crouchPressed)
@@ -482,9 +486,13 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
 
     public void OnGameStart()
     {
+        aniPlayer1.SetActive(false);
+        aniPlayer2.SetActive(false);
+
         StartCoroutine(StartTimer(1f));
         cutscene_overview.SetActive(false);
         EventData.isOnCutScene = false;
+
         GameManager.instance.ResetPlayer1Position(spawnPoints[2]);
         GameManager.instance.ResetPlayer2Position(spawnPoints[3]);
         GameManager.instance.UnFreezeBothPlayers();
@@ -497,8 +505,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     {
         yield return new WaitForSeconds(duration);
         canvas_fadeIn.SetActive(false);
-        aniPlayer1.SetActive(false);
-        aniPlayer2.SetActive(false); 
+
     }
 
     IEnumerator StartBurning(float duration)
@@ -511,5 +518,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         }
     }
 
-    
+
+
+
 }

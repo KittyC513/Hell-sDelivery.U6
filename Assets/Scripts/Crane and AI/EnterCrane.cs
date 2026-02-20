@@ -8,10 +8,12 @@ public class EnterCrane : MonoBehaviour
 
     public Transform pos_controlRoom;
     public Camera cam_crane;
+    public Camera cam_pos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         cam_crane.enabled = false;
+        cam_pos.enabled = false;
         p1EnterCrane = false; 
         p2EnterCrane = false;
     }
@@ -19,7 +21,10 @@ public class EnterCrane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!EventData.craneIsActivated)
+        {
+            cam_pos.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
