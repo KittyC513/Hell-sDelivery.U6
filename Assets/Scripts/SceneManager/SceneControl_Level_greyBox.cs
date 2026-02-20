@@ -23,6 +23,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public Transform megneticPos;
     public int objCount = 0;
     public GameObject magneticObjPrefab;
+    public Transform exitPoint;
 
     //constraints for crane movement
     public Vector3 craneMinMaxHight;
@@ -156,6 +157,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         if (playerInput.crouchPressed)
         {
             enterCrane.ResetEntrance();
+            playerInput.transform.position = exitPoint.position;
         }
 
 
@@ -280,6 +282,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             rb.angularVelocity = Vector3.zero;
             rb.useGravity = false;
             rb.isKinematic = true;
+            magneticSurfaceCollider.isTrigger = true;
 
             Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f;
             Quaternion targetRot = craneSurface.rotation;
@@ -293,7 +296,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             //}
             _magneticPos.position = Vector3.Lerp(_magneticPos.position, targetPos, moveSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(_magneticPos.position, targetPos) < 0.2f)
+            if (Vector3.Distance(_magneticPos.position, targetPos) < 1f)
             {
                 magneticObjPrefab.transform.SetParent(craneTrolley, true);
                 childObjs = magneticObjPrefab.transform;
@@ -314,7 +317,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             magneticSurfaceCollider = null;
         }
         //apply the force to the first object detected within the magnetic surface area
-        if (colliders.Length > 0)
+        if (colliders.Length > 0 && childObjs == null)
         {
             //Rigidbody rigi_mo = colliders[0].gameObject.GetComponent<Rigidbody>();
             //rigi_mo.linearVelocity = Vector3.up * magneticForce;
@@ -414,7 +417,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
                     // Target follows craneSurface every frame
                     Vector3 targetPos = craneSurface.position + craneSurface.up * 0.1f; ;
 
-                    if (targetPos.y < craneMinMaxHight.y - 0.5f)
+                    if (targetPos.y < craneMinMaxHight.x- 0.5f)
                     {
                         targetPos.y = craneMinMaxHight.y - 0.5f;
                     }
@@ -436,6 +439,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         {
             StopCoroutine(magnetCoroutine);
             magnetCoroutine = null;
+            magneticSurfaceCollider.isTrigger = false;
         }
 
         if (childObjs != null)
