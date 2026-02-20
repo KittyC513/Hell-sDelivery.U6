@@ -22,8 +22,8 @@ Shader "Outlines/BackfaceOutlines"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            #pragma prefer_hlslcc gles
-            #pragma exlude_renderers_d3d11_9x
+            //#pragma prefer_hlslcc gles
+            //#pragma exlude_renderers_d3d11_9x
 
             #pragma vertex Vertex
             #pragma fragment Fragment
