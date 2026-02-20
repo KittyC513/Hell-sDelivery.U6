@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using Unity.VisualScripting;
+using System.Drawing.Printing;
 
 public class CraneState
 {
@@ -33,7 +34,7 @@ public class CraneState
     protected Vector3 dropoffLocation;
     protected bool armHasLoad = false;
 
-    public float visRadius = 20f;
+    public float visRadius = 50f;
     public float visAngle = 30f;
     public float rotateSpeed = 3f;
 
@@ -254,7 +255,7 @@ public class MovingToPickup : CraneState
 #region PickingUp
 public class PickingUp : CraneState
 {
-    private float pickUpTime = 3f;
+    private float pickUpTime = 1.3f;
     private float timer = 0f;
 
     public PickingUp(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation, Vector3 _dropoffLocation)
@@ -271,6 +272,7 @@ public class PickingUp : CraneState
         //Debug.Log("Crane is Picking Up Load.");
         // Set picking up trigger
         anim.SetTrigger("isPickingUp");
+        Debug.Log("Crane has picked up load.");
     }
     public override void Update()
     {
@@ -337,6 +339,9 @@ public class MovingToDropoff : CraneState
 
         player1 = GameManager.instance.player1.transform;
         player2 = GameManager.instance.player2.transform;
+
+        Debug.Log("player1 position: " + player1.position);
+        Debug.Log("player2 position: " + player2.position);
 
         //Debug.Log("Dropoff Location set to: " + dropoffLocation);
         craneArm = npc.transform.Find("Crane/Base_Rotatable");
@@ -534,7 +539,7 @@ public class MovingToDropoff : CraneState
 
 public class DroppingOff : CraneState
 {
-    private float dropOffTime = 4f;
+    private float dropOffTime = 1f;
     private float timer = 0f;
 
     public DroppingOff(GameObject _npc, Animator _anim, Transform _player, Vector3 _pickupLocation,Vector3 _dropoffLocation)
@@ -553,6 +558,7 @@ public class DroppingOff : CraneState
         // Set dropping off trigger
 
         anim.SetTrigger("isDroppingOff");
+        Debug.Log("Crane has dropped off load.");
     }
     public override void Update()
     {

@@ -33,7 +33,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public float surfaceSizeY;
     public Vector3 surfaceSize;
     public Vector3 surfaceCenter;
-    public Vector3 offset;
+    public Vector3 offset = new Vector3(0,-1f,0);
     public Transform childObjs;
     public float magneticForce = 10f;
 
@@ -171,7 +171,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             craneArm.Rotate(Vector3.up * inputX * craneRotateSpeed * Time.deltaTime);
         }
 
-        if (Mathf.Abs(inputY) >= 0.5f && Mathf.Abs(inputY) > Mathf.Abs(inputX))
+        if (Mathf.Abs(inputY) >= 0.3f && Mathf.Abs(inputY) > Mathf.Abs(inputX))
         {
             Vector3 delta = Vector3.up * inputY * craneMoveSpeed * Time.deltaTime * 0.1f;
 
@@ -195,7 +195,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         //    //move crane trolley
         //    craneTrolley.Translate(Vector3.right * trolleyInputX * craneMoveSpeed * Time.deltaTime);
         //}
-        if (Mathf.Abs(trolleyInputY) >= 0.5f)
+        if (Mathf.Abs(trolleyInputY) >= 0.3f)
         {
             Vector3 localPos = craneTrolley.localPosition;
 
@@ -226,7 +226,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         print("Enable Magnetic Surface - Check for Objects");
         //check for colliders within the magnetic surface area when enabled
         //surfaceSize = new Vector3(surfaceSizeY, craneSurface.localScale.y / 2, craneSurface.localScale.z / 2) - offset;
-        surfaceSize = new Vector3(surfaceSizeY, 2, 2) - offset;
+        surfaceSize = new Vector3(surfaceSizeY, 2, 2);
         print("Surface Size: " + surfaceSize);
         surfaceCenter = craneSurface.localPosition;
         print("Surface Center: " + surfaceCenter);
@@ -249,21 +249,21 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         if (magneticObjPrefab == null) return;
 
         print("Colliders Length: " + colliders.Length);
-        if (colliders.Length > 0 && magnetCoroutine == null)
-        {
-            //magneticSurfaceCollider = colliders[0];
-            Transform magneticObjChild = magneticObjPrefab.transform.Find("car_body");
-            //magneticSurfaceCollider = magneticPrefab.GetComponent<Collider>();  
-            magneticSurfaceCollider = magneticObjChild.GetComponent<Collider>();  
+        //if (colliders.Length > 0 && magnetCoroutine == null)
+        //{
+        //    //magneticSurfaceCollider = colliders[0];
+        //    Transform magneticObjChild = magneticObjPrefab.transform.Find("car_body");
+        //    //magneticSurfaceCollider = magneticPrefab.GetComponent<Collider>();  
+        //    magneticSurfaceCollider = magneticObjChild.GetComponent<Collider>();  
 
-            //megneticPos = magneticSurfaceCollider.transform;
-            magneticObj = magneticSurfaceCollider.transform;
+        //    //megneticPos = magneticSurfaceCollider.transform;
+        //    magneticObj = magneticSurfaceCollider.transform;
 
 
-            //magnetCoroutine = StartCoroutine(MagnetPullCoroutine(megneticPos));
-            magnetCoroutine = StartCoroutine(MagnetPullCoroutine(magneticObj));
+        //    //magnetCoroutine = StartCoroutine(MagnetPullCoroutine(megneticPos));
+        //    //magnetCoroutine = StartCoroutine(MagnetPullCoroutine(magneticObj));
             
-        }
+        //}
         if (colliders.Length > 0)
         {
             //magneticSurfaceCollider = colliders[0];
@@ -284,7 +284,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             rb.isKinematic = true;
             magneticSurfaceCollider.isTrigger = true;
 
-            Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f;
+            Vector3 targetPos = craneSurface.position + craneSurface.up * 0.2f - offset;
             Quaternion targetRot = craneSurface.rotation;
 
             //magneticObj.position = Vector3.Lerp(magneticObj.position, targetPos, moveSpeed * Time.deltaTime);
@@ -303,7 +303,7 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
             }
 
         }
-        else
+        else if(objCount < 1)
         {
             if (magneticSurfaceCollider == null) return;
             Rigidbody rb = magneticSurfaceCollider.attachedRigidbody;
@@ -439,7 +439,6 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         {
             StopCoroutine(magnetCoroutine);
             magnetCoroutine = null;
-            magneticSurfaceCollider.isTrigger = false;
         }
 
         if (childObjs != null)
@@ -450,7 +449,8 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
                 rb.useGravity = true;
                 rb.isKinematic = false;
             }
-
+            magneticSurfaceCollider.isTrigger = false;
+            magneticObjPrefab = null;
             childObjs.SetParent(null, true);
             childObjs = null;
         }
@@ -464,7 +464,6 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
                 rb.isKinematic = false;
             }
             magneticObj = null;
-            magneticObjPrefab = null;
             objCount--;
         }
     }
@@ -498,4 +497,16 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
         yield return new WaitForSeconds(duration);
         canvas_fadeIn.SetActive(false);
     }
+
+    IEnumerator StartBurning(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        //Activate burning effect on the car
+        if (childObjs != null)
+        {
+
+        }
+    }
+
+    
 }
