@@ -55,7 +55,8 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     public GameObject cutscene_RVSquatterOutro;
     public GameObject canvas_fadeIn;
 
-
+    public GameObject aniPlayer1;
+    public GameObject aniPlayer2;
 
     private void Awake()
     {
@@ -496,6 +497,8 @@ public class SceneControl_Level_greyBox : SceneControlBase<SceneControl_Level_gr
     {
         yield return new WaitForSeconds(duration);
         canvas_fadeIn.SetActive(false);
+        aniPlayer1.SetActive(false);
+        aniPlayer2.SetActive(false); 
     }
 
     IEnumerator StartBurning(float duration)
