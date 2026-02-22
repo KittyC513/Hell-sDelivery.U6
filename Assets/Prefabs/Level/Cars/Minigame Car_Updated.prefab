@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3b097d663c32843b7fef462adeb3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactUI: {fileID: 408323746932834555}
+  interactUI: {fileID: 7287942453648787207}
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -388,8 +388,7 @@ MonoBehaviour:
         m_CallState: 2
   limitInteracts: 0
   maxNumberOfInteracts: 1
-  requireItem: 0
-  validItemTag: 
+  UIOnly: 0
   canInteract: 1
 --- !u!65 &7245436408471590172
 BoxCollider:
@@ -1189,7 +1188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6279059540584257645}
-  - component: {fileID: 408323746932834555}
+  - component: {fileID: 7287942453648787207}
   - component: {fileID: 1999725772468549719}
   m_Layer: 0
   m_Name: Minigame Car_Updated
@@ -1214,7 +1213,7 @@ Transform:
   - {fileID: 3311986947229739072}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &408323746932834555
+--- !u!114 &7287942453648787207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1223,7 +1222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8264930064711128921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 213fe578ec3fd5647985791e0c219f86, type: 3}
+  m_Script: {fileID: 11500000, guid: 70fca810c4926674abb264b38bf840b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   billboardPrefab: {fileID: 4668376425706960398, guid: f5fa995a5832a8b469a975e36a333dc3, type: 3}
@@ -1236,6 +1235,7 @@ MonoBehaviour:
   amplitude: 0.15
   images: []
   active: 1
+  cameraToBillboard: {fileID: 0}
 --- !u!114 &1999725772468549719
 MonoBehaviour:
   m_ObjectHideFlags: 0

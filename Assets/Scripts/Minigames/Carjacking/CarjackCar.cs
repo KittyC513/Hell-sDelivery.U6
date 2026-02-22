@@ -24,6 +24,8 @@ public class CarjackCar : MonoBehaviour
     public virtual void Start()
     {
         minigameManager = FindFirstObjectByType<CarjackMinigameManager>();
+        SingleCamBillboardUI singleBillboard = GetComponent<SingleCamBillboardUI>();
+        singleBillboard.cameraToBillboard = Camera.main;
         p1Slider = minigameManager.p1Slider;
         p2Slider = minigameManager.p2Slider;
         

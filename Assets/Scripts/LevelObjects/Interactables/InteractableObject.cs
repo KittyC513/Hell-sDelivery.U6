@@ -13,9 +13,6 @@ public class InteractableObject : MonoBehaviour
 
     [SerializeField] private bool limitInteracts = true;
     [SerializeField] private int maxNumberOfInteracts = 1;
-    [SerializeField] private bool requireItem = false;
-    [SerializeField] private string validItemTag;
-    [SerializeField] private bool UIOnly = false;
     public bool canInteract = true;
 
     private int interactCount = 0;
@@ -31,18 +28,14 @@ public class InteractableObject : MonoBehaviour
             }
         }
 
-        if (!UIOnly)
+        if (!canInteract)
         {
-            if (!canInteract)
-            {
-                interactUI.active = false;
-            }
-            else
-            {
-                interactUI.active = true;
-            }
+            interactUI.active = false;
         }
-        
+        else
+        {
+            interactUI.active = true;
+        }
     }
 
     public void EnableUI(int playerNum)
@@ -66,11 +59,6 @@ public class InteractableObject : MonoBehaviour
         {
             //interact with this object 
             OnInteract.Invoke(playerInput.GetComponent<PlayerInputDetection>(), this);
-
-            if (requireItem)
-            {
-                //Destroy(item.gameObject, 0.1f);
-            }
 
             interactCount++;
         }

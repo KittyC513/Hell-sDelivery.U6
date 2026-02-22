@@ -8,37 +8,39 @@ public class BillboardUI : MonoBehaviour
     private Camera p1Cam;
     private Camera p2Cam;
 
-    [SerializeField] private Canvas billboardPrefab;
+    [SerializeField] protected Canvas billboardPrefab;
     //[SerializeField] private Transform positionFollow;
 
-    [SerializeField] private bool player1Active = false;
-    [SerializeField] private bool player2Active = false;
+    [SerializeField] protected bool player1Active = false;
+    [SerializeField] protected bool player2Active = false;
 
     [SerializeField] private bool globalIcons = false;
 
-    [SerializeField] private float yOffset = 0.5f;
+    [SerializeField] protected float yOffset = 0.5f;
 
     [SerializeField] private bool applySine = true;
     [SerializeField] private float frequency = 2.5f;
     [SerializeField] private float amplitude = 0.15f;
+    public bool active = true;
+
+    [Space, Header("Lock Rotations")]
+    public bool lockX = false;
+    public bool lockY = false;
+    public bool lockZ = false;
+    private Vector3 lockVector;
 
     private Vector3 pos;
-    private Vector3 startPos;
+    protected Vector3 startPos;
     private Vector3 changeInPos;
 
     [HideInInspector] public List<GameObject> images;
-    public bool active = true;
+
 
     public delegate void OnInitialize();
     public OnInitialize onInitialize;
 
-
-    private void Start()
+    protected virtual void SetupBillboard()
     {
-        
-        //change this to grab an instance from the active player to get their current camera
-        //rather than the player camera so that it can be used with different camera types such as
-        //the minigame camera
         p1Cam = GameManager.instance.cam_p1;
         p2Cam = GameManager.instance.cam_p2;
         images = new List<GameObject>();
@@ -60,6 +62,11 @@ public class BillboardUI : MonoBehaviour
             images[1].GetComponentInChildren<Image>().color = Color.blue;
         }
         onInitialize?.Invoke();
+    }
+
+    private void Start()
+    {
+        SetupBillboard();
     }
 
     public void EnableAllIcons()
@@ -96,6 +103,13 @@ public class BillboardUI : MonoBehaviour
 
     private void Update()
     {
+       ToggleUI();
+
+      
+    }
+
+    protected virtual void ToggleUI()
+    {
         //update the unaltered position
         startPos = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
 
@@ -126,12 +140,11 @@ public class BillboardUI : MonoBehaviour
                 images[1].SetActive(false);
             }
         }
-      
-        
-     
     }
 
-    private void BillboardToCamera(Camera cam, GameObject img)
+
+
+    protected void BillboardToCamera(Camera cam, GameObject img)
     {
         //apply the y offset from the sin wave
         float yPos = amplitude * Mathf.Sin(Time.time * frequency);
@@ -139,8 +152,23 @@ public class BillboardUI : MonoBehaviour
 
         img.transform.position = pos;
 
-        img.transform.LookAt(cam.transform.position);
+        //img.transform.LookAt(cam.transform.position);
+        
+        LookatCamera(cam, img);
+    }
 
+    private void LookatCamera(Camera cam, GameObject img)
+    {
+        //get the direction to the camera
+        Vector3 direction = (cam.transform.position - img.transform.position).normalized;
+        //get a vector based on the locked angles
+        lockVector = new Vector3(lockX == true ? 0 : 1, lockY == true ? 0 : 1, lockZ == true ? 0 : 1);
+        direction = new Vector3(direction.x * lockVector.x, direction.y * lockVector.y, direction.z * lockVector.z);
+
+        //get a quaternion rotation using the camera's up vector
+        Quaternion targetDirection = Quaternion.LookRotation(direction, cam.transform.up);
+        //rotate towards the target direction
+        img.transform.rotation = Quaternion.Slerp(img.transform.rotation, targetDirection, 100 * Time.deltaTime);
     }
 
     private void OnDrawGizmosSelected()
