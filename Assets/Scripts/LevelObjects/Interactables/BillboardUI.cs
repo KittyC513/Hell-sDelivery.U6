@@ -14,7 +14,7 @@ public class BillboardUI : MonoBehaviour
     [SerializeField] protected bool player1Active = false;
     [SerializeField] protected bool player2Active = false;
 
-    [SerializeField] private bool globalIcons = false;
+    [SerializeField] protected bool globalIcons = false;
 
     [SerializeField] protected float yOffset = 0.5f;
 

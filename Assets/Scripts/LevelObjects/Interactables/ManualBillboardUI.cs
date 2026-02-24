@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ManualBillboardUI : BillboardUI
 {
@@ -14,6 +15,18 @@ public class ManualBillboardUI : BillboardUI
 
         images.Add(canvasp1);
         images.Add(canvasp2);
+
+
+        if (!globalIcons)
+        {
+            images[0].layer = LayerMask.NameToLayer("UI_P2Ignore");
+            images[1].layer = LayerMask.NameToLayer("UI_P1Ignore");
+        }
+        else
+        {
+            images[0].GetComponentInChildren<Image>().color = Color.red;
+            images[1].GetComponentInChildren<Image>().color = Color.blue;
+        }
 
         onInitialize?.Invoke();
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FollowerQueue : MonoBehaviour
 {
-    [SerializeField] private List<FollowerObject> followers;
+    [SerializeField] public List<FollowerObject> followers;
     [SerializeField] private GameObject objectToFollow;
     [SerializeField] private GameObject emptyTransformObject;
     
@@ -98,6 +98,10 @@ public class FollowerQueue : MonoBehaviour
 
     public void AddNewFollower(FollowerObject follower)
     {
+        if (followers.Count + 1 > targetPositions.Count)
+        {
+            targetPositions.Add(Instantiate(emptyTransformObject, objectToFollow.transform.position, Quaternion.identity, parent));
+        }
         followers.Add(follower);
 
         //UpdateFollowPositions();
@@ -108,5 +112,22 @@ public class FollowerQueue : MonoBehaviour
         followers.Remove(follower);
 
         //UpdateFollowPositions();
+    }
+
+    public FollowerObject DoesQueueContainTag(string tag)
+    {
+        for (int i = 0; i < followers.Count; i++)
+        {
+            if (followers[i] != null)
+            {
+                if (followers[i].CompareTag(tag))
+                {
+                    return followers[i];
+                }
+            }
+           
+        }
+
+        return null;
     }
 }

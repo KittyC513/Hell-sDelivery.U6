@@ -10,6 +10,7 @@ public class FriendshipBerry : MonoBehaviour
     [SerializeField] private FollowerObject followObject;
     private Collider col;
     private FollowerQueue queue;
+    private FollowerQueue otherQueue; //the queue of the player not holding this item
     [SerializeField] private float captureTime = 5;
     [SerializeField] private float returnSpeed = 2;
     [SerializeField] private float minRequiredDistance = 3;
@@ -69,12 +70,14 @@ public class FriendshipBerry : MonoBehaviour
                 if (playerNum == 1)
                 {
                     otherPlayer = GameManager.instance.player2;
+                    otherQueue = otherPlayer.GetComponentInChildren<FollowerQueue>();
                     billboardUI.ShowIconToPlayer(true, 1);
                     billboardUI.ShowIconToPlayer(false, 2);
                 }
                 else
                 {
                     otherPlayer = GameManager.instance.player1;
+                    otherQueue = otherPlayer.GetComponentInChildren<FollowerQueue>();
                     billboardUI.ShowIconToPlayer(true, 2);
                     billboardUI.ShowIconToPlayer(false, 1);
                 }
@@ -126,6 +129,7 @@ public class FriendshipBerry : MonoBehaviour
         {
             if (!col.enabled) col.enabled = true;
             if (transform.position != startPos) transform.position = startPos;
+            Debug.Log(transform.position + "||" + startPos);
         }
         
     }
@@ -145,7 +149,7 @@ public class FriendshipBerry : MonoBehaviour
 
         //reset the lerp time
         lerpTime = 0;
-        
+        followObject.ToggleActive(false);
         queue.RemoveFollower(followObject);
         queue = null;
 
@@ -157,7 +161,7 @@ public class FriendshipBerry : MonoBehaviour
     {
         //reset timer
         t = 0;
-
+        
         col.enabled = false;
     }
 
@@ -183,6 +187,7 @@ public class FriendshipBerry : MonoBehaviour
     {
         queue.RemoveFollower(followObject);
         anim.SetTrigger("Collected");
+        billboardUI.DisableAllIcons();
         //temporary
         //Destroy(this.gameObject);
     }
@@ -195,16 +200,22 @@ public class FriendshipBerry : MonoBehaviour
     private void CompareDistance()
     {
         float distance = Vector3.Distance(currentPlayer.transform.position, otherPlayer.transform.position);
-
-        if (distance < minRequiredDistance)
+        
+        if (distance < minRequiredDistance && otherQueue.DoesQueueContainTag("Berry") != null)
         {
-            ChangeState(BerryState.collected);
+            otherQueue.DoesQueueContainTag("Berry").GetComponent<FriendshipBerry>().CollectBerry();
+            CollectBerry();
         }
     }
 
     public void PlayParticleSystem()
     {
         collectParticles.Play();
+    }
+
+    public void CollectBerry()
+    {
+        if (berryState != BerryState.collected) ChangeState(BerryState.collected);
     }
 
 }
