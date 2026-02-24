@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BillboardUI : MonoBehaviour
 {
-    private Camera p1Cam;
-    private Camera p2Cam;
+    protected Camera p1Cam;
+    protected Camera p2Cam;
 
     [SerializeField] protected Canvas billboardPrefab;
     //[SerializeField] private Transform positionFollow;
@@ -73,6 +73,12 @@ public class BillboardUI : MonoBehaviour
     {
         player1Active = true;
         player2Active = true; 
+    }
+
+    public void DisableAllIcons()
+    {
+        player1Active = false;
+        player2Active = false; 
     }
 
     

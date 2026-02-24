@@ -70,7 +70,7 @@ public class FollowerQueue : MonoBehaviour
                 {
                     followers[i].UpdatePosition(targetPositions[i].transform.position, targetPositions[i].transform.rotation);
                 }
-                else if (i != 0 && i != 1)
+                else if (i != 0)
                 {
                     followers.RemoveAt(i);
                 }

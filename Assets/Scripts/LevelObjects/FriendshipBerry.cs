@@ -1,4 +1,6 @@
+
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FriendshipBerry : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class FriendshipBerry : MonoBehaviour
     [SerializeField] private float captureTime = 5;
     [SerializeField] private float returnSpeed = 2;
     [SerializeField] private float minRequiredDistance = 3;
+    [SerializeField] private ParticleSystem collectParticles;
+    [SerializeField] private BillboardUI billboardUI;
+    [SerializeField] private Image p1Image;
+    [SerializeField] private Image p2Image;
     private float t;
     private float lerpTime;
     private Vector3 startPos;
@@ -19,11 +25,13 @@ public class FriendshipBerry : MonoBehaviour
 
     private GameObject otherPlayer;
     private GameObject currentPlayer;
+    private Animator anim;
 
     private void Start()
     {
         startPos = transform.position;
         col = GetComponent<Collider>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -61,10 +69,14 @@ public class FriendshipBerry : MonoBehaviour
                 if (playerNum == 1)
                 {
                     otherPlayer = GameManager.instance.player2;
+                    billboardUI.ShowIconToPlayer(true, 1);
+                    billboardUI.ShowIconToPlayer(false, 2);
                 }
                 else
                 {
                     otherPlayer = GameManager.instance.player1;
+                    billboardUI.ShowIconToPlayer(true, 2);
+                    billboardUI.ShowIconToPlayer(false, 1);
                 }
                 
             }
@@ -121,6 +133,9 @@ public class FriendshipBerry : MonoBehaviour
     {
         Timer();
         CompareDistance();
+        p1Image.fillAmount = (captureTime - t) / captureTime;
+        p2Image.fillAmount = (captureTime - t) / captureTime;
+       
     }
 
     public void OnCaptureExpire()
@@ -133,7 +148,9 @@ public class FriendshipBerry : MonoBehaviour
         
         queue.RemoveFollower(followObject);
         queue = null;
- 
+
+
+        billboardUI.DisableAllIcons();
         
     }
     public void OnCapture()
@@ -165,8 +182,14 @@ public class FriendshipBerry : MonoBehaviour
     private void OnCollect()
     {
         queue.RemoveFollower(followObject);
+        anim.SetTrigger("Collected");
         //temporary
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+    }
+
+    public void Destroy()
+    {
+        Destroy(this.gameObject, 0.15f);
     }
 
     private void CompareDistance()
@@ -177,6 +200,11 @@ public class FriendshipBerry : MonoBehaviour
         {
             ChangeState(BerryState.collected);
         }
+    }
+
+    public void PlayParticleSystem()
+    {
+        collectParticles.Play();
     }
 
 }
