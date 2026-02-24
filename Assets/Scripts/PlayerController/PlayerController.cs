@@ -751,7 +751,7 @@ public class PlayerController : NetworkBehaviour
 
             if (grounded)
             {
-                leftTheGround.Invoke();
+                leftTheGround?.Invoke();
                 if (debugActive && useJumpMarkers)
                 {
                     Instantiate(runMarker, transform.position, Quaternion.identity);
